@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_p2pview"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:background="@color/black"
+        android:layout_height="0dp">
+
+        <com.p2p.core.P2PView
+            android:id="@+id/pview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+        <View
+            android:id="@+id/view_black"
+            android:layout_width="match_parent"
+            android:background="@color/black"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+    <!--<Button
+        android:id="@+id/btn_palyback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="回放录像" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tx_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>-->
+
+    <LinearLayout
+        android:id="@+id/ll_talkback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_inversion_150px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="8dp"
+            android:text="回放"
+            android:textColor="@color/base_black"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--<android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_item_banner"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/base_color" />-->
+
+    <com.youth.banner.Banner
+        android:id="@+id/viewpager_item_banner"
+        android:layout_width="match_parent"
+        android:layout_height="180dp" />
+
+    <!--<FrameLayout
+        android:id="@+id/fl_item_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/tv_location_item_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_community_location_40px"
+            android:drawablePadding="4dp"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_toggle_item_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:drawablePadding="3dp"
+            android:drawableRight="@drawable/ic_arrow_right_gray_40px"
+            android:padding="10dp"
+            android:text="切换"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </FrameLayout>-->
+
+
+</FrameLayout>

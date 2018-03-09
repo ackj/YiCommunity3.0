@@ -1,0 +1,79 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.aglhz.yicommunity"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    signingConfigs {
+        debug {
+            keyAlias 'agl'
+            keyPassword 'aglandroid'
+            storeFile file('../agl.keystore')
+            storePassword 'aglandroid'
+        }
+        release {
+            keyAlias 'agl'
+            keyPassword 'aglandroid'
+            storeFile file('../agl.keystore')
+            storePassword 'aglandroid'
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "isDebug", "true"//配置自定义debug版下的字段。
+            ndk {
+                abiFilters "armeabi"
+            }
+        }
+        release {
+            buildConfigField "boolean", "isDebug", "false"//配置自定义debug版下的字段。
+            ndk {
+                abiFilters "armeabi"
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
+    productFlavors {
+//        lanmei {
+//            signingConfig signingConfigs.release
+//        }
+//        meilun {
+//
+//            signingConfig signingConfigs.release
+//        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    //阿里巴巴开源基础路由
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+    implementation project(':amain')
+}

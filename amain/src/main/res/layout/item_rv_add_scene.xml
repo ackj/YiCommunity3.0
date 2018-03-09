@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/iv_icon_item_rv_add_scene_fragment"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_equipment_smokedetectorgswsd04_180px" />
+
+    <TextView
+        android:id="@+id/tv_name_item_rv_add_scene_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="门口电灯"
+        android:textColor="@color/base_black" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_node_item_rv_add_scene_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_stroke_base_color_5radius"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="第　1　路"
+        android:textColor="@color/base_color" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_action_item_rv_add_scene_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_stroke_base_color_5radius"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="打开"
+        android:textColor="@color/base_color" />
+
+    <ImageView
+        android:id="@+id/iv_delete_item_rv_add_scene_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        android:src="@drawable/ic_close_black_18dp" />
+
+</LinearLayout>

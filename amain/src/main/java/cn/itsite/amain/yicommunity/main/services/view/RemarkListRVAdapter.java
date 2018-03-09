@@ -1,0 +1,97 @@
+package cn.itsite.amain.yicommunity.main.services.view;
+
+
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseViewHolder;
+
+import java.util.List;
+
+import cn.itsite.abase.mvp.view.base.BaseRecyclerViewAdapter;
+import cn.itsite.abase.utils.DensityUtils;
+import cn.itsite.amain.R;
+import cn.itsite.amain.yicommunity.App;
+import cn.itsite.amain.yicommunity.entity.bean.RemarkListBean;
+
+
+/**
+ * Created by leguang on 2017/6/26 0026.
+ * Email：langmanleguang@qq.com
+ */
+public class RemarkListRVAdapter extends BaseRecyclerViewAdapter<RemarkListBean.DataBean.CommentListBean, BaseViewHolder> {
+
+    public RemarkListRVAdapter() {
+        super(R.layout.item_rv_remark);
+    }
+
+    @Override
+    protected void convert(BaseViewHolder helper, RemarkListBean.DataBean.CommentListBean item) {
+        //——————————————给哪些子View添加事件————————————————
+        helper.addOnClickListener(R.id.iv_head_item_rv_remark)
+                .addOnClickListener(R.id.ll_comment_item_rv_remark)
+                .addOnClickListener(R.id.tv_comment_count_item_rv_remark);
+
+        //——————————————头像————————————————
+        ImageView ivPhoto = helper.getView(R.id.iv_head_item_rv_remark);
+
+        Glide.with(ivPhoto.getContext())
+                .load(item.getMember().getAvator())
+                .apply(new RequestOptions()
+                        .error(R.drawable.ic_default_img_120px)
+                        .placeholder(R.drawable.ic_default_img_120px)
+                        .circleCrop())
+                .into(ivPhoto);
+
+        RatingBar rbStar = helper.getView(R.id.rb_star_item_rv_remark);
+        rbStar.setRating(item.getStartLevel());
+
+        helper.setText(R.id.tv_name_item_rv_remark, item.getMember().getMemberNickName())
+                .setText(R.id.tv_content_item_rv_remark, item.getContent())
+                .setText(R.id.tv_comment_count_item_rv_remark, item.getCommentReplyList().size() + "")
+                .setText(R.id.tv_time_item_rv_remark, item.getCreateTime().substring(0, 16));
+
+        //----------------- 评论 ------------------
+        LinearLayout commentsLayout = helper.getView(R.id.ll_comment_item_rv_remark);
+
+        if (item.getCommentReplyList().isEmpty()) {
+            commentsLayout.setVisibility(View.GONE);
+        } else {
+            commentsLayout.removeAllViews();
+            commentsLayout.setVisibility(View.VISIBLE);
+            List<RemarkListBean.DataBean.CommentListBean.CommentReplyListBean> replyList = item.getCommentReplyList();
+
+            for (int i = 0; i < replyList.size(); i++) {
+                RemarkListBean.DataBean.CommentListBean.CommentReplyListBean replyBean = replyList.get(i);
+                String name = replyBean.getMember().getMemberNickName();
+                String content = replyBean.getContent();
+                String text = name + ":" + content;
+
+                TextView tvComment = new TextView(App.mContext);
+                tvComment.setTextSize(13);
+                tvComment.setTextColor(0xBB222222);
+
+                LinearLayout.LayoutParams tvLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                int marginValue = DensityUtils.dp2px(App.mContext, 1);
+                tvLp.setMargins(marginValue, marginValue, marginValue, marginValue);
+                tvComment.setLayoutParams(tvLp);
+
+                SpannableString nameSpan = new SpannableString(text);
+                nameSpan.setSpan(new ForegroundColorSpan(0xFF5CA0C3), 0, name.length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvComment.setText(nameSpan);
+
+                commentsLayout.addView(tvComment);
+            }
+        }
+
+    }
+}

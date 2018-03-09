@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+        <TextView
+            style="@style/LinkageEditItem_TitleStyle"
+            android:text="联动名称" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入名称"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View style="@style/NormalLineStyle" />
+
+    <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+        <TextView
+            style="@style/LinkageEditItem_TitleStyle"
+            android:text="触发类型" />
+
+        <TextView
+            android:id="@+id/tv_trigger_type"
+            style="@style/LinkageEditItem_SelectTextStyle"
+            android:text="传感器" />
+    </LinearLayout>
+
+    <View style="@style/NormalLineStyle" />
+
+    <LinearLayout
+        android:id="@+id/ll_date_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_week"
+            style="@style/LinkageEditItem_LinearLayoutStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                style="@style/LinkageEditItem_TitleStyle"
+                android:text="可选时间" />
+
+            <TextView
+                android:id="@+id/tv_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ic_arrow_right_30px"
+                android:text="周数："
+                android:textColor="@color/light_blue" />
+        </LinearLayout>
+
+        <View style="@style/NormalLineStyle" />
+
+        <LinearLayout
+            android:id="@+id/ll_time"
+            style="@style/LinkageEditItem_LinearLayoutStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                style="@style/LinkageEditItem_TitleStyle"
+                android:text="时间" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ic_arrow_right_30px"
+                android:text="00:00"
+                android:textColor="@color/light_blue" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sensor_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+            <TextView
+                style="@style/LinkageEditItem_TitleStyle"
+                android:text="传感器" />
+
+            <TextView
+                android:id="@+id/tv_sensor"
+                style="@style/LinkageEditItem_SelectTextStyle"
+                android:text="请选择" />
+        </LinearLayout>
+
+        <View style="@style/NormalLineStyle" />
+
+        <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+            <TextView
+                style="@style/LinkageEditItem_TitleStyle"
+                android:text="触发动作" />
+
+            <TextView
+                android:id="@+id/tv_sensor_action"
+                style="@style/LinkageEditItem_SelectTextStyle"
+                android:text="请选择" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/NormalLineStyle" />
+
+    <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+        <TextView
+            style="@style/LinkageEditItem_TitleStyle"
+            android:text="联动类型" />
+
+        <TextView
+            android:id="@+id/tv_linkage_type"
+            style="@style/LinkageEditItem_SelectTextStyle"
+            android:text="设备" />
+    </LinearLayout>
+
+    <View style="@style/NormalLineStyle" />
+
+    <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+        <TextView
+            style="@style/LinkageEditItem_TitleStyle"
+            android:text="联动到" />
+
+        <TextView
+            android:id="@+id/tv_device_sence"
+            style="@style/LinkageEditItem_SelectTextStyle"
+            android:text="请选择" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_scene_gone_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View style="@style/NormalLineStyle" />
+
+        <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+            <TextView
+                style="@style/LinkageEditItem_TitleStyle"
+                android:text="联动到哪个节点" />
+
+            <TextView
+                android:id="@+id/tv_device_node"
+                style="@style/LinkageEditItem_SelectTextStyle"
+                android:text="请选择" />
+        </LinearLayout>
+
+        <View style="@style/NormalLineStyle" />
+
+        <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+            <TextView
+                style="@style/LinkageEditItem_TitleStyle"
+                android:text="联动动作" />
+
+            <TextView
+
+                android:id="@+id/tv_device_action"
+                style="@style/LinkageEditItem_SelectTextStyle"
+                android:text="请选择" />
+        </LinearLayout>
+
+        <View style="@style/NormalLineStyle" />
+
+        <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+            <TextView
+                style="@style/LinkageEditItem_TitleStyle"
+                android:text="延时" />
+
+            <LinearLayout
+                android:layout_width="115dp"
+                android:layout_height="28dp"
+                android:background="@drawable/shape_stroke_blue"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <EditText
+                    android:id="@+id/et_minute"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textColor="@color/light_blue"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="s"
+                    android:textColor="@color/light_blue"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View style="@style/NormalLineStyle" />
+
+        <LinearLayout style="@style/LinkageEditItem_LinearLayoutStyle">
+
+            <TextView
+                style="@style/LinkageEditItem_TitleStyle"
+                android:text="延时联动动作" />
+
+            <TextView
+                android:id="@+id/tv_device_action_2"
+                style="@style/LinkageEditItem_SelectTextStyle"
+                android:text="请选择" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View style="@style/NormalLineStyle" />
+
+</LinearLayout>

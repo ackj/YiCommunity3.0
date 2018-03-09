@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <!--<EditText
+        android:id="@+id/et_nickname"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/shape_stroke_base_color"
+        android:hint="请输入WIFI帐号"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textSize="15sp" />-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="设备需要连接的WIFI"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_wifiname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GC_M"
+        android:textColor="@color/base_color"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_stroke_base_color"
+        android:hint="请输入WIFI密码"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"
+        android:layout_width="260dp"
+        android:textColor="@color/red_text"
+        android:layout_height="wrap_content"
+        android:text="请重置设备并在听到设备提示音'嘟嘟嘟...'点击开始配网。" />
+
+    <!--<Button
+        android:id="@+id/btn_next"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_solid_basecolor"
+        android:text="下一步"
+        android:textColor="@color/white" />-->
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_solid_basecolor"
+        android:text="开始配网"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:visibility="gone"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_solid_basecolor"
+        android:text="停止配网"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_receive"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/default_gray"
+        android:textSize="12sp" />
+</LinearLayout>

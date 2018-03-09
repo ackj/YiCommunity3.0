@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="15dp">
+
+        <ImageView
+            android:id="@+id/iv_icon_item_security"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_equipment_gassolenoidvalve_180px" />
+
+        <TextView
+            android:id="@+id/tv_name_item_security"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="门槛"
+            android:textColor="@color/base_black"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_state"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="38dp"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/ic_state_green_24px" />
+</FrameLayout>

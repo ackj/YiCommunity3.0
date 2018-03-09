@@ -1,0 +1,82 @@
+package cn.itsite.acommon.widget.goodscounter;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import cn.itsite.acommon.R;
+
+/**
+ * Author： Administrator on 2018/2/22 0022.
+ * Email： liujia95me@126.com
+ * 商品计数控件
+ */
+public class GoodsCounterView extends LinearLayout {
+    private static final String TAG = GoodsCounterView.class.getSimpleName();
+    private TextView mTvCount;
+    private ImageView mIvMinus;
+    private ImageView mIvAdd;
+    private int counter;
+
+    public GoodsCounterView(Context context) {
+        this(context, null);
+    }
+
+    public GoodsCounterView(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public GoodsCounterView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        View view = LayoutInflater.from(context).inflate(R.layout.view_goods_counter, null);
+        mTvCount = (TextView) view.findViewById(R.id.tv_count);
+        mIvMinus = (ImageView) view.findViewById(R.id.iv_minus);
+        mIvAdd = (ImageView) view.findViewById(R.id.iv_add);
+        addView(view);
+        initListener();
+    }
+
+    private void initListener() {
+        mIvAdd.setOnClickListener(v -> clickAdd());
+        mIvMinus.setOnClickListener(v -> clickMinus());
+    }
+
+    public void setCountWidth(int widthPx) {
+        LinearLayout.LayoutParams layoutParams = (LayoutParams) mTvCount.getLayoutParams();
+        layoutParams.width = widthPx;
+        mTvCount.setLayoutParams(layoutParams);
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    private void clickMinus() {
+        if (counter > 0) {
+            counter--;
+            mTvCount.setText(formatCounter(counter));
+        }
+    }
+
+    private void clickAdd() {
+        counter++;
+        mTvCount.setText(formatCounter(counter));
+    }
+
+    private String formatCounter(int counter) {
+        String strCounter = String.valueOf(counter);
+        if (counter > 99) {
+            strCounter = "99+";
+        }
+        return strCounter;
+    }
+}

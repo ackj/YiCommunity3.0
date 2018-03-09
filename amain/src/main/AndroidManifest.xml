@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.itsite.amain">
+
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- 门禁部分特殊要求权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- Needed to allow app to install on tablets, since android.permission.CALL_PHONE implies android.hardware.telephony is required -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Needed to allow app to install on tablets, since android.permission.CAMERA implies android.hardware.camera and android.hardware.camera.autofocus are required -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!-- Needed to store received images if the user wants to -->
+    <!-- Needed to use our own Contact editor -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- Needed to route the audio to the bluetooth headset if available -->
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!-- Needed to pre fill the wizard email field (only if enabled in custom settings) -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+
+    <!-- 相机相关权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 震动相关权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 闪光灯相关权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!-- 打电话权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 添加快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <!-- 移除快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <!-- 查询快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!--用于读取短信验证码,缺一不可-->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+
+    <!--todo(高亮)sssssssssssssssssssss S1相关权限 sssssssssssssssssssssssssssss-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--用于读取短信验证码,缺一不可-->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <!--用于读取短信验证码,缺一不可-->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <!-- 相机相关权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 震动相关权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 闪光灯相关权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <!--高德地图-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!--录音-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <!--shiyan -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- Needed to allow app to install on tablets, since android.permission.CALL_PHONE implies android.hardware.telephony is required -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Needed to allow app to install on tablets, since android.permission.CAMERA implies android.hardware.camera and android.hardware.camera.autofocus are required -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- Needed to store received images if the user wants to -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- Needed to use our own Contact editor -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- Needed to route the audio to the bluetooth headset if available -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!-- Needed to pre fill the wizard email field (only if enabled in custom settings) -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+
+    <!--以下为小米推送所需权限-->
+    <permission
+        android:name="com.aglhz.yicommunity.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.aglhz.yicommunity.permission.MIPUSH_RECEIVE" />
+    <!--以上为小米推送所需权限-->
+
+    <application>
+
+        <activity
+            android:name=".yicommunity.main.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".yicommunity.main.publish.CommentActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Transparent" />
+
+        <activity
+            android:name=".yicommunity.login.LoginActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/Transparent">
+            <intent-filter>
+                <action android:name="LoginActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".yicommunity.main.picker.PickerActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".yicommunity.web.WebActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".yicommunity.qrcode.QRCodeActivity"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".yicommunity.launch.WelcomeActivity"
+            android:theme="@style/Transparent" />
+
+        <service
+            android:name="com.sipphone.sdk.SipService"
+            android:label="Sip Service"
+            android:stopWithTask="false" />
+
+        <activity
+            android:name=".yicommunity.main.house.HouseActivity"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".yicommunity.main.parking.ParkingActivity"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".yicommunity.main.parking.TempParkActivity"
+            android:theme="@style/Transparent" />
+
+        <activity
+            android:name=".yicommunity.main.publish.PropertyActivity"
+            android:theme="@style/Transparent"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".yicommunity.main.door.DoorActivity"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".yicommunity.main.about.AboutActivity"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".yicommunity.main.mypublish.MyPublishActivity"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".yicommunity.preview.PreviewActivity"
+            android:theme="@style/Transparent" />
+
+        <!--快捷方式Activity，启动模式必须设置成singleInstance，否则主Activity存在的时候，点击快捷方式会把主Activity也带起来。-->
+        <activity
+            android:name=".yicommunity.main.mine.QuickOpenActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Transparent">
+            <intent-filter>
+                <action android:name="com.android.launcher.action.INSTALL_SHORTCUT" /> <!-- 自定义的action，通过自定义的action可以跨app调用到activity -->
+                <action android:name="android.intent.action.MAIN" /><!-- 当程序删除时，快捷方式也会跟着删除 -->
+                <category android:name="android.intent.category.DEFAULT" /> <!-- 必须加上这个，否则下面无法直接使用自定的action -->
+            </intent-filter>
+        </activity>
+
+        <!-- 高德地图 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="da7f5447eccd1609e8dcce4cd0919ad8" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <service
+            android:name="com.sipphone.sdk.SipService"
+            android:label="Sip Service"
+            android:stopWithTask="false" />
+
+        <activity
+            android:name=".yicommunity.main.door.call.CallActivity"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".yicommunity.main.door.call.CallIncomingActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <!-- 微信支付回调页面 -->
+        <activity
+            android:name=".yicommunity.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.file.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/boxing_file_provider" />
+        </provider>
+
+        <activity
+            android:name=".yicommunity.main.message.MessageActivity"
+            android:exported="true"
+            android:theme="@style/Transparent" />
+
+        <activity
+            android:name=".yicommunity.main.guide.GuideActivity"
+            android:theme="@style/Transparent" />
+
+        <!--社区服务-->
+        <activity
+            android:name=".yicommunity.main.services.ServicesActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Transparent" />
+
+
+        <!--todo(高亮) ssssssssssssssssssssssss 以下是S1的内容 sssssssssssssssssssssssssssss-->
+        <activity
+            android:name="cn.itsite.amain.s1.main.home.MainActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name="cn.itsite.amain.s1.common.clip.ClipActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name="cn.itsite.amain.s1.net.NetActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="cn.itsite.amain.s1.qrcode.ScanQRCodeActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name="cn.itsite.amain.s1.about.AboutActivity"
+            android:theme="@style/AppTheme.Transparent" />
+
+        <receiver android:name="cn.itsite.amain.s1.broadcast.NetworkConnectReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!--todo(高亮)ssssssssssssssssssssss 摄像头 ssssssssssssssssssssssss-->
+        <activity
+            android:name="cn.itsite.amain.s1.camera.CameraPlayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name="cn.itsite.amain.s1.camera.CameraPlay2Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity android:name="cn.itsite.amain.s1.camera.PlayBackActivity" />
+        <activity android:name="cn.itsite.amain.s1.camera.CameraSettingActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <FrameLayout
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="90dp">
+
+        <ImageView
+            android:id="@+id/iv_scan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_camera_scan_810px" />
+
+        <TextView
+            android:id="@+id/tv_count_down"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="60"
+            android:textColor="@color/base_color"
+            android:textSize="35dp" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="正在玩命配置,请稍候~"
+        android:textColor="@color/default_gray"
+        android:textSize="16sp" />
+
+    <Button
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_solid_basecolor"
+        android:text="返回重新配置"
+        android:textColor="@color/white" />
+</LinearLayout>

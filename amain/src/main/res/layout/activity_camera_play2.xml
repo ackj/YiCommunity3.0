@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.p2p.core.P2PView
+            android:id="@+id/p2pview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true" />
+
+        <include layout="@layout/view_loading" />
+
+        <LinearLayout
+            android:id="@+id/ll_rec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/view_red_pointer"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/shape_pointer_red" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REC"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_quality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/shape_stroke_white"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="标清"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <View
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:background="@color/white"
+                android:id="@+id/iv_mute"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/selector_camera_mute" />
+
+            <ImageView
+                android:background="@color/white"
+                android:id="@+id/iv_microphone"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/selector_camera_microphone" />
+
+            <ImageView
+                android:background="@color/white"
+                android:id="@+id/iv_video"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/selector_camera_video" />
+
+            <ImageView
+                android:background="@color/white"
+                android:id="@+id/iv_photograph"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/selector_camera_photograph" />
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>

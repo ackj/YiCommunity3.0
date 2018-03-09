@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_room_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_roomdevicebutton_1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_roomdevicebutton_240px"
+        android:gravity="center"
+        android:text="灯光"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_roomdevicebutton_2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_roomdevicebutton_240px"
+        android:gravity="center"
+        android:text="插座"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_roomdevicebutton_3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_roomdevicebutton_240px"
+        android:gravity="center"
+        android:text="警号"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_roomdevicebutton_4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_roomdevicebutton_240px"
+        android:gravity="center"
+        android:text="监控"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+</RelativeLayout>

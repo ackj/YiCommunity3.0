@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_community_fragment_complain"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/base_grey"
+                android:gravity="center"
+                android:text="惠州海伦堡"
+                android:textColor="@color/gray_text"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="联系人"
+                    android:textColor="@color/base_black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/et_name_fragment_complain"
+                    style="@style/EtBackgroundNullStyle"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:hint="输入联系人姓名"
+                    android:maxLength="20" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/base_grey" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="联系方式"
+                    android:textColor="@color/base_black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/et_phone_fragment_complain"
+                    style="@style/EtBackgroundNullStyle"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:hint="输入联系方式"
+                    android:inputType="number"
+                    android:maxLength="30" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/base_grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="意见建议"
+                android:textColor="@color/base_black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_content_fragment_complain"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bg_round_gray_edittext"
+                android:gravity="top"
+                android:hint="意见建议"
+                android:padding="10dp"
+                android:textColor="@color/accent_text"
+                android:textColorHint="@color/default_text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="图片"
+                android:textColor="@color/base_black"
+                android:textSize="16sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_fragment_complain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <Button
+                android:id="@+id/btn_submit_fragment_complain"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_submit"
+                android:text="提交"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="yicommunity" />
+
+    <version value="1" />
+
+    <storage value="external" />
+
+    <list>
+        <!--停车场历史记录-->
+        <mapping class="com.aglhz.yicommunity.entity.db.ParkHistoryData" />
+        <!--临时停车的车牌历史记录-->
+        <mapping class="com.aglhz.yicommunity.entity.db.PlateHistoryData" />
+    </list>
+</litepal>

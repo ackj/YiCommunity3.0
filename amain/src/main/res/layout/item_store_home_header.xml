@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_banner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        android:src="@color/base_line"
+        app:layout_constraintDimensionRatio="5:2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_1"
+        style="@style/CGoodsTypeGridLLStyle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/ll_2"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@color/base_line" />
+
+        <TextView
+            style="@style/CGoodsTypeGridTextStyle"
+            android:text="零食" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_2"
+        style="@style/CGoodsTypeGridLLStyle"
+        app:layout_constraintLeft_toRightOf="@id/ll_1"
+        app:layout_constraintRight_toLeftOf="@+id/ll_3"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@color/base_line" />
+
+        <TextView
+            style="@style/CGoodsTypeGridTextStyle"
+            android:text="酒水" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_3"
+        style="@style/CGoodsTypeGridLLStyle"
+        app:layout_constraintLeft_toRightOf="@id/ll_2"
+        app:layout_constraintRight_toLeftOf="@+id/ll_4"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@color/base_line" />
+
+        <TextView
+            style="@style/CGoodsTypeGridTextStyle"
+            android:text="日用" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_4"
+        style="@style/CGoodsTypeGridLLStyle"
+        app:layout_constraintLeft_toRightOf="@id/ll_3"
+        app:layout_constraintRight_toLeftOf="@+id/ll_5"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@color/base_line" />
+
+        <TextView
+            style="@style/CGoodsTypeGridTextStyle"
+            android:text="饮料" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_5"
+        style="@style/CGoodsTypeGridLLStyle"
+        app:layout_constraintLeft_toRightOf="@id/ll_4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@color/base_line" />
+
+        <TextView
+            style="@style/CGoodsTypeGridTextStyle"
+            android:text="分类" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

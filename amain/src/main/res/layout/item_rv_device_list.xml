@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_icon_item_rv_device_list_fragment"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_equipment_smokedetectorgswsd04_180px" />
+
+    <TextView
+        android:id="@+id/tv_name_item_rv_device_list_fragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="门口电灯"
+        android:textColor="@color/base_black" />
+
+    <TextView
+        android:id="@+id/tv_online_item_rv_device_list_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingRight="5dp"
+        android:text="在线" />
+
+    <CheckBox
+        android:id="@+id/ck_select_item_rv_device_list_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false" />
+
+</LinearLayout>

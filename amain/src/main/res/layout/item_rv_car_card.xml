@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_item_rv_car_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
+    android:layout_marginTop="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="3dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_header_item_rv_car_card"
+            android:layout_width="0dp"
+            android:layout_height="122dp"
+            android:background="@drawable/bg_park_card_header_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_header"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="22dp"
+                android:src="@drawable/ic_park_white_75"
+                android:tint="@color/white_70_percent_alpha"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_park_item_rv_car_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="凯宾斯基"
+                android:textColor="@color/white_70_percent_alpha"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_header"
+                app:layout_constraintLeft_toRightOf="@+id/iv_header" />
+
+            <TextView
+                android:id="@+id/tv_plate_item_rv_car_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="粤B12345"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                app:layout_constraintLeft_toLeftOf="@+id/iv_header"
+                app:layout_constraintTop_toBottomOf="@+id/iv_header" />
+
+            <ImageView
+                android:id="@+id/iv_stamp_item_rv_car_card"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/tv_plate_item_rv_car_card"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_name_item_rv_car_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:text="大叔"
+            android:textColor="@color/base_black"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_header_item_rv_car_card" />
+
+        <TextView
+            android:id="@+id/tv_time_item_rv_car_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:text="到期时间："
+            android:textColor="@color/default_gray"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_name_item_rv_car_card"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toRightOf="@+id/tv_name_item_rv_car_card"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_header_item_rv_car_card" />
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/base_line"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_item_rv_car_card" />
+
+        <TextView
+            android:id="@+id/tv_action_item_rv_car_card"
+            android:layout_width="0dp"
+            android:layout_height="27dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="立即缴费"
+            android:textColor="@color/default_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_item_rv_car_card" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

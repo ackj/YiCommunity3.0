@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/bg_yishequ_more_750px_600px"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="更多"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_zhuji_220px" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="智能中控名称"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tv_device_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <View style="@style/MoreItem_LineStyle" />
+
+    <LinearLayout
+        android:id="@+id/ll_wifi_setting"
+        style="@style/MoreItem_LinearLayoutStyle">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="23dp"
+            android:src="@drawable/ic_wifi_setting_69_69" />
+
+        <TextView
+            style="@style/MoreItem_TitleStyle"
+            android:text="主机配网" />
+    </LinearLayout>
+
+    <!--<View style="@style/MoreItem_LineStyle" />
+
+    <LinearLayout
+        android:id="@+id/ll_host_authorize"
+        style="@style/MoreItem_LinearLayoutStyle">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="23dp"
+            android:src="@drawable/ic_more_authorize_69" />
+
+        <TextView
+            style="@style/MoreItem_TitleStyle"
+            android:text="主机授权" />
+    </LinearLayout>
+-->
+    <LinearLayout
+        android:id="@+id/ll_host_manager"
+        style="@style/MoreItem_LinearLayoutStyle">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="23dp"
+            android:src="@drawable/ic_host_manager_69_69" />
+
+        <TextView
+            style="@style/MoreItem_TitleStyle"
+            android:text="主机管理" />
+    </LinearLayout>
+
+    <View style="@style/MoreItem_LineStyle" />
+
+    <LinearLayout
+        android:id="@+id/ll_room_manager"
+        style="@style/MoreItem_LinearLayoutStyle">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="23dp"
+            android:src="@drawable/ic_room_69_69" />
+
+        <TextView
+            style="@style/MoreItem_TitleStyle"
+            android:text="房间管理" />
+    </LinearLayout>
+
+    <!--<View style="@style/MoreItem_LineStyle" />
+
+    <LinearLayout
+        android:id="@+id/ll_authorization"
+        style="@style/MoreItem_LinearLayoutStyle">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="23dp"
+            android:src="@drawable/ic_room_69_69" />
+
+        <TextView
+            style="@style/MoreItem_TitleStyle"
+            android:text="授权" />
+    </LinearLayout>-->
+
+    <View style="@style/MoreItem_LineStyle" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

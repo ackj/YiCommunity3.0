@@ -57,13 +57,12 @@ android {
 
     flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
     productFlavors {
-//        lanmei {
-//            signingConfig signingConfigs.release
-//        }
-//        meilun {
-//
-//            signingConfig signingConfigs.release
-//        }
+        yishequ{
+        }
+        meilun {
+        }
+        vensi {
+        }
     }
 }
 

@@ -20,6 +20,7 @@ android {
             }
         }
     }
+    publishNonDefault true  //用于解决依赖Module无法区分debug个版本的。
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -27,13 +28,31 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "boolean", "isDebug", "true"//配置自定义debug版下的字段。
+            ndk {
+                abiFilters "armeabi", "armeabi-v7a"
+            }
+        }
         release {
+            buildConfigField "boolean", "isDebug", "false"//配置自定义debug版下的字段。
+            ndk {
+                abiFilters "armeabi"
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    publishNonDefault true  //用于解决依赖Module无法区分debug个版本的。
+    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
+    productFlavors {
+        yishequ{
+        }
+        meilun {
+        }
+        vensi {
+        }
+    }
 }
 
 dependencies {

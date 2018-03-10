@@ -36,11 +36,16 @@ ext {
     buildToolsVersion = "27.1.0"
     minSdkVersion = 19
     targetSdkVersion = 22
-    versionCode = 225
+    versionCode = gitVersionCode()
     versionName = "2.2.5"
 }
 
+//利用git的次数来充当版本号，由于我们是从225开始使用这一套，同时定义为3.0，所以在后面加300。
 static int gitVersionCode() {
     def count = "git rev-list HEAD --count".execute().text.trim()
-    return count.isInteger() ? count.toInteger() : 0
+    return count.isInteger() ? count.toInteger() + 300 : 0
+}
+
+def getVersionName() {
+    return String.format("%s.%s", rootProject.ext.APP1_VERSION_NAME, rootProject.ext.APP1_TEST_NUM)
 }

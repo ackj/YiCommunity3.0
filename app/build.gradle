@@ -6,7 +6,7 @@ android {
         applicationId "com.aglhz.yicommunity"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.gitVersionCode()
+        versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -74,13 +74,26 @@ android {
         }
     }
 
+    buildTypes.all {
+        buildType -> buildType.versionNameSuffix = buildType.isDebuggable() ? "-测试版" : "-正式版"
+    }
+
+    productFlavors.all {
+        flavor ->
+            def code = defaultConfig.versionCode.toString()
+            code = code.substring(0, 1) +
+                    "." + code.substring(1, 2) +
+                    "." + code.substring(2)
+            flavor.versionName = code
+    }
+
     // 输出文件配置，格式如下：app-{渠道名称+版本}-{版本号}-{日期时间}.apk
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                //app-yishequDebug-2.2.5-201803101650
-                outputFileName = "app-${variant.name}-${variant.versionCode}-${new Date().format('yyyyMMddHHmm')}.apk"
+                //app-yishequDebug-2.2.5-201803101650.apk
+                outputFileName = "app-${variant.name}-${variant.versionName}-${new Date().format('yyyyMMddHHmm')}.apk"
             }
         }
     }

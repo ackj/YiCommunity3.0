@@ -21,18 +21,14 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "boolean", "isDebug", "true"//配置自定义debug版下的字段。
-            ndk {
-                abiFilters "armeabi", "armeabi-v7a"
-            }
-        }
-        release {
-            buildConfigField "boolean", "isDebug", "false"//配置自定义debug版下的字段。
             ndk {
                 abiFilters "armeabi"
             }
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            ndk {
+                abiFilters "armeabi"
+            }
         }
     }
 

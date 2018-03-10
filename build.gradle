@@ -39,3 +39,8 @@ ext {
     versionCode = 225
     versionName = "2.2.5"
 }
+
+static int gitVersionCode() {
+    def count = "git rev-list HEAD --count".execute().text.trim()
+    return count.isInteger() ? count.toInteger() : 0
+}

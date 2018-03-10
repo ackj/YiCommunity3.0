@@ -8,16 +8,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import cn.itsite.abase.log.ALog;
-
-import cn.itsite.amain.R;
-import cn.itsite.amain.yicommunity.main.picker.model.City;
-import cn.itsite.amain.yicommunity.main.picker.model.LocateState;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import cn.itsite.abase.log.ALog;
+import cn.itsite.amain.R;
+import cn.itsite.amain.yicommunity.main.picker.model.City;
+import cn.itsite.amain.yicommunity.main.picker.model.LocateState;
 
 /**
  * author zaaach on 2016/1/26.
@@ -195,6 +194,8 @@ public class CityListAdapter extends BaseAdapter {
                     });
                 }
                 break;
+            default:
+                break;
         }
         return view;
     }
@@ -222,7 +223,9 @@ public class CityListAdapter extends BaseAdapter {
          * @return
          */
         public static String getFirstLetter(final String pinyin) {
-            if (TextUtils.isEmpty(pinyin)) return "定位";
+            if (TextUtils.isEmpty(pinyin)) {
+                return "定位";
+            }
             String c = pinyin.substring(0, 1);
             Pattern pattern = Pattern.compile("^[A-Za-z]+$");
             if (pattern.matcher(c).matches()) {

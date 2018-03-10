@@ -105,7 +105,7 @@ public class RepairFragment extends BaseFragment<PublishContract.Presenter> impl
         btSubmit = ((Button) view.findViewById(R.id.bt_submit_fragment_repair));
         toolbarTitle = ((TextView) view.findViewById(R.id.toolbar_title));
         toolbar = ((Toolbar) view.findViewById(R.id.toolbar));
-        tvLocation = ((EditText) view.findViewById(R.id.tv_location_fragment_repair));
+        tvLocation = ((TextView) view.findViewById(R.id.tv_location_fragment_repair));
         etName = ((EditText) view.findViewById(R.id.et_name_fragment_repair));
         etPhone = ((EditText) view.findViewById(R.id.et_phone_fragment_repair));
         etContent = ((EditText) view.findViewById(R.id.et_content_fragment_repair));

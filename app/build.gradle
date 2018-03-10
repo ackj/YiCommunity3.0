@@ -6,17 +6,17 @@ android {
         applicationId "com.aglhz.yicommunity"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
+        versionCode rootProject.gitVersionCode()
         versionName rootProject.ext.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
         multiDexEnabled true
-
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
         }
+
     }
 
     compileOptions {
@@ -40,28 +40,48 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "boolean", "isDebug", "true"//配置自定义debug版下的字段。
             ndk {
                 abiFilters "armeabi"
             }
+            signingConfig signingConfigs.debug
+            aaptOptions {
+                cruncherEnabled false//快速处理PNG图片
+            }
         }
         release {
-            buildConfigField "boolean", "isDebug", "false"//配置自定义debug版下的字段。
             ndk {
                 abiFilters "armeabi"
             }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
     flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
     productFlavors {
-        yishequ{
+        yishequ {
+            resValue "string", "app_name", "亿社区"
+            applicationId 'com.aglhz.yicommunity'
         }
         meilun {
+            resValue "string", "app_name", "美好生活"
+            applicationId 'com.meilun.one'
         }
         vensi {
+            resValue "string", "app_name", "威士丹力"
+            applicationId 'com.aglhz.yicommunity'
+        }
+    }
+
+    // 输出文件配置，格式如下：app-{渠道名称+版本}-{版本号}-{日期时间}.apk
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                //app-yishequDebug-2.2.5-201803101650
+                outputFileName = "app-${variant.name}-${variant.versionCode}-${new Date().format('yyyyMMddHHmm')}.apk"
+            }
         }
     }
 }

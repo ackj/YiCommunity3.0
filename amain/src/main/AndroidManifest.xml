@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!-- Needed to allow app to install on tablets, since android.permission.CALL_PHONE implies android.hardware.telephony is required -->
+
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
@@ -58,13 +58,11 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
-
-    <!--todo(高亮)sssssssssssssssssssss S1相关权限 sssssssssssssssssssssssssssss-->
     <!--以下为小米推送所需权限-->
     <permission
-        android:name="com.aglhz.yicommunity.permission.MIPUSH_RECEIVE"
+        android:name="cn.itsite.amain.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.aglhz.yicommunity.permission.MIPUSH_RECEIVE" />
+    <uses-permission android:name="cn.itsite.amain.permission.MIPUSH_RECEIVE" />
     <!--以上为小米推送所需权限-->
 
     <application>
@@ -153,12 +151,15 @@
             </intent-filter>
         </activity>
 
-        <!-- 高德地图 -->
+        <!-- 以下为高德地图配置 -->
+        <!--这个的配置位置必须是在高德后台配置的那个包名对应的AndroidManifest.xml文件中-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="da7f5447eccd1609e8dcce4cd0919ad8" />
+            android:value="${amap_apikey}" />
+        <!--android:value="002c49f1112a41840a9c47c684c8d4f4" />-->
 
         <service android:name="com.amap.api.location.APSService" />
+        <!-- 以上为高德地图配置 -->
 
         <activity
             android:name=".yicommunity.main.door.call.CallActivity"
@@ -189,7 +190,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.aglhz.yicommunity.file.provider"
+            android:authorities="${application_id}.file.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

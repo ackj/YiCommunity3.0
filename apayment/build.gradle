@@ -19,7 +19,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    publishNonDefault true  //用于解决依赖Module无法区分debug个版本的。
 
     buildTypes {
         debug {
@@ -33,8 +32,6 @@ android {
             ndk {
                 abiFilters "armeabi"
             }
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

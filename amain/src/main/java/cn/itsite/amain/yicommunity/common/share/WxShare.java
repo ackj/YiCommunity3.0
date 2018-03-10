@@ -2,15 +2,15 @@ package cn.itsite.amain.yicommunity.common.share;
 
 import android.text.TextUtils;
 
-import cn.itsite.abase.log.ALog;
-import cn.itsite.amain.yicommunity.App;
-import cn.itsite.amain.yicommunity.common.Constants;
-
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXTextObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import cn.itsite.abase.log.ALog;
+import cn.itsite.amain.yicommunity.App;
+import cn.itsite.amain.yicommunity.common.Constants;
 
 /**
  * Created by leguang on 2017/6/16 0016.
@@ -41,8 +41,7 @@ public class WxShare {
         req.scene = SendMessageToWX.Req.WXSceneSession;
 
         IWXAPI api = WXAPIFactory.createWXAPI(App.mContext, Constants.WX_APP_ID);
-        boolean b = api.sendReq(req);
-        ALog.e("b-->" + b);
+        ALog.e("分享是否成功-->" + api.sendReq(req));
     }
 
     private static String buildTransaction(final String type) {

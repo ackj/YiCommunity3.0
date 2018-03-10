@@ -22,28 +22,36 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "boolean", "isDebug", "true"//配置自定义debug版下的字段。
-            ndk {
-                abiFilters "armeabi", "armeabi-v7a"
-            }
-        }
-        release {
-            buildConfigField "boolean", "isDebug", "false"//配置自定义debug版下的字段。
             ndk {
                 abiFilters "armeabi"
             }
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            aaptOptions {
+                cruncherEnabled false//快速处理PNG图片
+            }
+        }
+        release {
+            ndk {
+                abiFilters "armeabi"
+            }
         }
     }
 
     flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
     productFlavors {
-        yishequ{
+        yishequ {
+            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""//这个还是得想办法让后台返回才行。
+            manifestPlaceholders = [application_id: "com.aglhz.yicommunity",
+                                    amap_apikey   : "da7f5447eccd1609e8dcce4cd0919ad8"]
         }
         meilun {
+            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""//这个还是得想办法让后台返回才行。
+            manifestPlaceholders = [application_id: "com.meilun.one",
+                                    amap_apikey   : "002c49f1112a41840a9c47c684c8d4f4"]
         }
         vensi {
+            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""//这个还是得想办法让后台返回才行。
+            manifestPlaceholders = [application_id: "com.aglhz.yicommunity",
+                                    amap_apikey   : "da7f5447eccd1609e8dcce4cd0919ad8"]
         }
     }
 }

@@ -9,7 +9,6 @@
     <color name="default_color">#99CCFF</color>
 
     <color name="base_line">#E7E7E7</color>
-    
 
     <!--由于名称取错了，导致有两个灰色单词，只建议使用干扰源，后期慢慢将grey淘汰-->
     <color name="base_grey">#F3F5F7</color>

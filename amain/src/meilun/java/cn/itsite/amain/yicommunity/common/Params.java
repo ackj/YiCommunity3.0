@@ -14,7 +14,7 @@ public class Params {
     public static String token;
     public static String cmnt_c = "";
     public String sc = "AglhzYsq";
-    public String fc = "FAglYsq";
+    public String fc = "FYsqVensi";
     public String dir = "";
     public String des = "";
     public String contact = "";
@@ -54,7 +54,6 @@ public class Params {
     public String outTime;
     public String currentPositionLat;
     public String billFids;     //多个时用“,”分隔。 现在已经改成ofids
-    public int payMethod;     //多个时用“,”分隔。
     public String currentPositionLng;
     public String positionAddress;
     public String secondCategoryId;//二级菜单的id
@@ -110,7 +109,7 @@ public class Params {
     public String roomDir; //6-31-1-1
     public String acsStoreDeviceFid; //无人便利店设备登记表的Fid。
     public String accessKey; //当前二维码的访问密匙。
-    public String deviceType;
+    public int payMethod;     //多个时用“,”分隔。
     public String cmnt_dir;
 
     private Params() {

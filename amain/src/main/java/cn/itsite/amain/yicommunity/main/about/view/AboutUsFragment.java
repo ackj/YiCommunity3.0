@@ -25,6 +25,7 @@ import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.AppUtils;
+import cn.itsite.amain.BuildConfig;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.ApiService;
@@ -113,7 +114,7 @@ public class AboutUsFragment extends BaseFragment implements View.OnClickListene
         Map<String, String> params = new HashMap<>();
         params.put("accessKey", getMd5(accessKey));
         params.put("random", random);
-        params.put("sc", Constants.SC);
+        params.put("sc", BuildConfig.SC);
         params.put("appType", Constants.APP_TYPE);
 
 

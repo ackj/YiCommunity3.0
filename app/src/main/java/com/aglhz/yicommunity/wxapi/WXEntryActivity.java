@@ -1,4 +1,4 @@
-package cn.itsite.amain.yicommunity.wxapi;
+package com.aglhz.yicommunity.wxapi;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,15 +27,14 @@ import static cn.itsite.apayment.payment.pay.wechat.WeChatAppPay.WECHAT_PAY_RESU
  * @time 2017/4/12 0009 17:39
  * 微信支付工具。
  */
-public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
-    public static final String TAG = WXPayEntryActivity.class.getName();
+public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
+    public static final String TAG = WXEntryActivity.class.getName();
     private IWXAPI api;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wx_pay);
-        ALog.e("11111111111111111");
 
         api = WXAPIFactory.createWXAPI(this, UserHelper.WXAPPID);
         api.handleIntent(getIntent(), this);

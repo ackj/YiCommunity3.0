@@ -7,6 +7,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,7 +41,8 @@ android {
     flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
     productFlavors {
         yishequ {
-            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""//这个还是得想办法让后台返回才行,可以考虑通过传包名来区分不同App，而不是写死在这里。
+            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""
+//这个还是得想办法让后台返回才行,可以考虑通过传包名来区分不同App，而不是写死在这里。
             buildConfigField "String", "SC", "\"AglhzYsq\""//这个还是得想办法让后台返回才行。
 
             manifestPlaceholders = [application_id: "com.aglhz.yicommunity",
@@ -68,56 +70,89 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    //LBS服务。
-    api project(':albs')
-    //支付。
-    api project(':apayment')
-    //推送。
-    api project(':apush')
+
+    //分类模块。
+    api project(':classify')
+    //配送模块。
+    api project(':delivery')
+    //商品详情模块。
+    api project(':goodsdetail')
+    //商品主页模块。
+    api project(':goodshome')
+    //搜索模块。
+    api project(':goodssearch')
+    //订单模块。
+    api project(':order')
+    //购物车模块。
+    api project(':shoppingcart')
+
+    //阿里巴巴开源基础路由
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
 
     //自定义二维码
     api 'com.google.zxing:core:3.2.1'
     api 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
     api 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
+
     //底部导航栏
     api 'com.aurelhubert:ahbottomnavigation:2.0.6'
+
     //地址选择器
     api 'com.github.chihane:JDAddressSelector:1.1.4'
+
     //图片选择器
     api 'com.bilibili:boxing-impl:0.7.0'
+
     //switchbutton
     api 'com.kyleduo.switchbutton:library:1.4.5'
+
     //时间选择器
     api 'com.contrarywind:Android-PickerView:3.2.4'
+
     //视频播放
     api 'fm.jiecao:jiecaovideoplayer:5.5.4'
+
     //Banner
     api 'com.youth.banner:banner:1.4.9'
+
     //swipelayout
     api 'com.daimajia.swipelayout:library:1.2.0@aar'
+
     //Gif图加载框架
     api 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+
     //一个底部弹框的级联选择器
     api 'com.github.leguang:MultiSelector:1.3'
+
     //暂时使用的更新库,配合更新库使用，后期要内化掉。
     api 'com.qianwen:update-app:3.3.1'
     api 'com.qianwen:okhttp-utils:3.8.0'
+
     //配合更新库使用，后期要内化掉。
     api 'com.android.support.constraint:constraint-layout:1.0.2'
+
     //todo(高亮)ssssssssssssssssssssss 以下为s1相关 sssssssssssssssssssssssssssss
+
     //progress-button
     api 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+
     //页面状态管理
     api 'com.github.leguang:StateManager:1.1.0'
+
     //摄像头
     api 'com.p2p.core:p2p-core:0.4.3'
     api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+
     //声波配网库
     api 'com.github.jwkj:SoundWaveSender:v2.0.2'
+
     //声波配网库说依赖的udp通讯库，不可删除
     api 'com.jwkj:udpsender:v2.0.1'
+
     //自定义车牌键盘。
     api 'com.github.leguang:AKeyboard:0.0.3'
+
     //orm框架
     api 'org.litepal.android:core:1.6.0'
+
 }

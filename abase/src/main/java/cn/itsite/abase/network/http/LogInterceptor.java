@@ -1,14 +1,13 @@
 package cn.itsite.abase.network.http;
 
-import cn.itsite.abase.event.EventLogout;
-import cn.itsite.abase.log.ALog;
-
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import cn.itsite.abase.event.EventLogout;
+import cn.itsite.abase.log.ALog;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -28,8 +27,9 @@ public class LogInterceptor implements Interceptor {
         long t1 = System.nanoTime();
 
         Buffer buffer = new Buffer();
-        if (request.body() != null)
+        if (request.body() != null) {
             request.body().writeTo(buffer);
+        }
 
         ALog.e(String.format("Sending request %s on %s%n%sRequest Params: %s",
                 request.url(), chain.connection(), request.headers(), buffer.clone().readUtf8()));
@@ -50,12 +50,13 @@ public class LogInterceptor implements Interceptor {
                     jsonObject.toString()));
 
             ALog.json(jsonObject.toString());
-            
-            String code = jsonOther.optString("code");
-            if ("123".equals(code)) {
-                EventBus.getDefault().post(new EventLogout());
-            }
 
+            if (jsonOther != null) {
+                String code = jsonOther.optString("code");
+                if ("123".equals(code)) {
+                    EventBus.getDefault().post(new EventLogout());
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -3,9 +3,7 @@ package cn.itsite.abase.mvp.presenter.base;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 
-import cn.itsite.abase.common.RxManager;
-import cn.itsite.abase.log.ALog;
-import cn.itsite.abase.mvp.contract.base.BaseContract;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 
@@ -17,6 +15,7 @@ import java.net.SocketTimeoutException;
 import cn.itsite.abase.common.RxManager;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.abase.network.http.BaseResponse;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 
@@ -158,4 +157,38 @@ public abstract class BasePresenter<V extends BaseContract.View, M extends BaseC
 
     }
 
+    public abstract class BaseSubscriber<T extends BaseResponse> extends Subscriber<T> {
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            start("");
+        }
+
+        @Override
+        public void onNext(T response) {
+            if (response.isSuccessful()) {
+                onSuccess(response);
+            } else if (response.getCode() == 123) {
+                Logger.e(TAG, "123");
+            } else {
+                Logger.e(TAG, "非200");
+                getView().error(response.getMessage());
+            }
+        }
+
+
+        @Override
+        public void onCompleted() {
+            complete();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+            error(e);
+        }
+
+        public abstract void onSuccess(T t);
+    }
 }

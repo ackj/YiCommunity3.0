@@ -13,5 +13,7 @@
         <mapping class="cn.itsite.amain.yicommunity.entity.db.ParkHistoryData" />
         <!--临时停车的车牌历史记录-->
         <mapping class="cn.itsite.amain.yicommunity.entity.db.PlateHistoryData" />
+        <!--地图选址历史记录-->
+        <mapping class="cn.itsite.albs.entity.db.TipsHistoryData" />
     </list>
 </litepal>

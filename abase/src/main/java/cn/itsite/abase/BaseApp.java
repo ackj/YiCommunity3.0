@@ -1,8 +1,10 @@
 package cn.itsite.abase;
 
 import android.content.Context;
+import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.itsite.abase.BuildConfig;
 
 import cn.itsite.abase.exception.AppExceptionHandler;
@@ -25,6 +27,8 @@ public class BaseApp extends MultiDexApplication {
         super.onCreate();
         mContext = this;
         initData();//根据是不是Debug版本来设置。
+        initStrictMode();
+        initRouter();
     }
 
     private void initData() {
@@ -100,5 +104,36 @@ public class BaseApp extends MultiDexApplication {
             ALog.init(false, "release-ysq");//在release版中禁止打印log。
             Thread.setDefaultUncaughtExceptionHandler(AppExceptionHandler.getInstance(this));//在release版中处理全局异常。
         }
+    }
+
+
+    private void initStrictMode() {
+// 分别为MainThread和VM设置Strict Mode
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+//                    .detectResourceMismatches()
+                    .detectCustomSlowCalls()
+                    .penaltyLog()
+                    .build());
+
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .detectLeakedRegistrationObjects()
+                    .detectActivityLeaks()
+                    .penaltyLog()
+                    .build());
+        }
+    }
+
+    private void initRouter() {
+        if (BuildConfig.DEBUG) {         // 这两行必须写在init之前，否则这些配置在init过程中将无效
+            ARouter.openLog();     // 打印日志
+            ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+        }
+        ARouter.init(this); // 尽可能早，推荐在Application中初始化
     }
 }

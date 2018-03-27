@@ -3,21 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/YiCommunity3.0.iml" filepath="$PROJECT_DIR$/YiCommunity3.0.iml" />
-      <module fileurl="file://F:\gaocheng\code\YiCommunity3.0\YiCommunity3.0.iml" filepath="F:\gaocheng\code\YiCommunity3.0\YiCommunity3.0.iml" />
       <module fileurl="file://$PROJECT_DIR$/abase/abase.iml" filepath="$PROJECT_DIR$/abase/abase.iml" />
-      <module fileurl="file://F:\gaocheng\code\YiCommunity3.0\abase\abase.iml" filepath="F:\gaocheng\code\YiCommunity3.0\abase\abase.iml" />
       <module fileurl="file://$PROJECT_DIR$/acommon/acommon.iml" filepath="$PROJECT_DIR$/acommon/acommon.iml" />
-      <module fileurl="file://F:\gaocheng\code\YiCommunity3.0\acommon\acommon.iml" filepath="F:\gaocheng\code\YiCommunity3.0\acommon\acommon.iml" />
       <module fileurl="file://$PROJECT_DIR$/albs/albs.iml" filepath="$PROJECT_DIR$/albs/albs.iml" />
-      <module fileurl="file://F:\gaocheng\code\YiCommunity3.0\albs\albs.iml" filepath="F:\gaocheng\code\YiCommunity3.0\albs\albs.iml" />
       <module fileurl="file://$PROJECT_DIR$/amain/amain.iml" filepath="$PROJECT_DIR$/amain/amain.iml" />
-      <module fileurl="file://F:\gaocheng\code\YiCommunity3.0\amain\amain.iml" filepath="F:\gaocheng\code\YiCommunity3.0\amain\amain.iml" />
       <module fileurl="file://$PROJECT_DIR$/apayment/apayment.iml" filepath="$PROJECT_DIR$/apayment/apayment.iml" />
-      <module fileurl="file://F:\gaocheng\code\YiCommunity3.0\apayment\apayment.iml" filepath="F:\gaocheng\code\YiCommunity3.0\apayment\apayment.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://F:\gaocheng\code\YiCommunity3.0\app\app.iml" filepath="F:\gaocheng\code\YiCommunity3.0\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/apush/apush.iml" filepath="$PROJECT_DIR$/apush/apush.iml" />
-      <module fileurl="file://F:\gaocheng\code\YiCommunity3.0\apush\apush.iml" filepath="F:\gaocheng\code\YiCommunity3.0\apush\apush.iml" />
     </modules>
   </component>
 </project>

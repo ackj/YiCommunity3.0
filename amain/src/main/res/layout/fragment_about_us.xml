@@ -107,9 +107,11 @@
             style="@style/MineItemViewMoreStyle"
             android:layout_marginRight="10dp" />
     </LinearLayout>
+
     <View
         style="@style/LineStyle"
         android:layout_height="1dp" />
+
     <TextView
         android:id="@+id/tv_check_update_about_us_fragment"
         android:layout_width="match_parent"

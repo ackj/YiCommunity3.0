@@ -41,7 +41,8 @@ public class PublishNeighbourModel extends BaseModel implements PublishContract.
                 builder.addFormDataPart("file", f.getName(), requestBody);
             }
         }
-        return HttpHelper.getService(ApiService.class).requestSubmitNeighbour(ApiService.requestSubmitNeighbour, builder.build())
+        return HttpHelper.getService(ApiService.class)
+                .requestSubmitNeighbour(ApiService.requestSubmitNeighbour, builder.build())
                 .subscribeOn(Schedulers.io());
     }
 }

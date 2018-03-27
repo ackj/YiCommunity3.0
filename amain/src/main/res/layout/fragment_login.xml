@@ -26,7 +26,6 @@
             android:text="@string/login"
             android:textColor="@color/base_color"
             android:textSize="18sp" />
-
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout

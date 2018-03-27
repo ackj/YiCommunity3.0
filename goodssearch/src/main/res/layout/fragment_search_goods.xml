@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -17,7 +18,7 @@
             android:layout_width="31dp"
             android:layout_height="31dp"
             android:padding="8dp"
-            android:src="@drawable/ic_arrow_left_gray_24dp" />
+            app:srcCompat="@drawable/ic_arrow_left_gray_24dp" />
 
         <EditText
             android:id="@+id/et_input"
@@ -29,8 +30,8 @@
             android:background="@drawable/shape_bg_input_solid"
             android:hint="@string/search_you_want_to_need_goods"
             android:imeOptions="actionSearch"
-            android:singleLine="true"
             android:paddingLeft="20dp"
+            android:singleLine="true"
             android:textColor="@color/base_gray"
             android:textSize="@dimen/H5" />
 
@@ -44,9 +45,19 @@
             android:textSize="@dimen/H3" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <cn.itsite.statemanager.StateLayout
+        android:id="@+id/stateLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:emptyLayout="@layout/state_empty_layout"
+        app:errorLayout="@layout/state_error_layout"
+        app:loadingLayout="@layout/state_loading"
+        app:netErrorLayout="@layout/state_net_error">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </cn.itsite.statemanager.StateLayout>
 
 </LinearLayout>

@@ -144,7 +144,6 @@
                     android:id="@+id/cb_agreement_publish_exchange_fragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/selector_bt_radio"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="同意"

@@ -64,13 +64,12 @@
             android:text="离家布防"
             android:textColor="@color/base_gray" />
 
-        <com.aglhz.s1.widget.RecordButton
+        <cn.itsite.amain.s1.widget.RecordButton
             android:id="@+id/tv_message_item_security_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:clickable="true"
             android:drawablePadding="10dp"
             android:drawableTop="@drawable/selector_leavemessage"
             android:gravity="center"

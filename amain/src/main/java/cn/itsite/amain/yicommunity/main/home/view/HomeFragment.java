@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -23,17 +25,16 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.itsite.acommon.AudioPlayer;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.common.ScrollingHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.DensityUtils;
+import cn.itsite.acommon.AudioPlayer;
 import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
 import cn.itsite.amain.R;
 import cn.itsite.amain.s1.main.home.MainActivity;
 import cn.itsite.amain.yicommunity.App;
-import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.LbsManager;
 import cn.itsite.amain.yicommunity.common.Params;
@@ -228,12 +229,14 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                         ((SupportActivity) _mActivity).start(ParkChargeFragment.newInstance(null));
 
                     } else if (i == R.id.ll_life_supermarket) {
-                        ALog.e(UserHelper.communityLongitude);
-                        ALog.e(UserHelper.communityLatitude);
-                        go2Web("生活超市", ApiService.SUPERMARKET
-                                .replace("%1", UserHelper.token)
-                                .replace("%2", UserHelper.communityLongitude)
-                                .replace("%3", UserHelper.communityLatitude));
+
+
+                        ARouter.getInstance().build("/goodshome/main").navigation();
+
+//                        go2Web("生活超市", ApiService.SUPERMARKET
+//                                .replace("%1", UserHelper.token)
+//                                .replace("%2", UserHelper.communityLongitude)
+//                                .replace("%3", UserHelper.communityLatitude));
 //                            _mActivity.start(StoreListFragment.newInstance());
                     }
                     break;

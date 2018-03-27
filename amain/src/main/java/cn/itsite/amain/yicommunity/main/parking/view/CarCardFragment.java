@@ -62,7 +62,7 @@ public class CarCardFragment extends BaseFragment<CarCardContract.Presenter> imp
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        toolbarTitle = ((EditText) view.findViewById(R.id.toolbar_title));
+        toolbarTitle = ((TextView) view.findViewById(R.id.toolbar_title));
         recyclerView = ((RecyclerView) view.findViewById(R.id.recyclerView));
         toolbarMenu = ((TextView) view.findViewById(R.id.toolbar_menu));
         toolbar = ((Toolbar) view.findViewById(R.id.toolbar));

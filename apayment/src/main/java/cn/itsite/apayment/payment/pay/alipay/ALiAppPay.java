@@ -81,19 +81,15 @@ public class ALiAppPay implements IPayable {
             onPayListener.onStart(getPayType());
         }
 
-        Runnable payRun = new Runnable() {
-            @Override
-            public void run() {
-                PayTask task = new PayTask(activity);
-                // TODO 请根据自身需求解析mPrePayinfo，最终的字符串值应该为一连串key=value形式
-                Map<String, String> result = task.payV2(params.getOrderInfo(), true);
-                Message message = Message.obtain();
-                message.what = PAY_RESULT;
-                message.obj = result;
-                mHandler.sendMessage(message);
-            }
-        };
-        ThreadManager.execute(payRun);
+        ThreadManager.execute(() -> {
+            PayTask task = new PayTask(activity);
+            // TODO 请根据自身需求解析mPrePayinfo，最终的字符串值应该为一连串key=value形式
+            Map<String, String> result = task.payV2(params.getOrderInfo(), true);
+            Message message = Message.obtain();
+            message.what = PAY_RESULT;
+            message.obj = result;
+            mHandler.sendMessage(message);
+        });
     }
 
     @Override

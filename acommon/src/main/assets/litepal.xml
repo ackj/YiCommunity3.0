@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
-    <dbname value="ec" />
+    <dbname value="yicommunity" />
 
     <version value="1" />
 
     <storage value="external" />
 
     <list>
+        <!--地图选址历史记录-->
+        <mapping class="cn.itsite.albs.entity.db.TipsHistoryData" />
+        <!--停车场历史记录-->
+        <mapping class="cn.itsite.amain.yicommunity.entity.db.ParkHistoryData" />
+        <!--临时停车的车牌历史记录-->
+        <mapping class="cn.itsite.amain.yicommunity.entity.db.PlateHistoryData" />
         <!--地图选址历史记录-->
         <mapping class="cn.itsite.albs.entity.db.TipsHistoryData" />
     </list>

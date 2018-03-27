@@ -1,1 +1,1 @@
-include ':app', ':abase', ':acommon', ':albs', ':apayment', ':apush', ':amain'
+include ':app', ':abase', ':acommon', ':albs', ':apayment', ':apush', ':amain', ':classify', ':delivery', ':goodsdetail', ':goodshome', ':goodssearch', ':order', ':shoppingcart'

@@ -1,6 +1,5 @@
 package cn.itsite.amain.yicommunity.main.picker.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.OnClick;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
@@ -27,7 +25,6 @@ import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.DBManager;
 import cn.itsite.amain.yicommunity.common.LbsManager;
-import cn.itsite.amain.yicommunity.main.picker.PickerActivity;
 import cn.itsite.amain.yicommunity.main.picker.model.City;
 import cn.itsite.amain.yicommunity.main.picker.model.LocateState;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -68,7 +65,7 @@ public class CityPickerFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData();
+        init();
         initView(view);
         initToolbar();
         initListener();
@@ -102,7 +99,7 @@ public class CityPickerFragment extends BaseFragment implements View.OnClickList
         toolbar.setNavigationOnClickListener(v -> ((SupportActivity) _mActivity).onBackPressedSupport());
     }
 
-    private void initData() {
+    private void init() {
         dbManager = new DBManager(_mActivity);
         dbManager.copyDBFile();
         mAllCities = dbManager.getAllCities();

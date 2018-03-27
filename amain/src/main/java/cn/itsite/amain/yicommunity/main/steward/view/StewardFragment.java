@@ -369,7 +369,12 @@ public class StewardFragment extends BaseLazyFragment<StewardContract.Presenter>
         new AlertDialog.Builder(_mActivity)
                 .setTitle("联系方式")
                 .setItems(arrayPhones, (dialog, which) -> {
-                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + arrayPhones[which].substring(3))));
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + arrayPhones[which].substring(3)));
+                    if (intent.resolveActivity(_mActivity.getPackageManager()) != null) {
+                        startActivity(intent);
+                    } else {
+                        DialogHelper.warningSnackbar(getView(), "亲！抱歉，未找到拨号器");
+                    }
                 }).show();
     }
 

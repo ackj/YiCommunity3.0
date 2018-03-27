@@ -64,7 +64,7 @@ public class Constants extends BaseConstants {
     public static final String SERVICE_ID = "service_id";
 
     //微信
-    public static final String WX_APP_ID = "wx160fff7b6ed86ef7";
+    public static final String WX_APP_ID = BuildConfig.WX_APP_ID;
 
     //网络部分
     public static final int RESPONSE_CODE_SUCCESS = 200;

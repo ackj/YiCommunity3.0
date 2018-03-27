@@ -8,6 +8,8 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -21,13 +23,21 @@ android {
     }
 
     buildTypes {
+        debug {
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    publishNonDefault true  //用于解决依赖Module无法区分debug个版本的。
+    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
+    productFlavors {
+        yishequ {
+        }
+        meilun {
+        }
+        vensi {
+        }
+    }
 }
 
 dependencies {

@@ -8,6 +8,8 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -20,20 +22,54 @@ android {
             }
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
+        debug {
+            ndk {
+                abiFilters "armeabi"
+            }
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "armeabi"
+            }
         }
     }
 
-    publishNonDefault true  //用于解决依赖Module无法区分debug个版本的。
+    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
+    productFlavors {
+        yishequ {
+            buildConfigField "String", "XIAOMI_APP_ID", "\"2882303761517621288\""//配置小米的AppId。
+            buildConfigField "String", "XIAOMI_APP_KEY", "\"5861762181288\""//配置小米的AppKey。
+
+            manifestPlaceholders = [application_id  : "com.aglhz.yicommunity",
+                                    aliyun_appkey   : "24632152",
+                                    aliyun_appsecret: "077b8ea013652e988304c0bc6b41fb3a",
+                                    huawei_appid    : "100099829"]
+        }
+        meilun {
+            buildConfigField "String", "XIAOMI_APP_ID", "\"2882303761517677829\""//配置小米的AppId。
+            buildConfigField "String", "XIAOMI_APP_KEY", "\"5251767792829\""//配置小米的AppKey。
+
+            manifestPlaceholders = [application_id  : "com.meilun.one",
+                                    aliyun_appkey   : "24713561",
+                                    aliyun_appsecret: "8d7429b0e82469d5b2ab909719f06d31",
+                                    huawei_appid    : "100156589"]
+        }
+        vensi {
+            buildConfigField "String", "XIAOMI_APP_ID", "\"2882303761517621288\""//配置小米的AppId。
+            buildConfigField "String", "XIAOMI_APP_KEY", "\"5861762181288\""//配置小米的AppKey。
+
+            manifestPlaceholders = [application_id  : "com.aglhz.yicommunity",
+                                    aliyun_appkey   : "24632152",
+                                    aliyun_appsecret: "077b8ea013652e988304c0bc6b41fb3a",
+                                    huawei_appid    : "100099829"]
+        }
+    }
 }
 
 dependencies {

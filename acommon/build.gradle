@@ -8,6 +8,8 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -20,9 +22,27 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
+        debug {
+            buildConfigField "boolean", "isDebug", "true"//配置自定义debug版下的字段。
+            ndk {
+                abiFilters "armeabi", "armeabi-v7a"
+            }
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "isDebug", "false"//配置自定义debug版下的字段。
+            ndk {
+                abiFilters "armeabi"
+            }
+        }
+    }
+
+    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
+    productFlavors {
+        yishequ {
+        }
+        meilun {
+        }
+        vensi {
         }
     }
 }

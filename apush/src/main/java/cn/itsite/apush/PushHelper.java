@@ -4,10 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
-import cn.itsite.abase.BaseApp;
-import cn.itsite.abase.cache.SPCache;
-import cn.itsite.abase.log.ALog;
-import cn.itsite.abase.network.http.HttpHelper;
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
@@ -23,6 +19,10 @@ import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.io.IOException;
 
+import cn.itsite.abase.BaseApp;
+import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.log.ALog;
+import cn.itsite.abase.network.http.HttpHelper;
 import okhttp3.ResponseBody;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -49,8 +49,8 @@ public class PushHelper {
     public static final String PREFIX = "and_";
     public static final String DEVICE_ID = "device_id";
 
-    private static final String XIAOMI_APP_ID = "2882303761517621288";
-    private static final String XIAOMI_APP_KEY = "5861762181288";
+    private static final String XIAOMI_APP_ID = BuildConfig.XIAOMI_APP_ID;
+    private static final String XIAOMI_APP_KEY = BuildConfig.XIAOMI_APP_KEY;
     private static HuaweiApiClient client;
 
     public static void init(Context mContext) {

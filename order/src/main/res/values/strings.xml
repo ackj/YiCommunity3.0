@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Order</string>
+
+    <array name="mine_order_tabs">
+        <item>全部</item>
+        <item>代付款</item>
+        <item>待收货</item>
+        <item>退款/售后</item>
+    </array>
+
+    <string name="amount">共%1$s件产品      合计：%2$s</string>
+    <string name="consignee">收货人：%1$s      %2$s</string>
+</resources>

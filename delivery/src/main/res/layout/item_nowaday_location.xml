@@ -19,23 +19,19 @@
         android:paddingRight="12dp">
 
         <TextView
-            android:includeFontPadding="false"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="当前定位"
-            android:textColor="@color/base_gray"
+            android:includeFontPadding="false"
+            android:text="默认地址"
             android:textSize="@dimen/H4" />
 
         <TextView
-            android:includeFontPadding="false"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ellipsize="end"
-            android:lines="1"
-            android:text="广东省惠州市凯宾斯基C座801"
+            android:includeFontPadding="false"
+            android:maxLines="2"
             android:textColor="@color/base_black"
             android:textSize="@dimen/H3" />
     </LinearLayout>
@@ -47,7 +43,6 @@
         android:paddingLeft="12dp"
         android:paddingTop="10dp"
         android:text="我的地址"
-        android:textColor="@color/base_gray"
         android:textSize="@dimen/H4" />
 
 </LinearLayout>

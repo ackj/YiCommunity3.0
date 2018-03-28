@@ -20,9 +20,7 @@ import cn.itsite.abase.utils.ScreenUtils;
  */
 @Route(path = "/order/submitorderfragment")
 public class SubmitOrderFragment extends BaseFragment{
-
     public static final String TAG = SubmitOrderFragment.class.getSimpleName();
-
     private RelativeLayout mLlToolbar;
     private RecyclerView mRecyclerView;
     private SubmitOrderRVAdapter mAdapter;

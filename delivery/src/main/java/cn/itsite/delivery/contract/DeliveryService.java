@@ -1,8 +1,10 @@
-package cn.itsite.delivery;
+package cn.itsite.delivery.contract;
 
 import java.util.List;
 
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.delivery.model.DeliveryBean;
+import cn.itsite.delivery.model.RequestBean;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;

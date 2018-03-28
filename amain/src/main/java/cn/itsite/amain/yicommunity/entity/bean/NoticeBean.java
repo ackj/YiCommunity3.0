@@ -2,12 +2,14 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/5/7 0007 17:30.
  * Email: liujia95me@126.com
  */
 
-public class NoticeBean extends BaseBean{
+public class NoticeBean extends BaseBean {
 
     /**
      * data : {"noticeList":[{"fid":"eec6cfd7-988f-4e97-954b-f3d32eae29e1","title":"小区部分停电通知","content":"停电范围：小区1栋、2栋、3栋\u2026","ctime":"2017-02-06"}]}

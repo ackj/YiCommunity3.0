@@ -5,12 +5,14 @@ import android.os.Parcelable;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/5/22 0022 11:36.
  * Email: liujia95me@126.com
  */
 
-public class SubCategoryBean extends BaseBean{
+public class SubCategoryBean extends BaseBean {
 
     private List<DataBean> data;
 

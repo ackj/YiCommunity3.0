@@ -4,7 +4,7 @@ package cn.itsite.amain.yicommunity.login.contract;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.amain.yicommunity.entity.bean.SipBean;
-import cn.itsite.amain.yicommunity.entity.bean.UserBean;
+import cn.itsite.acommon.UserBean;
 import rx.Observable;
 
 /**

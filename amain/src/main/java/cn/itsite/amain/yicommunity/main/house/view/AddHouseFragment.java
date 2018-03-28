@@ -28,7 +28,7 @@ import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import cn.itsite.amain.yicommunity.entity.bean.BuildingBean;
 import cn.itsite.amain.yicommunity.entity.bean.CommunitySelectBean;
 import cn.itsite.amain.yicommunity.entity.bean.FloorBean;

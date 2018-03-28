@@ -1,5 +1,7 @@
 package cn.itsite.amain.yicommunity.entity.bean;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Created by YandZD on 2017/3/2.
  */

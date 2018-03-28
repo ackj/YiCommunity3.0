@@ -30,7 +30,7 @@ import cn.itsite.amain.s1.entity.bean.BaseBean;
 import cn.itsite.amain.s1.host.contract.AuthorizationContract;
 import cn.itsite.amain.s1.host.presenter.AuthorizationPresenter;
 import cn.itsite.amain.s1.qrcode.ScanQRCodeFragment;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;

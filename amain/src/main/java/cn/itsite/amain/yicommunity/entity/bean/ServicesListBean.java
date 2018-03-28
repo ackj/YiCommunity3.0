@@ -2,13 +2,15 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/6/30 0030 16:06.
  * Email: liujia95me@126.com
  * 服务商品列表
  */
 
-public class ServicesListBean extends BaseBean{
+public class ServicesListBean extends BaseBean {
 
 
     /**

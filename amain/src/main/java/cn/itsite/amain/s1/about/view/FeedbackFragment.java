@@ -21,7 +21,7 @@ import cn.itsite.amain.R;
 import cn.itsite.amain.s1.about.contract.FeedbackContract;
 import cn.itsite.amain.s1.about.presenter.FeedbackPresenter;
 import cn.itsite.amain.s1.common.Params;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 
 /**
  * Author: LiuJia on 2017/4/21 18:06.

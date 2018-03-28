@@ -1,11 +1,13 @@
 package cn.itsite.amain.yicommunity.entity.bean;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author：leguang on 2016/10/9 0009 15:49
  * Email：langmanleguang@qq.com
  */
 
-public class CheckTokenBean extends BaseBean{
+public class CheckTokenBean extends BaseBean {
 
 
     /**

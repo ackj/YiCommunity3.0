@@ -11,7 +11,7 @@ import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.DoorManager;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import cn.itsite.amain.yicommunity.event.EventCommunity;
 import cn.itsite.amain.yicommunity.login.contract.LoginContract;
 import cn.itsite.amain.yicommunity.login.model.LoginModel;

@@ -2,12 +2,14 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/5/7 0007 20:53.
  * Email: liujia95me@126.com
  */
 
-public class PropertyPayBean extends BaseBean{
+public class PropertyPayBean extends BaseBean {
 
     /**
      * data : {"billList":[{"fid":"6fde1aaf-d48a-4e0b-97ec-6e0040dad2bf","billCode":"201712280058182955648","billName":"老李11月份的账单","settlementStartDate":"2017-11-01","settlementEndDate":"2017-11-30","amount":0.1,"status":0,"remark":"","createTime":"2017-12-28 00:58:18","houseInfo":"凯宾斯基3栋1单元30层8房","itemList":[]},{"fid":"ba346577-eee8-4dd9-916a-fbf3f9ceea19","billCode":"201712271359007701502","billName":"李勇11月份的物业账单","settlementStartDate":"2017-11-01","settlementEndDate":"2017-11-30","amount":0.1,"status":0,"remark":"","createTime":"2017-12-27 13:59:01","houseInfo":"凯宾斯基3栋1单元30层8房","itemList":[]},{"fid":"ce7c868a-a40a-4c70-84b8-142a22b86eee","billCode":"201712271011025431479","billName":"我我我","settlementStartDate":"2017-12-27","settlementEndDate":"2017-12-28","amount":0.01,"status":0,"remark":"","createTime":"2017-12-27 10:11:03","houseInfo":"凯宾斯基3栋1单元30层8房","itemList":[]}],"totalAmt":0.21000000000000002}

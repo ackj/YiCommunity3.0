@@ -24,7 +24,7 @@ import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Constants;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import cn.itsite.amain.yicommunity.entity.bean.BannerBean;
 import cn.itsite.amain.yicommunity.entity.bean.HomeBean;
 import cn.itsite.amain.yicommunity.entity.bean.ServicesTypesBean;

@@ -36,7 +36,7 @@ import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import cn.itsite.amain.yicommunity.entity.bean.ServiceDetailBean;
 import cn.itsite.amain.yicommunity.event.EventRefreshRemarkList;
 import cn.itsite.amain.yicommunity.main.publish.CommentActivity;

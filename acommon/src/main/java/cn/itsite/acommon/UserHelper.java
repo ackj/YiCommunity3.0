@@ -1,4 +1,4 @@
-package cn.itsite.amain.yicommunity.common;
+package cn.itsite.acommon;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,9 +6,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
+import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.log.ALog;
-import cn.itsite.amain.s1.App;
-import cn.itsite.amain.yicommunity.entity.bean.UserBean;
 
 /**
  * Author：leguang on 2016/5/4 0009 15:49
@@ -331,7 +330,7 @@ public class UserHelper {
     }
 
     private static SharedPreferences getSp() {
-        return App.mContext.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        return BaseApp.mContext.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
     }
 
     private static SharedPreferences.Editor getEditor() {
@@ -339,7 +338,7 @@ public class UserHelper {
     }
 
     private static SharedPreferences getDefaultSp() {
-        return App.mContext.getSharedPreferences(DEFAULT, Context.MODE_PRIVATE);
+        return BaseApp.mContext.getSharedPreferences(DEFAULT, Context.MODE_PRIVATE);
     }
 
     private static SharedPreferences.Editor getDefaultEditor() {

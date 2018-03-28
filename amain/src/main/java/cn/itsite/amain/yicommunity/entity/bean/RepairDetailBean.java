@@ -2,6 +2,8 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/5/19 0019 09:39.
  * Email: liujia95me@126.com

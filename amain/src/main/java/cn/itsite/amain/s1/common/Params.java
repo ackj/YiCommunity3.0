@@ -2,7 +2,7 @@ package cn.itsite.amain.s1.common;
 
 import java.io.File;
 
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 
 /**
  * Created by leguang on 2017/5/6 0006.

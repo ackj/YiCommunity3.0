@@ -3,12 +3,14 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/5/7 0007 20:53.
  * Email: liujia95me@126.com
  */
 
-public class PropertyPayDetailBean extends BaseBean{
+public class PropertyPayDetailBean extends BaseBean {
 
     /**
      * data : {"fid":"6fde1aaf-d48a-4e0b-97ec-6e0040dad2bf","billCode":"201712280058182955648","billName":"老李11月份的账单","settlementStartDate":"2017-11-01","settlementEndDate":"2017-11-30","amount":0.1,"status":0,"remark":"","createTime":"2017-12-28 00:58:18","houseInfo":"凯宾斯基3栋1单元30层8房","payChannel":"","payMethod":"","propertyBillBillCode":"","tradeBillNo":"","itemList":[{"itemName":"电梯公摊费","itemAmt":0.1,"itemRemark":"电梯公摊费"}]}

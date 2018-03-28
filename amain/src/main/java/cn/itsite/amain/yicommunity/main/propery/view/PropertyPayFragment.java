@@ -18,7 +18,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.amain.R;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import cn.itsite.amain.yicommunity.event.EventCommunity;
 import cn.itsite.amain.yicommunity.main.picker.PickerActivity;
 import me.yokeyword.fragmentation.SupportActivity;

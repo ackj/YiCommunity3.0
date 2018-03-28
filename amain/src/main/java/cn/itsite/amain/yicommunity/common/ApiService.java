@@ -4,7 +4,7 @@ import java.util.Map;
 
 import cn.itsite.amain.yicommunity.entity.bean.AppUpdateBean;
 import cn.itsite.amain.yicommunity.entity.bean.BannerBean;
-import cn.itsite.amain.yicommunity.entity.bean.BaseBean;
+import cn.itsite.acommon.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.BuildingBean;
 import cn.itsite.amain.yicommunity.entity.bean.CarCardBean;
 import cn.itsite.amain.yicommunity.entity.bean.CarCardListBean;
@@ -49,7 +49,7 @@ import cn.itsite.amain.yicommunity.entity.bean.SocialityListBean;
 import cn.itsite.amain.yicommunity.entity.bean.SubCategoryBean;
 import cn.itsite.amain.yicommunity.entity.bean.UnitBean;
 import cn.itsite.amain.yicommunity.entity.bean.UnreadMessageBean;
-import cn.itsite.amain.yicommunity.entity.bean.UserBean;
+import cn.itsite.acommon.UserBean;
 import cn.itsite.amain.yicommunity.entity.bean.UserDataBean;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;

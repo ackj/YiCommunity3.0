@@ -45,7 +45,8 @@ public class StoreRVAdapter extends BaseMultiItemQuickAdapter<StoreItemGridBean,
         switch (item.getItemType()) {
             case StoreItemGridBean.TYPE_BANNER:
                 Banner banner = helper.getView(R.id.banner);
-                helper.addOnClickListener(R.id.ll_location);
+                helper.addOnClickListener(R.id.ll_location)
+                        .setVisible(R.id.ll_location, item.shopType.equals("shop"));
 
                 List<Object> bannerImages = new ArrayList<>();
                 List<String> bannerTitles = new ArrayList<>();
@@ -54,6 +55,11 @@ public class StoreRVAdapter extends BaseMultiItemQuickAdapter<StoreItemGridBean,
                     bannerTitles.add(item.getBanners().get(i).getTitle());
                 }
                 banner.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtils.dp2px(BaseApp.mContext, 150)));
+                if ("shop".equals(item.shopType)) {
+                    banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+                } else {
+                    banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+                }
                 banner.setImageLoader(new ImageLoader() {
                     @Override
                     public void displayImage(Context context, Object path, ImageView imageView) {
@@ -61,10 +67,11 @@ public class StoreRVAdapter extends BaseMultiItemQuickAdapter<StoreItemGridBean,
                     }
                 })
                         .setBannerTitles(bannerTitles)
-                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
                         .setImages(bannerImages)
+                        .setIndicatorGravity(BannerConfig.RIGHT)
                         .isAutoPlay(true)
                         .start();
+
                 break;
             case StoreItemGridBean.TYPE_MORE:
                 helper.setText(R.id.tv_name, item.getCategoryBean().getCategory());

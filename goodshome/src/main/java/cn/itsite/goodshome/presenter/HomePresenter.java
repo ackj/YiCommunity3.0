@@ -51,6 +51,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
                         StoreItemGridBean banners = new StoreItemGridBean();
                         banners.setBanners(homeBean.getAds());
                         banners.setSpanSize(2);
+                        banners.shopType = goodsParams.shoptype;
                         banners.setItemType(StoreItemGridBean.TYPE_BANNER);
                         data.add(banners);
                         for (int i = 0; i < homeBean.getRecommendations().size(); i++) {

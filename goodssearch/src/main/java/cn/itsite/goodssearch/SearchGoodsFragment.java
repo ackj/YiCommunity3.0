@@ -122,6 +122,9 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         mSearchGoodsAdapter = new SearchGoodsRVAdapter();
         mRecyclerView.setAdapter(mSearchGoodsAdapter);
 
+        mParmas.shoptype = "shop";
+        mParmas.shopUid = "123";
+
         //获取热门搜索
         mPresenter.getKeywords(mParmas);
 

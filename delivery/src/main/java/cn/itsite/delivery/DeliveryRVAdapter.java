@@ -20,6 +20,7 @@ public class DeliveryRVAdapter extends BaseRecyclerViewAdapter<DeliveryBean, Bas
         helper.setText(R.id.tv_name, item.getName())
                 .setText(R.id.tv_phone, item.getPhoneNumber())
                 .setText(R.id.tv_address, item.getLocation() + item.getAddress())
-                .addOnClickListener(R.id.iv_edit);
+                .addOnClickListener(R.id.iv_edit)
+                .addOnClickListener(R.id.container_layout);
     }
 }

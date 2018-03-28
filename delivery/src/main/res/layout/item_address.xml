@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container_layout"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
 
     <TextView
-        android:includeFontPadding="false"
-
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
+        android:includeFontPadding="false"
         android:text="黄沙"
         android:textColor="@color/base_black"
         android:textSize="@dimen/H3"
@@ -21,11 +23,11 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:includeFontPadding="false"
         android:id="@+id/tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="22dp"
+        android:includeFontPadding="false"
         android:text="184****2626"
         android:textColor="@color/base_black"
         android:textSize="@dimen/H3"
@@ -33,12 +35,12 @@
         app:layout_constraintLeft_toRightOf="@id/tv_name" />
 
     <TextView
-        android:includeFontPadding="false"
         android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="10dp"
+        android:includeFontPadding="false"
         android:text="广东省广东省广东省广东省广东省广东省"
         app:layout_constraintBottom_toTopOf="@+id/line_1"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -5,8 +5,6 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import java.util.List;
 
 import cn.itsite.acommon.GoodsGridBean;
-import cn.itsite.goodshome.model.CategoryBean;
-import cn.itsite.goodshome.model.ProductsBean;
 
 /**
  * Author： Administrator on 2018/1/30 0030.
@@ -25,6 +23,7 @@ public class StoreItemGridBean extends GoodsGridBean implements MultiItemEntity 
     private CategoryBean categoryBean;
     private ProductsBean productsBean;
     private List<ProductsBean> banners;
+    public String shopType;//区分首页展示用的
 
     public List<ProductsBean> getBanners() {
         return banners;

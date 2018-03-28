@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.goodshome.R;
 import cn.itsite.goodshome.contract.HomeContract;
@@ -48,13 +49,18 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     private StateManager mStateManager;
     private PtrFrameLayout mPtrFrameLayout;
 
-    public static StoreFragment newInstance() {
-        return new StoreFragment();
+    public static StoreFragment newInstance(String shopType) {
+        StoreFragment fragment = new StoreFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("shopType", shopType);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mParmas.shoptype = getArguments().getString("shopType");
     }
 
     @NonNull
@@ -98,7 +104,6 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     }
 
     private void initData() {
-        //添加Banner头
         mAdatper = new StoreRVAdapter();
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 2));
         mRecyclerView.setAdapter(mAdatper);
@@ -111,21 +116,33 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
             }
         });
 
-        mParmas.shoptype = "shop";
         mPresenter.getHome(mParmas);
     }
 
     private void initListener() {
+        mAdatper.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                StoreItemGridBean item = mAdatper.getItem(position);
+                switch (item.getItemType()) {
+                    case StoreItemGridBean.TYPE_BANNER:
+                        if (view.getId() == R.id.ll_location) {
+                            ToastUtils.showToast(_mActivity, "点击地址");
+                            Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
+                            ((StoreHomeFragment) getParentFragment()).startForResult((BaseFragment) addressFragment,100);
+                        }
+                        break;
+                    default:
+                }
+            }
+        });
+
         mAdatper.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 StoreItemGridBean item = mAdatper.getItem(position);
                 switch (item.getItemType()) {
                     case StoreItemGridBean.TYPE_BANNER:
-                        if (view.getId() == R.id.ll_location) {
-                            Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
-                            ((StoreHomeFragment) getParentFragment()).start((BaseFragment) addressFragment);
-                        }
                         break;
                     case StoreItemGridBean.TYPE_MORE:
                         Fragment fragment = (Fragment) ARouter.getInstance().build("/classify/classifyfragment").navigation();

@@ -118,7 +118,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     private void initData() {
         setCommunity();
-
+        params.keywords = "智能";
         layoutManager = new LinearLayoutManager(_mActivity);
         recyclerView.setLayoutManager(layoutManager);
         List<HomeBean> data = new ArrayList<>();
@@ -229,10 +229,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                         ((SupportActivity) _mActivity).start(ParkChargeFragment.newInstance(null));
 
                     } else if (i == R.id.ll_life_supermarket) {
-
-
                         ARouter.getInstance().build("/goodshome/main").navigation();
-
 //                        go2Web("生活超市", ApiService.SUPERMARKET
 //                                .replace("%1", UserHelper.token)
 //                                .replace("%2", UserHelper.communityLongitude)
@@ -395,16 +392,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     @Override
     public void responseFirstLevel(List<FirstLevelBean.DataBean> datas) {
         if (datas.size() > 0) {
-            for (FirstLevelBean.DataBean bean : datas) {
-                if ("智能家居".equals(bean.getName())) {
-                    params.id = bean.getId();
-                    break;
-                }
-                ALog.e(TAG, "id:" + bean.getId());
-            }
-            mPresenter.requestSubCategoryList(params);
+            params.id = datas.get(0).getId();
         }
+        mPresenter.requestSubCategoryList(params);
     }
+
 
     @Override
     public void responseSubCategoryList(List<SubCategoryBean.DataBean> datas) {

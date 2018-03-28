@@ -747,8 +747,9 @@ public interface ApiService {
     //一级列表同时是判断是否是跳转一级列表还是二级列表的入口
     String requestFirstLevel = "http://www.aglhz.com/mall/member/goodscategory/firstLevelList.do";
 
+    @FormUrlEncoded
     @POST
-    Observable<FirstLevelBean> requestFirstLevel(@Url String url, @Query("keywords") String keywords, @Query("payFrom") int payFrom, @Query("fromPoint") String fromPoint);
+    Observable<FirstLevelBean> requestFirstLevel(@Url String url, @Field("keywords") String keywords, @Field("payFrom") int payFrom, @Field("fromPoint") String fromPoint);
 
     //二级列表
     String requestSubCategoryLevel = "http://www.aglhz.com/mall/member/goodscategory/subCategoryLevelList.do";

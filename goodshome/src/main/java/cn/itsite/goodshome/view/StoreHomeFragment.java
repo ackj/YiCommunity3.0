@@ -30,6 +30,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
+import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.goodshome.R;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -109,6 +110,14 @@ public class StoreHomeFragment extends BaseFragment {
                     .navigation();
             start((BaseFragment) fragment);
         });
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 100) {
+            ToastUtils.showToast(_mActivity, "选地址");
+        }
     }
 
     private void initMagicIndicator() {

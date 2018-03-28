@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.tmall.ultraviewpager.UltraViewPager;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -30,7 +29,11 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
+import cn.itsite.acommon.DefaultTransformer;
 import cn.itsite.acommon.SpecificationDialog;
+import cn.itsite.acommon.VerticalViewPager;
+
+import static android.view.View.OVER_SCROLL_NEVER;
 
 /**
  * Author： Administrator on 2018/2/6 0006.
@@ -45,7 +48,7 @@ public class GoodsDetailFragment extends BaseFragment {
     private TextView mTvPutShopcart;
     private TextView mTvBuyItNow;
     private LinearLayout mLlShopCart;
-    private UltraViewPager mUltraViewPager;
+    private VerticalViewPager mUltraViewPager;
     private MagicIndicator mMagicIndicator;
 
     public static GoodsDetailFragment newInstance() {
@@ -84,7 +87,10 @@ public class GoodsDetailFragment extends BaseFragment {
     }
 
     private void initData() {
-        mUltraViewPager.setScrollMode(UltraViewPager.ScrollMode.VERTICAL);
+//        mUltraViewPager.setScrollMode(UltraViewPager.ScrollMode.VERTICAL);
+        mUltraViewPager.setPageTransformer(true, new DefaultTransformer());
+        mUltraViewPager.setOverScrollMode(OVER_SCROLL_NEVER);
+
         GoodsDetailVPAdapter adapter = new GoodsDetailVPAdapter(getChildFragmentManager());
         mUltraViewPager.setAdapter(adapter);
     }
@@ -157,7 +163,7 @@ public class GoodsDetailFragment extends BaseFragment {
         LinearLayout titleContainer = commonNavigator.getTitleContainer(); // must after setNavigator
         titleContainer.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         titleContainer.setDividerDrawable(getResources().getDrawable(R.drawable.simple_splitter_2));
-        ViewPagerHelper.bind(mMagicIndicator, mUltraViewPager.getViewPager());
+        ViewPagerHelper.bind(mMagicIndicator, mUltraViewPager);
     }
 
     private void showSpecificationDialog() {

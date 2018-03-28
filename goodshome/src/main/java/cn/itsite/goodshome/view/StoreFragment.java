@@ -111,8 +111,7 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
             }
         });
 
-        mParmas.type = "shop";
-
+        mParmas.shoptype = "shop";
         mPresenter.getHome(mParmas);
     }
 

@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HttpHelper {
     private static final String TAG = HttpHelper.class.getSimpleName();
-    public static String BASE_URL = "http://119.23.129.133:8076/one_mall_api/";
+    public static String BASE_URL = "http://www.aglhz.com/mall/ec/";
     private static OkHttpClient mOkHttpClient;
     private static Retrofit mRetrofit;
     private static final int TIMEOUT = 15;

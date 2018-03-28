@@ -16,8 +16,10 @@ import cn.itsite.acommon.GoodsCounterView;
 
 public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, BaseViewHolder> {
 
+
     public ShoppingCartRVAdapter() {
         super(null);
+        addItemType(StoreBean.TYPE_EMPTY, R.layout.item_empty);
         addItemType(StoreBean.TYPE_STORE_TITLE, R.layout.item_store_title);
         addItemType(StoreBean.TYPE_STORE_GOODS, R.layout.item_cart_goods);
         addItemType(StoreBean.TYPE_RECOMMEND_TITLE, R.layout.item_recommend_title);
@@ -27,6 +29,9 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
     @Override
     protected void convert(BaseViewHolder helper, StoreBean item) {
         switch (item.getItemType()) {
+            case StoreBean.TYPE_EMPTY:
+                helper.addOnClickListener(R.id.empty_layout);
+                break;
             case StoreBean.TYPE_STORE_TITLE:
                 helper
                         .setText(R.id.tv_store_name, item.getShopBean().getName())
@@ -62,8 +67,6 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
                 Glide.with(ivIcon.getContext())
                         .load(item.getProductsBean().getIcon())
                         .into(ivIcon);
-
-
                 break;
             case StoreBean.TYPE_RECOMMEND_TITLE:
                 break;

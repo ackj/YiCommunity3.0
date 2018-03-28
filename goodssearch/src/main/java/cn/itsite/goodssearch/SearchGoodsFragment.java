@@ -213,11 +213,17 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back) {
-            refreshData(mHotKeywordsDatas);
+//            refreshData(mHotKeywordsDatas);
+            pop();
         } else if (v.getId() == R.id.et_input) {
 //            refreshData(data2);
         } else if (v.getId() == R.id.tv_search) {
-            search();
+            if ("搜索".equals(mTvSearch.getText())) {
+                search();
+            } else {
+                refreshData(mHotKeywordsDatas);
+                mTvSearch.setText("搜索");
+            }
         }
     }
 
@@ -294,5 +300,6 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         }
         //todo:待删
         mStateManager.showEmpty();
+        mTvSearch.setText("取消");
     }
 }

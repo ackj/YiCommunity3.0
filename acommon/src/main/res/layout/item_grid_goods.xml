@@ -83,7 +83,7 @@
         android:gravity="left"
         android:lines="1"
         android:text="￥ 589.00"
-        android:textColor="@color/default_color"
+        android:textColor="@color/error"
         android:textSize="@dimen/H3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

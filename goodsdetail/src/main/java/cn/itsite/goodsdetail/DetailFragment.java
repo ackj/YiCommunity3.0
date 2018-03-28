@@ -1,16 +1,22 @@
 package cn.itsite.goodsdetail;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.trycatch.mysnackbar.ScreenUtil;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 
@@ -50,7 +56,6 @@ public class DetailFragment extends BaseFragment {
         initStatusBar();
         initData();
         initWebView();
-        initListener();
     }
 
     private void initStatusBar() {
@@ -106,7 +111,5 @@ public class DetailFragment extends BaseFragment {
         });
     }
 
-    private void initListener() {
-    }
 
 }

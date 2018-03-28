@@ -16,6 +16,7 @@ public class StoreBean implements MultiItemEntity {
     public static final int TYPE_STORE_GOODS = 2;
     public static final int TYPE_RECOMMEND_TITLE = 3;
     public static final int TYPE_RECOMMEND_GOODS = 4;
+    public static final int TYPE_EMPTY = 100;//空状态
 
     private boolean isChecked;
 

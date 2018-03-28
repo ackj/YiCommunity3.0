@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 
 public class GoodsParams {
 
+    public String shoptype;
     public String type;
     public String keyword;
     public String uid;

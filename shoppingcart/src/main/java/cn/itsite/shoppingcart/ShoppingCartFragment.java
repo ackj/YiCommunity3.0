@@ -6,11 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.acommon.SpecificationDialog;
+import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.shoppingcart.contract.CartContract;
 import cn.itsite.shoppingcart.presenter.CartPresenter;
 
@@ -49,10 +52,13 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     private TextView mTvAnchor;//锚，无需在意这个view
     //--------------------------
     private boolean isEditModel;//是编辑模式吗
-//    private GoodsCounterView mCurrentCounterView;//当前计数的view
+    //    private GoodsCounterView mCurrentCounterView;//当前计数的view
     List<StoreBean> mDatas = new ArrayList<>();
 
-    private GoodsParams mGoodsParams =new GoodsParams();
+    StoreBean emptyBean = new StoreBean();//空页面对应的bean
+
+    private GoodsParams mGoodsParams = new GoodsParams();
+    private ImageView mIvArrowLeft;
 
     public static ShoppingCartFragment newInstance() {
         return new ShoppingCartFragment();
@@ -80,6 +86,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         mTvTotalSum = view.findViewById(R.id.tv_total_sum);
         mTvEdit = view.findViewById(R.id.tv_edit);
         mTvAnchor = view.findViewById(R.id.anchor_1);
+        mIvArrowLeft = view.findViewById(R.id.iv_arrow_left);
         return attachToSwipeBack(view);
     }
 
@@ -96,6 +103,9 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     }
 
     private void initData() {
+        emptyBean.setItemType(StoreBean.TYPE_EMPTY);
+        emptyBean.setSpanSize(2);
+
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 2));
         mAdapter = new ShoppingCartRVAdapter();
         mRecyclerView.setAdapter(mAdapter);
@@ -113,6 +123,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     private void initListener() {
         mTvSubmit.setOnClickListener(this);
         mTvEdit.setOnClickListener(this);
+        mIvArrowLeft.setOnClickListener(this);
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -124,7 +135,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
                         if (view.getId() == R.id.tv_specification) {
                             showSpecificationDialog();
                         } else if (view.getId() == R.id.tv_confirm) {
-                            mPresenter.putProduct("123",item.getProductsBean().getUid());
+                            mPresenter.putProduct("123", item.getProductsBean().getUid());
                         }
                         break;
                     case StoreBean.TYPE_RECOMMEND_TITLE:
@@ -132,6 +143,9 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
                     case StoreBean.TYPE_RECOMMEND_GOODS:
                         Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
                         start((BaseFragment) goodsDetailFragment);
+                        break;
+                    case StoreBean.TYPE_EMPTY:
+                        pop();
                         break;
                     default:
                 }
@@ -177,10 +191,18 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         });
     }
 
-    private void showSpecificationDialog() {
-        SpecificationDialog dialog = new SpecificationDialog();
-        dialog.show(getChildFragmentManager());
+    private void showHintDialog() {
+        new BaseDialogFragment()
+                .setLayoutId(R.layout.dialog_hint)
+                .setConvertListener((holder, dialog) -> {
+
+                })
+                .setMargin(40)
+                .setDimAmount(0.3f)
+                .setGravity(Gravity.CENTER)
+                .show(getChildFragmentManager());
     }
+
 
     //刷新选中的商城商品
     private void checkStoreGoods(int position, boolean isChecked) {
@@ -210,7 +232,12 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
 
     @Override
     public void responseGetCartsSuccess(List<StoreBean> data) {
-        mDatas = data;
+        if (data == null || data.isEmpty()) {
+            mDatas.clear();
+        } else {
+//            mDatas = data;
+        }
+        mDatas.add(emptyBean);
         //查推荐
         mPresenter.getRecommendGoods(mGoodsParams);
     }
@@ -243,9 +270,9 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     private void clickSubmit() {
         if (isEditModel) {
             //删除
-            mPresenter.deleteProduct("123","123");
+            showHintDialog();
+//            mPresenter.deleteProduct("123", "123");
         } else {
-            //把
             //结算
             ToastUtils.showToast(_mActivity, "结算");
             Fragment fragment = (Fragment) ARouter.getInstance().build("/shoppingcart/shoppingcartfragment").navigation();
@@ -256,12 +283,19 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         }
     }
 
+    private void showSpecificationDialog() {
+        SpecificationDialog dialog = new SpecificationDialog();
+        dialog.show(getChildFragmentManager());
+    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv_edit) {
             switchEditModel();
         } else if (v.getId() == R.id.tv_submit) {
             clickSubmit();
+        } else if (v.getId() == R.id.iv_arrow_left) {
+            pop();
         }
     }
 

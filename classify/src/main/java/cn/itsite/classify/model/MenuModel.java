@@ -25,7 +25,7 @@ public class MenuModel extends BaseModel implements MenuContract.Model {
     @Override
     public Observable<BaseResponse<List<MenuBean>>> getGategories(GoodsParams params) {
         return HttpHelper.getService(MenuService.class)
-                .getGategories(params.toString())
+                .getGategories(null)
                 .subscribeOn(Schedulers.io());
     }
 

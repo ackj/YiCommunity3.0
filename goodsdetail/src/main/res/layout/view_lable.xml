@@ -9,7 +9,7 @@
         android:layout_width="13dp"
         android:layout_height="13dp"
         android:layout_marginLeft="12dp"
-        android:src="@color/red" />
+        android:src="@drawable/ic_shose_orange" />
 
     <TextView
         android:layout_width="wrap_content"

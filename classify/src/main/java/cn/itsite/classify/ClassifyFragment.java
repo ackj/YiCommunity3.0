@@ -64,6 +64,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     //    private int maxUnfoldHeight;//展开的最大高度，不能超过(ONE_UNFOLD_LINE_HEIGHT)的4倍高
     private boolean subMenuCanScroll = false;//控制三级菜单能否滚动
     private TextView mTvSearch;
+    private ImageView mIvBack;
 
     public static ClassifyFragment newInstance() {
         return new ClassifyFragment();
@@ -92,6 +93,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         mLlStretchable = view.findViewById(R.id.ll_stretchable);
         mIvStretchMenu = view.findViewById(R.id.iv_stretch);
         mTvSearch = view.findViewById(R.id.tv_input);
+        mIvBack = view.findViewById(R.id.iv_back);
         return attachToSwipeBack(view);
     }
 
@@ -132,13 +134,17 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         mParams.uid = "123";
         mParams.category = "123";
         mPresenter.getGategories(mParams);
-
-
     }
 
 
     @SuppressLint("ClickableViewAccessibility")
     private void initListener() {
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         mIvSwitchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,6 +236,8 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         //逻辑按点击“全部”一致，请求网络
         mParams.uid = menuBean.getUid();
         mPresenter.getProducts(mParams);
+
+        stretch(ONE_UNFOLD_LINE_HEIGHT);
     }
 
     //把三级菜单伸缩至指定的高度

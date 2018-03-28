@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.main.home.contract.HomeContract;
 import cn.itsite.amain.yicommunity.main.home.model.HomeModel;
 import rx.android.schedulers.AndroidSchedulers;

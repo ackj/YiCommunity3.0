@@ -1,7 +1,7 @@
 package cn.itsite.amain.yicommunity.common;
 
 
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.amain.yicommunity.App;
 

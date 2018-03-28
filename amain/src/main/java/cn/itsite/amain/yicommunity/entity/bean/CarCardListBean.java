@@ -3,7 +3,7 @@ package cn.itsite.amain.yicommunity.entity.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 
 /**
  * Author: LiuJia on 2017/5/24 0024 09:59.

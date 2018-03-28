@@ -41,7 +41,7 @@ import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.CommentBean;
 import cn.itsite.amain.yicommunity.event.EventCommunity;
 import cn.itsite.amain.yicommunity.event.EventRefreshRemarkList;

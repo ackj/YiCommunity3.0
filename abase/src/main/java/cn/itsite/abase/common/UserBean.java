@@ -1,4 +1,4 @@
-package cn.itsite.acommon;
+package cn.itsite.abase.common;
 
 /**
  * Created by YandZD on 2017/1/17.

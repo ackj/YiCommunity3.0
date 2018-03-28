@@ -3,7 +3,7 @@ package cn.itsite.amain.yicommunity.main.mine.contract;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.UnreadMessageBean;
 import rx.Observable;
 

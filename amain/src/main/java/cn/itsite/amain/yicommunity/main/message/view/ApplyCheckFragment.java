@@ -15,7 +15,7 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.MessageCenterBean;
 import cn.itsite.amain.yicommunity.main.message.contract.ApplyCheckContract;
 import cn.itsite.amain.yicommunity.main.message.presenter.ApplyCheckPresenter;

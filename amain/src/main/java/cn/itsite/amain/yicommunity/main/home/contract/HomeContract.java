@@ -6,7 +6,7 @@ import java.util.List;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.amain.yicommunity.entity.bean.BannerBean;
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.FirstLevelBean;
 import cn.itsite.amain.yicommunity.entity.bean.MainDeviceListBean;
 import cn.itsite.amain.yicommunity.entity.bean.NoticeBean;

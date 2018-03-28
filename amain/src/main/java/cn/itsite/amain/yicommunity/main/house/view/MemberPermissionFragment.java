@@ -29,7 +29,7 @@ import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.HouseRightsBean;
 import cn.itsite.amain.yicommunity.event.EventCommunity;
 import cn.itsite.amain.yicommunity.main.house.contract.MemberPermissionContract;

@@ -1,6 +1,6 @@
 package cn.itsite.amain.yicommunity.entity.bean;
 
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 
 /**
  * Author: LiuJia on 2017/5/25 0025 15:16.

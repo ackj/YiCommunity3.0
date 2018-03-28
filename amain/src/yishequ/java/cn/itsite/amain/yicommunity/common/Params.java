@@ -4,7 +4,7 @@ package cn.itsite.amain.yicommunity.common;
 import java.io.File;
 import java.util.List;
 
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 
 /**
  * Created by leguang on 2017/5/6 0006.

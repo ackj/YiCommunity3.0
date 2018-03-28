@@ -17,7 +17,7 @@ import cn.itsite.amain.R;
 import cn.itsite.amain.s1.event.EventDeviceNameChanged;
 import cn.itsite.amain.s1.host.view.HostSettingsFragment;
 import cn.itsite.amain.s1.net.view.SetWifiFragment;
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 

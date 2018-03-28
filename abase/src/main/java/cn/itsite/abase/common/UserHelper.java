@@ -1,4 +1,4 @@
-package cn.itsite.acommon;
+package cn.itsite.abase.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;

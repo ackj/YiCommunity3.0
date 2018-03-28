@@ -18,7 +18,7 @@ import cn.itsite.abase.utils.RegexUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.main.door.contract.FamilyPhoneContract;
 import cn.itsite.amain.yicommunity.main.door.presenter.FamilyPhonePresenter;
 import me.yokeyword.fragmentation.SupportActivity;

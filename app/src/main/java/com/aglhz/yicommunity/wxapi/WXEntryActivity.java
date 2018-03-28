@@ -14,7 +14,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import cn.itsite.abase.log.ALog;
 import cn.itsite.amain.R;
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 
 import static cn.itsite.apayment.payment.pay.wechat.WeChatAppPay.WECHAT_PAY_RESULT_ACTION;
 import static cn.itsite.apayment.payment.pay.wechat.WeChatAppPay.WECHAT_PAY_RESULT_EXTRA;

@@ -25,7 +25,29 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    publishNonDefault true  //用于解决依赖Module无法区分debug个版本的。
+    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
+    productFlavors {
+        yishequ {
+            /**
+             * 需要添加fromPoint
+             * 亿社区：YsqApp
+             * 宅宜购：MallApp
+             * 美好生活：YsqMeilunApp
+             * 威士丹利社区：YsqVensiApp
+             * 高诚智能家居：SmartApp
+             * 美伦安保：SmartMeilunApp
+             * 猫眼：SmartCateyeApp
+             */
+
+            buildConfigField "String", "fromPoint", "\"YsqApp\""
+        }
+        meilun {
+            buildConfigField "String", "fromPoint", "\"YsqMeilunApp\""
+        }
+        vensi {
+            buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
+        }
+    }
 }
 
 dependencies {

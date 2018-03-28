@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 
 /**
  * Author: LiuJia on 2017/5/22 0022 11:36.

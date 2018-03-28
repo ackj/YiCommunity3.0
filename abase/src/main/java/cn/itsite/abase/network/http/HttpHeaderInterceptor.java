@@ -1,7 +1,10 @@
-package cn.itsite.acommon;
+package cn.itsite.abase.network.http;
+
+import com.itsite.abase.BuildConfig;
 
 import java.io.IOException;
 
+import cn.itsite.abase.common.UserHelper;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,7 +25,7 @@ public class HttpHeaderInterceptor implements Interceptor {
         Request request = chain.request().newBuilder()
                 .header("token", UserHelper.token)
                 .header("fromPoint", BuildConfig.fromPoint)
-                .header("Content-Type", "application/json")
+                .header("Content-Type", "application/json;charset=UTF-8")
                 .build();
 
 //        HttpUrl httpUrl = request.url()

@@ -38,10 +38,10 @@ android {
 
     signingConfigs {
         debug {
-            keyAlias properties.getProperty('keyAlias')
-            keyPassword properties.getProperty('keyPassword')
+            keyAlias 'agl'
+            keyPassword 'aglandroid'
             storeFile file('../agl.keystore')
-            storePassword properties.getProperty('storePassword')
+            storePassword 'aglandroid'
         }
         release {
             keyAlias properties.getProperty('keyAlias')

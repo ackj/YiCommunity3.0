@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Order</string>
-
     <array name="mine_order_tabs">
         <item>全部</item>
         <item>代付款</item>

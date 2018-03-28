@@ -25,7 +25,7 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.common.share.WxShare;
 import cn.itsite.amain.yicommunity.entity.bean.DoorListBean;
 import cn.itsite.amain.yicommunity.entity.bean.PasswordBean;

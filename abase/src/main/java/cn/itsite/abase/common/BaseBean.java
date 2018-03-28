@@ -1,4 +1,4 @@
-package cn.itsite.acommon;
+package cn.itsite.abase.common;
 
 import java.io.Serializable;
 

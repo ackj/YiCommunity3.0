@@ -27,7 +27,7 @@ import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.entity.bean.NoticeBean;
 import cn.itsite.amain.yicommunity.event.EventCommunity;
 import cn.itsite.amain.yicommunity.main.propery.contract.NoticeListContract;

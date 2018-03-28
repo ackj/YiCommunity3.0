@@ -22,7 +22,7 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.event.EventData;
 import cn.itsite.amain.yicommunity.login.contract.LoginContract;
 import cn.itsite.amain.yicommunity.login.presenter.LoginPresenter;

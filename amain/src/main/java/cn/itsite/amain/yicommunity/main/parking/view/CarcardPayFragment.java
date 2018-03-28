@@ -25,7 +25,7 @@ import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.CarCardListBean;
 import cn.itsite.amain.yicommunity.entity.bean.MonthlyPayRulesBean;
 import cn.itsite.amain.yicommunity.entity.bean.ParkPayResultBean;

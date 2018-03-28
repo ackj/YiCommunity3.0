@@ -39,7 +39,7 @@ import cn.itsite.amain.s1.main.home.MainActivity;
 import cn.itsite.amain.s1.main.smarthome.contract.SmartHomeContract;
 import cn.itsite.amain.s1.main.smarthome.presenter.SmartHomePresenter;
 import cn.itsite.amain.s1.qrcode.ScanQRCodeFragment;
-import cn.itsite.acommon.UserHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.entity.bean.MainDeviceListBean;
 import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;

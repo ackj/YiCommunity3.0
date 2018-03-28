@@ -7,7 +7,7 @@ import cn.itsite.amain.s1.common.Constants;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.amain.yicommunity.entity.bean.BannerBean;
-import cn.itsite.acommon.BaseBean;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.FirstLevelBean;
 import cn.itsite.amain.yicommunity.entity.bean.MainDeviceListBean;
 import cn.itsite.amain.yicommunity.entity.bean.NoticeBean;

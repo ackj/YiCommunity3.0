@@ -2,6 +2,8 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * 拼车服务列表bean
  * Created by YandZD on 2017/2/20.

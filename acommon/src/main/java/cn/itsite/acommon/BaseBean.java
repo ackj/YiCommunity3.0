@@ -1,4 +1,4 @@
-package cn.itsite.amain.yicommunity.entity.bean;
+package cn.itsite.acommon;
 
 import java.io.Serializable;
 

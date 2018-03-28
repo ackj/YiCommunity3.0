@@ -7,7 +7,7 @@ import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.entity.bean.BaseBean;
+import cn.itsite.acommon.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.MyHousesBean;
 import cn.itsite.amain.yicommunity.entity.bean.RepairTypesBean;
 import cn.itsite.amain.yicommunity.main.publish.contract.PublishContract;

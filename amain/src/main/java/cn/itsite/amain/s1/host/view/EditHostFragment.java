@@ -23,7 +23,7 @@ import cn.itsite.amain.s1.common.ApiService;
 import cn.itsite.amain.s1.common.Constants;
 import cn.itsite.amain.s1.common.Params;
 import cn.itsite.amain.s1.event.EventDeviceNameChanged;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import me.yokeyword.fragmentation.SupportActivity;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

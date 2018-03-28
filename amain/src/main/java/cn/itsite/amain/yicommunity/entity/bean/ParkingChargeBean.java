@@ -2,6 +2,8 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.io.Serializable;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/6/1 0001 10:02.
  * Email: liujia95me@126.com

@@ -15,7 +15,7 @@ import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.amain.s1.common.Constants;
 import cn.itsite.amain.s1.entity.bean.NotificationBean;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import cn.itsite.amain.yicommunity.common.boxing.BoxingGlideLoader;
 import cn.itsite.apush.event.EventLearnSensor;
 import cn.itsite.apush.event.EventRefreshSecurity;

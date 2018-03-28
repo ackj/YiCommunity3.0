@@ -2,12 +2,14 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/5/26 0026 10:52.
  * Email: liujia95me@126.com
  */
 
-public class RepairTypesBean extends BaseBean{
+public class RepairTypesBean extends BaseBean {
 
     /**
      * data : {"types":[{"code":"hy","name":"花园"},{"code":"ggqy","name":"公共区域"},{"code":"DT","name":"电梯"}]}

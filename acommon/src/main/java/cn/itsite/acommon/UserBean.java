@@ -1,4 +1,4 @@
-package cn.itsite.amain.yicommunity.entity.bean;
+package cn.itsite.acommon;
 
 /**
  * Created by YandZD on 2017/1/17.

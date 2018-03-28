@@ -4,6 +4,8 @@ package cn.itsite.amain.yicommunity.common;
 import java.io.File;
 import java.util.List;
 
+import cn.itsite.acommon.UserHelper;
+
 /**
  * Created by leguang on 2017/5/6 0006.
  * Email：langmanleguang@qq.com

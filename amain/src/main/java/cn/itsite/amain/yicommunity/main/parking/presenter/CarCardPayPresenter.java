@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.entity.bean.BaseBean;
+import cn.itsite.acommon.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.MonthlyPayRulesBean;
 import cn.itsite.amain.yicommunity.main.parking.contract.CarCardPayContract;
 import cn.itsite.amain.yicommunity.main.parking.model.CarCardPayModel;

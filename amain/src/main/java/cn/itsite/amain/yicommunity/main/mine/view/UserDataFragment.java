@@ -28,7 +28,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.util.ArrayList;
 
-import butterknife.OnClick;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
@@ -36,8 +35,8 @@ import cn.itsite.abase.utils.KeyBoardUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.common.UserHelper;
-import cn.itsite.amain.yicommunity.entity.bean.UserBean;
+import cn.itsite.acommon.UserHelper;
+import cn.itsite.acommon.UserBean;
 import cn.itsite.amain.yicommunity.event.EventData;
 import cn.itsite.amain.yicommunity.main.mine.contract.UserDataContract;
 import cn.itsite.amain.yicommunity.main.mine.presenter.UserDataPresenter;

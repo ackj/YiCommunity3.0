@@ -2,11 +2,13 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author： Administrator on 2017/9/29 0029.
  * Email： liujia95me@126.com
  */
-public class CommEquipmentBean extends BaseBean{
+public class CommEquipmentBean extends BaseBean {
 
     /**
      * data : {"dataList":[{"deviceSn":"G111EU6B1000300","houseInfoDetails":"凯宾斯基3栋1单元12层1房","deviceName":"NB300的主机"}]}

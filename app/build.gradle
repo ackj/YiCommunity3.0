@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+// 加载 local.properties 资源
+Properties properties = new Properties()
+InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+properties.load(inputStream)
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -21,22 +26,28 @@ android {
 
     }
 
+    //移除lint检测的error
+    lintOptions {
+        abortOnError false
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     signingConfigs {
         debug {
-            keyAlias 'agl'
-            keyPassword 'aglandroid'
+            keyAlias properties.getProperty('keyAlias')
+            keyPassword properties.getProperty('keyPassword')
             storeFile file('../agl.keystore')
-            storePassword 'aglandroid'
+            storePassword properties.getProperty('storePassword')
         }
         release {
-            keyAlias 'agl'
-            keyPassword 'aglandroid'
+            keyAlias properties.getProperty('keyAlias')
+            keyPassword properties.getProperty('keyPassword')
             storeFile file('../agl.keystore')
-            storePassword 'aglandroid'
+            storePassword properties.getProperty('storePassword')
         }
     }
 

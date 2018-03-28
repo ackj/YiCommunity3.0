@@ -2,12 +2,14 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/7/28 0028 20:18.
  * Email: liujia95me@126.com
  */
 
-public class OneKeyDoorBean extends BaseBean{
+public class OneKeyDoorBean extends BaseBean {
 
 
     /**

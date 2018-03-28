@@ -5,7 +5,7 @@ import java.util.List;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.entity.bean.BaseBean;
+import cn.itsite.acommon.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.ContactBean;
 import cn.itsite.amain.yicommunity.entity.bean.DoorListBean;
 import cn.itsite.amain.yicommunity.entity.bean.HouseInfoBean;

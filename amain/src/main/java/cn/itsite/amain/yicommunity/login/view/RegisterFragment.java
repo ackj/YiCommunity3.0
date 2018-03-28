@@ -18,14 +18,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import butterknife.OnClick;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.amain.yicommunity.common.SmsHelper;
-import cn.itsite.amain.yicommunity.common.UserHelper;
-import cn.itsite.amain.yicommunity.entity.bean.BaseBean;
+import cn.itsite.acommon.UserHelper;
+import cn.itsite.acommon.BaseBean;
 import cn.itsite.amain.yicommunity.login.contract.RegisterContract;
 import cn.itsite.amain.yicommunity.login.presenter.RegisterPresenter;
 import me.yokeyword.fragmentation.SupportActivity;

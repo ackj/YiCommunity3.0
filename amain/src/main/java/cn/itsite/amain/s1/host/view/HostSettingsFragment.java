@@ -22,7 +22,7 @@ import cn.itsite.amain.s1.entity.bean.BaseBean;
 import cn.itsite.amain.s1.entity.bean.HostSettingsBean;
 import cn.itsite.amain.s1.host.contract.HostSettingsContract;
 import cn.itsite.amain.s1.host.presenter.HostSettingsPresenter;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**

@@ -10,7 +10,7 @@ import com.bilibili.boxing.loader.IBoxingMediaLoader;
 import org.litepal.LitePal;
 
 import cn.itsite.abase.log.ALog;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 import cn.itsite.amain.yicommunity.common.boxing.BoxingGlideLoader;
 import cn.itsite.apush.PushHelper;
 

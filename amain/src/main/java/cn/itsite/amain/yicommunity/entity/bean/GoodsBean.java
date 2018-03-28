@@ -2,12 +2,14 @@ package cn.itsite.amain.yicommunity.entity.bean;
 
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2017/5/22 0022 14:35.
  * Email: liujia95me@126.com
  */
 
-public class GoodsBean extends BaseBean{
+public class GoodsBean extends BaseBean {
 
     private List<DataBean> data;
 

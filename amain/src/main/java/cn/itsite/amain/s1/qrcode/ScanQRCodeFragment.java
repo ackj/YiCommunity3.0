@@ -24,7 +24,7 @@ import cn.itsite.abase.utils.ImageUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.s1.App;
 import cn.itsite.amain.s1.host.view.AddHostFragment;
-import cn.itsite.amain.yicommunity.common.UserHelper;
+import cn.itsite.acommon.UserHelper;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 

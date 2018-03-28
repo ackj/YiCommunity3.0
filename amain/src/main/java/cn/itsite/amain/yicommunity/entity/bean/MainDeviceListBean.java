@@ -3,12 +3,14 @@ package cn.itsite.amain.yicommunity.entity.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.itsite.acommon.BaseBean;
+
 /**
  * Author: LiuJia on 2018/1/3 0003 15:36.
  * Email: liujia95me@126.com
  */
 
-public class MainDeviceListBean extends BaseBean{
+public class MainDeviceListBean extends BaseBean {
 
     private List<DataBean> data;
 

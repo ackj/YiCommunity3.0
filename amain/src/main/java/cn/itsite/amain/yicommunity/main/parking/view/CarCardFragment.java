@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,7 +21,7 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.entity.bean.BaseBean;
+import cn.itsite.acommon.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.CarCardListBean;
 import cn.itsite.amain.yicommunity.main.guide.GuideHelper;
 import cn.itsite.amain.yicommunity.main.parking.contract.CarCardContract;

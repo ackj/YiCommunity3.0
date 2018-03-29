@@ -2,12 +2,14 @@ package cn.itsite.amain.yicommunity.main.home.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -18,18 +20,19 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.itsite.abase.common.UserHelper;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
+import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.DensityUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Constants;
-import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.entity.bean.BannerBean;
 import cn.itsite.amain.yicommunity.entity.bean.HomeBean;
 import cn.itsite.amain.yicommunity.entity.bean.ServicesTypesBean;
 import cn.itsite.amain.yicommunity.main.services.ServicesActivity;
-import cn.itsite.amain.yicommunity.main.smarthome.view.SmartHomeMallFragment;
 import cn.itsite.amain.yicommunity.main.sociality.view.CarpoolFragment;
 import cn.itsite.amain.yicommunity.main.sociality.view.SocialityFragment;
 import cn.itsite.amain.yicommunity.main.sociality.view.SocialityListFragment;
@@ -165,9 +168,12 @@ public class HomeRVAdapter extends BaseMultiItemQuickAdapter<HomeBean, BaseViewH
                         return false;
                     }
                 });
-                SmartLifeAdapter smartLifeAdapter = new SmartLifeAdapter(item.getWisdomLife());
-                smartLifeAdapter.setOnItemClickListener((adapter12, view, position) ->
-                        ((BaseActivity) fragment.getActivity()).start(SmartHomeMallFragment.newInstance(item.getWisdomLife(), position)));
+                ALog.e(TAG,"item.getSmartMenus():"+item.getSmartMenus());
+                SmartLifeAdapter smartLifeAdapter = new SmartLifeAdapter(item.getSmartMenus());
+                smartLifeAdapter.setOnItemClickListener((adapter12, view, position) ->{
+                    Fragment classifyfragment = (Fragment) ARouter.getInstance().build("/classify/classifyfragment").navigation();
+                    ((BaseActivity) fragment.getActivity()).start((BaseFragment) classifyfragment);
+                });
                 rvSmartLife.setAdapter(smartLifeAdapter);
                 break;
             default:

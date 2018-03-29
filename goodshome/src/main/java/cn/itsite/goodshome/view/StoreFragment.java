@@ -87,6 +87,12 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
         initPtrFrameLayout(mPtrFrameLayout, mRecyclerView);
     }
 
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        mPresenter.getHome(mParmas);
+    }
+
     private void initStateManager() {
         mStateManager = StateManager.builder(_mActivity)
                 .setContent(mRecyclerView)
@@ -115,8 +121,6 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                 return mDatas.get(position).getSpanSize();
             }
         });
-
-        mPresenter.getHome(mParmas);
     }
 
     private void initListener() {
@@ -171,6 +175,4 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
         mDatas = data;
         mAdatper.setNewData(mDatas);
     }
-
-
 }

@@ -60,6 +60,7 @@ import cn.itsite.amain.yicommunity.main.propery.view.PropertyPayFragment;
 import cn.itsite.amain.yicommunity.qrcode.QRCodeActivity;
 import cn.itsite.amain.yicommunity.web.WebActivity;
 import cn.itsite.amain.yicommunity.widget.OpenDoorDialog;
+import cn.itsite.classify.MenuBean;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -198,7 +199,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 mPresenter.requestBanners(params);
                 mPresenter.requestHomeNotices(params);
                 mPresenter.requestServiceTypes(params);
-                mPresenter.requestFirstLevel(params);
+//                mPresenter.requestFirstLevel(params);
+                //
+                mPresenter.requestSmartMenu(params);
             }
         });
     }
@@ -400,8 +403,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     public void responseSubCategoryList(List<SubCategoryBean.DataBean> datas) {
+        ptrFrameLayout.refreshComplete();
         if (datas.size() > 0) {
-            ptrFrameLayout.refreshComplete();
             adapter.getData().get(5).setWisdomLife(datas);
             adapter.notifyItemChanged(5);
         }
@@ -446,6 +449,16 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             openDoorialog.setSuccess();
         }
         DialogHelper.successSnackbar(getView(), baseBean.getOther().getMessage());
+    }
+
+    @Override
+    public void responseSmartMenu(List<MenuBean> datas) {
+        ptrFrameLayout.refreshComplete();
+        ALog.e(TAG, "responseSmartMenu:" + datas.size());
+        if (datas.size() > 0) {
+            adapter.getData().get(5).setSmartMenus(datas);
+            adapter.notifyItemChanged(5);
+        }
     }
 
     public void go2TopAndRefresh() {

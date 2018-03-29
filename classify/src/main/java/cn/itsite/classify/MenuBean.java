@@ -21,7 +21,16 @@ public class MenuBean {
     private String parentUid;
     private String category;
     private String uid;
+    private String url;
     private List<ChildrenBean> children;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getParentUid() {
         return parentUid;

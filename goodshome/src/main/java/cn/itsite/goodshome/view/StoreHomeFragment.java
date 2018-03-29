@@ -2,10 +2,13 @@ package cn.itsite.goodshome.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,18 +30,25 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import java.util.List;
+
 import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.abase.utils.ToastUtils;
+import cn.itsite.acommon.AddressBean;
+import cn.itsite.acommon.GoodsParams;
+import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.goodshome.R;
+import cn.itsite.goodshome.contract.StoreContract;
+import cn.itsite.goodshome.model.ShopBean;
+import cn.itsite.goodshome.presenter.StorePresenter;
 import q.rorbin.badgeview.QBadgeView;
 
 /**
  * Author： Administrator on 2018/1/30 0030.
  * Email： liujia95me@126.com
  */
-public class StoreHomeFragment extends BaseFragment {
+public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> implements StoreContract.View {
     public static final String TAG = StoreHomeFragment.class.getSimpleName();
     //    private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -47,6 +57,8 @@ public class StoreHomeFragment extends BaseFragment {
     private FloatingActionButton mFabSearch;
     private MagicIndicator mMagicIndicator;
 
+    private GoodsParams mParams = new GoodsParams();
+
     public static StoreHomeFragment newInstance() {
         return new StoreHomeFragment();
     }
@@ -54,6 +66,12 @@ public class StoreHomeFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @NonNull
+    @Override
+    protected StoreContract.Presenter createPresenter() {
+        return new StorePresenter(this);
     }
 
     @Nullable
@@ -97,6 +115,21 @@ public class StoreHomeFragment extends BaseFragment {
                 .setBadgeNumber(2);
     }
 
+    public void showStoreDialog(List<ShopBean> list) {
+        new BaseDialogFragment()
+                .setLayoutId(R.layout.dialog_store)
+                .setConvertListener((holder, dialog) -> {
+                    RecyclerView recyclerView = holder.getView(R.id.recyclerView);
+                    StoreDialogRVAdapter adapter = new StoreDialogRVAdapter();
+                    recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
+                    recyclerView.setAdapter(adapter);
+                    adapter.setNewData(list);
+                })
+                .setDimAmount(0.3f)
+                .setGravity(Gravity.BOTTOM)
+                .show(getChildFragmentManager());
+    }
+
     private void initListener() {
         mIvShopCart.setOnClickListener(v -> {
             Fragment fragment = (Fragment) ARouter.getInstance()
@@ -116,7 +149,10 @@ public class StoreHomeFragment extends BaseFragment {
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 100) {
-            ToastUtils.showToast(_mActivity, "选地址");
+            AddressBean addressBean = (AddressBean) data.getSerializable("address");
+            mParams.latitude = addressBean.latitude;
+            mParams.longitude = addressBean.longitude;
+            mPresenter.getStore(mParams);
         }
     }
 
@@ -162,5 +198,25 @@ public class StoreHomeFragment extends BaseFragment {
         ViewPagerHelper.bind(mMagicIndicator, mViewPager);
     }
 
+    @Override
+    public void responseGetStore(List<ShopBean> list) {
+        if (list == null || list.isEmpty()) {
+            showHintDialog();
+        } else {
+            showStoreDialog(list);
+        }
+    }
 
+    private void showHintDialog() {
+        new BaseDialogFragment()
+                .setLayoutId(R.layout.dialog_hint)
+                .setConvertListener((holder, dialog) -> {
+                    holder.setText(R.id.tv_content, "抱歉，该地址附近暂无便利店，请重新选择~")
+                            .setVisible(R.id.btn_cancel, false);
+                })
+                .setDimAmount(0.3f)
+                .setMargin(40)
+                .setGravity(Gravity.CENTER)
+                .show(getChildFragmentManager());
+    }
 }

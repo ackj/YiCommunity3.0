@@ -1,9 +1,11 @@
 package cn.itsite.goodshome.contract;
 
+import java.util.List;
+
+import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.goodshome.model.HomePojo;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import cn.itsite.acommon.GoodsParams;
+import cn.itsite.goodshome.model.ShopBean;
 import rx.Observable;
 
 /**
@@ -15,8 +17,15 @@ import rx.Observable;
 
 public interface StoreContract {
 
-    @GET("v1/home")
-    Observable<BaseResponse<HomePojo>> getHome(@Query("params")String params);
+    interface View extends BaseContract.View{
+        void responseGetStore(List<ShopBean> list);
+    }
 
+    interface Presenter extends BaseContract.Presenter {
+        void getStore(GoodsParams goodsParams);
+    }
 
+    interface Model extends BaseContract.Model {
+        Observable<BaseResponse<List<ShopBean>>> getStore(GoodsParams goodsParams);
+    }
 }

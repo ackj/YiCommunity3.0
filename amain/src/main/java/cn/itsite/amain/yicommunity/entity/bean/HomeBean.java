@@ -4,6 +4,8 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
 
+import cn.itsite.classify.MenuBean;
+
 /**
  * Created by Administrator on 2017/4/26 0026.
  */
@@ -31,6 +33,15 @@ public class HomeBean implements MultiItemEntity {
     public List<ServiceBean> qualityLifes;
     public List<SubCategoryBean.DataBean> wisdomLife;
     public List<ServicesTypesBean.DataBean.ClassifyListBean> servicesClassifyList;
+    public List<MenuBean> smartMenus;
+
+    public List<MenuBean> getSmartMenus() {
+        return smartMenus;
+    }
+
+    public void setSmartMenus(List<MenuBean> smartMenus) {
+        this.smartMenus = smartMenus;
+    }
 
     public List<ServicesTypesBean.DataBean.ClassifyListBean> getServicesClassifyList() {
         return servicesClassifyList;

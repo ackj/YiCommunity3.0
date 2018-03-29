@@ -1,10 +1,13 @@
 package cn.itsite.amain.yicommunity.common;
 
+import java.util.List;
 import java.util.Map;
 
+import cn.itsite.abase.common.BaseBean;
+import cn.itsite.abase.common.UserBean;
+import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.amain.yicommunity.entity.bean.AppUpdateBean;
 import cn.itsite.amain.yicommunity.entity.bean.BannerBean;
-import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.BuildingBean;
 import cn.itsite.amain.yicommunity.entity.bean.CarCardBean;
 import cn.itsite.amain.yicommunity.entity.bean.CarCardListBean;
@@ -49,8 +52,8 @@ import cn.itsite.amain.yicommunity.entity.bean.SocialityListBean;
 import cn.itsite.amain.yicommunity.entity.bean.SubCategoryBean;
 import cn.itsite.amain.yicommunity.entity.bean.UnitBean;
 import cn.itsite.amain.yicommunity.entity.bean.UnreadMessageBean;
-import cn.itsite.abase.common.UserBean;
 import cn.itsite.amain.yicommunity.entity.bean.UserDataBean;
+import cn.itsite.classify.MenuBean;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
@@ -744,6 +747,10 @@ public interface ApiService {
                                         @Query("aliasType") String aliasType);
 
     //************************* 智能商城模块 **************************
+    //分类
+    @GET("http://www.aglhz.com/mall/ec/v1/categories")
+    Observable<BaseResponse<List<MenuBean>>> requestSmartMenu(@Query("params")String params);
+
     //一级列表同时是判断是否是跳转一级列表还是二级列表的入口
     String requestFirstLevel = "http://www.aglhz.com/mall/member/goodscategory/firstLevelList.do";
 

@@ -13,15 +13,15 @@ public class ProductDetailBean {
 
 
     /**
-     * attributes : [{"attribute":"领券","name":"满140元减10元券","type":{"name":"积分","uid":"6564656565656"},"uid":"356465464"},{"attribute":"服务","name":"7天无理由","type":{"name":"服务类型","uid":"6564656565656"},"uid":"356465464"},{"attribute":"参数","name":"净含量12g，包装方式...","uid":"356465464"},{"attribute":"促销","name":"满1元可享受10倍积分","uid":"356465464"}]
-     * description : 500g/包
-     * detail : {"images":["http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg","http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg","http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg"],"url":"https://item.jd.com/4264502.html"}
-     * images : [{"discription":"500g/包","image":"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg"},{"discription":"500g/包","image":"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg"},{"discription":"500g/包","image":"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg"}]
-     * pay : {"cost":"4.125","currency":"¥","discount":"7.5","price":"5.5"}
-     * share : https://item.jd.com/4264502.html
-     * shop : {"name":"克拉家园店","serviceType":"","type":"shop","uid":"54545454545"}
-     * title : 巧克力豆
-     * uid : 45645646545454
+     * attributes : [{"attribute":"配送范围","name":"50.0公里内配送","type":{"name":"服务","uid":""},"uid":""}]
+     * description :
+     * detail : {"images":["http://aglhzmall.image.alimmdn.com/goods/20161214113637620173.jpg@750w"],"url":"http://www.aglhz.com/mall/m/html/description.html?id=235776f2-ef43-4612-9238-958016a3cdaf&galleryType=GoodsType"}
+     * images : [{"discription":"","image":"http://aglhzmall.image.alimmdn.com/goods/20161214113637620173.jpg@750w"}]
+     * pay : {"cost":"20.00","currency":"¥","price":"20.00"}
+     * share : http://www.aglhz.com/mall/m/html/photo.html?shopId=6716f108-a244-4d99-8d7e-b929e3c9290a&goodsId=235776f2-ef43-4612-9238-958016a3cdaf
+     * shop : {"name":"亿社区自营店(内测..)","serviceType":"","type":"O2OType","uid":"6716f108-a244-4d99-8d7e-b929e3c9290a"}
+     * title : 自然派果仁世家原果仁
+     * uid : c9d9748a-07e9-4810-a52e-12ac355cad4f
      */
 
     private String description;
@@ -108,8 +108,8 @@ public class ProductDetailBean {
 
     public static class DetailBean {
         /**
-         * images : ["http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg","http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg","http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg"]
-         * url : https://item.jd.com/4264502.html
+         * images : ["http://aglhzmall.image.alimmdn.com/goods/20161214113637620173.jpg@750w"]
+         * url : http://www.aglhz.com/mall/m/html/description.html?id=235776f2-ef43-4612-9238-958016a3cdaf&galleryType=GoodsType
          */
 
         private String url;
@@ -134,15 +134,13 @@ public class ProductDetailBean {
 
     public static class PayBean {
         /**
-         * cost : 4.125
+         * cost : 20.00
          * currency : ¥
-         * discount : 7.5
-         * price : 5.5
+         * price : 20.00
          */
 
         private String cost;
         private String currency;
-        private String discount;
         private String price;
 
         public String getCost() {
@@ -161,14 +159,6 @@ public class ProductDetailBean {
             this.currency = currency;
         }
 
-        public String getDiscount() {
-            return discount;
-        }
-
-        public void setDiscount(String discount) {
-            this.discount = discount;
-        }
-
         public String getPrice() {
             return price;
         }
@@ -180,10 +170,10 @@ public class ProductDetailBean {
 
     public static class ShopBean {
         /**
-         * name : 克拉家园店
+         * name : 亿社区自营店(内测..)
          * serviceType :
-         * type : shop
-         * uid : 54545454545
+         * type : O2OType
+         * uid : 6716f108-a244-4d99-8d7e-b929e3c9290a
          */
 
         private String name;
@@ -226,10 +216,10 @@ public class ProductDetailBean {
 
     public static class AttributesBean {
         /**
-         * attribute : 领券
-         * name : 满140元减10元券
-         * type : {"name":"积分","uid":"6564656565656"}
-         * uid : 356465464
+         * attribute : 配送范围
+         * name : 50.0公里内配送
+         * type : {"name":"服务","uid":""}
+         * uid :
          */
 
         private String attribute;
@@ -271,8 +261,8 @@ public class ProductDetailBean {
 
         public static class TypeBean {
             /**
-             * name : 积分
-             * uid : 6564656565656
+             * name : 服务
+             * uid :
              */
 
             private String name;
@@ -298,8 +288,8 @@ public class ProductDetailBean {
 
     public static class ImagesBean {
         /**
-         * discription : 500g/包
-         * image : http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg
+         * discription :
+         * image : http://aglhzmall.image.alimmdn.com/goods/20161214113637620173.jpg@750w
          */
 
         private String discription;

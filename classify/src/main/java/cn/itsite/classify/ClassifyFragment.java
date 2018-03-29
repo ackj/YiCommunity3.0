@@ -30,6 +30,10 @@ import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.classify.contract.MenuContract;
 import cn.itsite.classify.presenter.MenuPresenter;
+import cn.itsite.statemanager.BaseViewHolder;
+import cn.itsite.statemanager.StateLayout;
+import cn.itsite.statemanager.StateListener;
+import cn.itsite.statemanager.StateManager;
 
 /**
  * Author： Administrator on 2018/1/29 0029.
@@ -65,6 +69,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     private boolean subMenuCanScroll = false;//控制三级菜单能否滚动
     private TextView mTvSearch;
     private ImageView mIvBack;
+    private StateManager mStateManager;
 
     public static ClassifyFragment newInstance() {
         return new ClassifyFragment();
@@ -101,12 +106,28 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initStatusBar();
+        initStateManager();
         initData();
         initListener();
     }
 
     private void initStatusBar() {
         mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(), mLlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mLlToolbar.getPaddingRight(), mLlToolbar.getPaddingBottom());
+    }
+
+    private void initStateManager() {
+        mStateManager = StateManager.builder(_mActivity)
+                .setContent(mRvContent)
+                .setEmptyView(R.layout.state_empty_layout)
+                .setEmptyImage(R.drawable.ic_prompt_shangpin_01)
+                .setConvertListener(new StateListener.ConvertListener() {
+                    @Override
+                    public void convert(BaseViewHolder holder, StateLayout stateLayout) {
+                        holder.setVisible(R.id.bt_empty_state, false);
+                    }
+                })
+                .setEmptyText("抱歉，该分类暂无商品~")
+                .build();
     }
 
     private void initData() {
@@ -130,7 +151,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         mAdapterSubMenu = new ClassifySubMenuRVAdapter();
         mRvSubMenu.setAdapter(mAdapterSubMenu);
 
-        mParams.type = "products";
+        mParams.shoptype = "shop";
         mParams.uid = "123";
         mParams.category = "123";
         mPresenter.getGategories(mParams);
@@ -151,9 +172,11 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
                 if (mContentLayoutManager.getSpanCount() == SPAN_COUNT_ONE) {
                     mContentLayoutManager.setSpanCount(SPAN_COUNT_TWO);
                     mRvContent.setAdapter(mAdapterContentGrid);
+                    mIvSwitchView.setImageResource(R.drawable.ic_item_switch0_gray_24dp);
                 } else {
                     mContentLayoutManager.setSpanCount(SPAN_COUNT_ONE);
                     mRvContent.setAdapter(mAdapterContentLinear);
+                    mIvSwitchView.setImageResource(R.drawable.ic_item_switch1_gray_24dp);
                 }
             }
         });
@@ -200,7 +223,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
             public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
                 MenuBean.ChildrenBean bean = mAdapterSubMenu.getData().get(position);
                 mAdapterSubMenu.setSelectedPosition(position);
-                mParams.uid = bean.getUid();
+                mParams.category = bean.getUid();
                 mPresenter.getProducts(mParams);
             }
         });
@@ -234,7 +257,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         mAdapterSubMenu.addData(menuBean.getChildren());
         mAdapterSubMenu.setSelectedPosition(0);
         //逻辑按点击“全部”一致，请求网络
-        mParams.uid = menuBean.getUid();
+        mParams.category = menuBean.getUid();
         mPresenter.getProducts(mParams);
 
         stretch(ONE_UNFOLD_LINE_HEIGHT);
@@ -283,6 +306,11 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
 
     @Override
     public void responseGetProducts(List<ProductBean> data) {
+        if (data == null || data.isEmpty()) {
+            mStateManager.showEmpty();
+        } else {
+            mStateManager.showContent();
+        }
         mAdapterContentGrid.setNewData(data);
         mAdapterContentLinear.setNewData(data);
     }

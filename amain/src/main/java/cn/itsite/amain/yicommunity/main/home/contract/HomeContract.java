@@ -3,16 +3,18 @@ package cn.itsite.amain.yicommunity.main.home.contract;
 
 import java.util.List;
 
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.amain.yicommunity.entity.bean.BannerBean;
-import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.FirstLevelBean;
 import cn.itsite.amain.yicommunity.entity.bean.MainDeviceListBean;
 import cn.itsite.amain.yicommunity.entity.bean.NoticeBean;
 import cn.itsite.amain.yicommunity.entity.bean.OneKeyDoorBean;
 import cn.itsite.amain.yicommunity.entity.bean.ServicesTypesBean;
 import cn.itsite.amain.yicommunity.entity.bean.SubCategoryBean;
+import cn.itsite.classify.MenuBean;
 import rx.Observable;
 
 
@@ -44,6 +46,8 @@ public interface HomeContract {
         void responseCommEquipmentList(MainDeviceListBean datas);
 
         void responseScanOpenDoor(BaseBean baseBean);
+
+        void responseSmartMenu(List<MenuBean> menus);
     }
 
     interface Presenter extends BaseContract.Presenter {
@@ -66,6 +70,8 @@ public interface HomeContract {
         void requestCommEquipmentList(Params params);
 
         void requestScanOpenDoor(Params params);//无人便利店二维码扫描开门。
+
+        void requestSmartMenu(Params params);
     }
 
     interface Model extends BaseContract.Model {
@@ -88,5 +94,7 @@ public interface HomeContract {
         Observable<MainDeviceListBean> requestCommEquipmentList(Params params);
 
         Observable<BaseBean> requestScanOpenDoor(Params params);//无人便利店二维码扫描开门。
+
+        Observable<BaseResponse<List<MenuBean>>> requestSmartMenu(Params params);
     }
 }

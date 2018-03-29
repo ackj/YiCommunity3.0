@@ -51,7 +51,6 @@ public class CartPresenter extends BasePresenter<CartContract.View, CartContract
                 .subscribe(new BaseSubscriber<BaseResponse<List<UidBean>>>() {
                     @Override
                     public void onSuccess(BaseResponse<List<UidBean>> listBaseResponse) {
-                        Logger.e("delete success" + listBaseResponse.getData().get(0).getUid());
                         getView().responseDeleteSuccess(listBaseResponse.getData());
                     }
                 }));

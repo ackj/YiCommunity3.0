@@ -32,7 +32,7 @@
             android:imeOptions="actionSearch"
             android:paddingLeft="20dp"
             android:singleLine="true"
-            android:textColor="@color/base_gray"
+            android:textColor="@color/default_text"
             android:textSize="@dimen/H5" />
 
         <TextView

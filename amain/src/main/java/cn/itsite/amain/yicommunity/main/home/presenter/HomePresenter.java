@@ -2,12 +2,16 @@ package cn.itsite.amain.yicommunity.main.home.presenter;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
+import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.main.home.contract.HomeContract;
 import cn.itsite.amain.yicommunity.main.home.model.HomeModel;
+import cn.itsite.classify.MenuBean;
 import rx.android.schedulers.AndroidSchedulers;
 
 
@@ -148,5 +152,17 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
                         getView().error(bean.getOther().getMessage());
                     }
                 }, this::error));
+    }
+
+    @Override
+    public void requestSmartMenu(Params params) {
+        mRxManager.add(mModel.requestSmartMenu(params)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<MenuBean>>>() {
+                    @Override
+                    public void onSuccess(BaseResponse<List<MenuBean>> listBaseResponse) {
+                        getView().responseSmartMenu(listBaseResponse.getData());
+                    }
+                }));
     }
 }

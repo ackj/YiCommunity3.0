@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,8 +37,8 @@ public class SelectShoppingAddressFragment extends BaseFragment<DeliveryContract
     private RecyclerView mRecyclerView;
     private RelativeLayout mRlToolbar;
     private TextView mTvAdd;
-
     private DeliveryRVAdapter mAdapter;
+    private ImageView mIvBack;
 
     public static SelectShoppingAddressFragment newInstance() {
         return new SelectShoppingAddressFragment();
@@ -61,6 +62,7 @@ public class SelectShoppingAddressFragment extends BaseFragment<DeliveryContract
         mRlToolbar = view.findViewById(R.id.rl_toolbar);
         mTvAdd = view.findViewById(R.id.tv_add);
         mRecyclerView = view.findViewById(R.id.recyclerView);
+        mIvBack = view.findViewById(R.id.iv_back);
         return attachToSwipeBack(view);
     }
 
@@ -96,12 +98,16 @@ public class SelectShoppingAddressFragment extends BaseFragment<DeliveryContract
         });
         mAdapter.addHeaderView(header);
         mRecyclerView.setAdapter(mAdapter);
-
         mPresenter.getAddress();
-
     }
 
     private void initListener() {
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         mTvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

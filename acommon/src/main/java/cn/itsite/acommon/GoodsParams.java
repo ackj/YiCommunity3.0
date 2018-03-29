@@ -18,6 +18,8 @@ public class GoodsParams {
     public String category;
     public String shopUid;
 
+    public String latitude;
+    public String longitude;
 
     @Override
     public String toString() {

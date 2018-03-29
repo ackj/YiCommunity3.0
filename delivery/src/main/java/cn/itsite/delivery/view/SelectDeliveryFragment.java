@@ -1,4 +1,4 @@
-package cn.itsite.delivery;
+package cn.itsite.delivery.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +21,9 @@ import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.AddressBean;
+import cn.itsite.delivery.R;
 import cn.itsite.delivery.contract.DeliveryContract;
+import cn.itsite.delivery.model.DeliveryBean;
 import cn.itsite.delivery.presenter.DeliveryPresenter;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -30,18 +32,16 @@ import me.yokeyword.fragmentation.SupportActivity;
  * Email： liujia95me@126.com
  */
 @Route(path = "/delivery/selectshoppingaddressfragment")
-public class SelectShoppingAddressFragment extends BaseFragment<DeliveryContract.Presenter> implements DeliveryContract.View {
-
-    private static final String TAG = SelectShoppingAddressFragment.class.getSimpleName();
-
+public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presenter> implements DeliveryContract.View {
+    public static final String TAG = SelectDeliveryFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private RelativeLayout mRlToolbar;
     private TextView mTvAdd;
     private DeliveryRVAdapter mAdapter;
     private ImageView mIvBack;
 
-    public static SelectShoppingAddressFragment newInstance() {
-        return new SelectShoppingAddressFragment();
+    public static SelectDeliveryFragment newInstance() {
+        return new SelectDeliveryFragment();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SelectShoppingAddressFragment extends BaseFragment<DeliveryContract
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select_shopping_address, container, false);
+        View view = inflater.inflate(R.layout.fragment_select_delivery, container, false);
         mRlToolbar = view.findViewById(R.id.rl_toolbar);
         mTvAdd = view.findViewById(R.id.tv_add);
         mRecyclerView = view.findViewById(R.id.recyclerView);
@@ -75,7 +75,10 @@ public class SelectShoppingAddressFragment extends BaseFragment<DeliveryContract
     }
 
     private void initStatusBar() {
-        mRlToolbar.setPadding(mRlToolbar.getPaddingLeft(), mRlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mRlToolbar.getPaddingRight(), mRlToolbar.getPaddingBottom());
+        mRlToolbar.setPadding(mRlToolbar.getPaddingLeft(),
+                mRlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity),
+                mRlToolbar.getPaddingRight(),
+                mRlToolbar.getPaddingBottom());
     }
 
     private void initData() {

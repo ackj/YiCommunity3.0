@@ -99,7 +99,9 @@ public class HttpHelper {
                     }
                     if (in.peek() == JsonToken.STRING) {
                         String tmp = in.nextString();
-                        if (TextUtils.isEmpty(tmp)) tmp = "0";
+                        if (TextUtils.isEmpty(tmp)) {
+                            tmp = "0";
+                        }
                         return Double.parseDouble(tmp);
                     }
                     return in.nextDouble();
@@ -121,7 +123,9 @@ public class HttpHelper {
                     }
                     if (in.peek() == JsonToken.STRING) {
                         String tmp = in.nextString();
-                        if (TextUtils.isEmpty(tmp)) tmp = "0";
+                        if (TextUtils.isEmpty(tmp)) {
+                            tmp = "0";
+                        }
                         return Long.parseLong(tmp);
                     }
                     return in.nextLong();
@@ -143,7 +147,9 @@ public class HttpHelper {
                     }
                     if (in.peek() == JsonToken.STRING) {
                         String tmp = in.nextString();
-                        if (TextUtils.isEmpty(tmp)) tmp = "0";
+                        if (TextUtils.isEmpty(tmp)) {
+                            tmp = "0";
+                        }
                         return Integer.parseInt(tmp);
                     }
                     return in.nextInt();
@@ -155,9 +161,33 @@ public class HttpHelper {
                 }
             };
 
+            //自定义Strig适配器
+            final TypeAdapter STRING = new TypeAdapter<String>() {
+                @Override
+                public String read(JsonReader reader) throws IOException {
+                    if (reader.peek() == JsonToken.NULL) {
+                        reader.nextNull();
+                        return "";
+                    }
+                    return reader.nextString();
+                }
+
+                @Override
+                public void write(JsonWriter writer, String value) throws IOException {
+                    if (value == null) {
+                        // 在这里处理null改为空字符串
+                        writer.value("");
+                        return;
+                    }
+                    writer.value(value);
+                }
+            };
+
+
             gsonBuilder.registerTypeAdapterFactory(TypeAdapters.newFactory(double.class, Double.class, DOUBLE));
             gsonBuilder.registerTypeAdapterFactory(TypeAdapters.newFactory(long.class, Long.class, LONG));
             gsonBuilder.registerTypeAdapterFactory(TypeAdapters.newFactory(int.class, Integer.class, INT));
+            gsonBuilder.registerTypeAdapterFactory(TypeAdapters.newFactory(String.class, String.class, STRING));
 
             mRetrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

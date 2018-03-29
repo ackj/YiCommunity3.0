@@ -1,4 +1,4 @@
-package cn.itsite.delivery;
+package cn.itsite.delivery.model;
 
 import java.util.List;
 

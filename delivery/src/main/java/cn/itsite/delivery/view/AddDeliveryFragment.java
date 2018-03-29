@@ -1,4 +1,4 @@
-package cn.itsite.delivery;
+package cn.itsite.delivery.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
+import cn.itsite.delivery.R;
 import cn.itsite.delivery.contract.AddDeliveryContract;
 import cn.itsite.delivery.presenter.AddDeliveryPresenter;
 
@@ -23,12 +24,9 @@ import cn.itsite.delivery.presenter.AddDeliveryPresenter;
  */
 @Route(path="/delivery/addaddressfragment")
 public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presenter> implements AddDeliveryContract.View {
-
-    private static final String TAG = AddDeliveryFragment.class.getSimpleName();
-
+    public static final String TAG = AddDeliveryFragment.class.getSimpleName();
     private RelativeLayout mRlToolbar;
     private TextView mTvAdd;
-
     private boolean isAdd;
 
     public static AddDeliveryFragment newInstance() {
@@ -49,7 +47,7 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_address, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_delivery, container, false);
         mRlToolbar = view.findViewById(R.id.rl_toolbar);
         mTvAdd = view.findViewById(R.id.tv_add);
         return attachToSwipeBack(view);
@@ -64,7 +62,10 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
     }
 
     private void initStatusBar() {
-        mRlToolbar.setPadding(mRlToolbar.getPaddingLeft(), mRlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mRlToolbar.getPaddingRight(), mRlToolbar.getPaddingBottom());
+        mRlToolbar.setPadding(mRlToolbar.getPaddingLeft(),
+                mRlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity),
+                mRlToolbar.getPaddingRight(),
+                mRlToolbar.getPaddingBottom());
     }
 
     private void initData() {

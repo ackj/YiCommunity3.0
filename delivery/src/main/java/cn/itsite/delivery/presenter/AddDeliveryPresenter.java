@@ -6,6 +6,7 @@ import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.delivery.contract.AddDeliveryContract;
 import cn.itsite.delivery.model.AddDeliveryModel;
+import cn.itsite.delivery.model.DeliveryBean;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -34,25 +35,25 @@ public class AddDeliveryPresenter extends BasePresenter<AddDeliveryContract.View
     }
 
     @Override
-    public void postAddress() {
-        mRxManager.add(mModel.postAddress()
+    public void postAddress(DeliveryBean bean) {
+        mRxManager.add(mModel.postAddress(bean)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>(){
                     @Override
-                    public void onSuccess(BaseResponse listBaseResponse) {
-                        getView().responsePostAddressSuccess();
+                    public void onSuccess(BaseResponse response) {
+                        getView().responsePostAddressSuccess(response);
                     }
                 }));
     }
 
     @Override
-    public void putAddress() {
-        mRxManager.add(mModel.putAddress()
+    public void putAddress(DeliveryBean bean) {
+        mRxManager.add(mModel.putAddress(bean)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>(){
                     @Override
-                    public void onSuccess(BaseResponse listBaseResponse) {
-                        getView().responsePutAddressSuccess();
+                    public void onSuccess(BaseResponse response) {
+                        getView().responsePutAddressSuccess(response);
                     }
                 }));
     }

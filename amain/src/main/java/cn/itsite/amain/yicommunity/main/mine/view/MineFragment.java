@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -24,17 +26,16 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.event.EventLogout;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.DensityUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
-import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.DoorManager;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.entity.bean.UnreadMessageBean;
 import cn.itsite.amain.yicommunity.event.EventData;
 import cn.itsite.amain.yicommunity.event.EventUnread;
@@ -209,7 +210,6 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
                             .placeholder(R.drawable.ic_mine_avatar_normal_320px)
                             .circleCrop())
                     .into(ivHead);
-
             updateHeaderBackground();
 
             tvName.setText(UserHelper.userInfo.getNickName());
@@ -289,14 +289,18 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
             }
         } else if (i == R.id.ll_my_indent) {
             if (isLogined()) {
-                String url = ApiService.INDENT_CENTER + UserHelper.token;
-                go2Web("我的订单", url);
+                Fragment mineorderfragment = (Fragment) ARouter.getInstance().build("/order/mineorderfragment").navigation();
+                start(mineorderfragment);
+//                String url = ApiService.INDENT_CENTER + UserHelper.token;
+//                go2Web("我的订单", url);
 //                    _mActivity.start(MineOrderformFragment.newInstance());
             }
         } else if (i == R.id.ll_my_address) {
             if (isLogined()) {
-                String url = ApiService.MY_ADDRESS + UserHelper.token;
-                go2Web("我的地址", url);
+//                String url = ApiService.MY_ADDRESS + UserHelper.token;
+//                go2Web("我的地址", url);
+                Fragment mineorderfragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
+                start(mineorderfragment);
             }
         } else if (i == R.id.ll_make_shortcut) {//                if (TextUtils.isEmpty(UserHelper.dir)) {
 //                    new AlertDialog.Builder(_mActivity)

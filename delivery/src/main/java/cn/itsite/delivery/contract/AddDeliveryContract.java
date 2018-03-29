@@ -2,6 +2,7 @@ package cn.itsite.delivery.contract;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.delivery.model.DeliveryBean;
 import rx.Observable;
 
 /**
@@ -14,17 +15,17 @@ import rx.Observable;
 public interface AddDeliveryContract {
 
     interface View extends BaseContract.View{
-        void responsePostAddressSuccess();
-        void responsePutAddressSuccess();
+        void responsePostAddressSuccess(BaseResponse response);
+        void responsePutAddressSuccess(BaseResponse response);
     }
 
     interface Presenter extends BaseContract.Presenter {
-        void postAddress();
-        void putAddress();
+        void postAddress(DeliveryBean bean);
+        void putAddress(DeliveryBean bean);
     }
 
     interface Model extends BaseContract.Model {
-        Observable<BaseResponse> postAddress();
-        Observable<BaseResponse> putAddress();
+        Observable<BaseResponse> postAddress(DeliveryBean bean);
+        Observable<BaseResponse> putAddress( DeliveryBean bean);
     }
 }

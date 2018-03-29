@@ -98,7 +98,8 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
         mTvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(AddDeliveryFragment.newInstance(null));
+                startForResult(AddDeliveryFragment.newInstance(null), 100);
+
             }
         });
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -107,7 +108,7 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
                 List<DeliveryBean> data = mAdapter.getData();
                 DeliveryBean deliveryBean = data.get(position);
                 if (view.getId() == R.id.iv_edit) {
-                    start(AddDeliveryFragment.newInstance(data.get(position)));
+                    startForResult(AddDeliveryFragment.newInstance(data.get(position)), 100);
                 } else {
                     Bundle bundle = new Bundle();
                     AddressBean addressBean = new AddressBean();
@@ -120,6 +121,14 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
                 }
             }
         });
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (RESULT_OK == resultCode && requestCode == 100) {
+            mPresenter.getAddress();
+        }
     }
 
     @Override

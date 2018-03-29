@@ -2,7 +2,6 @@ package cn.itsite.goodsdetail;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.goodsdetail.contract.ProductContract;
-import cn.itsite.goodsdetail.presenter.ProductPresenter;
 
 /**
  * @author liujia
@@ -31,27 +28,27 @@ import cn.itsite.goodsdetail.presenter.ProductPresenter;
  * @time 2018/3/21 0021 14:41
  */
 
-public class GoodsFragment extends BaseFragment<ProductContract.Presenter> implements ProductContract.View {
+public class GoodsFragment extends BaseFragment {
     public static final String TAG = GoodsFragment.class.getSimpleName();
     private Banner mBanner;
     private TextView mTvName;
     private TextView mTvDesc;
     private TextView mTvPrice;
     private FlexboxLayout mFlexboxLayout;
+    private ProductDetailBean bean;
 
-    public static GoodsFragment newInstance() {
-        return new GoodsFragment();
+    public static GoodsFragment newInstance(ProductDetailBean bean) {
+        GoodsFragment fragment = new GoodsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean", bean);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @NonNull
-    @Override
-    protected ProductContract.Presenter createPresenter() {
-        return new ProductPresenter(this);
+        bean = (ProductDetailBean) getArguments().getSerializable("bean");
     }
 
     @Nullable
@@ -78,19 +75,16 @@ public class GoodsFragment extends BaseFragment<ProductContract.Presenter> imple
     }
 
     private void initData() {
-        mPresenter.getProduct("123");
+        if (bean != null) {
+            refreshBanner(bean);
+            refreshLables(bean);
+            mTvName.setText(bean.getTitle());
+            mTvDesc.setText(bean.getDescription());
+            mTvDesc.setText(bean.getPay().getCurrency() + bean.getPay().getCost());
+        }
     }
 
     private void initListener() {
-    }
-
-    @Override
-    public void responseGetProduct(ProductDetailBean bean) {
-        refreshBanner(bean);
-        refreshLables(bean);
-        mTvName.setText(bean.getTitle());
-        mTvDesc.setText(bean.getDescription());
-        mTvDesc.setText(bean.getPay().getCurrency() + bean.getPay().getCost());
     }
 
     private void refreshLables(ProductDetailBean bean) {

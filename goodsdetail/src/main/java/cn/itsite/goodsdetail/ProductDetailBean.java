@@ -1,5 +1,6 @@
 package cn.itsite.goodsdetail;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,8 +10,7 @@ import java.util.List;
  * @time 2018/3/21 0021 17:44
  */
 
-public class ProductDetailBean {
-
+public class ProductDetailBean implements Serializable {
 
     /**
      * attributes : [{"attribute":"配送范围","name":"50.0公里内配送","type":{"name":"服务","uid":""},"uid":""}]

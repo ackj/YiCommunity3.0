@@ -40,7 +40,7 @@ import cn.itsite.statemanager.StateManager;
  * Email： liujia95me@126.com
  */
 @Route(path = "/classify/classifyfragment")
-public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> implements MenuContract.View {
+public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> implements MenuContract.View, BaseQuickAdapter.OnItemClickListener {
 
     public static final String TAG = ClassifyFragment.class.getSimpleName();
 
@@ -203,13 +203,8 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
             }
         });
 
-        mAdapterContentLinear.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
-                start((BaseFragment) goodsDetailFragment);
-            }
-        });
+        mAdapterContentGrid.setOnItemClickListener(this);
+        mAdapterContentLinear.setOnItemClickListener(this);
 
         mAdapterMenu.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -313,5 +308,14 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         }
         mAdapterContentGrid.setNewData(data);
         mAdapterContentLinear.setNewData(data);
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
+        Bundle bundle = new Bundle();
+        bundle.putString("uid", mAdapterContentLinear.getData().get(position).getUid());
+        goodsDetailFragment.setArguments(bundle);
+        start((BaseFragment) goodsDetailFragment);
     }
 }

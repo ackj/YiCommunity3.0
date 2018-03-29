@@ -278,6 +278,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         super.onViewCreated(view, savedInstanceState);
         setGravity(Gravity.BOTTOM);
         setAnimStyle(R.anim.slide_enter);
+        setDimAmount(0.5f);
         initData();
         initListener();
     }

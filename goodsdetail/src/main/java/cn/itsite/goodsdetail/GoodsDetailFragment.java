@@ -2,6 +2,7 @@ package cn.itsite.goodsdetail;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.DefaultTransformer;
 import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.VerticalViewPager;
+import cn.itsite.goodsdetail.contract.ProductContract;
+import cn.itsite.goodsdetail.presenter.ProductPresenter;
 
 import static android.view.View.OVER_SCROLL_NEVER;
 
@@ -40,7 +43,7 @@ import static android.view.View.OVER_SCROLL_NEVER;
  * Email： liujia95me@126.com
  */
 @Route(path = "/goodsdetail/goodsdetailfragment")
-public class GoodsDetailFragment extends BaseFragment {
+public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter> implements ProductContract.View {
 
     public static final String TAG = GoodsDetailFragment.class.getSimpleName();
 
@@ -48,16 +51,25 @@ public class GoodsDetailFragment extends BaseFragment {
     private TextView mTvPutShopcart;
     private TextView mTvBuyItNow;
     private LinearLayout mLlShopCart;
-    private VerticalViewPager mUltraViewPager;
+    private VerticalViewPager mViewPager;
     private MagicIndicator mMagicIndicator;
 
     public static GoodsDetailFragment newInstance() {
         return new GoodsDetailFragment();
     }
 
+    String uid;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        uid = getArguments().getString("uid");
+    }
+
+    @NonNull
+    @Override
+    protected ProductContract.Presenter createPresenter() {
+        return new ProductPresenter(this);
     }
 
     @Nullable
@@ -68,7 +80,7 @@ public class GoodsDetailFragment extends BaseFragment {
         mTvPutShopcart = view.findViewById(R.id.tv_put_shopcart);
         mTvBuyItNow = view.findViewById(R.id.tv_buy_it_now);
         mLlShopCart = view.findViewById(R.id.ll_shopcart);
-        mUltraViewPager = view.findViewById(R.id.ultra_viewpager);
+        mViewPager = view.findViewById(R.id.ultra_viewpager);
         mMagicIndicator = view.findViewById(R.id.magicIndicator);
         return attachToSwipeBack(view);
     }
@@ -88,11 +100,11 @@ public class GoodsDetailFragment extends BaseFragment {
 
     private void initData() {
 //        mUltraViewPager.setScrollMode(UltraViewPager.ScrollMode.VERTICAL);
-        mUltraViewPager.setPageTransformer(true, new DefaultTransformer());
-        mUltraViewPager.setOverScrollMode(OVER_SCROLL_NEVER);
+        mViewPager.setPageTransformer(true, new DefaultTransformer());
+        mViewPager.setOverScrollMode(OVER_SCROLL_NEVER);
 
-        GoodsDetailVPAdapter adapter = new GoodsDetailVPAdapter(getChildFragmentManager());
-        mUltraViewPager.setAdapter(adapter);
+
+        mPresenter.getProduct(uid);
     }
 
     private void initListener() {
@@ -139,7 +151,7 @@ public class GoodsDetailFragment extends BaseFragment {
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mUltraViewPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return simplePagerTitleView;
@@ -163,7 +175,7 @@ public class GoodsDetailFragment extends BaseFragment {
         LinearLayout titleContainer = commonNavigator.getTitleContainer(); // must after setNavigator
         titleContainer.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         titleContainer.setDividerDrawable(getResources().getDrawable(R.drawable.simple_splitter_2));
-        ViewPagerHelper.bind(mMagicIndicator, mUltraViewPager);
+        ViewPagerHelper.bind(mMagicIndicator, mViewPager);
     }
 
     private void showSpecificationDialog() {
@@ -171,4 +183,9 @@ public class GoodsDetailFragment extends BaseFragment {
         dialog.show(getChildFragmentManager());
     }
 
+    @Override
+    public void responseGetProduct(ProductDetailBean bean) {
+        GoodsDetailVPAdapter adapter = new GoodsDetailVPAdapter(getChildFragmentManager(), bean);
+        mViewPager.setAdapter(adapter);
+    }
 }

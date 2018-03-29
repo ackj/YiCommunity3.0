@@ -212,7 +212,15 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                 .setLayoutId(R.layout.dialog_hint)
                 .setConvertListener((holder, dialog) -> {
                     holder.setText(R.id.tv_content, "抱歉，该地址附近暂无便利店，请重新选择~")
-                            .setVisible(R.id.btn_cancel, false);
+                            .setVisible(R.id.btn_cancel, false)
+                            .setOnClickListener(R.id.btn_comfirm, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
+                                    startForResult((BaseFragment) addressFragment, 100);
+
+                                }
+                            });
                 })
                 .setDimAmount(0.3f)
                 .setMargin(40)

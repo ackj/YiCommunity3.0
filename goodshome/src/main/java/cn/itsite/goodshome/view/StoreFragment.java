@@ -133,7 +133,7 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                         if (view.getId() == R.id.ll_location) {
                             ToastUtils.showToast(_mActivity, "点击地址");
                             Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
-                            ((StoreHomeFragment) getParentFragment()).startForResult((BaseFragment) addressFragment,100);
+                            ((StoreHomeFragment) getParentFragment()).startForResult((BaseFragment) addressFragment, 100);
                         }
                         break;
                     default:
@@ -155,6 +155,9 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                     case StoreItemGridBean.TYPE_RECOMMEND:
                     case StoreItemGridBean.TYPE_GOODS:
                         Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("uid", item.getProductsBean().getUid());
+                        goodsDetailFragment.setArguments(bundle);
                         ((StoreHomeFragment) getParentFragment()).start((BaseFragment) goodsDetailFragment);
                         break;
                     default:

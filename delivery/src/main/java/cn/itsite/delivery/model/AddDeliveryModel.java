@@ -37,6 +37,13 @@ public class AddDeliveryModel extends BaseModel implements AddDeliveryContract.M
 
     @Override
     public Observable<BaseResponse> putAddress(DeliveryBean bean) {
-        return null;
+        List<DeliveryBean> list = new ArrayList<>();
+        list.add(bean);
+        BaseRequest<List<DeliveryBean>> request = new BaseRequest();
+        request.data = list;
+        request.message = "修改这几个递送";
+        return HttpHelper.getService(DeliveryService.class)
+                .putAddress(new Gson().toJson(request))
+                .subscribeOn(Schedulers.io());
     }
 }

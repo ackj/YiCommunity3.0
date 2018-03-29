@@ -3,6 +3,7 @@ package cn.itsite.goodsdetail;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 
 /**
  * @author liujia
@@ -14,17 +15,20 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class GoodsDetailVPAdapter extends FragmentPagerAdapter {
     public static final String TAG = GoodsDetailVPAdapter.class.getSimpleName();
 
-    public GoodsDetailVPAdapter(FragmentManager fm) {
+    private ProductDetailBean bean;
+
+    public GoodsDetailVPAdapter(FragmentManager fm, ProductDetailBean bean) {
         super(fm);
+        this.bean = bean;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return position == 0 ? GoodsFragment.newInstance() : DetailFragment.newInstance();
+        return position == 0 ? GoodsFragment.newInstance(bean) : DetailFragment.newInstance(bean.getDetail().getUrl());
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return TextUtils.isEmpty(bean.getDetail().getUrl()) ? 1 : 2;
     }
 }

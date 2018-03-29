@@ -1,22 +1,16 @@
 package cn.itsite.goodsdetail;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
-import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import com.trycatch.mysnackbar.ScreenUtil;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 
@@ -31,15 +25,20 @@ public class DetailFragment extends BaseFragment {
 
     public static final String TAG = DetailFragment.class.getSimpleName();
     private WebView mWebView;
-    private String link = "https://item.jd.com/4264502.html";
+    private String link;
 
-    public static DetailFragment newInstance() {
-        return new DetailFragment();
+    public static DetailFragment newInstance(String link) {
+        DetailFragment fragment = new DetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("link", link);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        link = getArguments().getString("link");
     }
 
     @Nullable

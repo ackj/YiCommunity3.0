@@ -115,17 +115,19 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
             mTvSelectAddress.setText(deliveryBean.getLocation());
             mCbDefault.setChecked(deliveryBean.isIsDeafult());
             String gender = deliveryBean.getGender();
-            switch (gender) {
-                case GENDER_MALE:
-                    mRgGender.check(R.id.rb_male);
-                    break;
-                case GENDER_FEMALE:
-                    mRgGender.check(R.id.rb_female);
-                    break;
-                case GENDER_SECRECY:
-                    mRgGender.clearCheck();
-                    break;
-                default:
+            if (!TextUtils.isEmpty(gender)) {
+                switch (gender) {
+                    case GENDER_MALE:
+                        mRgGender.check(R.id.rb_male);
+                        break;
+                    case GENDER_FEMALE:
+                        mRgGender.check(R.id.rb_female);
+                        break;
+                    case GENDER_SECRECY:
+                        mRgGender.clearCheck();
+                        break;
+                    default:
+                }
             }
         }
     }
@@ -164,6 +166,9 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
             }
         } else if (v.getId() == R.id.tv_select_address) {
             //todo:跳转选择页面
+            if (checkInput()) {
+                mPresenter.putAddress(deliveryBean);
+            }
         }
     }
 

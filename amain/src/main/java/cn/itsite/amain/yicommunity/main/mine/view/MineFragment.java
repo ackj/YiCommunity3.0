@@ -49,6 +49,7 @@ import cn.itsite.amain.yicommunity.main.mypublish.MyPublishActivity;
 import cn.itsite.amain.yicommunity.main.view.MainFragment;
 import cn.itsite.amain.yicommunity.web.WebActivity;
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -290,7 +291,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         } else if (i == R.id.ll_my_indent) {
             if (isLogined()) {
                 Fragment mineorderfragment = (Fragment) ARouter.getInstance().build("/order/mineorderfragment").navigation();
-                start(mineorderfragment);
+                ((SupportActivity) _mActivity).start((ISupportFragment) mineorderfragment);
 //                String url = ApiService.INDENT_CENTER + UserHelper.token;
 //                go2Web("我的订单", url);
 //                    _mActivity.start(MineOrderformFragment.newInstance());
@@ -299,8 +300,9 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
             if (isLogined()) {
 //                String url = ApiService.MY_ADDRESS + UserHelper.token;
 //                go2Web("我的地址", url);
-                Fragment mineorderfragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
-                start(mineorderfragment);
+                Fragment fragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
+                ((SupportActivity) _mActivity).start((ISupportFragment) fragment);
+
             }
         } else if (i == R.id.ll_make_shortcut) {//                if (TextUtils.isEmpty(UserHelper.dir)) {
 //                    new AlertDialog.Builder(_mActivity)

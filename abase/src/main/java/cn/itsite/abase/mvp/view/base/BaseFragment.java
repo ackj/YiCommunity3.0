@@ -204,7 +204,7 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     @CallSuper
     public void error(String errorMessage) {
         dismissLoading();
-        DialogHelper.errorSnackbar(getView(), errorMessage);
+        DialogHelper.warningSnackbar(getView(), errorMessage);
     }
 
     @Override

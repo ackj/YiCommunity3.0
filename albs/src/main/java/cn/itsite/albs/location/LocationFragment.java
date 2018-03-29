@@ -51,7 +51,6 @@ import cn.itsite.abase.mvp.view.base.BaseRecyclerViewAdapter;
 import cn.itsite.abase.mvp.view.base.Decoration;
 import cn.itsite.albs.R;
 import me.yokeyword.fragmentation.SupportActivity;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * @author leguang
@@ -64,7 +63,11 @@ public class LocationFragment extends BaseFragment implements
         LocationSource, AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener, PoiSearch.OnPoiSearchListener {
     public static final String TAG = LocationFragment.class.getSimpleName();
     public static final String POI = "poi";
+    public static final String ADDRESS = "address";
+    public static final String LONGITUDE = "longitude";
+    public static final String LATITUDE = "latitude";
     public static final int REQUEST_CODE = 100;
+    public static final int RESULT_CODE = 101;
     private CardView cvSearch;
     private TextView tvKeword;
     private TextView tvLocation;
@@ -147,7 +150,11 @@ public class LocationFragment extends BaseFragment implements
         adapter.setOnItemClickListener((adapter, view, position) -> {
             PoiItem item = ((PoiItem) adapter.getData().get(position));
             String address = item.getProvinceName() + item.getCityName() + item.getAdName() + item.getSnippet();
-            selectAddress(address);
+            Bundle bundle = new Bundle();
+            bundle.putString(ADDRESS, address);
+            bundle.putDouble(LONGITUDE, item.getLatLonPoint().getLongitude());
+            bundle.putDouble(LATITUDE, item.getLatLonPoint().getLatitude());
+            selectAddress(bundle);
         });
 
         myLocation.setOnClickListener(v -> aMap.moveCamera(CameraUpdateFactory.changeLatLng(currentLatlng)));
@@ -159,7 +166,17 @@ public class LocationFragment extends BaseFragment implements
             if (address.startsWith(BaseApp.mContext.getString(R.string.locating))) {
                 DialogHelper.warningSnackbar(getView(), "抱歉，未获取到定位，请重新尝试！");
             } else {
-                selectAddress(address);
+                double longitude = 0;
+                double latitude = 0;
+                if (tvLocation.getTag() instanceof RegeocodeResult) {
+                    longitude = ((RegeocodeResult) tvLocation.getTag()).getRegeocodeQuery().getPoint().getLongitude();
+                    latitude = ((RegeocodeResult) tvLocation.getTag()).getRegeocodeQuery().getPoint().getLatitude();
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString(ADDRESS, address);
+                bundle.putDouble(LONGITUDE, longitude);
+                bundle.putDouble(LATITUDE, latitude);
+                selectAddress(bundle);
             }
         });
     }
@@ -340,8 +357,8 @@ public class LocationFragment extends BaseFragment implements
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
                 String address = result.getRegeocodeAddress().getFormatAddress();
-                Log.e(TAG, "FormatAddress-->" + address);
                 tvLocation.setText(address);
+                tvLocation.setTag(result);
                 doSearchQuery();
             }
         } else {
@@ -454,10 +471,8 @@ public class LocationFragment extends BaseFragment implements
         searchPOI(tip);
     }
 
-    private void selectAddress(String address) {
-        Bundle bundle = new Bundle();
-        bundle.getString(POI, address);
-        setFragmentResult(SupportFragment.RESULT_OK, bundle);
+    private void selectAddress(Bundle bundle) {
+        setFragmentResult(RESULT_CODE, bundle);
         ((SupportActivity) _mActivity).onBackPressedSupport();
     }
 }

@@ -298,15 +298,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     @Override
     public void error(String errorMessage) {
         super.error(errorMessage);
-        ALog.e(TAG, "error:" + errorMessage);
         if (openDoorialog != null) {
             openDoorialog.setError();
         }
-        dismissLoading();
         ptrFrameLayout.refreshComplete();
         adapter.notifyItemChanged(0);
         adapter.notifyItemChanged(1);
-        DialogHelper.warningSnackbar(getView(), errorMessage);
     }
 
     @Override

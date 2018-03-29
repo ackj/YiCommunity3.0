@@ -16,10 +16,12 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.abase.utils.ToastUtils;
+import cn.itsite.albs.location.LocationFragment;
 import cn.itsite.delivery.R;
 import cn.itsite.delivery.contract.AddDeliveryContract;
 import cn.itsite.delivery.model.DeliveryBean;
@@ -32,6 +34,7 @@ import cn.itsite.delivery.presenter.AddDeliveryPresenter;
 @Route(path = "/delivery/addaddressfragment")
 public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presenter> implements AddDeliveryContract.View, View.OnClickListener {
     public static final String TAG = AddDeliveryFragment.class.getSimpleName();
+    public static final int REQUEST_CODE = 0x11;
     private RelativeLayout mRlToolbar;
     private TextView mTvSave;
     private boolean isAdd;
@@ -41,13 +44,10 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
     private TextView mTvSelectAddress;
     private RadioGroup mRgGender;
     private DeliveryBean deliveryBean;
-
-    String gender = GENDER_SECRECY;
-
+    private String gender = GENDER_SECRECY;
     public static final String GENDER_MALE = "male";
     public static final String GENDER_FEMALE = "female";
     public static final String GENDER_SECRECY = "secrecy";
-
     private CheckBox mCbDefault;
     private TextView mTvTitle;
 
@@ -144,6 +144,10 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
                 }
             }
         });
+
+        mTvSelectAddress.setOnClickListener(v -> {
+            startForResult(LocationFragment.newInstance(), REQUEST_CODE);
+        });
     }
 
     @Override
@@ -204,6 +208,24 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
         } else {
             ToastUtils.showToast(_mActivity, message);
             return false;
+        }
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        ALog.e("1111111111111111");
+
+        if (requestCode == REQUEST_CODE && resultCode == LocationFragment.RESULT_CODE) {
+            ALog.e("222222222");
+
+            if (data != null) {
+                ALog.e("333333333333");
+
+                ALog.e(data.getString(LocationFragment.ADDRESS));
+                ALog.e(data.getDouble(LocationFragment.LONGITUDE));
+                ALog.e(data.getDouble(LocationFragment.LATITUDE));
+            }
         }
     }
 }

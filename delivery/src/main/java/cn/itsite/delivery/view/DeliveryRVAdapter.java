@@ -1,5 +1,8 @@
 package cn.itsite.delivery.view;
 
+import android.view.View;
+import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import cn.itsite.abase.mvp.view.base.BaseRecyclerViewAdapter;
@@ -19,6 +22,8 @@ public class DeliveryRVAdapter extends BaseRecyclerViewAdapter<DeliveryBean, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, DeliveryBean item) {
+        TextView tvIsDefault = helper.getView(R.id.tv_is_default);
+        tvIsDefault.setVisibility(item.isIsDeafult()? View.VISIBLE:View.GONE);
         helper.setText(R.id.tv_name, item.getName())
                 .setText(R.id.tv_phone, item.getPhoneNumber())
                 .setText(R.id.tv_address, item.getLocation() + item.getAddress())

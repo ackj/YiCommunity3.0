@@ -1,5 +1,7 @@
 package cn.itsite.delivery.model;
 
+import java.io.Serializable;
+
 /**
  * @author liujia
  * @version v0.0.0
@@ -7,7 +9,7 @@ package cn.itsite.delivery.model;
  * @time 2018/3/14 0014 15:42
  */
 
-public class DeliveryBean {
+public class DeliveryBean implements Serializable{
 
     /**
      * uid : 123123123

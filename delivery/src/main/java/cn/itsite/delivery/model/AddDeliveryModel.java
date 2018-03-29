@@ -1,9 +1,12 @@
 package cn.itsite.delivery.model;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.mvp.model.base.BaseModel;
+import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.delivery.contract.DeliveryService;
@@ -21,40 +24,19 @@ import rx.schedulers.Schedulers;
 public class AddDeliveryModel extends BaseModel implements AddDeliveryContract.Model {
 
     @Override
-    public Observable<BaseResponse> postAddress() {
-        RequestBean requestBean = new RequestBean();
-        List<RequestBean.DataBean> list = new ArrayList<>();
-        RequestBean.DataBean bean = new RequestBean.DataBean();
-        bean.setAddress("啦啦啦");
-        bean.setDeafult(true);
-        bean.setGender("啦啦啦");
-        bean.setLatitude("啦啦啦");
-        bean.setLocation("啦啦啦");
-        bean.setName("啦啦啦");
-        bean.setPhoneNumber("啦啦啦");
+    public Observable<BaseResponse> postAddress(DeliveryBean bean) {
+        List<DeliveryBean> list = new ArrayList<>();
         list.add(bean);
-        requestBean.setData(list);
+        BaseRequest<List<DeliveryBean>> request = new BaseRequest();
+        request.data = list;
+        request.message = "修改这几个递送";
         return HttpHelper.getService(DeliveryService.class)
-                .postAddress(requestBean)
+                .postAddress(new Gson().toJson(request))
                 .subscribeOn(Schedulers.io());
     }
 
     @Override
-    public Observable<BaseResponse> putAddress() {
-        RequestBean requestBean = new RequestBean();
-        List<RequestBean.DataBean> list = new ArrayList<>();
-        RequestBean.DataBean bean = new RequestBean.DataBean();
-        bean.setAddress("啦啦啦");
-        bean.setDeafult(true);
-        bean.setGender("啦啦啦");
-        bean.setLatitude("啦啦啦");
-        bean.setLocation("啦啦啦");
-        bean.setName("啦啦啦");
-        bean.setPhoneNumber("啦啦啦");
-        list.add(bean);
-        requestBean.setData(list);
-        return HttpHelper.getService(DeliveryService.class)
-                .putAddress("123",requestBean)
-                .subscribeOn(Schedulers.io());
+    public Observable<BaseResponse> putAddress(DeliveryBean bean) {
+        return null;
     }
 }

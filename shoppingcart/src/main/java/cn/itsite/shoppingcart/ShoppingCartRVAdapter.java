@@ -4,6 +4,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -66,6 +67,8 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
                 ImageView ivIcon = helper.getView(R.id.iv_icon);
                 Glide.with(ivIcon.getContext())
                         .load(item.getProductsBean().getIcon())
+                        .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                        .apply(new RequestOptions().error(R.drawable.ic_img_error))
                         .into(ivIcon);
                 break;
             case StoreBean.TYPE_RECOMMEND_TITLE:
@@ -74,6 +77,8 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
                 ImageView mIvIcon = helper.getView(R.id.iv_icon);
                 Glide.with(mIvIcon.getContext())
                         .load(item.getRecommendGoodsBean().getImageUrl())
+                        .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                        .apply(new RequestOptions().error(R.drawable.ic_img_error))
                         .into(mIvIcon);
                 helper.addOnClickListener(R.id.cl_goods_layout)
                         .setText(R.id.tv_name, item.getRecommendGoodsBean().getTitle())

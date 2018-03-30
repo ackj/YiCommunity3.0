@@ -3,6 +3,7 @@ package cn.itsite.classify;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import cn.itsite.abase.mvp.view.base.BaseRecyclerViewAdapter;
@@ -23,6 +24,8 @@ public class ClassifyContentLinearRVAdapter extends BaseRecyclerViewAdapter<Prod
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         Glide.with(ivIcon.getContext())
                 .load(item.getImageUrl())
+                .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                .apply(new RequestOptions().error(R.drawable.ic_img_error))
                 .into(ivIcon);
         helper.setText(R.id.tv_name, item.getTitle())
                 .setText(R.id.tv_desc, item.getDescription())

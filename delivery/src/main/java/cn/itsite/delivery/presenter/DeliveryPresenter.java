@@ -48,13 +48,13 @@ public class DeliveryPresenter extends BasePresenter<DeliveryContract.View,Deliv
     }
 
     @Override
-    public void deleteAddress() {
-        mRxManager.add(mModel.deleteAddress()
+    public void deleteAddress(String uid) {
+        mRxManager.add(mModel.deleteAddress(uid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>(){
                     @Override
-                    public void onSuccess(BaseResponse listBaseResponse) {
-                        getView().responseDeleteAddressSuccess();
+                    public void onSuccess(BaseResponse response) {
+                        getView().responseDeleteAddressSuccess(response);
                     }
                 }));
     }

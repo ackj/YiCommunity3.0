@@ -17,16 +17,16 @@ import rx.Observable;
 public interface DeliveryContract {
     interface View extends BaseContract.View{
         void responseGetAddress(List<DeliveryBean> data);
-        void responseDeleteAddressSuccess();
+        void responseDeleteAddressSuccess(BaseResponse response);
     }
 
     interface Presenter extends BaseContract.Presenter {
         void getAddress();
-        void deleteAddress();
+        void deleteAddress(String uid);
     }
 
     interface Model extends BaseContract.Model {
         Observable<BaseResponse<List<DeliveryBean>>> getAddress();
-        Observable<BaseResponse> deleteAddress();
+        Observable<BaseResponse> deleteAddress(String uid);
     }
 }

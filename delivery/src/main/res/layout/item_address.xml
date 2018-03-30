@@ -1,89 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container_layout"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:background="@color/white"
-    android:clickable="true"
-    android:focusable="true">
+    android:layout_height="wrap_content"
+    app:drag_edge="right"
+    app:show_mode="pull_out">
 
     <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:includeFontPadding="false"
-        android:textColor="@color/base_black"
-        android:textSize="@dimen/H3"
-        app:layout_constraintBottom_toTopOf="@+id/tv_address"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        android:id="@+id/tv_delete"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:background="@color/error"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/white"
+        android:textSize="@dimen/H3" />
 
-    <TextView
-        android:id="@+id/tv_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="22dp"
-        android:includeFontPadding="false"
-        android:textColor="@color/base_black"
-        android:textSize="@dimen/H3"
-        app:layout_constraintBaseline_toBaselineOf="@id/tv_name"
-        app:layout_constraintLeft_toRightOf="@id/tv_name" />
-
-    <TextView
-        android:id="@+id/tv_is_default"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:text="[默认]"
-        android:textColor="@color/warn"
-        android:textSize="@dimen/H3"
-        app:layout_constraintBottom_toTopOf="@+id/line_1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_name" />
-
-    <TextView
-        android:id="@+id/tv_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="10dp"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="2"
-        android:textSize="@dimen/H3"
-        app:layout_constraintBottom_toTopOf="@+id/line_1"
-        app:layout_constraintLeft_toRightOf="@+id/tv_is_default"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <View
-        android:id="@+id/line_1"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/container_layout"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/base_white"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/base_black"
+            android:textSize="@dimen/H3"
+            app:layout_constraintBottom_toTopOf="@+id/tv_address"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/base_black"
+            android:textSize="@dimen/H3"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_name"
+            app:layout_constraintLeft_toRightOf="@id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_is_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="[默认]"
+            android:textColor="@color/warn"
+            android:textSize="@dimen/H3"
+            app:layout_constraintBottom_toTopOf="@+id/line_1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="65dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="@dimen/H3"
+            app:layout_constraintBottom_toTopOf="@+id/line_1"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toRightOf="@+id/tv_is_default"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <View
+            android:id="@+id/line_1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/base_white"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
-    <View
-        android:id="@+id/line_2"
-        android:layout_width="0.5dp"
-        android:layout_height="50dp"
-        android:background="@color/base_white"
-        app:layout_constraintBottom_toTopOf="@id/line_1"
-        app:layout_constraintRight_toLeftOf="@+id/iv_edit"
-        app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/line_2"
+            android:layout_width="0.5dp"
+            android:layout_height="50dp"
+            android:background="@color/base_white"
+            app:layout_constraintBottom_toTopOf="@id/line_1"
+            app:layout_constraintRight_toLeftOf="@+id/iv_edit"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/iv_edit"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:padding="20dp"
-        android:src="@drawable/ic_pencil_gray_24dp"
-        app:layout_constraintBottom_toTopOf="@id/line_1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="20dp"
+            android:src="@drawable/ic_pencil_gray_24dp"
+            app:layout_constraintBottom_toTopOf="@id/line_1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</com.daimajia.swipe.SwipeLayout>

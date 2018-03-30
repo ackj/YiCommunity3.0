@@ -19,6 +19,7 @@ import java.util.List;
 
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.AddressBean;
 import cn.itsite.delivery.R;
@@ -99,7 +100,6 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
             @Override
             public void onClick(View v) {
                 startForResult(AddDeliveryFragment.newInstance(null), 100);
-
             }
         });
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -109,6 +109,8 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
                 DeliveryBean deliveryBean = data.get(position);
                 if (view.getId() == R.id.iv_edit) {
                     startForResult(AddDeliveryFragment.newInstance(data.get(position)), 100);
+                } else if (view.getId() == R.id.tv_delete) {
+                    mPresenter.deleteAddress(deliveryBean.getUid());
                 } else {
                     Bundle bundle = new Bundle();
                     AddressBean addressBean = new AddressBean();
@@ -137,7 +139,8 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
     }
 
     @Override
-    public void responseDeleteAddressSuccess() {
-        DialogHelper.successSnackbar(getView(), "删除成功");
+    public void responseDeleteAddressSuccess(BaseResponse response) {
+        DialogHelper.successSnackbar(getView(), response.getMessage());
+        mPresenter.getAddress();
     }
 }

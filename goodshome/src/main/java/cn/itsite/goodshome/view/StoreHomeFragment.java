@@ -218,7 +218,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                                 public void onClick(View v) {
                                     Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
                                     startForResult((BaseFragment) addressFragment, 100);
-
+                                    dialog.dismiss();
                                 }
                             });
                 })

@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.youth.banner.Banner;
@@ -80,6 +81,8 @@ public class StoreRVAdapter extends BaseMultiItemQuickAdapter<StoreItemGridBean,
                 ImageView ivRmIcon = helper.getView(R.id.iv_icon);
                 Glide.with(ivRmIcon.getContext())
                         .load(item.getProductsBean().getImageUrl())
+                        .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                        .apply(new RequestOptions().error(R.drawable.ic_img_error))
                         .into(ivRmIcon);
                 helper.setText(R.id.tv_name, item.getProductsBean().getTitle())
                         .setText(R.id.tv_desc, item.getProductsBean().getDescription())
@@ -89,6 +92,8 @@ public class StoreRVAdapter extends BaseMultiItemQuickAdapter<StoreItemGridBean,
                 ImageView ivIcon = helper.getView(R.id.iv_icon);
                 Glide.with(ivIcon.getContext())
                         .load(item.getProductsBean().getImageUrl())
+                        .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                        .apply(new RequestOptions().error(R.drawable.ic_img_error))
                         .into(ivIcon);
                 helper.setText(R.id.tv_name, item.getProductsBean().getTitle())
                         .setText(R.id.tv_desc, item.getProductsBean().getDescription())

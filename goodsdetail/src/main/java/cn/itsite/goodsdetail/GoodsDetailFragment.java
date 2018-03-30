@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,6 +55,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     private LinearLayout mLlShopCart;
     private VerticalViewPager mViewPager;
     private MagicIndicator mMagicIndicator;
+    private TextView mTvTitleShop;
+    private ImageView mIvBack;
 
     public static GoodsDetailFragment newInstance() {
         return new GoodsDetailFragment();
@@ -82,6 +86,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mLlShopCart = view.findViewById(R.id.ll_shopcart);
         mViewPager = view.findViewById(R.id.ultra_viewpager);
         mMagicIndicator = view.findViewById(R.id.magicIndicator);
+        mTvTitleShop = view.findViewById(R.id.tv_title_shop);
+        mIvBack = view.findViewById(R.id.iv_back);
         return attachToSwipeBack(view);
     }
 
@@ -95,7 +101,10 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     }
 
     private void initStatusBar() {
-        mRlToolbar.setPadding(mRlToolbar.getPaddingLeft(), mRlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mRlToolbar.getPaddingRight(), mRlToolbar.getPaddingBottom());
+        mRlToolbar.setPadding(mRlToolbar.getPaddingLeft(),
+                mRlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity),
+                mRlToolbar.getPaddingRight(),
+                mRlToolbar.getPaddingBottom());
     }
 
     private void initData() {
@@ -103,11 +112,17 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mViewPager.setPageTransformer(true, new DefaultTransformer());
         mViewPager.setOverScrollMode(OVER_SCROLL_NEVER);
 
-
         mPresenter.getProduct(uid);
+
     }
 
     private void initListener() {
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         mTvPutShopcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,7 +154,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
 
             @Override
             public int getCount() {
-                return mTitles.length;
+                return 1;
             }
 
             @Override
@@ -185,6 +200,13 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
 
     @Override
     public void responseGetProduct(ProductDetailBean bean) {
+        if (TextUtils.isEmpty(bean.getDetail().getUrl())) {
+            mMagicIndicator.setVisibility(View.INVISIBLE);
+            mTvTitleShop.setVisibility(View.VISIBLE);
+        } else {
+            mMagicIndicator.setVisibility(View.VISIBLE);
+            mTvTitleShop.setVisibility(View.INVISIBLE);
+        }
         GoodsDetailVPAdapter adapter = new GoodsDetailVPAdapter(getChildFragmentManager(), bean);
         mViewPager.setAdapter(adapter);
     }

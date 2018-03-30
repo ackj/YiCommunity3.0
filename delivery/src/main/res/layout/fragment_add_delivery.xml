@@ -94,10 +94,20 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/rb_male"
+            android:id="@+id/rb_secrecy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="56dp"
+            android:checked="true"
+            android:text="保密"
+            android:textColor="@color/base_black"
+            android:textSize="@dimen/H3" />
+
+        <RadioButton
+            android:id="@+id/rb_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:text="先生"
             android:textColor="@color/base_black"
             android:textSize="@dimen/H3" />

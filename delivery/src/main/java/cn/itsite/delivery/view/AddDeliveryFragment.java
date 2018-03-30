@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 import cn.itsite.abase.common.DialogHelper;
-import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
@@ -113,7 +112,7 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
             mEtName.setText(deliveryBean.getName());
             mEtDetailAddress.setText(deliveryBean.getAddress());
             mTvSelectAddress.setText(deliveryBean.getLocation());
-            mCbDefault.setChecked(deliveryBean.isIsDeafult());
+            mCbDefault.setChecked(deliveryBean.isIsDefault());
             String gender = deliveryBean.getGender();
             if (!TextUtils.isEmpty(gender)) {
                 switch (gender) {
@@ -124,7 +123,7 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
                         mRgGender.check(R.id.rb_female);
                         break;
                     case GENDER_SECRECY:
-                        mRgGender.clearCheck();
+                        mRgGender.check(R.id.rb_secrecy);
                         break;
                     default:
                 }
@@ -134,6 +133,7 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
 
     private void initListener() {
         mTvSave.setOnClickListener(this);
+        mTvSelectAddress.setOnClickListener(this);
         mRgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -141,24 +141,25 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
                     gender = GENDER_MALE;
                 } else if (checkedId == R.id.rb_female) {
                     gender = GENDER_FEMALE;
+                } else {
+                    gender = GENDER_SECRECY;
                 }
             }
         });
 
-        mTvSelectAddress.setOnClickListener(v -> {
-            startForResult(LocationFragment.newInstance(), REQUEST_CODE);
-        });
     }
 
     @Override
     public void responsePostAddressSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        setFragmentResult(RESULT_OK, null);
         pop();
     }
 
     @Override
     public void responsePutAddressSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        setFragmentResult(RESULT_OK, null);
         pop();
     }
 
@@ -166,13 +167,14 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
     public void onClick(View v) {
         if (v.getId() == R.id.tv_save) {
             if (checkInput()) {
-                mPresenter.postAddress(deliveryBean);
+                if (isAdd) {
+                    mPresenter.postAddress(deliveryBean);
+                } else {
+                    mPresenter.putAddress(deliveryBean);
+                }
             }
         } else if (v.getId() == R.id.tv_select_address) {
-            //todo:跳转选择页面
-            if (checkInput()) {
-                mPresenter.putAddress(deliveryBean);
-            }
+            startForResult(LocationFragment.newInstance(), REQUEST_CODE);
         }
     }
 
@@ -183,8 +185,6 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
         String address = mTvSelectAddress.getText().toString();
         boolean isDefault = mCbDefault.isChecked();
         String message = null;
-        //todo:待删
-        address = "惠州江北凯宾斯基C座";
         if (TextUtils.isEmpty(name)) {
             message = "请输入姓名";
         } else if (TextUtils.isEmpty(phone)) {
@@ -198,12 +198,9 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
             deliveryBean.setGender(gender);
             deliveryBean.setAddress(detailAddress);
             deliveryBean.setLocation(address);
-            deliveryBean.setIsDeafult(isDefault);
+            deliveryBean.setIsDefault(isDefault);
             deliveryBean.setPhoneNumber(phone);
             deliveryBean.setName(name);
-            //todo 待删
-            deliveryBean.setLatitude("22.33");
-            deliveryBean.setLongitude("44.55");
             return true;
         } else {
             ToastUtils.showToast(_mActivity, message);
@@ -214,17 +211,13 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
-        ALog.e("1111111111111111");
-
         if (requestCode == REQUEST_CODE && resultCode == LocationFragment.RESULT_CODE) {
-            ALog.e("222222222");
-
             if (data != null) {
-                ALog.e("333333333333");
-
-                ALog.e(data.getString(LocationFragment.ADDRESS));
-                ALog.e(data.getDouble(LocationFragment.LONGITUDE));
-                ALog.e(data.getDouble(LocationFragment.LATITUDE));
+                String address = data.getString(LocationFragment.ADDRESS);
+                deliveryBean.setLocation(address);
+                deliveryBean.setLongitude("" + data.getDouble(LocationFragment.LONGITUDE));
+                deliveryBean.setLatitude("" + data.getDouble(LocationFragment.LATITUDE));
+                mTvSelectAddress.setText(address);
             }
         }
     }

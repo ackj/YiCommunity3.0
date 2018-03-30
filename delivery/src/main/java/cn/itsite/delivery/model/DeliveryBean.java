@@ -31,7 +31,7 @@ public class DeliveryBean implements Serializable{
     private String address;
     private String longitude;
     private String latitude;
-    private boolean isDeafult;
+    private boolean isDefault;
 
     public String getUid() {
         return uid;
@@ -97,11 +97,11 @@ public class DeliveryBean implements Serializable{
         this.latitude = latitude;
     }
 
-    public boolean isIsDeafult() {
-        return isDeafult;
+    public boolean isIsDefault() {
+        return isDefault;
     }
 
-    public void setIsDeafult(boolean isDeafult) {
-        this.isDeafult = isDeafult;
+    public void setIsDefault(boolean isDefault) {
+        this.isDefault = isDefault;
     }
 }

@@ -9,8 +9,8 @@ import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
-import cn.itsite.delivery.contract.DeliveryService;
 import cn.itsite.delivery.contract.AddDeliveryContract;
+import cn.itsite.delivery.contract.DeliveryService;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -29,7 +29,7 @@ public class AddDeliveryModel extends BaseModel implements AddDeliveryContract.M
         list.add(bean);
         BaseRequest<List<DeliveryBean>> request = new BaseRequest();
         request.data = list;
-        request.message = "修改这几个递送";
+        request.message = "新增这几个递送";
         return HttpHelper.getService(DeliveryService.class)
                 .postAddress(new Gson().toJson(request))
                 .subscribeOn(Schedulers.io());
@@ -42,8 +42,9 @@ public class AddDeliveryModel extends BaseModel implements AddDeliveryContract.M
         BaseRequest<List<DeliveryBean>> request = new BaseRequest();
         request.data = list;
         request.message = "修改这几个递送";
+
         return HttpHelper.getService(DeliveryService.class)
-                .putAddress(new Gson().toJson(request))
+                .putAddress(request)
                 .subscribeOn(Schedulers.io());
     }
 }

@@ -2,8 +2,10 @@ package cn.itsite.delivery.contract;
 
 import java.util.List;
 
+import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.delivery.model.DeliveryBean;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -32,11 +34,10 @@ public interface DeliveryService {
 
     //修改一个地址
     @PUT("v1/deliveries")
-    Observable<BaseResponse> putAddress(@Field("params") String params);
+    Observable<BaseResponse> putAddress(@Body BaseRequest params);
 
     //删除一个地址
     @DELETE("v1/deliveries/{uid}")
     Observable<BaseResponse> deleteAddress(@Path("uid") String uid);
-
 
 }

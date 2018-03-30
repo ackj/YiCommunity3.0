@@ -27,9 +27,9 @@ public class DeliveryModel extends BaseModel implements DeliveryContract.Model{
     }
 
     @Override
-    public Observable<BaseResponse> deleteAddress() {
+    public Observable<BaseResponse> deleteAddress(String uid) {
         return HttpHelper.getService(DeliveryService.class)
-                .deleteAddress("123")
+                .deleteAddress(uid)
                 .subscribeOn(Schedulers.io());
     }
 }

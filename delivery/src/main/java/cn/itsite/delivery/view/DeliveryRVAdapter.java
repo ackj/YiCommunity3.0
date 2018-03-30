@@ -23,11 +23,12 @@ public class DeliveryRVAdapter extends BaseRecyclerViewAdapter<DeliveryBean, Bas
     @Override
     protected void convert(BaseViewHolder helper, DeliveryBean item) {
         TextView tvIsDefault = helper.getView(R.id.tv_is_default);
-        tvIsDefault.setVisibility(item.isIsDeafult() ? View.VISIBLE : View.GONE);
+        tvIsDefault.setVisibility(item.isIsDefault() ? View.VISIBLE : View.GONE);
         helper.setText(R.id.tv_name, item.getName())
                 .setText(R.id.tv_phone, item.getPhoneNumber())
                 .setText(R.id.tv_address, item.getLocation() + item.getAddress())
                 .addOnClickListener(R.id.iv_edit)
+                .addOnClickListener(R.id.tv_delete)
                 .addOnClickListener(R.id.container_layout);
     }
 }

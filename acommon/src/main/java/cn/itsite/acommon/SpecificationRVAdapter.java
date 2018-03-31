@@ -32,7 +32,6 @@ public class SpecificationRVAdapter extends BaseRecyclerViewAdapter<SkusBean.Att
             final TextView textView = view.findViewById(R.id.textView);
             textView.setText(item.getValues().get(i).getValue());
             final SkusBean.AttributesBean.ValuesBean valuesBean = item.getValues().get(i);
-            textView.setEnabled(item.getValues().get(i).isHasIntersection());
             textView.setSelected(valuesBean.isSelected());
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override

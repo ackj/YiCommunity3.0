@@ -80,7 +80,7 @@ public class GoodsFragment extends BaseFragment {
             refreshLables(bean);
             mTvName.setText(bean.getTitle());
             mTvDesc.setText(bean.getDescription());
-            mTvDesc.setText(bean.getPay().getCurrency() + bean.getPay().getCost());
+            mTvPrice.setText(bean.getPay().getCurrency() + bean.getPay().getCost());
         }
     }
 

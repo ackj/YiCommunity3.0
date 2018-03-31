@@ -2,18 +2,17 @@ package cn.itsite.shoppingcart.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.StoreBean;
 import cn.itsite.shoppingcart.StorePojo;
-import cn.itsite.shoppingcart.UidBean;
 import cn.itsite.shoppingcart.contract.CartContract;
 import cn.itsite.shoppingcart.model.CartModel;
 import rx.Subscriber;
@@ -45,13 +44,13 @@ public class CartPresenter extends BasePresenter<CartContract.View, CartContract
     }
 
     @Override
-    public void deleteProduct(String shopUID, String productUID) {
-        mRxManager.add(mModel.deleteProduct(shopUID, productUID)
+    public void deleteProduct(String shopUID, List<OperatorBean> list) {
+        mRxManager.add(mModel.deleteProduct(shopUID, list)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<UidBean>>>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse<List<UidBean>> listBaseResponse) {
-                        getView().responseDeleteSuccess(listBaseResponse.getData());
+                    public void onSuccess(BaseResponse response) {
+                        getView().responseDeleteSuccess(response);
                     }
                 }));
     }
@@ -60,23 +59,22 @@ public class CartPresenter extends BasePresenter<CartContract.View, CartContract
     public void postProduct(String shopUID, String productUID) {
         mRxManager.add(mModel.postProduct(shopUID, productUID)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<UidBean>>>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse<List<UidBean>> listBaseResponse) {
-                        getView().responsePostSuccess(listBaseResponse.getData());
+                    public void onSuccess(BaseResponse response) {
+                        getView().responsePostSuccess(response);
                     }
                 }));
     }
 
     @Override
-    public void putProduct(String cartsUID, String productUID) {
-        mRxManager.add(mModel.putProduct(cartsUID, productUID)
+    public void putProduct(String cartsUID, ProductsBean bean) {
+        mRxManager.add(mModel.putProduct(cartsUID, bean)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<UidBean>>>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse<List<UidBean>> listBaseResponse) {
-                        Logger.e("post success" + listBaseResponse.getData().get(0).getUid());
-                        getView().responsePutSuccess(listBaseResponse.getData());
+                    public void onSuccess(BaseResponse response) {
+                        getView().responsePutSuccess(response);
                     }
                 }));
     }

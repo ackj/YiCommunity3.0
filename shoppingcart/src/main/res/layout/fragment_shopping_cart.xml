@@ -14,9 +14,9 @@
 
         <ImageView
             android:id="@+id/iv_arrow_left"
-            android:layout_alignBottom="@+id/tv_title"
             android:layout_width="44dp"
             android:layout_height="44dp"
+            android:layout_alignBottom="@+id/tv_title"
             android:layout_centerVertical="true"
             android:padding="14dp"
             app:srcCompat="@drawable/ic_arrow_left_gray_24dp" />
@@ -74,11 +74,10 @@
             android:textSize="@dimen/H3" />
 
         <TextView
-            android:textColor="@color/error"
             android:id="@+id/tv_total_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥ 5.00" />
+            android:textColor="@color/error" />
 
         <TextView
             android:id="@+id/tv_submit"

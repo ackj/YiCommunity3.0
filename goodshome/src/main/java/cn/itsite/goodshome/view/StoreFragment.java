@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,19 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.youth.banner.Banner;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.goodshome.R;
 import cn.itsite.goodshome.contract.HomeContract;
 import cn.itsite.goodshome.model.StoreItemGridBean;
@@ -85,12 +93,28 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
         initData();
         initListener();
         initPtrFrameLayout(mPtrFrameLayout, mRecyclerView);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onRefresh() {
         super.onRefresh();
+        refresh();
+    }
+
+    private void refresh() {
+        if ("shop".equals(mParmas.shoptype)) {
+            mParmas.shopUid = (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, null);
+            if (TextUtils.isEmpty(mParmas.shopUid)) {
+                mStateManager.showEmpty();
+            }
+        }
         mPresenter.getHome(mParmas);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SwitchStoreEvent event) {
+        refresh();
     }
 
     private void initStateManager() {
@@ -150,20 +174,30 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                         break;
                     case StoreItemGridBean.TYPE_MORE:
                         Fragment fragment = (Fragment) ARouter.getInstance().build("/classify/classifyfragment").navigation();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("shopType", mParmas.shoptype);
+                        bundle.putString("shopUid", mParmas.shopUid);
+                        fragment.setArguments(bundle);
                         ((StoreHomeFragment) getParentFragment()).start((BaseFragment) fragment);
                         break;
                     case StoreItemGridBean.TYPE_RECOMMEND:
                     case StoreItemGridBean.TYPE_GOODS:
                         Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("uid", item.getProductsBean().getUid());
-                        goodsDetailFragment.setArguments(bundle);
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("uid", item.getProductsBean().getUid());
+                        goodsDetailFragment.setArguments(bundle2);
                         ((StoreHomeFragment) getParentFragment()).start((BaseFragment) goodsDetailFragment);
                         break;
                     default:
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -175,7 +209,6 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
         } else {
             mStateManager.showContent();
         }
-        mDatas = data;
         mAdatper.setNewData(mDatas);
     }
 }

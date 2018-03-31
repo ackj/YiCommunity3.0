@@ -30,12 +30,14 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import cn.itsite.abase.BaseApp;
+import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.DefaultTransformer;
-import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.VerticalViewPager;
 import cn.itsite.goodsdetail.contract.ProductContract;
+import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.goodsdetail.presenter.ProductPresenter;
 
 import static android.view.View.OVER_SCROLL_NEVER;
@@ -63,6 +65,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     }
 
     String uid;
+    private String cartUid;
+    private ProductsBean productsBean;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,9 +115,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
 //        mUltraViewPager.setScrollMode(UltraViewPager.ScrollMode.VERTICAL);
         mViewPager.setPageTransformer(true, new DefaultTransformer());
         mViewPager.setOverScrollMode(OVER_SCROLL_NEVER);
-
+        cartUid = "-1";
         mPresenter.getProduct(uid);
-
     }
 
     private void initListener() {
@@ -194,8 +197,31 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     }
 
     private void showSpecificationDialog() {
-        SpecificationDialog dialog = new SpecificationDialog();
-        dialog.show(getChildFragmentManager());
+        productsBean.setAmount("1");
+        productsBean.setSku("");
+        mPresenter.postProduct(cartUid, productsBean);
+//        if (productsBean == null) {
+//            return;
+//        }
+//        SpecificationDialog dialog = new SpecificationDialog(_mActivity);
+//        dialog.getSkus(uid, new SpecificationDialog.OnSkusListener() {
+//            @Override
+//            public void hasSkus(boolean hasSkus) {
+//                if (hasSkus) {
+//                    dialog.show(getChildFragmentManager());
+//                } else {
+//                    mPresenter.postProduct(cartUid, productsBean);
+//                }
+//            }
+//
+//            @Override
+//            public void clickComfirm(String sku, int count) {
+//                productsBean.setSku(sku);
+//                productsBean.setAmount(count + "");
+//                dialog.dismiss();
+//                mPresenter.postProduct(cartUid, productsBean);
+//            }
+//        });
     }
 
     @Override
@@ -207,7 +233,15 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
             mMagicIndicator.setVisibility(View.VISIBLE);
             mTvTitleShop.setVisibility(View.INVISIBLE);
         }
+        productsBean = new ProductsBean();
+        productsBean.setUid(uid);
+
         GoodsDetailVPAdapter adapter = new GoodsDetailVPAdapter(getChildFragmentManager(), bean);
         mViewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void responsePostSuccess(BaseResponse response) {
+        DialogHelper.successSnackbar(getView(), response.getMessage());
     }
 }

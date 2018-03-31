@@ -78,6 +78,8 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mParams.shopUid = getArguments().getString("shopUid");
+        mParams.shoptype = getArguments().getString("shopType");
     }
 
     @NonNull
@@ -151,9 +153,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         mAdapterSubMenu = new ClassifySubMenuRVAdapter();
         mRvSubMenu.setAdapter(mAdapterSubMenu);
 
-        mParams.shoptype = "shop";
-        mParams.uid = "123";
-        mParams.category = "123";
+//        mParams.category = "123";
         mPresenter.getGategories(mParams);
     }
 

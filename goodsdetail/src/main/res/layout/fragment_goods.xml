@@ -73,7 +73,6 @@
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:lines="1"
-        android:text="￥ 589.00"
         android:textColor="@color/error"
         android:textSize="@dimen/H3"
         app:layout_constraintHorizontal_bias="0"
@@ -111,6 +110,6 @@
         android:textColor="@color/base_gray"
         android:textSize="@dimen/H5"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/ll_labels" />
+        app:layout_constraintTop_toBottomOf="@+id/flexboxLayout" />
 
 </android.support.constraint.ConstraintLayout>

@@ -13,8 +13,8 @@ public class StorePojo {
 
 
     /**
-     * shop : {"name":"克拉家园店","serviceType":"","type":"shop","uid":"54545454545"}
-     * products : [{"icon":"","specification":"","count":2,"title":"巧克力豆","uid":"45645646545454","description":"500g/包","share":"https://item.jd.com/4264502.html","pay":{"cost":"4.125","discount":"7.5","price":"5.5","currency":"¥"}}]
+     * shop : {"name":"亿社区自营店(内测..)","serviceType":"送货上门","type":"shop","uid":"6716f108-a244-4d99-8d7e-b929e3c9290a"}
+     * products : [{"icon":"http://aglhzmall.image.alimmdn.com/goods/20161126163849959791.jpg@400h_400w_1e_1c","specification":"","count":7,"title":"士力架 花生夹心巧克力 35g/条","uid":"6716f108-a244-4d99-8d7e-b929e3c9290a","skuID":"58b8a1e6-2a49-468d-b4c7-36d7a617843a","sku":"","description":"","share":"http://www.aglhz.com/mall/m/html/photo.html?shopId=6716f108-a244-4d99-8d7e-b929e3c9290a&goodsId=2489e4a3-4043-4813-8341-4f8bbfcd9919","pay":{"price":"3.50","currency":"¥"}}]
      */
 
     private ShopBean shop;
@@ -38,10 +38,10 @@ public class StorePojo {
 
     public static class ShopBean {
         /**
-         * name : 克拉家园店
-         * serviceType :
+         * name : 亿社区自营店(内测..)
+         * serviceType : 送货上门
          * type : shop
-         * uid : 54545454545
+         * uid : 6716f108-a244-4d99-8d7e-b929e3c9290a
          */
 
         private String name;
@@ -84,14 +84,16 @@ public class StorePojo {
 
     public static class ProductsBean {
         /**
-         * icon :
+         * icon : http://aglhzmall.image.alimmdn.com/goods/20161126163849959791.jpg@400h_400w_1e_1c
          * specification :
-         * count : 2
-         * title : 巧克力豆
-         * uid : 45645646545454
-         * description : 500g/包
-         * share : https://item.jd.com/4264502.html
-         * pay : {"cost":"4.125","discount":"7.5","price":"5.5","currency":"¥"}
+         * count : 7
+         * title : 士力架 花生夹心巧克力 35g/条
+         * uid : 6716f108-a244-4d99-8d7e-b929e3c9290a
+         * skuID : 58b8a1e6-2a49-468d-b4c7-36d7a617843a
+         * sku :
+         * description :
+         * share : http://www.aglhz.com/mall/m/html/photo.html?shopId=6716f108-a244-4d99-8d7e-b929e3c9290a&goodsId=2489e4a3-4043-4813-8341-4f8bbfcd9919
+         * pay : {"price":"3.50","currency":"¥"}
          */
 
         private String icon;
@@ -99,6 +101,8 @@ public class StorePojo {
         private int count;
         private String title;
         private String uid;
+        private String skuID;
+        private String sku;
         private String description;
         private String share;
         private PayBean pay;
@@ -143,6 +147,22 @@ public class StorePojo {
             this.uid = uid;
         }
 
+        public String getSkuID() {
+            return skuID;
+        }
+
+        public void setSkuID(String skuID) {
+            this.skuID = skuID;
+        }
+
+        public String getSku() {
+            return sku;
+        }
+
+        public void setSku(String sku) {
+            this.sku = sku;
+        }
+
         public String getDescription() {
             return description;
         }
@@ -169,32 +189,12 @@ public class StorePojo {
 
         public static class PayBean {
             /**
-             * cost : 4.125
-             * discount : 7.5
-             * price : 5.5
+             * price : 3.50
              * currency : ¥
              */
 
-            private String cost;
-            private String discount;
             private String price;
             private String currency;
-
-            public String getCost() {
-                return cost;
-            }
-
-            public void setCost(String cost) {
-                this.cost = cost;
-            }
-
-            public String getDiscount() {
-                return discount;
-            }
-
-            public void setDiscount(String discount) {
-                this.discount = discount;
-            }
 
             public String getPrice() {
                 return price;

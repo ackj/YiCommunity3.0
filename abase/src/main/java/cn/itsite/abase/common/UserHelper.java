@@ -37,6 +37,7 @@ public class UserHelper {
     public static final String ISREMEMBER = "isRemember";
     public static final String IS_EXCHANGE_AGREE = "is_exchange_agree";
     public static final String IS_CARPOOL_AGREE = "is_carpool_agree";
+    public static final String SHOP_ID = "shop_id";
 
     public static String account = "";//账户、密码、是否记住密码，这三个值是记录在默认SP中的。
     public static String password = "";//同时账户和密码在各自的SP中也有一份。

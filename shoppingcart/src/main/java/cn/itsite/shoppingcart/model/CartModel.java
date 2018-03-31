@@ -1,18 +1,21 @@
 package cn.itsite.shoppingcart.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.mvp.model.base.BaseModel;
+import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.shoppingcart.CartService;
+import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.RequestBean;
 import cn.itsite.shoppingcart.StorePojo;
-import cn.itsite.shoppingcart.UidBean;
 import cn.itsite.shoppingcart.contract.CartContract;
+import cn.itsite.shoppingcart.contract.CartService;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -26,19 +29,17 @@ import rx.schedulers.Schedulers;
 public class CartModel extends BaseModel implements CartContract.Model {
 
     @Override
-    public Observable<BaseResponse<List<UidBean>>> deleteProduct(String shopUID, String productUID) {
-        RequestBean bean = new RequestBean();
-        RequestBean.DataBean data = new RequestBean.DataBean();
-        data.setUid("12312312");
-        bean.setData(data);
-        bean.setMessage("hahahah");
+    public Observable<BaseResponse> deleteProduct(String shopUID, List<OperatorBean> list) {
+        BaseRequest request = new BaseRequest();
+        request.data = list;
+        request.message = "删除这几个商品";
         return HttpHelper.getService(CartService.class)
-                .deleteProduct(shopUID, productUID, bean)
+                .deleteProduct(shopUID, request)
                 .subscribeOn(Schedulers.io());
     }
 
     @Override
-    public Observable<BaseResponse<List<UidBean>>> postProduct(String shopUID, String productUID) {
+    public Observable<BaseResponse> postProduct(String shopUID, String productUID) {
         RequestBean bean = new RequestBean();
         RequestBean.DataBean data = new RequestBean.DataBean();
         data.setUid("12312312");
@@ -51,21 +52,20 @@ public class CartModel extends BaseModel implements CartContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse<List<UidBean>>> putProduct(String shopUID, String productUID) {
-        RequestBean bean = new RequestBean();
-        RequestBean.DataBean data = new RequestBean.DataBean();
-        data.setUid("12312312");
-        data.setAmount("12312312");
-        bean.setData(data);
-        bean.setMessage("hahahah");
+    public Observable<BaseResponse> putProduct(String shopUID, ProductsBean bean) {
+        BaseRequest request = new BaseRequest();
+        List<ProductsBean> list = new ArrayList<>();
+        list.add(bean);
+        request.data = list;
+        request.message = "修改这几个商品";
         return HttpHelper.getService(CartService.class)
-                .putProduct(shopUID, productUID, bean)
+                .putProduct(shopUID, request)
                 .subscribeOn(Schedulers.io());
     }
 
     @Override
     public Observable<BaseResponse<List<StorePojo>>> getCarts(String shopUID) {
-         return HttpHelper.getService(CartService.class)
+        return HttpHelper.getService(CartService.class)
                 .getCarts(shopUID)
                 .subscribeOn(Schedulers.io());
     }

@@ -1,5 +1,9 @@
-package cn.itsite.shoppingcart;
+package cn.itsite.acommon;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +13,7 @@ import java.util.List;
  * @time 2018/3/14 0014 9:39
  */
 
-public class StorePojo {
+public class StorePojo implements Parcelable {
 
 
     /**
@@ -19,6 +23,26 @@ public class StorePojo {
 
     private ShopBean shop;
     private List<ProductsBean> products;
+
+
+    public StorePojo(){}
+
+    protected StorePojo(Parcel in) {
+        shop = in.readParcelable(ShopBean.class.getClassLoader());
+        products = in.createTypedArrayList(ProductsBean.CREATOR);
+    }
+
+    public static final Creator<StorePojo> CREATOR = new Creator<StorePojo>() {
+        @Override
+        public StorePojo createFromParcel(Parcel in) {
+            return new StorePojo(in);
+        }
+
+        @Override
+        public StorePojo[] newArray(int size) {
+            return new StorePojo[size];
+        }
+    };
 
     public ShopBean getShop() {
         return shop;
@@ -36,7 +60,19 @@ public class StorePojo {
         this.products = products;
     }
 
-    public static class ShopBean {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(shop, flags);
+        dest.writeTypedList(products);
+    }
+
+
+    public static class ShopBean implements Parcelable {
         /**
          * name : 亿社区自营店(内测..)
          * serviceType : 送货上门
@@ -48,6 +84,26 @@ public class StorePojo {
         private String serviceType;
         private String type;
         private String uid;
+
+
+        protected ShopBean(Parcel in) {
+            name = in.readString();
+            serviceType = in.readString();
+            type = in.readString();
+            uid = in.readString();
+        }
+
+        public static final Creator<ShopBean> CREATOR = new Creator<ShopBean>() {
+            @Override
+            public ShopBean createFromParcel(Parcel in) {
+                return new ShopBean(in);
+            }
+
+            @Override
+            public ShopBean[] newArray(int size) {
+                return new ShopBean[size];
+            }
+        };
 
         public String getName() {
             return name;
@@ -80,9 +136,24 @@ public class StorePojo {
         public void setUid(String uid) {
             this.uid = uid;
         }
+
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(name);
+            dest.writeString(serviceType);
+            dest.writeString(type);
+            dest.writeString(uid);
+        }
     }
 
-    public static class ProductsBean {
+    public static class ProductsBean implements Parcelable {
+
         /**
          * icon : http://aglhzmall.image.alimmdn.com/goods/20161126163849959791.jpg@400h_400w_1e_1c
          * specification :
@@ -106,6 +177,30 @@ public class StorePojo {
         private String description;
         private String share;
         private PayBean pay;
+
+        protected ProductsBean(Parcel in) {
+            icon = in.readString();
+            specification = in.readString();
+            count = in.readInt();
+            title = in.readString();
+            uid = in.readString();
+            skuID = in.readString();
+            sku = in.readString();
+            description = in.readString();
+            share = in.readString();
+        }
+
+        public static final Creator<ProductsBean> CREATOR = new Creator<ProductsBean>() {
+            @Override
+            public ProductsBean createFromParcel(Parcel in) {
+                return new ProductsBean(in);
+            }
+
+            @Override
+            public ProductsBean[] newArray(int size) {
+                return new ProductsBean[size];
+            }
+        };
 
         public String getIcon() {
             return icon;
@@ -187,7 +282,25 @@ public class StorePojo {
             this.pay = pay;
         }
 
-        public static class PayBean {
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(icon);
+            dest.writeString(specification);
+            dest.writeInt(count);
+            dest.writeString(title);
+            dest.writeString(uid);
+            dest.writeString(skuID);
+            dest.writeString(sku);
+            dest.writeString(description);
+            dest.writeString(share);
+        }
+
+        public static class PayBean implements Serializable {
             /**
              * price : 3.50
              * currency : ¥

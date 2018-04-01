@@ -2,12 +2,14 @@ package cn.itsite.order;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import cn.itsite.acommon.StorePojo;
+
 /**
  * Author： Administrator on 2018/2/1 0001.
  * Email： liujia95me@126.com
  */
 
-public class SubmitOrderBean  implements MultiItemEntity {
+public class SubmitOrderBean implements MultiItemEntity {
     private static final String TAG = SubmitOrderBean.class.getSimpleName();
 
     public static final int TYPE_STORE_TITLE = 1;
@@ -25,22 +27,22 @@ public class SubmitOrderBean  implements MultiItemEntity {
         return itemType;
     }
 
-    private OrderBean orderInfoBean;
-    private ProductsBean productsBean;
+    private StorePojo.ShopBean shopBean;
+    private StorePojo.ProductsBean productsBean;
 
-    public OrderBean getOrderInfoBean() {
-        return orderInfoBean;
+    public StorePojo.ShopBean getShopBean() {
+        return shopBean;
     }
 
-    public void setOrderInfoBean(OrderBean orderInfoBean) {
-        this.orderInfoBean = orderInfoBean;
+    public void setShopBean(StorePojo.ShopBean shopBean) {
+        this.shopBean = shopBean;
     }
 
-    public ProductsBean getProductsBean() {
+    public StorePojo.ProductsBean getProductsBean() {
         return productsBean;
     }
 
-    public void setProductsBean(ProductsBean productsBean) {
+    public void setProductsBean(StorePojo.ProductsBean productsBean) {
         this.productsBean = productsBean;
     }
 }

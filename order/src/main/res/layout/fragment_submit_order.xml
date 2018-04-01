@@ -42,26 +42,37 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <RadioButton
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:layout_weight="1"
-            android:text="全选"
-            android:textColor="@color/base_gray"
+            android:text="共："
+            android:textColor="@color/default_text"
             android:textSize="@dimen/H3" />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0件"
+            android:textSize="@dimen/H3"
+            android:textColor="@color/error" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="合计："
-            android:textColor="@color/base_gray"
+            android:textColor="@color/default_text"
             android:textSize="@dimen/H3" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥ 5.00" />
+            android:textSize="@dimen/H3"
+            android:text="0.0"
+            android:id="@+id/tv_total_price"
+            android:textColor="@color/error" />
 
         <TextView
             android:layout_width="95dp"

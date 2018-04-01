@@ -18,6 +18,7 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.order.contract.OrderListContract;
 import cn.itsite.order.presenter.OrderListPresenter;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
@@ -32,14 +33,20 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     RecyclerView mRecyclerView;
     private OrderListRVAdapter mAdapter;
     private GoodsParams mGoodsParams = new GoodsParams();
+    private PtrFrameLayout mPtrFrameLayout;
 
-    public static OrderListFragment newInstance() {
-        return new OrderListFragment();
+    public static OrderListFragment newInstance(String category) {
+        OrderListFragment fragment = new OrderListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("category",category);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mGoodsParams.category = getArguments().getString("category");
     }
 
     @NonNull
@@ -53,6 +60,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recyclerview, container, false);
         mRecyclerView = view.findViewById(R.id.recyclerView);
+        mPtrFrameLayout = view.findViewById(R.id.ptrFrameLayout);
         return view;
     }
 
@@ -61,8 +69,14 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
         super.onViewCreated(view, savedInstanceState);
         initData();
         initListener();
+        initPtrFrameLayout(mPtrFrameLayout,mRecyclerView);
     }
 
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        mPresenter.getOrders(mGoodsParams);
+    }
 
     private void initData() {
         mAdapter = new OrderListRVAdapter();
@@ -70,13 +84,10 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
         mRecyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
         mRecyclerView.setAdapter(mAdapter);
 
-        mGoodsParams.category = "123";
-        mPresenter.getOrders(mGoodsParams);
 
     }
 
     private void initListener() {
-
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -86,7 +97,20 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     }
 
     @Override
+    public void start(Object response) {
+
+    }
+
+    @Override
+    public void error(String errorMessage) {
+        super.error(errorMessage);
+        mPtrFrameLayout.refreshComplete();
+
+    }
+
+    @Override
     public void responseOrders(List<OrderBean> data) {
+        mPtrFrameLayout.refreshComplete();
         mAdapter.setNewData(data);
     }
 }

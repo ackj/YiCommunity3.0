@@ -9,7 +9,7 @@ import cn.itsite.acommon.OperatorBean;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.StoreBean;
-import cn.itsite.shoppingcart.StorePojo;
+import cn.itsite.acommon.StorePojo;
 import rx.Observable;
 
 /**

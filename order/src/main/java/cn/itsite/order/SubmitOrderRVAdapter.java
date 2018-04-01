@@ -24,16 +24,17 @@ public class SubmitOrderRVAdapter extends BaseMultiItemQuickAdapter<SubmitOrderB
     protected void convert(BaseViewHolder helper, SubmitOrderBean item) {
         switch (item.getItemType()) {
             case SubmitOrderBean.TYPE_STORE_TITLE:
-                helper.setText(R.id.tv_name,item.getOrderInfoBean().getShop().getName());
+                helper.setText(R.id.tv_name,item.getShopBean().getName());
                 break;
             case SubmitOrderBean.TYPE_STORE_GOODS:
                 ImageView ivIcon = helper.getView(R.id.iv_icon);
                 Glide.with(ivIcon.getContext())
-                        .load(item.getProductsBean().getImageUrl())
+                        .load(item.getProductsBean().getIcon())
                         .into(ivIcon);
                 helper.setText(R.id.tv_name,item.getProductsBean().getTitle())
+                        .setText(R.id.tv_amount,"x"+item.getProductsBean().getCount())
                         .setText(R.id.tv_desc,item.getProductsBean().getDescription())
-                        .setText(R.id.tv_price,item.getProductsBean().getCurrency()+" "+item.getProductsBean().getPrice());
+                        .setText(R.id.tv_price,item.getProductsBean().getPay().getCurrency()+" "+item.getProductsBean().getPay().getPrice());
                 break;
             case SubmitOrderBean.TYPE_ORDER_INFO:
 //                helper.setText(R.id.tv_amount,String.format("共%1$s件产品      合计：￥ %2$s",item.getOrderInfoBean().getAmount(),item.getOrderInfoBean().getCost()))

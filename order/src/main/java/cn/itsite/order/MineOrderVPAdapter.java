@@ -23,7 +23,7 @@ public class MineOrderVPAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return OrderListFragment.newInstance();
+        return OrderListFragment.newInstance(categories.get(position).getUid());
     }
 
     @Override

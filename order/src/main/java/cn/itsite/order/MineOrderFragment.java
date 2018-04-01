@@ -74,7 +74,6 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     }
 
     private void initData() {
-        mGoodsParams.uid = "123";
         mGoodsParams.type = "orders";
         mPresenter.getCategories(mGoodsParams);
     }

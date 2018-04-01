@@ -157,7 +157,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
 
             @Override
             public int getCount() {
-                return 1;
+                return mTitles.length;
             }
 
             @Override

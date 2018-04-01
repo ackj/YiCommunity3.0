@@ -29,11 +29,11 @@ import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.GoodsCounterView;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.acommon.OperatorBean;
 import cn.itsite.acommon.SpecificationDialog;
+import cn.itsite.acommon.StorePojo;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.shoppingcart.contract.CartContract;
@@ -165,6 +165,9 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
                         break;
                     case StoreBean.TYPE_RECOMMEND_GOODS:
                         Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("uid", item.getRecommendGoodsBean().getUid());
+                        goodsDetailFragment.setArguments(bundle);
                         start((BaseFragment) goodsDetailFragment);
                         break;
                     case StoreBean.TYPE_EMPTY:
@@ -212,9 +215,31 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             @Override
             public void onGoodsCheckedChanged(int position, boolean isChecked) {
                 mAdapter.getData().get(position).setChecked(isChecked);
+                refreshChecked();
                 computePrice();
             }
         });
+    }
+
+    //刷新勾选的逻辑：有商品的商铺必须勾选，反之亦然
+    private void refreshChecked() {
+        List<StoreBean> data = mAdapter.getData();
+        boolean hasChecked = false;
+        StoreBean store = null;
+        for (int i = 0; i < data.size(); i++) {
+            StoreBean storeBean = data.get(i);
+            if (storeBean.getItemType() == StoreBean.TYPE_STORE_TITLE || i == data.size() - 1) {
+                if (!hasChecked && store != null) {
+                    store.setChecked(false);
+                }
+                hasChecked = false;
+                store = storeBean;
+            } else if (storeBean.getItemType() == StoreBean.TYPE_STORE_GOODS && storeBean.isChecked()) {
+                hasChecked = true;
+                store.setChecked(true);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     //计算总额
@@ -306,6 +331,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         if (mOperationSwipeLayout != null) {
             mOperationSwipeLayout.close();
             mOperationProduct.setCount(mOptionAmount);
+            computePrice();
         }
     }
 
@@ -350,16 +376,40 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         if (isEditModel) {
             //删除
             showHintDialog();
-//            mPresenter.deleteProduct("123", "123");
         } else {
             //结算
-            ToastUtils.showToast(_mActivity, "结算");
-            Fragment fragment = (Fragment) ARouter.getInstance().build("/shoppingcart/shoppingcartfragment").navigation();
+            submitOrders();
+
+        }
+    }
+
+    private void submitOrders() {
+        //1、检查是否有勾选商品
+        //2、把勾选的商品以及其所属的商铺用集合包装好
+        //3、将数据传递过去生成订单
+        List<StoreBean> data = mAdapter.getData();
+        ArrayList<StorePojo> resultData = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            StoreBean storeBean = data.get(i);
+            if (storeBean.getItemType() == StoreBean.TYPE_STORE_TITLE && storeBean.isChecked()) {
+                StorePojo storePojo = new StorePojo();
+                List<StorePojo.ProductsBean> products = new ArrayList<>();
+                storePojo.setProducts(products);
+                storePojo.setShop(storeBean.getShopBean());
+                resultData.add(storePojo);
+            } else if (storeBean.getItemType() == StoreBean.TYPE_STORE_GOODS && storeBean.isChecked()) {
+                resultData.get(resultData.size() - 1).getProducts().add(storeBean.getProductsBean());
+            }
+        }
+
+        if(resultData.size()>0){
+            Fragment fragment = (Fragment) ARouter.getInstance().build("/order/submitorderfragment").navigation();
             Bundle bundle = new Bundle();
-//            bundle.putSerializable();
+            bundle.putParcelableArrayList("orders", resultData);
             fragment.setArguments(bundle);
             start((BaseFragment) fragment);
         }
+
     }
 
     private void showSpecificationDialog() {

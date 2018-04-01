@@ -12,7 +12,7 @@ import cn.itsite.acommon.OperatorBean;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.StoreBean;
-import cn.itsite.shoppingcart.StorePojo;
+import cn.itsite.acommon.StorePojo;
 import cn.itsite.shoppingcart.contract.CartContract;
 import cn.itsite.shoppingcart.model.CartModel;
 import rx.Subscriber;

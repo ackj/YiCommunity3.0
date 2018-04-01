@@ -45,7 +45,6 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View,Ord
                 .subscribe(new BaseSubscriber<BaseResponse<List<OrderBean>>>() {
                     @Override
                     public void onSuccess(BaseResponse<List<OrderBean>> listBaseResponse) {
-                        Logger.e("post success" + listBaseResponse.getData().get(0).getUid());
                         getView().responseOrders(listBaseResponse.getData());
                     }
                 }));

@@ -1,4 +1,4 @@
-package cn.itsite.delivery.model;
+package cn.itsite.acommon;
 
 import java.io.Serializable;
 

@@ -1,5 +1,7 @@
 package cn.itsite.acommon;
 
+import java.util.List;
+
 /**
  * @author liujia
  * @version v0.0.0
@@ -12,5 +14,13 @@ public class OperatorBean {
 
     public String sku;
     public String uid;
+    public String note;
 
+    public List<Product> products;
+
+    public static class Product {
+        public String uid;
+        public String amount;
+        public String sku;
+    }
 }

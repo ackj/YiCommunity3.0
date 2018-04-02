@@ -9,6 +9,7 @@ import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
+import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.delivery.contract.AddDeliveryContract;
 import cn.itsite.delivery.contract.DeliveryService;
 import rx.Observable;

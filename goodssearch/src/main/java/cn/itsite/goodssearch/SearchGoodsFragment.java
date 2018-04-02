@@ -58,7 +58,8 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     private List<SearchGoodsBean> mProductsDatas;
     private StateManager mStateManager;
 
-    private GoodsParams mParmas = new GoodsParams();
+    private GoodsParams mParams = new GoodsParams();
+    private boolean clickKeyword;
 
     public static SearchGoodsFragment newInstance() {
         return new SearchGoodsFragment();
@@ -67,6 +68,8 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mParams.shopUid = getArguments().getString("shopUid");
+        mParams.shoptype = getArguments().getString("shopType");
     }
 
     @NonNull
@@ -122,11 +125,8 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         mSearchGoodsAdapter = new SearchGoodsRVAdapter();
         mRecyclerView.setAdapter(mSearchGoodsAdapter);
 
-        mParmas.shoptype = "shop";
-        mParmas.shopUid = "123";
-
         //获取热门搜索
-        mPresenter.getKeywords(mParmas);
+        mPresenter.getKeywords(mParams);
 
     }
 
@@ -153,13 +153,29 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mParmas.keyword = s.toString();
-                mPresenter.getKeywords(mParmas);
+                mParams.keyword = s.toString();
+                mPresenter.getKeywords(mParams);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        mSearchGoodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                SearchGoodsBean item = mSearchGoodsAdapter.getItem(position);
+                switch (item.getItemType()) {
+                    case SearchGoodsBean.TYPE_HISTORY_TITLE:
+                        if (view.getId() == R.id.iv_clear) {
+                            mPresenter.clearHistory();
+                            mPresenter.getKeywords(mParams);
+                        }
+                        break;
+                    default:
+                }
             }
         });
 
@@ -173,8 +189,9 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
                     case SearchGoodsBean.TYPE_HISTORY_ITEM:
                     case SearchGoodsBean.TYPE_SEARCH_STRING:
                         SearchGoodsFragment.super.start("");
-                        mParmas.keyword = item.getKeywordBean().getQuery();
-                        mPresenter.getProducts(mParmas);
+                        mEtInput.setText(item.getKeywordBean().getKeyword());
+                        mEtInput.setSelection(item.getKeywordBean().getKeyword().length());
+                        search();
                         break;
                     case SearchGoodsBean.TYPE_SEARCH_GOODS:
                         Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
@@ -208,25 +225,19 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         String input = mEtInput.getText().toString();
         if (!TextUtils.isEmpty(input)) {
             super.start("");
-            mParmas.keyword = input;
-            mPresenter.getProducts(mParmas);
+            mParams.keyword = input;
+            mPresenter.getProducts(mParams);
         }
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back) {
-//            refreshData(mHotKeywordsDatas);
             pop();
         } else if (v.getId() == R.id.et_input) {
-//            refreshData(data2);
+            refreshData(mKeywordsDatas);
         } else if (v.getId() == R.id.tv_search) {
-            if ("搜索".equals(mTvSearch.getText())) {
-                search();
-            } else {
-                refreshData(mHotKeywordsDatas);
-                mTvSearch.setText("搜索");
-            }
+            refreshData(mHotKeywordsDatas);
         }
     }
 
@@ -236,7 +247,6 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
 
     @Override
     public void responseGetKeywords(List<KeywordBean> datas) {
-        mStateManager.showContent();
         mKeywordsDatas = new ArrayList<>();
         for (int i = 0; i < datas.size(); i++) {
             SearchGoodsBean keywordBean = new SearchGoodsBean();
@@ -266,7 +276,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
             keywordBean.setItemType(SearchGoodsBean.TYPE_HISTORY_ITEM);
             keywordBean.setSpanSize(2);
             KeywordBean bean = new KeywordBean();
-            bean.setQuery(keyword2Local.get(i));
+            bean.setKeyword(keyword2Local.get(i));
             keywordBean.setKeywordBean(bean);
             mHotKeywordsDatas.add(keywordBean);
         }
@@ -301,8 +311,5 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
             }
             refreshData(mProductsDatas);
         }
-        //todo:待删
-        mStateManager.showEmpty();
-        mTvSearch.setText("取消");
     }
 }

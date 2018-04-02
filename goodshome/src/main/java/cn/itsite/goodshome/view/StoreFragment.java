@@ -26,7 +26,6 @@ import java.util.List;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.goodshome.R;
@@ -155,7 +154,6 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                 switch (item.getItemType()) {
                     case StoreItemGridBean.TYPE_BANNER:
                         if (view.getId() == R.id.ll_location) {
-                            ToastUtils.showToast(_mActivity, "点击地址");
                             Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
                             ((StoreHomeFragment) getParentFragment()).startForResult((BaseFragment) addressFragment, 100);
                         }

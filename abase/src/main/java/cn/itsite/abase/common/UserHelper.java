@@ -241,6 +241,8 @@ public class UserHelper {
         address = sp.getString(ADDRESS, "");
         isExchangeAgree = sp.getBoolean(IS_EXCHANGE_AGREE, false);
         isCarpoolAgree = sp.getBoolean(IS_CARPOOL_AGREE, false);
+
+
         getUserInfo();
     }
 

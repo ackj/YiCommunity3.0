@@ -10,58 +10,55 @@
         android:layout_height="45dp"
         android:layout_marginRight="12dp"
         android:gravity="center_vertical"
-        android:text="共3件产品      合计：￥ 5.00"
         android:textColor="@color/base_black"
         android:textSize="@dimen/H3"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <View
-        android:id="@+id/line_1"
+    <LinearLayout
+        android:id="@+id/ll_delivery"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/bitmap_red_blue_line"
-        app:layout_constraintTop_toBottomOf="@id/tv_amount" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:includeFontPadding="false"
+        <View
+            android:id="@+id/line_1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/bitmap_red_blue_line"/>
 
-        android:id="@+id/tv_contactway"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="10dp"
-        android:text="收货人：黄沙      184****2626"
-        android:textColor="@color/base_black"
-        android:textSize="@dimen/H3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line_1" />
+        <TextView
+            android:includeFontPadding="false"
+            android:id="@+id/tv_contactway"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/base_black"
+            android:textSize="@dimen/H3" />
 
-    <TextView
-        android:includeFontPadding="false"
+        <TextView
+            android:includeFontPadding="false"
 
-        android:id="@+id/tv_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="10dp"
-        android:text="广东省惠州市凯宾斯基C座 云山西路2号-801"
-        android:textColor="@color/base_gray"
-        android:textSize="@dimen/H3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_contactway" />
+            android:id="@+id/tv_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/default_text"
+            android:textSize="@dimen/H3"/>
 
-    <View
+        <View
+            android:id="@+id/line_2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bitmap_red_blue_line"
+            />
 
-        android:id="@+id/line_2"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bitmap_red_blue_line"
-        app:layout_constraintTop_toBottomOf="@id/tv_location" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/anchor_1"
@@ -73,9 +70,9 @@
         android:textColor="@color/default_black"
         android:textSize="@dimen/H3"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line_2" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_delivery" />
 
-    <EditText
+    <TextView
         android:id="@+id/tv_leave_message"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -89,6 +86,6 @@
         android:textSize="@dimen/H3"
         app:layout_constraintLeft_toRightOf="@id/anchor_1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line_2" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_delivery" />
 
 </android.support.constraint.ConstraintLayout>

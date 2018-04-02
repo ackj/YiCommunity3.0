@@ -25,7 +25,8 @@ public class StorePojo implements Parcelable {
     private List<ProductsBean> products;
 
 
-    public StorePojo(){}
+    public StorePojo() {
+    }
 
     protected StorePojo(Parcel in) {
         shop = in.readParcelable(ShopBean.class.getClassLoader());
@@ -86,7 +87,10 @@ public class StorePojo implements Parcelable {
         private String uid;
 
 
-        protected ShopBean(Parcel in) {
+        public ShopBean() {
+        }
+
+        public ShopBean(Parcel in) {
             name = in.readString();
             serviceType = in.readString();
             type = in.readString();
@@ -177,6 +181,8 @@ public class StorePojo implements Parcelable {
         private String description;
         private String share;
         private PayBean pay;
+
+        public ProductsBean(){}
 
         protected ProductsBean(Parcel in) {
             icon = in.readString();

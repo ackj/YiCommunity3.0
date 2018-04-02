@@ -34,6 +34,7 @@ import cn.itsite.statemanager.BaseViewHolder;
 import cn.itsite.statemanager.StateLayout;
 import cn.itsite.statemanager.StateListener;
 import cn.itsite.statemanager.StateManager;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * Author： Administrator on 2018/1/29 0029.
@@ -70,6 +71,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     private TextView mTvSearch;
     private ImageView mIvBack;
     private StateManager mStateManager;
+    private PtrFrameLayout mPtrFrameLayout;
 
     public static ClassifyFragment newInstance() {
         return new ClassifyFragment();
@@ -94,13 +96,14 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         View view = inflater.inflate(R.layout.fragment_classify, container, false);
         mLlToolbar = view.findViewById(R.id.ll_toolbar);
         mRvMenu = view.findViewById(R.id.rv_menu);
-        mRvContent = view.findViewById(R.id.rv_content);
+        mRvContent = view.findViewById(R.id.recyclerView);
         mIvSwitchView = view.findViewById(R.id.iv_switch);
         mRvSubMenu = view.findViewById(R.id.rv_sub_menu);
         mLlStretchable = view.findViewById(R.id.ll_stretchable);
         mIvStretchMenu = view.findViewById(R.id.iv_stretch);
         mTvSearch = view.findViewById(R.id.tv_input);
         mIvBack = view.findViewById(R.id.iv_back);
+        mPtrFrameLayout = view.findViewById(R.id.ptrFrameLayout);
         return attachToSwipeBack(view);
     }
 
@@ -111,6 +114,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         initStateManager();
         initData();
         initListener();
+        initPtrFrameLayout(mPtrFrameLayout, mRvContent);
     }
 
     private void initStatusBar() {
@@ -132,6 +136,13 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
                 .build();
     }
 
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        mParams.page = 1;
+        mPresenter.getProducts(mParams);
+    }
+
     private void initData() {
         mContentLayoutManager = new GridLayoutManager(_mActivity, SPAN_COUNT_TWO);
 
@@ -141,7 +152,17 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
 
         mRvContent.setLayoutManager(mContentLayoutManager);
         mAdapterContentGrid = new ClassifyContentGridRVAdapter();
+        mAdapterContentGrid.setEnableLoadMore(true);
+        mAdapterContentGrid.setOnLoadMoreListener(() -> {
+            mParams.page++;
+            mPresenter.getProducts(mParams);
+        }, mRvContent);
         mAdapterContentLinear = new ClassifyContentLinearRVAdapter();
+        mAdapterContentLinear.setEnableLoadMore(true);
+        mAdapterContentLinear.setOnLoadMoreListener(() -> {
+            mParams.page++;
+            mPresenter.getProducts(mParams);
+        }, mRvContent);
         mRvContent.setAdapter(mAdapterContentGrid);
 
         mRvSubMenu.setLayoutManager(new GridLayoutManager(_mActivity, 3) {
@@ -219,7 +240,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
                 MenuBean.ChildrenBean bean = mAdapterSubMenu.getData().get(position);
                 mAdapterSubMenu.setSelectedPosition(position);
                 mParams.category = bean.getUid();
-                mPresenter.getProducts(mParams);
+                onRefresh();
             }
         });
 
@@ -253,7 +274,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         mAdapterSubMenu.setSelectedPosition(0);
         //逻辑按点击“全部”一致，请求网络
         mParams.category = menuBean.getUid();
-        mPresenter.getProducts(mParams);
+        onRefresh();
 
         stretch(ONE_UNFOLD_LINE_HEIGHT);
     }
@@ -286,6 +307,10 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     }
 
     @Override
+    public void start(Object response) {
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
@@ -300,14 +325,33 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     }
 
     @Override
-    public void responseGetProducts(List<ProductBean> data) {
-        if (data == null || data.isEmpty()) {
-            mStateManager.showEmpty();
-        } else {
-            mStateManager.showContent();
+    public void responseGetProducts(List<ProductBean> datas) {
+
+        mPtrFrameLayout.refreshComplete();
+        if (datas == null || datas.isEmpty()) {
+            if (mParams.page == 1) {
+                mStateManager.showEmpty();
+            }
+            mAdapterContentGrid.loadMoreEnd();
+            mAdapterContentLinear.loadMoreEnd();
+            return;
         }
-        mAdapterContentGrid.setNewData(data);
-        mAdapterContentLinear.setNewData(data);
+
+        if (mParams.page == 1) {
+            mStateManager.showContent();
+            mAdapterContentGrid.setNewData(datas);
+            mAdapterContentGrid.disableLoadMoreIfNotFullPage(mRvContent);
+            mAdapterContentLinear.setNewData(datas);
+            mAdapterContentLinear.disableLoadMoreIfNotFullPage(mRvContent);
+        } else {
+            mAdapterContentGrid.addData(datas);
+            mAdapterContentGrid.setEnableLoadMore(true);
+            mAdapterContentGrid.loadMoreComplete();
+            mAdapterContentLinear.addData(datas);
+            mAdapterContentLinear.setEnableLoadMore(true);
+            mAdapterContentLinear.loadMoreComplete();
+        }
+
     }
 
     @Override

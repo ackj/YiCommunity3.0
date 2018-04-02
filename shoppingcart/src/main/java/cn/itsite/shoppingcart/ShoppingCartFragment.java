@@ -22,6 +22,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.swipe.SwipeLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +38,7 @@ import cn.itsite.acommon.GoodsParams;
 import cn.itsite.acommon.OperatorBean;
 import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.StorePojo;
+import cn.itsite.acommon.event.RefreshCartEvent;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.shoppingcart.contract.CartContract;
@@ -85,6 +90,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -129,6 +135,11 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             }
         });
         mAdapter.setNewData(mDatas);
+        mPresenter.getCarts(cartUid);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshCartEvent event) {
         mPresenter.getCarts(cartUid);
     }
 
@@ -402,7 +413,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             }
         }
 
-        if(resultData.size()>0){
+        if (resultData.size() > 0) {
             Fragment fragment = (Fragment) ARouter.getInstance().build("/order/submitorderfragment").navigation();
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("orders", resultData);
@@ -429,4 +440,9 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

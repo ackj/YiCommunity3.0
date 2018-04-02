@@ -2,8 +2,11 @@ package cn.itsite.goodsdetail.presenter;
 
 import android.support.annotation.NonNull;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.acommon.event.RefreshCartEvent;
 import cn.itsite.goodsdetail.ProductDetailBean;
 import cn.itsite.goodsdetail.contract.ProductContract;
 import cn.itsite.goodsdetail.model.ProductModel;
@@ -53,6 +56,7 @@ public class ProductPresenter extends BasePresenter<ProductContract.View, Produc
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onSuccess(BaseResponse response) {
+                        EventBus.getDefault().post(new RefreshCartEvent());
                         getView().responsePostSuccess(response);
                     }
                 }));

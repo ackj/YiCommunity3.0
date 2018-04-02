@@ -1,4 +1,4 @@
-package cn.itsite.delivery.presenter;
+package cn.itsite.order.presenter;
 
 import android.support.annotation.NonNull;
 
@@ -7,32 +7,33 @@ import java.util.List;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.delivery.contract.DeliveryContract;
-import cn.itsite.delivery.model.DeliveryModel;
+import cn.itsite.acommon.OperatorBean;
+import cn.itsite.order.contract.SubmitOrderContract;
+import cn.itsite.order.model.SubmitOrderModel;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * @author liujia
  * @version v0.0.0
  * @E-mail liujia95me@126.com
- * @time 2018/3/14 0014 15:45
+ * @time 2018/4/2 0002 15:30
  */
 
-public class DeliveryPresenter extends BasePresenter<DeliveryContract.View,DeliveryContract.Model> implements DeliveryContract.Presenter{
+public class SubmitOrderPresenter extends BasePresenter<SubmitOrderContract.View,SubmitOrderContract.Model> implements SubmitOrderContract.Presenter {
 
     /**
      * 创建Presenter的时候就绑定View和创建model。
      *
      * @param mView 所要绑定的view层对象，一般在View层创建Presenter的时候通过this把自己传过来。
      */
-    public DeliveryPresenter(DeliveryContract.View mView) {
+    public SubmitOrderPresenter(SubmitOrderContract.View mView) {
         super(mView);
     }
 
     @NonNull
     @Override
-    protected DeliveryContract.Model createModel() {
-        return new DeliveryModel();
+    protected SubmitOrderContract.Model createModel() {
+        return new SubmitOrderModel();
     }
 
     @Override
@@ -48,13 +49,13 @@ public class DeliveryPresenter extends BasePresenter<DeliveryContract.View,Deliv
     }
 
     @Override
-    public void deleteAddress(String uid) {
-        mRxManager.add(mModel.deleteAddress(uid)
+    public void postOrders(List<OperatorBean> data) {
+        mRxManager.add(mModel.postOrders(data)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>(){
                     @Override
                     public void onSuccess(BaseResponse response) {
-                        getView().responseDeleteAddressSuccess(response);
+                        getView().responsePostOrdersSuccess(response);
                     }
                 }));
     }

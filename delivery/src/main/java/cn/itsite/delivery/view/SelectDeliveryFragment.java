@@ -21,10 +21,9 @@ import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.AddressBean;
+import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.delivery.R;
 import cn.itsite.delivery.contract.DeliveryContract;
-import cn.itsite.delivery.model.DeliveryBean;
 import cn.itsite.delivery.presenter.DeliveryPresenter;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -113,11 +112,7 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
                     mPresenter.deleteAddress(deliveryBean.getUid());
                 } else {
                     Bundle bundle = new Bundle();
-                    AddressBean addressBean = new AddressBean();
-                    addressBean.address = deliveryBean.getAddress();
-                    addressBean.latitude = deliveryBean.getLatitude();
-                    addressBean.longitude = deliveryBean.getLongitude();
-                    bundle.putSerializable("address", addressBean);
+                    bundle.putSerializable("delivery", deliveryBean);
                     setFragmentResult(RESULT_OK, bundle);
                     ((SupportActivity) _mActivity).onBackPressedSupport();
                 }

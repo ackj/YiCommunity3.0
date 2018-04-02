@@ -11,6 +11,9 @@ import com.google.gson.Gson;
 
 public class GoodsParams {
 
+    public int pageSize = 20;
+    public int page = 1;
+
     public String shoptype;
     public String type;
     public String keyword;

@@ -2,8 +2,12 @@ package cn.itsite.order;
 
 import java.util.List;
 
+import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.acommon.DeliveryBean;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -27,4 +31,12 @@ public interface OrderService {
     //获取订单详情
     @GET("v1/orders/{uid}")
     Observable<BaseResponse<OrderDetailBean>> getOrderDetail(@Query("params")String params);
+
+    //获取地址列表
+    @GET("v1/deliveries")
+    Observable<BaseResponse<List<DeliveryBean>>> getAddress();
+
+    //新增订单
+    @POST("v1/orders")
+    Observable<BaseResponse> postOrders(@Body BaseRequest request);
 }

@@ -14,4 +14,7 @@ public class AddressBean implements Serializable {
     public String address;
     public String latitude;
     public String longitude;
+    public String name;
+    public String phoneNumber;
+    public String location;
 }

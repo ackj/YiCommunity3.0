@@ -2,6 +2,7 @@ package cn.itsite.order;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.acommon.StorePojo;
 
 /**
@@ -29,6 +30,51 @@ public class SubmitOrderBean implements MultiItemEntity {
 
     private StorePojo.ShopBean shopBean;
     private StorePojo.ProductsBean productsBean;
+    private DeliveryBean deliveryBean;
+    private int amount;
+    private float totalPrice;
+    private String leaveMessage;
+    private String currency;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getLeaveMessage() {
+        return leaveMessage;
+    }
+
+    public void setLeaveMessage(String leaveMessage) {
+        this.leaveMessage = leaveMessage;
+    }
+
+    public DeliveryBean getDeliveryBean() {
+        return deliveryBean;
+    }
+
+    public void setDeliveryBean(DeliveryBean deliveryBean) {
+        this.deliveryBean = deliveryBean;
+    }
 
     public StorePojo.ShopBean getShopBean() {
         return shopBean;

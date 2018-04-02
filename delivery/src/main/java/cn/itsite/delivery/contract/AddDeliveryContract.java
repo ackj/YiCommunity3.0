@@ -2,7 +2,7 @@ package cn.itsite.delivery.contract;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.delivery.model.DeliveryBean;
+import cn.itsite.acommon.DeliveryBean;
 import rx.Observable;
 
 /**

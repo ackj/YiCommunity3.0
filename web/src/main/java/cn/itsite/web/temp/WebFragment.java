@@ -1,4 +1,4 @@
-package cn.itsite.web;
+package cn.itsite.web.temp;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,10 +16,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
+import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.amain.yicommunity.common.Constants;
-import cn.itsite.amain.yicommunity.common.JavaScriptObject;
+import cn.itsite.web.R;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -29,6 +31,8 @@ import me.yokeyword.fragmentation.SupportActivity;
  * <p>
  * 负责项目中的web部分。
  */
+
+@Route(path = "/web/webfragment")
 public class WebFragment extends BaseFragment {
     public static final String TAG = WebFragment.class.getSimpleName();
     private WebView mWebView;
@@ -39,14 +43,10 @@ public class WebFragment extends BaseFragment {
     private String title;
     private String link;
 
-    public static WebFragment newInstance(String title, String link) {
-        ALog.e(TAG, "link-->" + link);
-        Bundle args = new Bundle();
-        args.putString(Constants.KEY_TITLE, title);
-        args.putString(Constants.KEY_LINK, link);
-
+    public static WebFragment newInstance(Bundle bundle) {
+        ALog.e(TAG, "link-->" + bundle.getString("link"));
         WebFragment fragment = new WebFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -54,10 +54,10 @@ public class WebFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
-        if (args != null) {
-            title = args.getString(Constants.KEY_TITLE);
-            link = args.getString(Constants.KEY_LINK);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            title = bundle.getString(BaseConstants.KEY_TITLE);
+            link = bundle.getString(BaseConstants.KEY_LINK);
         }
     }
 
@@ -65,11 +65,10 @@ public class WebFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_web, container, false);
-        mWebView = ((WebView) view.findViewById(R.id.wv_web_fragment));
-        ptrFramlayout = ((PtrFrameLayout) view.findViewById(R.id.ptr_web_fragment));
-        toolbarTitle = ((TextView) view.findViewById(R.id.toolbar_title));
-        toolbar = ((Toolbar) view.findViewById(R.id.toolbar));
-        toolbarMenu = ((TextView) view.findViewById(R.id.toolbar_menu));
+        mWebView = view.findViewById(R.id.wv_web_fragment);
+        toolbarTitle = view.findViewById(R.id.toolbar_title);
+        toolbar = view.findViewById(R.id.toolbar);
+        toolbarMenu = view.findViewById(R.id.toolbar_menu);
         return view;
     }
 
@@ -77,7 +76,6 @@ public class WebFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initToolbar();
-        initPtrFrameLayout(ptrFramlayout, mWebView);
         initWebView();
     }
 
@@ -108,8 +106,6 @@ public class WebFragment extends BaseFragment {
         webSettings.setAppCacheEnabled(false);
         webSettings.setDomStorageEnabled(true);
         webSettings.setGeolocationEnabled(true);
-
-        mWebView.addJavascriptInterface(new JavaScriptObject(_mActivity), "android");
 
         mWebView.setWebViewClient(new WebViewClient() {
 

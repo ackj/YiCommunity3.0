@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.JavaScriptObject;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -40,10 +39,14 @@ public class WebFragment extends BaseFragment {
     private String title;
     private String link;
 
-    public static WebFragment newInstance(Bundle bundle) {
-        ALog.e(TAG, "link-->" + bundle.getString("link"));
+    public static WebFragment newInstance(String title, String link) {
+        ALog.e(TAG, "link-->" + link);
+        Bundle args = new Bundle();
+        args.putString(Constants.KEY_TITLE, title);
+        args.putString(Constants.KEY_LINK, link);
+
         WebFragment fragment = new WebFragment();
-        fragment.setArguments(bundle);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -51,22 +54,22 @@ public class WebFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            title = bundle.getString(Constants.KEY_TITLE);
-            link = bundle.getString(Constants.KEY_LINK);
+        Bundle args = getArguments();
+        if (args != null) {
+            title = args.getString(Constants.KEY_TITLE);
+            link = args.getString(Constants.KEY_LINK);
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_web_temp, container, false);
-        mWebView = view.findViewById(R.id.wv_web_fragment);
-        ptrFramlayout = view.findViewById(R.id.ptr_web_fragment);
-        toolbarTitle = view.findViewById(R.id.toolbar_title);
-        toolbar = view.findViewById(R.id.toolbar);
-        toolbarMenu = view.findViewById(R.id.toolbar_menu);
+        View view = inflater.inflate(cn.itsite.web.R.layout.fragment_web, container, false);
+        mWebView = ((WebView) view.findViewById(cn.itsite.web.R.id.wv_web_fragment));
+        ptrFramlayout = ((PtrFrameLayout) view.findViewById(cn.itsite.web.R.id.ptr_web_fragment));
+        toolbarTitle = ((TextView) view.findViewById(cn.itsite.web.R.id.toolbar_title));
+        toolbar = ((Toolbar) view.findViewById(cn.itsite.web.R.id.toolbar));
+        toolbarMenu = ((TextView) view.findViewById(cn.itsite.web.R.id.toolbar_menu));
         return view;
     }
 
@@ -83,7 +86,7 @@ public class WebFragment extends BaseFragment {
         if (!TextUtils.isEmpty(title)) {
             toolbarTitle.setText(title);
         }
-        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);
+        toolbar.setNavigationIcon(cn.itsite.web.R.drawable.ic_chevron_left_white_24dp);
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
         toolbarMenu.setText("关闭");
         toolbarMenu.setOnClickListener(v -> ((SupportActivity) _mActivity).onBackPressedSupport());

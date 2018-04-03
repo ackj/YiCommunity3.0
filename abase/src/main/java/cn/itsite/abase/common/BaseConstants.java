@@ -1,9 +1,6 @@
 package cn.itsite.abase.common;
 
 
-import cn.itsite.abase.BaseApp;
-import cn.itsite.abase.utils.DirectoryUtils;
-
 import java.io.File;
 
 import cn.itsite.abase.BaseApp;
@@ -28,4 +25,8 @@ public class BaseConstants {
     public static final String PATH_DATA = DirectoryUtils.getDiskCacheDirectory(BaseApp.mContext, "data").getAbsolutePath();
     public static final String PATH_NET_CACHE = PATH_DATA + File.separator + "NetCache";
     public static final String PATH_APK_CACHE = PATH_DATA + File.separator + "ApkCache";
+
+    public static final String KEY_LINK = "link";
+    public static final String KEY_TITLE = "title";
+
 }

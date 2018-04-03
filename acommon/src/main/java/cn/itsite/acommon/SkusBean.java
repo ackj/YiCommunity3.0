@@ -14,6 +14,24 @@ public class SkusBean {
 
     private List<AttributesBean> attributes;
     private List<SkuBean> skus;
+    private PayBean pay;
+    private String stockQuantity;
+
+    public String getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(String stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public PayBean getPay() {
+        return pay;
+    }
+
+    public void setPay(PayBean pay) {
+        this.pay = pay;
+    }
 
     public List<AttributesBean> getAttributes() {
         return attributes;
@@ -29,6 +47,53 @@ public class SkusBean {
 
     public void setSkus(List<SkuBean> skus) {
         this.skus = skus;
+    }
+
+    public static class PayBean {
+
+        /**
+         * cost : 475.00~495.00
+         * currency : ¥
+         * discount :
+         * price : 475.00~495.00
+         */
+
+        private String cost;
+        private String currency;
+        private String discount;
+        private String price;
+
+        public String getCost() {
+            return cost;
+        }
+
+        public void setCost(String cost) {
+            this.cost = cost;
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+
+        public void setCurrency(String currency) {
+            this.currency = currency;
+        }
+
+        public String getDiscount() {
+            return discount;
+        }
+
+        public void setDiscount(String discount) {
+            this.discount = discount;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
     }
 
     public static class AttributesBean {
@@ -85,6 +150,7 @@ public class SkusBean {
             public void setHasIntersection(boolean hasIntersection) {
                 this.hasIntersection = hasIntersection;
             }
+
             public int getStockQuantity() {
                 return stockQuantity;
             }
@@ -124,7 +190,7 @@ public class SkusBean {
 
         private String sku;
         private int stockQuantity;
-        private int price;
+        private String price;
         private String currency;
         private String note;
         private String uid;
@@ -146,11 +212,11 @@ public class SkusBean {
             this.stockQuantity = stockQuantity;
         }
 
-        public int getPrice() {
+        public String getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(String price) {
             this.price = price;
         }
 

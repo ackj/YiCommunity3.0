@@ -38,6 +38,8 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.DefaultTransformer;
+import cn.itsite.acommon.SkusBean;
+import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.StorePojo;
 import cn.itsite.acommon.VerticalViewPager;
 import cn.itsite.acommon.model.ProductsBean;
@@ -64,7 +66,6 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     private TextView mTvTitleShop;
     private ImageView mIvBack;
     private ProductDetailBean mDetailBean;
-    private boolean hasSku;
 
     public static GoodsDetailFragment newInstance() {
         return new GoodsDetailFragment();
@@ -73,6 +74,9 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     String uid;
     private String cartUid;
     private ProductsBean productsBean;
+
+    private SkusBean.SkuBean mSku;
+    private int mAmount;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +102,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mMagicIndicator = view.findViewById(R.id.magicIndicator);
         mTvTitleShop = view.findViewById(R.id.tv_title_shop);
         mIvBack = view.findViewById(R.id.iv_back);
+
         return attachToSwipeBack(view);
     }
 
@@ -180,32 +185,30 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         ViewPagerHelper.bind(mMagicIndicator, mViewPager);
     }
 
+
     private void showSpecificationDialog() {
-        productsBean.setAmount("1");
-        productsBean.setSku("");
-        mPresenter.postProduct(cartUid, productsBean);
-//        if (productsBean == null) {
-//            return;
-//        }
-//        SpecificationDialog dialog = new SpecificationDialog(_mActivity);
-//        dialog.getSkus(uid, new SpecificationDialog.OnSkusListener() {
-//            @Override
-//            public void hasSkus(boolean hasSkus) {
-//                if (hasSkus) {
-//                    dialog.show(getChildFragmentManager());
-//                } else {
-//                    mPresenter.postProduct(cartUid, productsBean);
-//                }
-//            }
-//
-//            @Override
-//            public void clickComfirm(String sku, int count) {
-//                productsBean.setSku(sku);
-//                productsBean.setAmount(count + "");
-//                dialog.dismiss();
-//                mPresenter.postProduct(cartUid, productsBean);
-//            }
-//        });
+        if (productsBean == null) {
+            return;
+        }
+        String normalImage = null;
+        if (mDetailBean.getImages() != null && mDetailBean.getImages().size() > 0) {
+            normalImage = mDetailBean.getImages().get(0).getImage();
+        }
+        SpecificationDialog dialog = new SpecificationDialog(_mActivity, uid, normalImage);
+        dialog.setSkuListener(new SpecificationDialog.OnSkusListener() {
+            @Override
+            public void clickComfirm(SkusBean.SkuBean sku, int amount, SpecificationDialog dialog) {
+                mSku = sku;
+                mAmount = amount;
+                productsBean.setAmount(amount + "");
+                if (sku != null) {
+                    productsBean.setSku(sku.getUid());
+                }
+                mPresenter.postProduct(cartUid, productsBean);
+                dialog.dismiss();
+            }
+        });
+        dialog.show(getChildFragmentManager());
     }
 
     @Override
@@ -232,17 +235,14 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.iv_back){
+        if (v.getId() == R.id.iv_back) {
             pop();
-        }else if(v.getId()==R.id.tv_put_shopcart){
+        } else if (v.getId() == R.id.tv_put_shopcart) {
             showSpecificationDialog();
-        }else if(v.getId() == R.id.tv_buy_it_now){
+        } else if (v.getId() == R.id.tv_buy_it_now) {
             Fragment fragment = (Fragment) ARouter.getInstance().build("/order/submitorderfragment").navigation();
-            start((BaseFragment) fragment);
-        }else if(v.getId() == R.id.ll_shopcart){
-            Fragment fragment = (Fragment) ARouter.getInstance().build("/shoppingcart/shoppingcartfragment").navigation();
             StorePojo storePojo = new StorePojo();
-            StorePojo.ShopBean shopBean= new StorePojo.ShopBean();
+            StorePojo.ShopBean shopBean = new StorePojo.ShopBean();
             shopBean.setName(mDetailBean.getShop().getName());
             shopBean.setServiceType(mDetailBean.getShop().getServiceType());
             shopBean.setType(mDetailBean.getShop().getType());
@@ -260,18 +260,21 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
             payBean.setPrice(mDetailBean.getPay().getPrice());
             productsBean.setPay(payBean);
             productsBean.setTitle(mDetailBean.getTitle());
-            //todo:写sku的时候加上去
-            if(hasSku){
-                productsBean.setCount(1);
-                productsBean.setSkuID("");
-                productsBean.setSku("");
+            productsBean.setCount(mAmount);
+            if (mSku != null) {
+                productsBean.setSkuID(mSku.getUid());
+                productsBean.setSku(mSku.getSku());
             }
             productsBeans.add(productsBean);
             ArrayList<StorePojo> orders = new ArrayList<>();
             orders.add(storePojo);
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("orders",orders);
+            bundle.putParcelableArrayList("orders", orders);
             fragment.setArguments(bundle);
+            start((BaseFragment) fragment);
+        } else if (v.getId() == R.id.ll_shopcart) {
+            Fragment fragment = (Fragment) ARouter.getInstance().build("/shoppingcart/shoppingcartfragment").navigation();
+
             start((BaseFragment) fragment);
         }
     }

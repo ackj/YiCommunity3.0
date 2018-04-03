@@ -2,13 +2,12 @@ package cn.itsite.order.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.List;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.OperatorBean;
 import cn.itsite.order.OrderBean;
 import cn.itsite.order.contract.OrderListContract;
 import cn.itsite.order.model.OrderListModel;
@@ -46,6 +45,30 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View,Ord
                     @Override
                     public void onSuccess(BaseResponse<List<OrderBean>> listBaseResponse) {
                         getView().responseOrders(listBaseResponse.getData());
+                    }
+                }));
+    }
+
+    @Override
+    public void deleteOrders(List<OperatorBean> orders) {
+        mRxManager.add(mModel.deleteOrders(orders)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        getView().responseDeleteSuccess(response);
+                    }
+                }));
+    }
+
+    @Override
+    public void putOrders(List<OperatorBean> orders) {
+        mRxManager.add(mModel.putOrders(orders)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        getView().responsePutSuccess(response);
                     }
                 }));
     }

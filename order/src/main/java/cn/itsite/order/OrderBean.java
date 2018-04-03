@@ -13,24 +13,40 @@ public class OrderBean {
 
 
     /**
-     * actions : [{"action":"取消订单","category":"2353552352"},{"action":"去付款","category":"2353343535"},{"action":"删除订单","category":""}]
+     * uid : 43433331313
+     * deliveryType : 送货上门
      * amount : 4
      * category : 待付款
-     * cost : 10
-     * deliveryType : 送货上门
-     * products : [{"description":"wifi/电话双网 您的智能小卫士","detailUrl":"https://item.jd.com/4264502.html","imageUrl":"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg","title":"优乐美奶茶","uid":"13212133313"},{"description":"wifi/电话双网 您的智能小卫士","detailUrl":"https://item.jd.com/4264502.html","imageUrl":"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg","title":"优乐美奶茶","uid":"13212133313"}]
-     * shop : {"cartUid":"235353552352","name":"克拉家园店","type":"shop","uid":"54545454545"}
-     * uid : 43433331313
+     * pay : {"cost":"10","discount":"10","price":"10","currency":"¥"}
+     * actions : [{"action":"取消订单","type":"cancel","category":"2353552352","link":""},{"action":"去付款","category":"2353343535","type":"pay","link":""},{"action":"删除订单","category":"","type":"delete","link":""}]
+     * shop : {"name":"克拉家园店","type":"shop","cartUid":"235353552352","uid":"54545454545"}
+     * products : [{"imageUrl":"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg","detailUrl":"https://item.jd.com/4264502.html","title":"优乐美奶茶","description":"wifi/电话双网 您的智能小卫士","uid":"13212133313"},{"imageUrl":"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg","detailUrl":"https://item.jd.com/4264502.html","title":"优乐美奶茶","description":"wifi/电话双网 您的智能小卫士","uid":"13212133313"}]
      */
 
+    private String uid;
+    private String deliveryType;
     private String amount;
     private String category;
-    private String cost;
-    private String deliveryType;
+    private PayBean pay;
     private ShopBean shop;
-    private String uid;
     private List<ActionsBean> actions;
     private List<ProductsBean> products;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(String deliveryType) {
+        this.deliveryType = deliveryType;
+    }
 
     public String getAmount() {
         return amount;
@@ -48,20 +64,12 @@ public class OrderBean {
         this.category = category;
     }
 
-    public String getCost() {
-        return cost;
+    public PayBean getPay() {
+        return pay;
     }
 
-    public void setCost(String cost) {
-        this.cost = cost;
-    }
-
-    public String getDeliveryType() {
-        return deliveryType;
-    }
-
-    public void setDeliveryType(String deliveryType) {
-        this.deliveryType = deliveryType;
+    public void setPay(PayBean pay) {
+        this.pay = pay;
     }
 
     public ShopBean getShop() {
@@ -70,14 +78,6 @@ public class OrderBean {
 
     public void setShop(ShopBean shop) {
         this.shop = shop;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public List<ActionsBean> getActions() {
@@ -96,26 +96,64 @@ public class OrderBean {
         this.products = products;
     }
 
+    public static class PayBean {
+        /**
+         * cost : 10
+         * discount : 10
+         * price : 10
+         * currency : ¥
+         */
+
+        private String cost;
+        private String discount;
+        private String price;
+        private String currency;
+
+        public String getCost() {
+            return cost;
+        }
+
+        public void setCost(String cost) {
+            this.cost = cost;
+        }
+
+        public String getDiscount() {
+            return discount;
+        }
+
+        public void setDiscount(String discount) {
+            this.discount = discount;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+
+        public void setCurrency(String currency) {
+            this.currency = currency;
+        }
+    }
+
     public static class ShopBean {
         /**
-         * cartUid : 235353552352
          * name : 克拉家园店
          * type : shop
+         * cartUid : 235353552352
          * uid : 54545454545
          */
 
-        private String cartUid;
         private String name;
         private String type;
+        private String cartUid;
         private String uid;
-
-        public String getCartUid() {
-            return cartUid;
-        }
-
-        public void setCartUid(String cartUid) {
-            this.cartUid = cartUid;
-        }
 
         public String getName() {
             return name;
@@ -133,6 +171,14 @@ public class OrderBean {
             this.type = type;
         }
 
+        public String getCartUid() {
+            return cartUid;
+        }
+
+        public void setCartUid(String cartUid) {
+            this.cartUid = cartUid;
+        }
+
         public String getUid() {
             return uid;
         }
@@ -145,19 +191,15 @@ public class OrderBean {
     public static class ActionsBean {
         /**
          * action : 取消订单
+         * type : cancel
          * category : 2353552352
+         * link :
          */
-        private String type;
+
         private String action;
+        private String type;
         private String category;
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
+        private String link;
 
         public String getAction() {
             return action;
@@ -167,6 +209,14 @@ public class OrderBean {
             this.action = action;
         }
 
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
         public String getCategory() {
             return category;
         }
@@ -174,29 +224,37 @@ public class OrderBean {
         public void setCategory(String category) {
             this.category = category;
         }
+
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
     }
 
     public static class ProductsBean {
         /**
-         * description : wifi/电话双网 您的智能小卫士
-         * detailUrl : https://item.jd.com/4264502.html
          * imageUrl : http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg
+         * detailUrl : https://item.jd.com/4264502.html
          * title : 优乐美奶茶
+         * description : wifi/电话双网 您的智能小卫士
          * uid : 13212133313
          */
 
-        private String description;
-        private String detailUrl;
         private String imageUrl;
+        private String detailUrl;
         private String title;
+        private String description;
         private String uid;
 
-        public String getDescription() {
-            return description;
+        public String getImageUrl() {
+            return imageUrl;
         }
 
-        public void setDescription(String description) {
-            this.description = description;
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
 
         public String getDetailUrl() {
@@ -207,20 +265,20 @@ public class OrderBean {
             this.detailUrl = detailUrl;
         }
 
-        public String getImageUrl() {
-            return imageUrl;
-        }
-
-        public void setImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
-        }
-
         public String getTitle() {
             return title;
         }
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
 
         public String getUid() {

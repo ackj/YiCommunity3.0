@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
@@ -35,6 +36,8 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     private ViewPager viewPager;
 
     private GoodsParams mGoodsParams = new GoodsParams();
+    private CategoryBean mAllCategory;
+    private List<CategoryBean> mCategories;
 
     public static MineOrderFragment newInstance() {
         return new MineOrderFragment();
@@ -74,6 +77,11 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     }
 
     private void initData() {
+        mAllCategory = new CategoryBean();
+        mAllCategory.setCategory("全部");
+        mCategories = new ArrayList<>();
+        mCategories.add(mAllCategory);
+
         mGoodsParams.type = "orders";
         mPresenter.getCategories(mGoodsParams);
     }
@@ -83,7 +91,8 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
 
     @Override
     public void responseGetCategories(List<CategoryBean> data) {
-        MineOrderVPAdapter mAdapter = new MineOrderVPAdapter(getChildFragmentManager(),data);
+        mCategories.addAll(data);
+        MineOrderVPAdapter mAdapter = new MineOrderVPAdapter(getChildFragmentManager(),mCategories);
         viewPager.setAdapter(mAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

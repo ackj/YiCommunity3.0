@@ -68,9 +68,9 @@
         app:layout_constraintTop_toBottomOf="@id/line_1">
 
         <TextView
+            android:id="@+id/tv_amount"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="共5件" />
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:layout_width="12dp"

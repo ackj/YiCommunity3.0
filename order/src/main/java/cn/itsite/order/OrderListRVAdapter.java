@@ -32,22 +32,25 @@ public class OrderListRVAdapter extends BaseRecyclerViewAdapter<OrderBean, BaseV
 
     private SupportActivity activity;
 
-    public void setActivity(SupportActivity activity){
+    public void setActivity(SupportActivity activity) {
         this.activity = activity;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, OrderBean item) {
         RecyclerView recyclerView = helper.getView(R.id.recyclerView);
-        helper.setText(R.id.tv_price, "￥ " + item.getCost())
+        helper.setText(R.id.tv_price, item.getPay().getCurrency() + item.getPay().getCost())
                 .setText(R.id.tv_name, item.getShop().getName())
+                .setText(R.id.tv_amount, "共" + item.getAmount() + "件")
                 .setText(R.id.tv_category, item.getCategory())
                 .setTextColor(R.id.tv_delivery_type, isDeliveryToDoor(item) ?
                         BaseApp.mContext.getResources().getColor(R.color.base_color) :
                         BaseApp.mContext.getResources().getColor(R.color.green))
                 .setText(R.id.tv_delivery_type, item.getDeliveryType())
                 .setBackgroundRes(R.id.tv_delivery_type, isDeliveryToDoor(item) ?
-                        R.drawable.shape_bg_round_orange : R.drawable.shape_bg_round_green);
+                        R.drawable.shape_bg_round_orange : R.drawable.shape_bg_round_green)
+                .addOnClickListener(R.id.btn_2)
+                .addOnClickListener(R.id.btn_1);
         recyclerView.setLayoutManager(new LinearLayoutManager(BaseApp.mContext, LinearLayoutManager.HORIZONTAL, false));
         OrderItemImageAdapter adapter = new OrderItemImageAdapter();
         recyclerView.setAdapter(adapter);
@@ -57,11 +60,12 @@ public class OrderListRVAdapter extends BaseRecyclerViewAdapter<OrderBean, BaseV
         btn1.setVisibility(View.INVISIBLE);
         btn2.setVisibility(View.INVISIBLE);
         for (int i = 0; i < item.getActions().size(); i++) {
+            OrderBean.ActionsBean action = item.getActions().get(i);
             if (i == 0) {
-                btn2.setText(item.getActions().get(i).getAction());
+                btn2.setText(action.getAction());
                 btn2.setVisibility(View.VISIBLE);
             } else if (i == 1) {
-                btn1.setText(item.getActions().get(i).getAction());
+                btn1.setText(action.getAction());
                 btn1.setVisibility(View.VISIBLE);
             }
         }

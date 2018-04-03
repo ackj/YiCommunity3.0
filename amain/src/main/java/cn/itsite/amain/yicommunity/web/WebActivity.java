@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
+import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 
 /**
@@ -21,11 +22,11 @@ public class WebActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(cn.itsite.web.R.layout.activity_web);
+        setContentView(R.layout.activity_web);
         initData();
 
         if (savedInstanceState == null) {
-            loadRootFragment(cn.itsite.web.R.id.fl_web_activity, WebFragment.newInstance(title, link));
+            loadRootFragment(R.id.fl_web_activity, WebFragment.newInstance(title, link));
         }
     }
 

@@ -25,6 +25,10 @@ import cn.itsite.acommon.GoodsParams;
 import cn.itsite.acommon.OperatorBean;
 import cn.itsite.order.contract.OrderListContract;
 import cn.itsite.order.presenter.OrderListPresenter;
+import cn.itsite.statemanager.BaseViewHolder;
+import cn.itsite.statemanager.StateLayout;
+import cn.itsite.statemanager.StateListener;
+import cn.itsite.statemanager.StateManager;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -48,6 +52,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     private OrderListRVAdapter mAdapter;
     private GoodsParams mGoodsParams = new GoodsParams();
     private PtrFrameLayout mPtrFrameLayout;
+    private StateManager mStateManager;
 
     public static OrderListFragment newInstance(String category) {
         OrderListFragment fragment = new OrderListFragment();
@@ -81,9 +86,26 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initStateManager();
         initData();
         initListener();
         initPtrFrameLayout(mPtrFrameLayout, mRecyclerView);
+    }
+
+    private void initStateManager() {
+        mStateManager = StateManager.builder(_mActivity)
+                .setContent(mRecyclerView)
+                .setEmptyView(R.layout.state_empty_layout)
+                .setEmptyImage(R.drawable.ic_prompt_order_01)
+                .setErrorOnClickListener(v -> mPtrFrameLayout.autoRefresh())
+                .setConvertListener(new StateListener.ConvertListener() {
+                    @Override
+                    public void convert(BaseViewHolder holder, StateLayout stateLayout) {
+                        holder.setVisible(R.id.bt_empty_state, false);
+                    }
+                })
+                .setEmptyText("当前页面暂无订单~")
+                .build();
     }
 
     @Override
@@ -161,13 +183,19 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     public void error(String errorMessage) {
         super.error(errorMessage);
         mPtrFrameLayout.refreshComplete();
+        mStateManager.showError();
 
     }
 
     @Override
     public void responseOrders(List<OrderBean> data) {
         mPtrFrameLayout.refreshComplete();
-        mAdapter.setNewData(data);
+        if (data.size() > 0) {
+            mAdapter.setNewData(data);
+            mStateManager.showContent();
+        } else {
+            mStateManager.showEmpty();
+        }
     }
 
     @Override

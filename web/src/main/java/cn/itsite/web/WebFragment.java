@@ -1,4 +1,4 @@
-package cn.itsite.web.temp;
+package cn.itsite.web;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -21,7 +21,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.web.R;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;
 

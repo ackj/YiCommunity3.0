@@ -102,7 +102,6 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mMagicIndicator = view.findViewById(R.id.magicIndicator);
         mTvTitleShop = view.findViewById(R.id.tv_title_shop);
         mIvBack = view.findViewById(R.id.iv_back);
-
         return attachToSwipeBack(view);
     }
 
@@ -186,7 +185,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     }
 
 
-    private void showSpecificationDialog() {
+    private void showSpecificationDialog(boolean isBuyItNow) {
         if (productsBean == null) {
             return;
         }
@@ -204,7 +203,11 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
                 if (sku != null) {
                     productsBean.setSku(sku.getUid());
                 }
-                mPresenter.postProduct(cartUid, productsBean);
+                if (isBuyItNow) {//立即购买
+                    buyItNow();
+                } else {//加到购物车
+                    mPresenter.postProduct(cartUid, productsBean);
+                }
                 dialog.dismiss();
             }
         });
@@ -238,44 +241,47 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         if (v.getId() == R.id.iv_back) {
             pop();
         } else if (v.getId() == R.id.tv_put_shopcart) {
-            showSpecificationDialog();
+            showSpecificationDialog(false);
         } else if (v.getId() == R.id.tv_buy_it_now) {
-            Fragment fragment = (Fragment) ARouter.getInstance().build("/order/submitorderfragment").navigation();
-            StorePojo storePojo = new StorePojo();
-            StorePojo.ShopBean shopBean = new StorePojo.ShopBean();
-            shopBean.setName(mDetailBean.getShop().getName());
-            shopBean.setServiceType(mDetailBean.getShop().getServiceType());
-            shopBean.setType(mDetailBean.getShop().getType());
-            shopBean.setUid(mDetailBean.getShop().getUid());
-            storePojo.setShop(shopBean);
-
-            List<StorePojo.ProductsBean> productsBeans = new ArrayList<>();
-            storePojo.setProducts(productsBeans);
-            StorePojo.ProductsBean productsBean = new StorePojo.ProductsBean();
-            productsBean.setCount(1);
-            productsBean.setDescription(mDetailBean.getDescription());
-            productsBean.setIcon(mDetailBean.getImages().get(0).getImage());
-            StorePojo.ProductsBean.PayBean payBean = new StorePojo.ProductsBean.PayBean();
-            payBean.setCurrency(mDetailBean.getPay().getCurrency());
-            payBean.setPrice(mDetailBean.getPay().getPrice());
-            productsBean.setPay(payBean);
-            productsBean.setTitle(mDetailBean.getTitle());
-            productsBean.setCount(mAmount);
-            if (mSku != null) {
-                productsBean.setSkuID(mSku.getUid());
-                productsBean.setSku(mSku.getSku());
-            }
-            productsBeans.add(productsBean);
-            ArrayList<StorePojo> orders = new ArrayList<>();
-            orders.add(storePojo);
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("orders", orders);
-            fragment.setArguments(bundle);
-            start((BaseFragment) fragment);
+            showSpecificationDialog(true);
         } else if (v.getId() == R.id.ll_shopcart) {
             Fragment fragment = (Fragment) ARouter.getInstance().build("/shoppingcart/shoppingcartfragment").navigation();
 
             start((BaseFragment) fragment);
         }
+    }
+
+    private void buyItNow() {
+        Fragment fragment = (Fragment) ARouter.getInstance().build("/order/submitorderfragment").navigation();
+        StorePojo storePojo = new StorePojo();
+        StorePojo.ShopBean shopBean = new StorePojo.ShopBean();
+        shopBean.setName(mDetailBean.getShop().getName());
+        shopBean.setServiceType(mDetailBean.getShop().getServiceType());
+        shopBean.setType(mDetailBean.getShop().getType());
+        shopBean.setUid(mDetailBean.getShop().getUid());
+        storePojo.setShop(shopBean);
+
+        List<StorePojo.ProductsBean> productsBeans = new ArrayList<>();
+        storePojo.setProducts(productsBeans);
+        StorePojo.ProductsBean productsBean = new StorePojo.ProductsBean();
+        productsBean.setDescription(mDetailBean.getDescription());
+        productsBean.setIcon(mDetailBean.getImages().get(0).getImage());
+        StorePojo.ProductsBean.PayBean payBean = new StorePojo.ProductsBean.PayBean();
+        payBean.setCurrency(mDetailBean.getPay().getCurrency());
+        payBean.setPrice(mDetailBean.getPay().getPrice());
+        productsBean.setPay(payBean);
+        productsBean.setTitle(mDetailBean.getTitle());
+        productsBean.setCount(mAmount);
+        if (mSku != null) {
+            productsBean.setSkuID(mSku.getUid());
+            productsBean.setSku(mSku.getSku());
+        }
+        productsBeans.add(productsBean);
+        ArrayList<StorePojo> orders = new ArrayList<>();
+        orders.add(storePojo);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("orders", orders);
+        fragment.setArguments(bundle);
+        start((BaseFragment) fragment);
     }
 }

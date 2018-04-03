@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
-import cn.itsite.amain.yicommunity.common.Constants;
 
 /**
  * Author：leguang on 2017/4/12 0009 15:49

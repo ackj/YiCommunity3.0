@@ -16,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.amain.yicommunity.common.Constants;
@@ -42,8 +43,8 @@ public class WebFragment extends BaseFragment {
     public static WebFragment newInstance(String title, String link) {
         ALog.e(TAG, "link-->" + link);
         Bundle args = new Bundle();
-        args.putString(Constants.KEY_TITLE, title);
-        args.putString(Constants.KEY_LINK, link);
+        args.putString(BaseConstants.KEY_TITLE, title);
+        args.putString(BaseConstants.KEY_LINK, link);
 
         WebFragment fragment = new WebFragment();
         fragment.setArguments(args);

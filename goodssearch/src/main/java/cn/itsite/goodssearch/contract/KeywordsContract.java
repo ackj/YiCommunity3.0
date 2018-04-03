@@ -5,8 +5,8 @@ import java.util.List;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.goodssearch.GoodsBean;
-import cn.itsite.goodssearch.KeywordBean;
+import cn.itsite.goodssearch.model.GoodsBean;
+import cn.itsite.goodssearch.model.KeywordBean;
 import rx.Observable;
 
 

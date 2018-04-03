@@ -1,10 +1,13 @@
-package cn.itsite.goodssearch;
+package cn.itsite.goodssearch.view;
 
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+
+import cn.itsite.goodssearch.R;
+import cn.itsite.goodssearch.model.SearchGoodsBean;
 
 /**
  * Author： Administrator on 2018/1/31 0031.

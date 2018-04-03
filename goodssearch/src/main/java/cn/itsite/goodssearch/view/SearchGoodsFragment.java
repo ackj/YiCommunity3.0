@@ -1,4 +1,4 @@
-package cn.itsite.goodssearch;
+package cn.itsite.goodssearch.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +29,12 @@ import java.util.List;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsParams;
+import cn.itsite.goodssearch.R;
 import cn.itsite.goodssearch.contract.KeywordsContract;
+import cn.itsite.goodssearch.model.GoodsBean;
+import cn.itsite.goodssearch.model.KeywordBean;
+import cn.itsite.goodssearch.model.SearchGoodsBean;
 import cn.itsite.goodssearch.presenter.KeywordsPresenter;
-import cn.itsite.statemanager.BaseViewHolder;
-import cn.itsite.statemanager.StateLayout;
-import cn.itsite.statemanager.StateListener;
 import cn.itsite.statemanager.StateManager;
 
 /**
@@ -44,11 +43,9 @@ import cn.itsite.statemanager.StateManager;
  */
 @Route(path = "/goodssearch/searchgoodsfragment")
 public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> implements View.OnClickListener, KeywordsContract.View {
-
-    private static final String TAG = SearchGoodsFragment.class.getSimpleName();
-
+    public static final String TAG = SearchGoodsFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
-    private SearchGoodsRVAdapter mSearchGoodsAdapter;
+    private SearchGoodsRVAdapter adapter;
     private LinearLayout mLlToolbar;
     private TextView mTvSearch;
     private EditText mEtInput;
@@ -57,16 +54,10 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     private List<SearchGoodsBean> mKeywordsDatas;
     private List<SearchGoodsBean> mProductsDatas;
     private StateManager mStateManager;
-
     private GoodsParams mParmas = new GoodsParams();
 
     public static SearchGoodsFragment newInstance() {
         return new SearchGoodsFragment();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @NonNull
@@ -77,7 +68,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_goods, container, false);
         mLlToolbar = view.findViewById(R.id.ll_toolbar);
         mTvSearch = view.findViewById(R.id.tv_search);
@@ -97,7 +88,10 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     }
 
     private void initStatusBar() {
-        mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(), mLlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mLlToolbar.getPaddingRight(), mLlToolbar.getPaddingBottom());
+        mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(),
+                mLlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity),
+                mLlToolbar.getPaddingRight(),
+                mLlToolbar.getPaddingBottom());
     }
 
     private void initStateManager() {
@@ -105,22 +99,17 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
                 .setContent(mRecyclerView)
                 .setEmptyView(R.layout.state_empty_layout)
                 .setEmptyImage(R.drawable.ic_prompt_search_01)
-                .setConvertListener(new StateListener.ConvertListener() {
-                    @Override
-                    public void convert(BaseViewHolder holder, StateLayout stateLayout) {
-                        holder.setVisible(R.id.bt_empty_state, false);
-                    }
-                })
+                .setConvertListener((holder, stateLayout) ->
+                        holder.setVisible(R.id.bt_empty_state, false))
                 .setEmptyText("抱歉，搜无此商品~")
                 .build();
     }
 
     private void initData() {
         showSoftInputFromWindow(_mActivity, mEtInput);
-
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 6));
-        mSearchGoodsAdapter = new SearchGoodsRVAdapter();
-        mRecyclerView.setAdapter(mSearchGoodsAdapter);
+        adapter = new SearchGoodsRVAdapter();
+        mRecyclerView.setAdapter(adapter);
 
         mParmas.shoptype = "shop";
         mParmas.shopUid = "123";
@@ -131,13 +120,9 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     }
 
     private void refreshData(final List<SearchGoodsBean> data) {
-        mSearchGoodsAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                return data.get(position).getSpanSize();
-            }
-        });
-        mSearchGoodsAdapter.setNewData(data);
+        adapter.setSpanSizeLookup((gridLayoutManager, position) ->
+                data.get(position).getSpanSize());
+        adapter.setNewData(data);
         mStateManager.showContent();
     }
 
@@ -163,37 +148,33 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
             }
         });
 
-        mSearchGoodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SearchGoodsBean item = mSearchGoodsAdapter.getItem(position);
-                switch (item.getItemType()) {
-                    case SearchGoodsBean.TYPE_HISTORY_TITLE:
-                        break;
-                    case SearchGoodsBean.TYPE_HISTORY_ITEM:
-                    case SearchGoodsBean.TYPE_SEARCH_STRING:
-                        SearchGoodsFragment.super.start("");
-                        mParmas.keyword = item.getKeywordBean().getQuery();
-                        mPresenter.getProducts(mParmas);
-                        break;
-                    case SearchGoodsBean.TYPE_SEARCH_GOODS:
-                        Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
-                        start((BaseFragment) goodsDetailFragment);
-                        break;
-                    default:
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            SearchGoodsBean item = this.adapter.getItem(position);
+            switch (item.getItemType()) {
+                case SearchGoodsBean.TYPE_HISTORY_TITLE:
+                    break;
+                case SearchGoodsBean.TYPE_HISTORY_ITEM:
+                case SearchGoodsBean.TYPE_SEARCH_STRING:
+                    SearchGoodsFragment.super.start("");
+                    mParmas.keyword = item.getKeywordBean().getQuery();
+                    mPresenter.getProducts(mParmas);
+                    break;
+                case SearchGoodsBean.TYPE_SEARCH_GOODS:
+                    Fragment goodsDetailFragment = (Fragment) ARouter.getInstance()
+                            .build("/goodsdetail/goodsdetailfragment")
+                            .navigation();
+                    start((BaseFragment) goodsDetailFragment);
+                    break;
+                default:
 
-                }
             }
         });
 
-        mEtInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    search();
-                }
-                return false;
+        mEtInput.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                search();
             }
+            return false;
         });
     }
 
@@ -232,6 +213,10 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
 
     @Override
     public void start(Object response) {
+    }
+
+    @Override
+    public void error(String errorMessage) {
     }
 
     @Override

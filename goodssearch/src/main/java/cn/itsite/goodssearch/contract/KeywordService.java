@@ -1,9 +1,11 @@
-package cn.itsite.goodssearch;
+package cn.itsite.goodssearch.contract;
 
 
 import java.util.List;
 
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.goodssearch.model.GoodsBean;
+import cn.itsite.goodssearch.model.KeywordBean;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

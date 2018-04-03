@@ -1,4 +1,4 @@
-package cn.itsite.goodssearch;
+package cn.itsite.goodssearch.model;
 
 /**
  * @author liujia

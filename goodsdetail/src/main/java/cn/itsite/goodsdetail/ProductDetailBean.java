@@ -132,7 +132,7 @@ public class ProductDetailBean implements Serializable {
         }
     }
 
-    public static class PayBean {
+    public static class PayBean implements Serializable{
         /**
          * cost : 20.00
          * currency : ¥
@@ -168,7 +168,7 @@ public class ProductDetailBean implements Serializable {
         }
     }
 
-    public static class ShopBean {
+    public static class ShopBean implements Serializable{
         /**
          * name : 亿社区自营店(内测..)
          * serviceType :
@@ -214,7 +214,7 @@ public class ProductDetailBean implements Serializable {
         }
     }
 
-    public static class AttributesBean {
+    public static class AttributesBean implements Serializable{
         /**
          * attribute : 配送范围
          * name : 50.0公里内配送
@@ -286,7 +286,7 @@ public class ProductDetailBean implements Serializable {
         }
     }
 
-    public static class ImagesBean {
+    public static class ImagesBean implements Serializable{
         /**
          * discription :
          * image : http://aglhzmall.image.alimmdn.com/goods/20161214113637620173.jpg@750w

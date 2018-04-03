@@ -25,5 +25,5 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_bg_round_gray"
         android:text="点击刷新"
-        android:textColor="@color/base_gray" />
+        android:textColor="@color/default_text" />
 </LinearLayout>

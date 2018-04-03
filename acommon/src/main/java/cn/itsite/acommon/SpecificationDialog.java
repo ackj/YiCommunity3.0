@@ -1,10 +1,12 @@
 package cn.itsite.acommon;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.utils.DensityUtils;
+import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.contract.SkusContract;
 import cn.itsite.acommon.presenter.SkusPresenter;
 import cn.itsite.adialog.dialog.LoadingDialog;
@@ -32,6 +35,8 @@ import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 
 public class SpecificationDialog extends BaseDialogFragment implements SkusContract.View {
 
+    private static final String TAG = SpecificationDialog.class.getSimpleName();
+
     private RecyclerView mRecyclerView;
     private GoodsCounterView mTvGoodsCounter;
 
@@ -42,8 +47,11 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     private TextView mTvStockQuantity;
     private TextView mTvSku;
     private HashMap<Integer, SkusBean.AttributesBean.ValuesBean> mPositions = new HashMap<>();//已选的Position集
-    private List<String> mInterselectionSkus = new ArrayList<>();//选中的skus交集，最后只会剩下一个值
-    private List<String> mSkuUids = new ArrayList<>();//所有可能性的skus的uid
+
+    private String selectedSku;
+
+//    private List<String> mInterselectionSkus = new ArrayList<>();//选中的skus交集，最后只会剩下一个值
+//    private List<String> mSkuUids = new ArrayList<>();//所有可能性的skus的uid
 
     private String testJson = "{\n" +
             "        \"attributes\": [\n" +
@@ -259,6 +267,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
             "        ]\n" +
             "    }";
     private SkusBean skusBean;
+    private TextView mTvConfirm;
 
     @Nullable
     @Override
@@ -269,7 +278,19 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         mTvName = view.findViewById(R.id.tv_name);
         mTvSku = view.findViewById(R.id.tv_sku);
         mTvStockQuantity = view.findViewById(R.id.tv_stock_quantity);
+        mTvConfirm = view.findViewById(R.id.tv_confirm);
         return view;
+    }
+
+    public SpecificationDialog() {
+
+    }
+
+    Context mContext;
+
+    @SuppressLint("ValidFragment")
+    public SpecificationDialog(Context context) {
+        mContext = context;
     }
 
     @SuppressLint("ResourceType")
@@ -293,11 +314,6 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
 //        mPresenter.getSkus("123");
 
         skusBean = new Gson().fromJson(testJson, SkusBean.class);
-        for (int i = 0; i < skusBean.getSkus().size(); i++) {
-            SkusBean.SkuBean skuBean = skusBean.getSkus().get(i);
-            mSkuUids.add(skuBean.getUid());
-        }
-        refreshSkus();
         mAdapter.setNewData(skusBean.getAttributes());
     }
 
@@ -311,57 +327,22 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
                 } else {
                     mPositions.remove(position);
                 }
-
-                //把positions对应的skus交集求出来
-                if (mPositions.size() == 0) {
-                    refreshSkus();
-                } else {
-                    if (mPositions.size() == 1) {
-                        for (SkusBean.AttributesBean.ValuesBean value : mPositions.values()) {
-                            mInterselectionSkus = value.getSkus();
-                        }
-                        refreshSkus();
-                    } else {
-                        List<String> newInterselection = new ArrayList<>();
-                        for (int i = 0; i < valuesBean.getSkus().size(); i++) {
-                            String sku = valuesBean.getSkus().get(i);
-                            for (int j = 0; j < mInterselectionSkus.size(); j++) {
-                                if (mInterselectionSkus.get(j).equals(sku)) {
-                                    newInterselection.add(sku);
-                                }
-                            }
-                        }
-                        for (SkusBean.AttributesBean.ValuesBean value : mPositions.values()) {
-                            value.getSkus();
-                        }
-                        mInterselectionSkus = newInterselection;
-                        for (int i = 0; i < mAdapter.getData().size(); i++) {
-                            SkusBean.AttributesBean attributesBean = mAdapter.getData().get(i);
-                            for (int j = 0; j < attributesBean.getValues().size(); j++) {
-                                boolean hasIntersection = hasIntersection(attributesBean.getValues().get(j).getSkus(), mInterselectionSkus);
-                                attributesBean.getValues().get(j).setHasIntersection(hasIntersection);
-                            }
-
-                        }
-                    }
-                }
-
-                mAdapter.notifyDataSetChanged();
                 refreshProduct();
             }
         });
-    }
-
-    private void refreshSkus() {
-        for (int i = 0; i < skusBean.getAttributes().size(); i++) {
-            SkusBean.AttributesBean attributesBean = skusBean.getAttributes().get(i);
-            for (int j = 0; j < attributesBean.getValues().size(); j++) {
-                boolean hasIntersection = hasIntersection(attributesBean.getValues().get(j).getSkus(), mSkuUids);
-                attributesBean.getValues().get(j).setHasIntersection(hasIntersection);
-
-
+        mTvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int counter = mTvGoodsCounter.getCounter();
+                if (counter <= 0) {
+                    ToastUtils.showToast(getContext(), "请选择数量");
+                } else if (selectedSku == null) {
+                    ToastUtils.showToast(getContext(), "请选择规格");
+                } else {
+                    mOnSkusListener.clickComfirm(selectedSku, counter);
+                }
             }
-        }
+        });
     }
 
     //刷新商品
@@ -374,19 +355,37 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
             }
             sb.append(data.get(i).getAttribute());
         }
-        mTvSku.setText(sb);
-    }
-
-    //两个sku集是否有交集
-    private boolean hasIntersection(List<String> skus1, List<String> skus2) {
-        for (int i = 0; i < skus1.size(); i++) {
-            for (int j = 0; j < skus2.size(); j++) {
-                if (skus1.get(i).equals(skus2.get(j))) {
-                    return true;
+        //选择完毕后
+        if (TextUtils.isEmpty(sb.toString())) {
+            //最后交集只会剩下一个值
+            List<String> intersection = new ArrayList<>();
+            for (int i = 0; i < mPositions.size(); i++) {
+                SkusBean.AttributesBean.ValuesBean valuesBean = mPositions.get(i);
+                if (i == 0) {
+                    intersection = new ArrayList<>(valuesBean.getSkus());
+                } else {
+                    intersection.retainAll(valuesBean.getSkus());
                 }
             }
+            SkusBean.SkuBean skuBean = null;
+            if (intersection.size() == 1) {
+                for (int i = 0; i < skusBean.getSkus().size(); i++) {
+                    if (skusBean.getSkus().get(i).getUid().equals(intersection.get(0))) {
+                        skuBean = skusBean.getSkus().get(i);
+                    }
+                }
+            }
+            if (skuBean == null) {
+                selectedSku = null;
+                mTvSku.setText("库存不足，请选择其他类型~");
+            } else {
+                selectedSku = skuBean.getSku();
+                mTvSku.setText(skuBean.getSku());
+            }
+        } else {
+            selectedSku = null;
+            mTvSku.setText(sb);
         }
-        return false;
     }
 
     @Override
@@ -396,7 +395,10 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
 
     public void showLoading(String message) {
         if (loadingDialog == null) {
-            loadingDialog = new LoadingDialog(getContext());
+            if (mContext != null)
+                loadingDialog = new LoadingDialog(mContext);
+            else
+                loadingDialog = new LoadingDialog(getContext());
             loadingDialog.setDimAmount(0);
         } else {
             loadingDialog.setText(message);
@@ -426,8 +428,24 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         dismissLoading();
     }
 
+
+    OnSkusListener mOnSkusListener;
+
+    public void getSkus(String uid, OnSkusListener listener) {
+        mPresenter.getSkus(uid);
+        mOnSkusListener = listener;
+    }
+
+    public interface OnSkusListener {
+        void hasSkus(boolean hasSkus);
+
+        void clickComfirm(String sku, int amount);
+    }
+
+
     @Override
     public void responseGetSkus(SkusBean bean) {
+        mOnSkusListener.hasSkus(bean.getSkus().size() > 0);
         mAdapter.setNewData(bean.getAttributes());
     }
 }

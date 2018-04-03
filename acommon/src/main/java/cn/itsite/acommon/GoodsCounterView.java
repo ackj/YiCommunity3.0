@@ -19,7 +19,7 @@ public class GoodsCounterView extends LinearLayout {
     private TextView mTvCount;
     private ImageView mIvMinus;
     private ImageView mIvAdd;
-    private int counter;
+    private int counter = 1;
 
     public GoodsCounterView(Context context) {
         this(context, null);
@@ -70,7 +70,7 @@ public class GoodsCounterView extends LinearLayout {
     }
 
     public void clickMinus() {
-        if (counter > 0) {
+        if (counter > 1) {
             counter--;
             mTvCount.setText(formatCounter(counter));
         }

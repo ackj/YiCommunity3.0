@@ -1,5 +1,6 @@
 package cn.itsite.order;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -66,8 +68,12 @@ public class OrderListRVAdapter extends BaseRecyclerViewAdapter<OrderBean, BaseV
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+                OrderBean.ProductsBean item = adapter.getData().get(position);
                 Fragment fragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
+                Bundle bundle = new Bundle();
+                bundle.putString("uid", item.getUid());
+                fragment.setArguments(bundle);
                 activity.start((BaseFragment) fragment);
             }
         });
@@ -88,6 +94,8 @@ public class OrderListRVAdapter extends BaseRecyclerViewAdapter<OrderBean, BaseV
             ImageView ivImg = helper.getView(R.id.iv_img);
             Glide.with(ivImg.getContext())
                     .load(item.getImageUrl())
+                    .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                    .apply(new RequestOptions().error(R.drawable.ic_img_error))
                     .into(ivImg);
         }
     }

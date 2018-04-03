@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -30,19 +31,23 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import cn.itsite.abase.BaseApp;
+import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.AddressBean;
+import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.goodshome.R;
 import cn.itsite.goodshome.contract.StoreContract;
 import cn.itsite.goodshome.model.ShopBean;
 import cn.itsite.goodshome.presenter.StorePresenter;
-import q.rorbin.badgeview.QBadgeView;
 
 /**
  * Author： Administrator on 2018/1/30 0030.
@@ -57,7 +62,10 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
     private FloatingActionButton mFabSearch;
     private MagicIndicator mMagicIndicator;
 
+    private String[] shopTypes = {"smartHome", "shop"};
+
     private GoodsParams mParams = new GoodsParams();
+    private StoreHomeVPAdapter mAdapter;
 
     public static StoreHomeFragment newInstance() {
         return new StoreHomeFragment();
@@ -101,18 +109,18 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
     }
 
     private void initData() {
-        StoreHomeVPAdapter mAdapter = new StoreHomeVPAdapter(getChildFragmentManager());
+        mAdapter = new StoreHomeVPAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mAdapter);
 //        mTabLayout.setupWithViewPager(mViewPager);
 
-        //购物车上的小红点数字
-        new QBadgeView(_mActivity)
-                .bindTarget(mIvShopCart)
-                .setBadgeTextSize(10, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setBadgeBackgroundColor(0xA0FF0000)
-                .setBadgeTextColor(0x99FFFFFF)
-                .setBadgeNumber(2);
+        //todo （暂时不做）购物车上的小红点数字
+//        new QBadgeView(_mActivity)
+//                .bindTarget(mIvShopCart)
+//                .setBadgeTextSize(10, true)
+//                .setBadgeGravity(Gravity.END | Gravity.TOP)
+//                .setBadgeBackgroundColor(0xA0FF0000)
+//                .setBadgeTextColor(0x99FFFFFF)
+//                .setBadgeNumber(2);
     }
 
     public void showStoreDialog(List<ShopBean> list) {
@@ -124,6 +132,15 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                     recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
                     recyclerView.setAdapter(adapter);
                     adapter.setNewData(list);
+                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+                            String shopUid = adapter.getData().get(position).getUid();
+                            SPCache.put(_mActivity, UserHelper.SHOP_ID, shopUid);
+                            EventBus.getDefault().post(new SwitchStoreEvent(shopUid));
+                            dialog.dismiss();
+                        }
+                    });
                 })
                 .setDimAmount(0.3f)
                 .setGravity(Gravity.BOTTOM)
@@ -141,6 +158,10 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
             Fragment fragment = (Fragment) ARouter.getInstance()
                     .build("/goodssearch/searchgoodsfragment")
                     .navigation();
+            Bundle bundle = new Bundle();
+            bundle.putString("shopType", shopTypes[mViewPager.getCurrentItem()]);
+            bundle.putString("shopUid", (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, ""));
+            fragment.setArguments(bundle);
             start((BaseFragment) fragment);
         });
     }
@@ -149,9 +170,9 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 100) {
-            AddressBean addressBean = (AddressBean) data.getSerializable("address");
-            mParams.latitude = addressBean.latitude;
-            mParams.longitude = addressBean.longitude;
+            DeliveryBean deliveryBean = (DeliveryBean) data.getSerializable("delivery");
+            mParams.latitude = deliveryBean.getLatitude();
+            mParams.longitude = deliveryBean.getLongitude();
             mPresenter.getStore(mParams);
         }
     }

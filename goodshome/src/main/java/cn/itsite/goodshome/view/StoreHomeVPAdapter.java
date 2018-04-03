@@ -22,7 +22,7 @@ public class StoreHomeVPAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return position == 0 ? StoreFragment.newInstance("smart") : StoreFragment.newInstance("shop");
+        return position == 0 ? StoreFragment.newInstance("smartHome") : StoreFragment.newInstance("shop");
     }
 
     @Override

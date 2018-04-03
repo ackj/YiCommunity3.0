@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.flexbox.FlexboxLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -80,7 +81,7 @@ public class GoodsFragment extends BaseFragment {
             refreshLables(bean);
             mTvName.setText(bean.getTitle());
             mTvDesc.setText(bean.getDescription());
-            mTvDesc.setText(bean.getPay().getCurrency() + bean.getPay().getCost());
+            mTvPrice.setText(bean.getPay().getCurrency() + bean.getPay().getCost());
         }
     }
 
@@ -103,11 +104,16 @@ public class GoodsFragment extends BaseFragment {
         mBanner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load(path).into(imageView);
+                Glide.with(context).load(path)
+                        .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                        .apply(new RequestOptions().error(R.drawable.ic_img_error))
+                        .into(imageView);
             }
         })
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+
                 .setImages(bannerImages)
+
                 .isAutoPlay(true)
                 .start();
     }

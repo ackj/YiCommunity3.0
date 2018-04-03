@@ -62,6 +62,7 @@ public class DetailFragment extends BaseFragment {
     }
 
     private void initData() {
+        mWebView.setClickable(false);
         mWebView.loadUrl(link);
     }
 

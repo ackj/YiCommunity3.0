@@ -1,12 +1,16 @@
 package cn.itsite.shoppingcart;
 
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.daimajia.swipe.SwipeLayout;
 
 import cn.itsite.acommon.GoodsCounterView;
 
@@ -46,11 +50,21 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
                         });
                 break;
             case StoreBean.TYPE_STORE_GOODS:
+                TextView tvSku = helper.getView(R.id.tv_specification);
+                if(TextUtils.isEmpty(item.getProductsBean().getSku())){
+                    tvSku.setVisibility(View.GONE);
+                }else{
+                    tvSku.setVisibility(View.VISIBLE);
+                    tvSku.setText(item.getProductsBean().getSku());
+                }
+
+                SwipeLayout swipeLayout =  helper.getView(R.id.swipeLayout);
+                swipeLayout.setSwipeEnabled(false);
+
                 GoodsCounterView goodsCounterView = helper.getView(R.id.goodsCounterView);
                 goodsCounterView.setCounter(item.getProductsBean().getCount());
                 helper.setOnCheckedChangeListener(R.id.checkBox, null)
                         .setText(R.id.tv_name, item.getProductsBean().getTitle())
-                        .setText(R.id.tv_specification, item.getProductsBean().getDescription())
                         .setChecked(R.id.checkBox, item.isChecked())
                         .setOnCheckedChangeListener(R.id.checkBox, new CompoundButton.OnCheckedChangeListener() {
                             @Override
@@ -60,9 +74,10 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
                         })
                         .addOnClickListener(R.id.tv_specification)
                         .addOnClickListener(R.id.tv_confirm)
+                        .addOnClickListener(R.id.iv_edit)
                         .setText(R.id.tv_name, item.getProductsBean().getTitle())
                         .setText(R.id.tv_desc, item.getProductsBean().getDescription())
-                        .setText(R.id.tv_price, item.getProductsBean().getPay().getCurrency() + " " + item.getProductsBean().getPay().getCost());
+                        .setText(R.id.tv_price, item.getProductsBean().getPay().getCurrency() + " " + item.getProductsBean().getPay().getPrice());
 
                 ImageView ivIcon = helper.getView(R.id.iv_icon);
                 Glide.with(ivIcon.getContext())

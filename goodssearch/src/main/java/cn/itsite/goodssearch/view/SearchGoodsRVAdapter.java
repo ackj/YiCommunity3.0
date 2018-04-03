@@ -33,12 +33,14 @@ public class SearchGoodsRVAdapter extends BaseMultiItemQuickAdapter<SearchGoodsB
         switch (item.getItemType()) {
             case SearchGoodsBean.TYPE_HISTORY_TITLE:
                 helper.setText(R.id.tv_title, item.getTitle())
-                        .setVisible(R.id.iv_clear, item.getTitle().contains("历史"));
+                        .setVisible(R.id.iv_clear, item.getTitle().contains("历史"))
+                        .addOnClickListener(R.id.iv_clear);
                 break;
             case SearchGoodsBean.TYPE_HISTORY_ITEM:
-                helper.setText(R.id.tv_keyword, item.getKeywordBean().getQuery());
+                helper.setText(R.id.tv_keyword, item.getKeywordBean().getKeyword());
                 break;
             case SearchGoodsBean.TYPE_SEARCH_STRING:
+                helper.setText(R.id.tv_keyword, item.getKeywordBean().getKeyword());
                 break;
             case SearchGoodsBean.TYPE_SEARCH_GOODS:
                 ImageView mIvIcon = helper.getView(R.id.iv_icon);

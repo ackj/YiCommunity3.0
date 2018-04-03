@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsParams;
@@ -35,6 +38,9 @@ import cn.itsite.goodssearch.model.GoodsBean;
 import cn.itsite.goodssearch.model.KeywordBean;
 import cn.itsite.goodssearch.model.SearchGoodsBean;
 import cn.itsite.goodssearch.presenter.KeywordsPresenter;
+import cn.itsite.statemanager.BaseViewHolder;
+import cn.itsite.statemanager.StateLayout;
+import cn.itsite.statemanager.StateListener;
 import cn.itsite.statemanager.StateManager;
 
 /**
@@ -43,9 +49,11 @@ import cn.itsite.statemanager.StateManager;
  */
 @Route(path = "/goodssearch/searchgoodsfragment")
 public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> implements View.OnClickListener, KeywordsContract.View {
-    public static final String TAG = SearchGoodsFragment.class.getSimpleName();
+
+    private static final String TAG = SearchGoodsFragment.class.getSimpleName();
+
     private RecyclerView mRecyclerView;
-    private SearchGoodsRVAdapter adapter;
+    private SearchGoodsRVAdapter mSearchGoodsAdapter;
     private LinearLayout mLlToolbar;
     private TextView mTvSearch;
     private EditText mEtInput;
@@ -54,10 +62,20 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     private List<SearchGoodsBean> mKeywordsDatas;
     private List<SearchGoodsBean> mProductsDatas;
     private StateManager mStateManager;
-    private GoodsParams mParmas = new GoodsParams();
+
+    private GoodsParams mParams = new GoodsParams();
+    private boolean clickKeyword;
+    private boolean isClickSearchString;
 
     public static SearchGoodsFragment newInstance() {
         return new SearchGoodsFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mParams.shopUid = getArguments().getString("shopUid");
+        mParams.shoptype = getArguments().getString("shopType");
     }
 
     @NonNull
@@ -68,7 +86,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_goods, container, false);
         mLlToolbar = view.findViewById(R.id.ll_toolbar);
         mTvSearch = view.findViewById(R.id.tv_search);
@@ -88,10 +106,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     }
 
     private void initStatusBar() {
-        mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(),
-                mLlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity),
-                mLlToolbar.getPaddingRight(),
-                mLlToolbar.getPaddingBottom());
+        mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(), mLlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mLlToolbar.getPaddingRight(), mLlToolbar.getPaddingBottom());
     }
 
     private void initStateManager() {
@@ -99,30 +114,36 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
                 .setContent(mRecyclerView)
                 .setEmptyView(R.layout.state_empty_layout)
                 .setEmptyImage(R.drawable.ic_prompt_search_01)
-                .setConvertListener((holder, stateLayout) ->
-                        holder.setVisible(R.id.bt_empty_state, false))
+                .setConvertListener(new StateListener.ConvertListener() {
+                    @Override
+                    public void convert(BaseViewHolder holder, StateLayout stateLayout) {
+                        holder.setVisible(R.id.bt_empty_state, false);
+                    }
+                })
                 .setEmptyText("抱歉，搜无此商品~")
                 .build();
     }
 
     private void initData() {
         showSoftInputFromWindow(_mActivity, mEtInput);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 6));
-        adapter = new SearchGoodsRVAdapter();
-        mRecyclerView.setAdapter(adapter);
 
-        mParmas.shoptype = "shop";
-        mParmas.shopUid = "123";
+        mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 6));
+        mSearchGoodsAdapter = new SearchGoodsRVAdapter();
+        mRecyclerView.setAdapter(mSearchGoodsAdapter);
 
         //获取热门搜索
-        mPresenter.getKeywords(mParmas);
+        mPresenter.getKeywords(mParams);
 
     }
 
     private void refreshData(final List<SearchGoodsBean> data) {
-        adapter.setSpanSizeLookup((gridLayoutManager, position) ->
-                data.get(position).getSpanSize());
-        adapter.setNewData(data);
+        mSearchGoodsAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
+                return data.get(position).getSpanSize();
+            }
+        });
+        mSearchGoodsAdapter.setNewData(data);
         mStateManager.showContent();
     }
 
@@ -138,8 +159,13 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mParmas.keyword = s.toString();
-                mPresenter.getKeywords(mParmas);
+                if (isClickSearchString) {
+                    isClickSearchString = false;
+                } else {
+                    mParams.keyword = s.toString();
+                    mPresenter.getKeywords(mParams);
+                }
+                ALog.e(TAG, "搜索：" + s);
             }
 
             @Override
@@ -148,33 +174,55 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
             }
         });
 
-        adapter.setOnItemClickListener((adapter, view, position) -> {
-            SearchGoodsBean item = this.adapter.getItem(position);
-            switch (item.getItemType()) {
-                case SearchGoodsBean.TYPE_HISTORY_TITLE:
-                    break;
-                case SearchGoodsBean.TYPE_HISTORY_ITEM:
-                case SearchGoodsBean.TYPE_SEARCH_STRING:
-                    SearchGoodsFragment.super.start("");
-                    mParmas.keyword = item.getKeywordBean().getQuery();
-                    mPresenter.getProducts(mParmas);
-                    break;
-                case SearchGoodsBean.TYPE_SEARCH_GOODS:
-                    Fragment goodsDetailFragment = (Fragment) ARouter.getInstance()
-                            .build("/goodsdetail/goodsdetailfragment")
-                            .navigation();
-                    start((BaseFragment) goodsDetailFragment);
-                    break;
-                default:
-
+        mSearchGoodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                SearchGoodsBean item = mSearchGoodsAdapter.getItem(position);
+                switch (item.getItemType()) {
+                    case SearchGoodsBean.TYPE_HISTORY_TITLE:
+                        if (view.getId() == R.id.iv_clear) {
+                            mPresenter.clearHistory();
+                            mPresenter.getKeywords(mParams);
+                        }
+                        break;
+                    default:
+                }
             }
         });
 
-        mEtInput.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                search();
+        mSearchGoodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SearchGoodsBean item = mSearchGoodsAdapter.getItem(position);
+                switch (item.getItemType()) {
+                    case SearchGoodsBean.TYPE_HISTORY_TITLE:
+                        break;
+                    case SearchGoodsBean.TYPE_HISTORY_ITEM:
+                    case SearchGoodsBean.TYPE_SEARCH_STRING:
+                        SearchGoodsFragment.super.start("");
+                        isClickSearchString = true;
+                        mEtInput.setText(item.getKeywordBean().getKeyword());
+                        mEtInput.setSelection(item.getKeywordBean().getKeyword().length());
+                        search();
+                        break;
+                    case SearchGoodsBean.TYPE_SEARCH_GOODS:
+                        Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
+                        start((BaseFragment) goodsDetailFragment);
+                        break;
+                    default:
+
+                }
             }
-            return false;
+        });
+
+        mEtInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    search();
+                }
+                return false;
+            }
         });
     }
 
@@ -189,25 +237,19 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         String input = mEtInput.getText().toString();
         if (!TextUtils.isEmpty(input)) {
             super.start("");
-            mParmas.keyword = input;
-            mPresenter.getProducts(mParmas);
+            mParams.keyword = input;
+            mPresenter.getProducts(mParams);
         }
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back) {
-//            refreshData(mHotKeywordsDatas);
             pop();
         } else if (v.getId() == R.id.et_input) {
-//            refreshData(data2);
+            refreshData(mKeywordsDatas);
         } else if (v.getId() == R.id.tv_search) {
-            if ("搜索".equals(mTvSearch.getText())) {
-                search();
-            } else {
-                refreshData(mHotKeywordsDatas);
-                mTvSearch.setText("搜索");
-            }
+            refreshData(mHotKeywordsDatas);
         }
     }
 
@@ -216,12 +258,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     }
 
     @Override
-    public void error(String errorMessage) {
-    }
-
-    @Override
     public void responseGetKeywords(List<KeywordBean> datas) {
-        mStateManager.showContent();
         mKeywordsDatas = new ArrayList<>();
         for (int i = 0; i < datas.size(); i++) {
             SearchGoodsBean keywordBean = new SearchGoodsBean();
@@ -251,7 +288,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
             keywordBean.setItemType(SearchGoodsBean.TYPE_HISTORY_ITEM);
             keywordBean.setSpanSize(2);
             KeywordBean bean = new KeywordBean();
-            bean.setQuery(keyword2Local.get(i));
+            bean.setKeyword(keyword2Local.get(i));
             keywordBean.setKeywordBean(bean);
             mHotKeywordsDatas.add(keywordBean);
         }
@@ -286,8 +323,5 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
             }
             refreshData(mProductsDatas);
         }
-        //todo:待删
-        mStateManager.showEmpty();
-        mTvSearch.setText("取消");
     }
 }

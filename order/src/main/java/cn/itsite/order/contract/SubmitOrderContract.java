@@ -1,32 +1,38 @@
-package cn.itsite.delivery.contract;
+package cn.itsite.order.contract;
 
 import java.util.List;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.DeliveryBean;
+import cn.itsite.acommon.OperatorBean;
 import rx.Observable;
 
 /**
  * @author liujia
  * @version v0.0.0
  * @E-mail liujia95me@126.com
- * @time 2018/3/14 0014 15:45
+ * @time 2018/4/2 0002 15:22
  */
 
-public interface DeliveryContract {
-    interface View extends BaseContract.View{
+public interface SubmitOrderContract {
+
+    interface View extends BaseContract.View {
         void responseGetAddress(List<DeliveryBean> data);
-        void responseDeleteAddressSuccess(BaseResponse response);
+
+        void responsePostOrdersSuccess(BaseResponse response);
     }
 
     interface Presenter extends BaseContract.Presenter {
         void getAddress();
-        void deleteAddress(String uid);
+
+        void postOrders(List<OperatorBean> data);
     }
 
     interface Model extends BaseContract.Model {
         Observable<BaseResponse<List<DeliveryBean>>> getAddress();
-        Observable<BaseResponse> deleteAddress(String uid);
+
+        Observable<BaseResponse> postOrders(List<OperatorBean> data);
     }
+
 }

@@ -2,7 +2,9 @@ package cn.itsite.amain.yicommunity.web;
 
 import android.os.Bundle;
 
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
+import cn.itsite.amain.yicommunity.common.Constants;
 
 /**
  * Author：leguang on 2017/4/12 0009 15:49
@@ -12,14 +14,24 @@ import cn.itsite.abase.mvp.view.base.BaseActivity;
  */
 
 public class WebActivity extends BaseActivity {
-    public static final String TAG = WebActivity.class.getSimpleName();
+    private static final String TAG = WebActivity.class.getSimpleName();
+    private String title;
+    private String link;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getIntent().getBundleExtra("bundle");
+        setContentView(cn.itsite.web.R.layout.activity_web);
+        initData();
+
         if (savedInstanceState == null) {
-            loadRootFragment(android.R.id.content, WebFragment.newInstance(bundle));
+            loadRootFragment(cn.itsite.web.R.id.fl_web_activity, WebFragment.newInstance(title, link));
         }
+    }
+
+    private void initData() {
+        title = getIntent().getStringExtra(Constants.KEY_TITLE);
+        link = getIntent().getStringExtra(Constants.KEY_LINK);
+        ALog.e(link);
     }
 }

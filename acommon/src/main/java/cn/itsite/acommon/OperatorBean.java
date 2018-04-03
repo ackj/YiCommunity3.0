@@ -15,6 +15,8 @@ public class OperatorBean {
     public String sku;
     public String uid;
     public String note;
+    public String product;
+    public String category;
 
     public List<Product> products;
 

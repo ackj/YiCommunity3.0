@@ -2,8 +2,6 @@ package cn.itsite.order.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.List;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
@@ -45,7 +43,6 @@ public class MineOrderPresenter extends BasePresenter<MineOrderContract.View,Min
                 .subscribe(new BaseSubscriber<BaseResponse<List<CategoryBean>>>() {
                     @Override
                     public void onSuccess(BaseResponse<List<CategoryBean>> listBaseResponse) {
-                        Logger.e("post success" + listBaseResponse.getData().get(0).getUid());
                         getView().responseGetCategories(listBaseResponse.getData());
                     }
                 }));

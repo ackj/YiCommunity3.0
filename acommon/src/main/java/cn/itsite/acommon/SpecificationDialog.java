@@ -11,16 +11,17 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.flexbox.FlexboxLayout;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.utils.DensityUtils;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.contract.SkusContract;
@@ -48,226 +49,16 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     private TextView mTvSku;
     private HashMap<Integer, SkusBean.AttributesBean.ValuesBean> mPositions = new HashMap<>();//已选的Position集
 
-    private String selectedSku;
+    private SkusBean.SkuBean selectedSku;
 
 //    private List<String> mInterselectionSkus = new ArrayList<>();//选中的skus交集，最后只会剩下一个值
 //    private List<String> mSkuUids = new ArrayList<>();//所有可能性的skus的uid
 
-    private String testJson = "{\n" +
-            "        \"attributes\": [\n" +
-            "            {\n" +
-            "                \"attribute\": \"性别\",\n" +
-            "                \"values\": [\n" +
-            "                    {\n" +
-            "                        \"skus\": [\n" +
-            "                            \"2\",\n" +
-            "                            \"3\",\n" +
-            "                            \"4\",\n" +
-            "                            \"6\",\n" +
-            "                            \"7\",\n" +
-            "                            \"8\"\n" +
-            "                        ],\n" +
-            "                        \"stockQuantity\": 600,\n" +
-            "                        \"value\": \"男\"\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                        \"skus\": [\n" +
-            "                            \"10\",\n" +
-            "                            \"11\",\n" +
-            "                            \"13\",\n" +
-            "                            \"15\",\n" +
-            "                            \"17\",\n" +
-            "                            \"18\"\n" +
-            "                        ],\n" +
-            "                        \"stockQuantity\": 600,\n" +
-            "                        \"value\": \"女\"\n" +
-            "                    }\n" +
-            "                ]\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"attribute\": \"颜色\",\n" +
-            "                \"values\": [\n" +
-            "                    {\n" +
-            "                        \"skus\": [\n" +
-            "                            \"2\",\n" +
-            "                            \"3\",\n" +
-            "                            \"10\",\n" +
-            "                            \"11\"\n" +
-            "                        ],\n" +
-            "                        \"stockQuantity\": 400,\n" +
-            "                        \"value\": \"红色\"\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                        \"skus\": [\n" +
-            "                            \"4\",\n" +
-            "                            \"6\",\n" +
-            "                            \"13\",\n" +
-            "                            \"15\"\n" +
-            "                        ],\n" +
-            "                        \"stockQuantity\": 400,\n" +
-            "                        \"value\": \"黄色\"\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                        \"skus\": [\n" +
-            "                            \"7\",\n" +
-            "                            \"8\",\n" +
-            "                            \"17\",\n" +
-            "                            \"18\"\n" +
-            "                        ],\n" +
-            "                        \"stockQuantity\": 400,\n" +
-            "                        \"value\": \"蓝色\"\n" +
-            "                    }\n" +
-            "                ]\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"attribute\": \"尺码\",\n" +
-            "                \"values\": [\n" +
-            "                    {\n" +
-            "                        \"skus\": [\n" +
-            "                            \"4\",\n" +
-            "                            \"7\",\n" +
-            "                            \"10\",\n" +
-            "                            \"13\"\n" +
-            "                        ],\n" +
-            "                        \"stockQuantity\": 400,\n" +
-            "                        \"value\": \"X码\"\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                        \"skus\": [\n" +
-            "                            \"2\",\n" +
-            "                            \"8\",\n" +
-            "                            \"11\",\n" +
-            "                            \"15\"\n" +
-            "                        ],\n" +
-            "                        \"stockQuantity\": 400,\n" +
-            "                        \"value\": \"M码\"\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                        \"skus\": [\n" +
-            "                            \"3\",\n" +
-            "                            \"6\",\n" +
-            "                            \"15\",\n" +
-            "                            \"18\"\n" +
-            "                        ],\n" +
-            "                        \"stockQuantity\": 400,\n" +
-            "                        \"value\": \"L码\"\n" +
-            "                    }\n" +
-            "                ]\n" +
-            "            }\n" +
-            "        ],\n" +
-            "        \"skus\": [\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"男+红色+M码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"2\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"男+红色+L码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"3\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"男+黄色+X码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"4\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"男+黄色+L码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"6\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"男+蓝色+X码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"7\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"男+蓝色+M码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"8\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"女+红色+X码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"10\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"女+红色+M码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"11\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"女+黄色+X码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"13\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"女+黄色+L码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"15\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"女+蓝色+M码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"17\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"currency\": \"¥\",\n" +
-            "                \"imageUrl\": \"http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg\",\n" +
-            "                \"note\": \"备注：该商品XXX\",\n" +
-            "                \"price\": 50,\n" +
-            "                \"sku\": \"女+蓝色+L码\",\n" +
-            "                \"stockQuantity\": 100,\n" +
-            "                \"uid\": \"18\"\n" +
-            "            }\n" +
-            "        ]\n" +
-            "    }";
     private SkusBean skusBean;
     private TextView mTvConfirm;
+    private ImageView mIvIcon;
+    private TextView mTvPrice;
+    private boolean mHasSkus;
 
     @Nullable
     @Override
@@ -279,6 +70,8 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         mTvSku = view.findViewById(R.id.tv_sku);
         mTvStockQuantity = view.findViewById(R.id.tv_stock_quantity);
         mTvConfirm = view.findViewById(R.id.tv_confirm);
+        mIvIcon = view.findViewById(R.id.iv_icon);
+        mTvPrice = view.findViewById(R.id.tv_price);
         return view;
     }
 
@@ -287,10 +80,14 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     }
 
     Context mContext;
+    private String mUid;
+    private String mNormalImage;
 
     @SuppressLint("ValidFragment")
-    public SpecificationDialog(Context context) {
+    public SpecificationDialog(Context context, String uid, String normalImage) {
         mContext = context;
+        this.mUid = uid;
+        mNormalImage = normalImage;
     }
 
     @SuppressLint("ResourceType")
@@ -310,11 +107,11 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new SpecificationRVAdapter();
         mRecyclerView.setAdapter(mAdapter);
+        mPresenter.getSkus(mUid);
 
-//        mPresenter.getSkus("123");
-
-        skusBean = new Gson().fromJson(testJson, SkusBean.class);
-        mAdapter.setNewData(skusBean.getAttributes());
+        if (mNormalImage != null) {
+            refreshImage(mNormalImage);
+        }
     }
 
 
@@ -336,10 +133,10 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
                 int counter = mTvGoodsCounter.getCounter();
                 if (counter <= 0) {
                     ToastUtils.showToast(getContext(), "请选择数量");
-                } else if (selectedSku == null) {
+                } else if (mHasSkus && selectedSku == null) {
                     ToastUtils.showToast(getContext(), "请选择规格");
                 } else {
-                    mOnSkusListener.clickComfirm(selectedSku, counter);
+                    mOnSkusListener.clickComfirm(selectedSku, counter, SpecificationDialog.this);
                 }
             }
         });
@@ -379,8 +176,9 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
                 selectedSku = null;
                 mTvSku.setText("库存不足，请选择其他类型~");
             } else {
-                selectedSku = skuBean.getSku();
+                selectedSku = skuBean;
                 mTvSku.setText(skuBean.getSku());
+                refreshInfo(skuBean.getStockQuantity() + "", skuBean.getCurrency() + skuBean.getPrice());
             }
         } else {
             selectedSku = null;
@@ -420,7 +218,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     @Override
     public void error(String errorMessage) {
         dismissLoading();
-        DialogHelper.errorSnackbar(getView(), errorMessage);
+        ToastUtils.showToast(getContext(), errorMessage);
     }
 
     @Override
@@ -431,21 +229,35 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
 
     OnSkusListener mOnSkusListener;
 
-    public void getSkus(String uid, OnSkusListener listener) {
-        mPresenter.getSkus(uid);
+    public void setSkuListener(OnSkusListener listener) {
         mOnSkusListener = listener;
     }
 
     public interface OnSkusListener {
-        void hasSkus(boolean hasSkus);
-
-        void clickComfirm(String sku, int amount);
+        void clickComfirm(SkusBean.SkuBean sku, int amount, SpecificationDialog dialog);
     }
 
+    private void refreshInfo(String stockQuantity, String price) {
+        mTvStockQuantity.setText("库存 " + stockQuantity + " 件");
+        mTvPrice.setText(price);
+    }
+
+    private void refreshImage(String imageUrl) {
+        Glide.with(mContext)
+                .load(imageUrl)
+                .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                .apply(new RequestOptions().error(R.drawable.ic_img_error))
+                .into(mIvIcon);
+    }
 
     @Override
     public void responseGetSkus(SkusBean bean) {
-        mOnSkusListener.hasSkus(bean.getSkus().size() > 0);
         mAdapter.setNewData(bean.getAttributes());
+        //设置默认数据
+        mHasSkus = bean.getAttributes().size() > 0;
+        if (bean.getPay() != null) {
+            refreshInfo(bean.getStockQuantity(), bean.getPay().getCurrency() + bean.getPay().getPrice());
+        }
+        refreshProduct();
     }
 }

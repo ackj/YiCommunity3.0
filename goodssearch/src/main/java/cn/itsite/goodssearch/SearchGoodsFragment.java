@@ -28,6 +28,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsParams;
@@ -60,6 +61,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
 
     private GoodsParams mParams = new GoodsParams();
     private boolean clickKeyword;
+    private boolean isClickSearchString;
 
     public static SearchGoodsFragment newInstance() {
         return new SearchGoodsFragment();
@@ -153,8 +155,13 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mParams.keyword = s.toString();
-                mPresenter.getKeywords(mParams);
+                if (isClickSearchString) {
+                    isClickSearchString = false;
+                } else {
+                    mParams.keyword = s.toString();
+                    mPresenter.getKeywords(mParams);
+                }
+                ALog.e(TAG, "搜索：" + s);
             }
 
             @Override
@@ -189,6 +196,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
                     case SearchGoodsBean.TYPE_HISTORY_ITEM:
                     case SearchGoodsBean.TYPE_SEARCH_STRING:
                         SearchGoodsFragment.super.start("");
+                        isClickSearchString = true;
                         mEtInput.setText(item.getKeywordBean().getKeyword());
                         mEtInput.setSelection(item.getKeywordBean().getKeyword().length());
                         search();

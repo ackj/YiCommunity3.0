@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
@@ -66,6 +67,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mOrders = getArguments().getParcelableArrayList("orders");
+        ALog.e(TAG, "orders:" + mOrders);
     }
 
     @Nullable
@@ -177,7 +179,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                 product.uid = submitOrderBean.getProductsBean().getUid();
                 operatorBean.products.add(product);
             } else if (submitOrderBean.getItemType() == SubmitOrderBean.TYPE_ORDER_INFO) {
-                operatorBean.note = submitOrderBean.getLeaveMessage()+"";
+                operatorBean.note = submitOrderBean.getLeaveMessage() + "";
                 operatorBean.uid = submitOrderBean.getDeliveryBean().getUid();
                 data.add(operatorBean);
             }
@@ -240,6 +242,10 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                 break;
             }
         }
+        if (data.size() >= 1 && mDefaultDelivery == null) {
+            mDefaultDelivery = data.get(0);
+        }
+
         if (mDefaultDelivery == null) {
             showHintDialog();
         } else {

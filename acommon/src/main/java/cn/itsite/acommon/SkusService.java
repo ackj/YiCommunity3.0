@@ -2,7 +2,7 @@ package cn.itsite.acommon;
 
 import cn.itsite.abase.network.http.BaseResponse;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -14,8 +14,8 @@ import rx.Observable;
 
 public interface SkusService {
 
-    @GET("v1/skus/{uid}")
-    Observable<BaseResponse<SkusBean>> getSkus(@Path("uid") String uid);
+    @GET("v1/skusets")
+    Observable<BaseResponse<SkusBean>> getSkus(@Query("params") String params);
 
 
 }

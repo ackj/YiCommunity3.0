@@ -1,8 +1,11 @@
 package cn.itsite.acommon.model;
 
+import com.google.gson.Gson;
+
 import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
+import cn.itsite.acommon.OperatorBean;
 import cn.itsite.acommon.SkusBean;
 import cn.itsite.acommon.SkusService;
 import cn.itsite.acommon.contract.SkusContract;
@@ -16,12 +19,14 @@ import rx.schedulers.Schedulers;
  * @time 2018/3/22 0022 14:39
  */
 
-public class SkusModel extends BaseModel implements SkusContract.Model{
+public class SkusModel extends BaseModel implements SkusContract.Model {
 
     @Override
     public Observable<BaseResponse<SkusBean>> getSkus(String uid) {
+        OperatorBean operatorBean = new OperatorBean();
+        operatorBean.product = uid;
         return HttpHelper.getService(SkusService.class)
-                .getSkus(uid)
+                .getSkus(new Gson().toJson(operatorBean))
                 .subscribeOn(Schedulers.io());
     }
 }

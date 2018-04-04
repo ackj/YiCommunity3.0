@@ -134,8 +134,8 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                 } else if (view.getId() == R.id.btn_1) {
                     OrderBean.ActionsBean actions = orderBean.getActions().get(1);
                     clickAction(orderBean.getUid(), actions);
-                } else {
-                    ((SupportActivity) _mActivity).start(OrderDetailFragment.newInstance());
+                } else if (view.getId() == R.id.layout_order) {
+                    ((SupportActivity) _mActivity).start(OrderDetailFragment.newInstance(orderBean.getUid()));
                 }
             }
         });

@@ -38,6 +38,24 @@ public class OrderDetailBean {
     private String uid;
     private List<ActionsBean> actions;
     private List<ProductsBean> products;
+    private ProductsBean.PayBean pay;
+    private ExpressBean express;
+
+    public ExpressBean getExpress() {
+        return express;
+    }
+
+    public void setExpress(ExpressBean express) {
+        this.express = express;
+    }
+
+    public ProductsBean.PayBean getPay() {
+        return pay;
+    }
+
+    public void setPay(ProductsBean.PayBean pay) {
+        this.pay = pay;
+    }
 
     public String getAmount() {
         return amount;
@@ -422,6 +440,53 @@ public class OrderDetailBean {
             public void setPrice(String price) {
                 this.price = price;
             }
+        }
+    }
+
+    public static class ExpressBean{
+
+        /**
+         * name : 小明同志
+         * phoneNumber : 13811112222
+         * imageUrl : http://ww3.sinaimg.cn/large/0060lm7Tly1fo6vt0p500j30af0ad758.jpg
+         * identity : 派送员
+         */
+
+        private String name;
+        private String phoneNumber;
+        private String imageUrl;
+        private String identity;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public void setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public String getIdentity() {
+            return identity;
+        }
+
+        public void setIdentity(String identity) {
+            this.identity = identity;
         }
     }
 }

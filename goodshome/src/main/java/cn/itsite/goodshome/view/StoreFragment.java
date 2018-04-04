@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,7 @@ import java.util.List;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.goodshome.R;
@@ -55,6 +55,8 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     private GoodsParams mParmas = new GoodsParams();
     private StateManager mStateManager;
     private PtrFrameLayout mPtrFrameLayout;
+
+    private DeliveryBean mDeliveryBean;
 
     public static StoreFragment newInstance(String shopType) {
         StoreFragment fragment = new StoreFragment();
@@ -104,15 +106,14 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     private void refresh() {
         if ("shop".equals(mParmas.shoptype)) {
             mParmas.shopUid = (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, null);
-            if (TextUtils.isEmpty(mParmas.shopUid)) {
-                mStateManager.showEmpty();
-            }
+
         }
         mPresenter.getHome(mParmas);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SwitchStoreEvent event) {
+        mDeliveryBean = event.getDelivery();
         refresh();
     }
 

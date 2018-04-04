@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -32,7 +33,7 @@ public interface OrderService {
 
     //获取订单详情
     @GET("v1/orders/{uid}")
-    Observable<BaseResponse<OrderDetailBean>> getOrderDetail(@Query("params") String params);
+    Observable<BaseResponse<OrderDetailBean>> getOrderDetail(@Path("uid") String uid);
 
     //获取地址列表
     @GET("v1/deliveries")

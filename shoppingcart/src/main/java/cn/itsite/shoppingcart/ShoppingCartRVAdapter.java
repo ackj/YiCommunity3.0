@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.daimajia.swipe.SwipeLayout;
 
+import cn.itsite.abase.BaseApp;
 import cn.itsite.acommon.GoodsCounterView;
 
 /**
@@ -47,11 +48,17 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                 listener.onStoreCheckedChanged(helper.getLayoutPosition(), isChecked);
                             }
-                        });
+                        })
+                        .setText(R.id.tv_delivery_type,item.getShopBean().getServiceType())
+                        .setTextColor(R.id.tv_delivery_type, item.getShopBean().getServiceType().contains("上门") ?
+                                BaseApp.mContext.getResources().getColor(R.color.base_color) :
+                                BaseApp.mContext.getResources().getColor(R.color.green))
+                        .setBackgroundRes(R.id.tv_delivery_type,  item.getShopBean().getServiceType().contains("上门")  ?
+                                R.drawable.shape_bg_round_orange : R.drawable.shape_bg_round_green);
                 break;
             case StoreBean.TYPE_STORE_GOODS:
                 TextView tvSku = helper.getView(R.id.tv_specification);
-                if(TextUtils.isEmpty(item.getProductsBean().getSku())){
+                if(TextUtils.isEmpty(item.getProductsBean().getSkuID())){
                     tvSku.setVisibility(View.GONE);
                 }else{
                     tvSku.setVisibility(View.VISIBLE);

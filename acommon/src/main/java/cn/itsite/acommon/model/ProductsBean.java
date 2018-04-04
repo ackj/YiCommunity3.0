@@ -1,5 +1,7 @@
 package cn.itsite.acommon.model;
 
+import java.util.List;
+
 /**
  * @author liujia
  * @version v0.0.0
@@ -16,8 +18,17 @@ public class ProductsBean {
      */
 
     private String uid;
-    private String sku;
+    private List<String> skus;
     private String amount;
+    private String sku;
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
 
     public String getUid() {
         return uid;
@@ -27,12 +38,12 @@ public class ProductsBean {
         this.uid = uid;
     }
 
-    public String getSku() {
-        return sku;
+    public List<String> getSkus() {
+        return skus;
     }
 
-    public void setSku(String sku) {
-        this.sku = sku;
+    public void setSkus(List<String> skus) {
+        this.skus = skus;
     }
 
     public String getAmount() {

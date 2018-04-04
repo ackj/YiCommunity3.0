@@ -11,17 +11,70 @@
         android:layout_height="8dp"
         android:background="@color/default_white" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_express"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/line_1">
+
+        <ImageView
+            android:id="@+id/iv_avator"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_identity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:textColor="@color/default_text"
+            android:textSize="@dimen/H3"
+            app:layout_constraintLeft_toRightOf="@+id/iv_avator"
+            app:layout_constraintTop_toTopOf="@+id/iv_avator" />
+
+        <TextView
+            android:id="@+id/tv_express_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:textColor="@color/base_black"
+            android:textSize="@dimen/H3"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_avator"
+            app:layout_constraintLeft_toRightOf="@+id/iv_avator" />
+
+        <TextView
+            android:id="@+id/tv_express_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:textColor="#008dc6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/default_white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginLeft="12dp"
         android:gravity="center_vertical"
-        android:text="克拉家园便利店"
         android:textColor="@color/base_black"
         android:textSize="@dimen/H3"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line_1" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_express" />
 
     <TextView
         android:id="@+id/tv_delivery_type"
@@ -33,7 +86,6 @@
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:paddingTop="2dp"
-        android:text="送货上门"
         android:textColor="@color/base_color"
         android:textSize="@dimen/H5"
         app:layout_constraintBaseline_toBaselineOf="@id/tv_name"
@@ -45,7 +97,6 @@
         android:layout_height="45dp"
         android:layout_marginRight="12dp"
         android:gravity="center_vertical"
-        android:text="已取消"
         android:textColor="@color/warn"
         android:textSize="@dimen/H3"
         app:layout_constraintBaseline_toBaselineOf="@id/tv_name"

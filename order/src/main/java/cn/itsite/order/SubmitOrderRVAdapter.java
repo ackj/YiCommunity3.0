@@ -6,6 +6,8 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import cn.itsite.abase.BaseApp;
+
 /**
  * Author： Administrator on 2018/2/1 0001.
  * Email： liujia95me@126.com
@@ -24,7 +26,13 @@ public class SubmitOrderRVAdapter extends BaseMultiItemQuickAdapter<SubmitOrderB
     protected void convert(BaseViewHolder helper, SubmitOrderBean item) {
         switch (item.getItemType()) {
             case SubmitOrderBean.TYPE_STORE_TITLE:
-                helper.setText(R.id.tv_name, item.getShopBean().getName());
+                helper.setText(R.id.tv_name, item.getShopBean().getName())
+                        .setText(R.id.tv_delivery_type,item.getShopBean().getServiceType())
+                        .setTextColor(R.id.tv_delivery_type, item.getShopBean().getServiceType().contains("上门") ?
+                                BaseApp.mContext.getResources().getColor(R.color.base_color) :
+                                BaseApp.mContext.getResources().getColor(R.color.green))
+                        .setBackgroundRes(R.id.tv_delivery_type,  item.getShopBean().getServiceType().contains("上门")  ?
+                                R.drawable.shape_bg_round_orange : R.drawable.shape_bg_round_green);
                 break;
             case SubmitOrderBean.TYPE_STORE_GOODS:
                 ImageView ivIcon = helper.getView(R.id.iv_icon);
@@ -43,6 +51,7 @@ public class SubmitOrderRVAdapter extends BaseMultiItemQuickAdapter<SubmitOrderB
                         .setText(R.id.tv_contactway, String.format("收货人：%1$s      %2$s", item.getDeliveryBean().getName(), item.getDeliveryBean().getPhoneNumber()))
                         .setText(R.id.tv_location, item.getDeliveryBean().getLocation() + item.getDeliveryBean().getAddress())
                         .setText(R.id.tv_leave_message, item.getLeaveMessage());
+
                 break;
             default:
         }

@@ -66,6 +66,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
 
     private GoodsParams mParams = new GoodsParams();
     private StoreHomeVPAdapter mAdapter;
+    private DeliveryBean mDeliveryBean;
 
     public static StoreHomeFragment newInstance() {
         return new StoreHomeFragment();
@@ -137,7 +138,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                         public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
                             String shopUid = adapter.getData().get(position).getUid();
                             SPCache.put(_mActivity, UserHelper.SHOP_ID, shopUid);
-                            EventBus.getDefault().post(new SwitchStoreEvent(shopUid));
+                            EventBus.getDefault().post(new SwitchStoreEvent(shopUid,mDeliveryBean));
                             dialog.dismiss();
                         }
                     });
@@ -170,9 +171,9 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 100) {
-            DeliveryBean deliveryBean = (DeliveryBean) data.getSerializable("delivery");
-            mParams.latitude = deliveryBean.getLatitude();
-            mParams.longitude = deliveryBean.getLongitude();
+            mDeliveryBean = (DeliveryBean) data.getSerializable("delivery");
+            mParams.latitude = mDeliveryBean.getLatitude();
+            mParams.longitude = mDeliveryBean.getLongitude();
             mPresenter.getStore(mParams);
         }
     }

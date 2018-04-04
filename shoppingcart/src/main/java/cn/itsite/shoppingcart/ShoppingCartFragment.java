@@ -36,6 +36,7 @@ import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsCounterView;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.SkusBean;
 import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.StorePojo;
 import cn.itsite.acommon.event.RefreshCartEvent;
@@ -151,7 +152,6 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             }
         });
         mAdapter.setNewData(mDatas);
-        mPresenter.getCarts(cartUid);
     }
 
     private void initStateManager() {
@@ -188,7 +188,9 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
                         break;
                     case StoreBean.TYPE_STORE_GOODS:
                         if (view.getId() == R.id.tv_specification) {
-                            showSpecificationDialog();
+                            GoodsCounterView goodsCounterView = ((View) view.getParent()).findViewById(R.id.goodsCounterView);
+                            StorePojo.ProductsBean productsBean = item.getProductsBean();
+                            showSpecificationDialog(productsBean, view, goodsCounterView);
                         } else if (view.getId() == R.id.tv_confirm) {
                             GoodsCounterView goodsCounterView = ((View) view.getParent()).findViewById(R.id.goodsCounterView);
                             mOperationSwipeLayout = (SwipeLayout) view.getParent().getParent();
@@ -196,7 +198,17 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
                             mOptionAmount = goodsCounterView.getCounter();
                             ProductsBean productsBean = new ProductsBean();
                             productsBean.setAmount(goodsCounterView.getCounter() + "");
-                            productsBean.setSku(item.getProductsBean().getSku());
+                            TextView tvSpecification = ((View) view.getParent()).findViewById(R.id.tv_specification);
+                            List<String> skus = (List<String>) tvSpecification.getTag(R.id.tag_skus);
+                            if (item.getProductsBean().getSkuID() != null) {
+                                if (skus == null) {
+                                    List<String> skuList = new ArrayList<>();
+                                    skuList.add(item.getProductsBean().getSkuID());
+                                    productsBean.setSkus(skuList);
+                                } else {
+                                    productsBean.setSkus(skus);
+                                }
+                            }
                             productsBean.setUid(item.getProductsBean().getUid());
                             mPresenter.putProduct(cartUid, productsBean);
                         } else if (view.getId() == R.id.iv_edit) {
@@ -380,6 +392,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
 
     @Override
     public void responseGetCartsSuccess(List<StoreBean> data) {
+        mPtrFrameLayout.refreshComplete();
         if (data == null || data.isEmpty()) {
             mDatas.clear();
             mDatas.add(emptyBean);
@@ -396,7 +409,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         mAdapter.setNewData(mDatas);
         if (mDatas.size() == 0) {
             mStateManager.showEmpty();
-        }else{
+        } else {
             mStateManager.showContent();
         }
     }
@@ -460,8 +473,22 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
 
     }
 
-    private void showSpecificationDialog() {
-        SpecificationDialog dialog = new SpecificationDialog();
+    private void showSpecificationDialog(StorePojo.ProductsBean product, View view, GoodsCounterView goodsCounterView) {
+        SpecificationDialog dialog = new SpecificationDialog(_mActivity, product.getUid(), product.getIcon(), goodsCounterView.getCounter());
+        dialog.setSkuListener(new SpecificationDialog.OnSkusListener() {
+            @Override
+            public void clickComfirm(SkusBean.SkuBean sku, int amount, SpecificationDialog dialog) {
+                if (sku != null && !product.getSkuID().equals(sku.getUid())) {
+                    List<String> skus = new ArrayList<>();
+                    skus.add(product.getSkuID());
+                    skus.add(sku.getUid());
+                    view.setTag(R.id.tag_skus, skus);
+                    ((TextView) view).setText(sku.getSku());
+                }
+                goodsCounterView.setCounter(amount);
+                dialog.dismiss();
+            }
+        });
         dialog.show(getChildFragmentManager());
     }
 
@@ -476,6 +503,12 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         }
     }
 
+    @Override
+    public void error(String errorMessage) {
+        super.error(errorMessage);
+        mPtrFrameLayout.refreshComplete();
+        mStateManager.showError();
+    }
 
     @Override
     public void onDestroy() {

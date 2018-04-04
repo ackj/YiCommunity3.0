@@ -1,2 +1,4 @@
 <resources>
+    <item name="tag_skus" type="id"/>
+
 </resources>

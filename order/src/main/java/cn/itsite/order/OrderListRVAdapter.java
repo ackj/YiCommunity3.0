@@ -50,7 +50,8 @@ public class OrderListRVAdapter extends BaseRecyclerViewAdapter<OrderBean, BaseV
                 .setBackgroundRes(R.id.tv_delivery_type, isDeliveryToDoor(item) ?
                         R.drawable.shape_bg_round_orange : R.drawable.shape_bg_round_green)
                 .addOnClickListener(R.id.btn_2)
-                .addOnClickListener(R.id.btn_1);
+                .addOnClickListener(R.id.btn_1)
+                .addOnClickListener(R.id.layout_order);
         recyclerView.setLayoutManager(new LinearLayoutManager(BaseApp.mContext, LinearLayoutManager.HORIZONTAL, false));
         OrderItemImageAdapter adapter = new OrderItemImageAdapter();
         recyclerView.setAdapter(adapter);

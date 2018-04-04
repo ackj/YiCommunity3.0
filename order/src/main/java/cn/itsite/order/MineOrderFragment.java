@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -25,7 +26,7 @@ import cn.itsite.order.presenter.MineOrderPresenter;
  * Author： Administrator on 2018/2/1 0001.
  * Email： liujia95me@126.com
  */
-@Route(path="/order/mineorderfragment")
+@Route(path = "/order/mineorderfragment")
 public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter> implements MineOrderContract.View {
 
     public static final String TAG = MineOrderFragment.class.getSimpleName();
@@ -38,6 +39,7 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     private GoodsParams mGoodsParams = new GoodsParams();
     private CategoryBean mAllCategory;
     private List<CategoryBean> mCategories;
+    private ImageView mIvBack;
 
     public static MineOrderFragment newInstance() {
         return new MineOrderFragment();
@@ -61,6 +63,7 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
         mLlToolbar = view.findViewById(R.id.rl_toolbar);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
+        mIvBack = view.findViewById(R.id.iv_back);
         return attachToSwipeBack(view);
     }
 
@@ -87,12 +90,18 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     }
 
     private void initListener() {
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
     }
 
     @Override
     public void responseGetCategories(List<CategoryBean> data) {
         mCategories.addAll(data);
-        MineOrderVPAdapter mAdapter = new MineOrderVPAdapter(getChildFragmentManager(),mCategories);
+        MineOrderVPAdapter mAdapter = new MineOrderVPAdapter(getChildFragmentManager(), mCategories);
         viewPager.setAdapter(mAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

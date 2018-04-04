@@ -133,14 +133,14 @@ public class SkusBean {
             private String value;
             private List<String> skus;
             private boolean hasIntersection; //自己加的，与后台数据无关
-            private boolean selected;//是否选中
+            private boolean isSelected;//是否选中
 
             public boolean isSelected() {
-                return selected;
+                return isSelected;
             }
 
             public void setSelected(boolean selected) {
-                this.selected = selected;
+                isSelected = selected;
             }
 
             public boolean isHasIntersection() {

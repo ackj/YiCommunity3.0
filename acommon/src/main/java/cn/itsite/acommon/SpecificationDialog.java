@@ -82,12 +82,21 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     Context mContext;
     private String mUid;
     private String mNormalImage;
+    private int mNormalAmount = 1;
 
     @SuppressLint("ValidFragment")
     public SpecificationDialog(Context context, String uid, String normalImage) {
         mContext = context;
-        this.mUid = uid;
+        mUid = uid;
         mNormalImage = normalImage;
+    }
+
+    @SuppressLint("ValidFragment")
+    public SpecificationDialog(Context context, String uid, String normalImage, int normalAmount) {
+        mContext = context;
+        mUid = uid;
+        mNormalImage = normalImage;
+        mNormalAmount = normalAmount;
     }
 
     @SuppressLint("ResourceType")
@@ -108,6 +117,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         mAdapter = new SpecificationRVAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mPresenter.getSkus(mUid);
+        mTvGoodsCounter.setCounter(mNormalAmount);
 
         if (mNormalImage != null) {
             refreshImage(mNormalImage);
@@ -177,12 +187,12 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
                 mTvSku.setText("库存不足，请选择其他类型~");
             } else {
                 selectedSku = skuBean;
-                mTvSku.setText(skuBean.getSku());
+                mTvSku.setText("已选："+skuBean.getSku());
                 refreshInfo(skuBean.getStockQuantity() + "", skuBean.getCurrency() + skuBean.getPrice());
             }
         } else {
             selectedSku = null;
-            mTvSku.setText(sb);
+            mTvSku.setText("请选择 "+sb);
         }
     }
 
@@ -252,6 +262,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
 
     @Override
     public void responseGetSkus(SkusBean bean) {
+        skusBean = bean;
         mAdapter.setNewData(bean.getAttributes());
         //设置默认数据
         mHasSkus = bean.getAttributes().size() > 0;

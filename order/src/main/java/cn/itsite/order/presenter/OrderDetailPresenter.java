@@ -2,9 +2,11 @@ package cn.itsite.order.presenter;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.OperatorBean;
 import cn.itsite.order.OrderDetailBean;
 import cn.itsite.order.contract.OrderDetailContract;
 import cn.itsite.order.model.OrderDetailModel;
@@ -17,7 +19,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * @time 2018/3/20 0020 16:46
  */
 
-public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.View,OrderDetailContract.Model> implements OrderDetailContract.Presenter{
+public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.View, OrderDetailContract.Model> implements OrderDetailContract.Presenter {
 
     /**
      * 创建Presenter的时候就绑定View和创建model。
@@ -35,13 +37,37 @@ public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.View
     }
 
     @Override
-    public void getOrderDetail(GoodsParams goodsParams) {
-        mRxManager.add(mModel.getOrderDetail(goodsParams)
+    public void getOrderDetail(String uid) {
+        mRxManager.add(mModel.getOrderDetail(uid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<OrderDetailBean>>() {
                     @Override
                     public void onSuccess(BaseResponse<OrderDetailBean> listBaseResponse) {
                         getView().responseOrderDetail(listBaseResponse.getData());
+                    }
+                }));
+    }
+
+    @Override
+    public void deleteOrders(List<OperatorBean> orders) {
+        mRxManager.add(mModel.deleteOrders(orders)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        getView().responseDeleteSuccess(response);
+                    }
+                }));
+    }
+
+    @Override
+    public void putOrders(List<OperatorBean> orders) {
+        mRxManager.add(mModel.putOrders(orders)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        getView().responsePutSuccess(response);
                     }
                 }));
     }

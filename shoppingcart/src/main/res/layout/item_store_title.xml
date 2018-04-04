@@ -31,12 +31,20 @@
             android:textSize="@dimen/H3" />
 
         <TextView
+            android:id="@+id/tv_delivery_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
-            android:padding="2dp"
+            android:background="@drawable/shape_bg_round_orange"
+            android:paddingBottom="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingTop="2dp"
             android:text="送货上门"
-            android:textSize="@dimen/H5" />
+            android:textColor="@color/base_color"
+            android:textSize="@dimen/H5"
+           />
+
     </LinearLayout>
 
     <View

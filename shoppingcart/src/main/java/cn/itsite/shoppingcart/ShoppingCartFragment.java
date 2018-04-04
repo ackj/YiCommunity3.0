@@ -43,6 +43,11 @@ import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.shoppingcart.contract.CartContract;
 import cn.itsite.shoppingcart.presenter.CartPresenter;
+import cn.itsite.statemanager.BaseViewHolder;
+import cn.itsite.statemanager.StateLayout;
+import cn.itsite.statemanager.StateListener;
+import cn.itsite.statemanager.StateManager;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * Author： Administrator on 2018/1/31 0031.
@@ -76,6 +81,8 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     private StorePojo.ProductsBean mOperationProduct;
     private int mOptionAmount;
     private SwipeLayout mOperationSwipeLayout;
+    private PtrFrameLayout mPtrFrameLayout;
+    private StateManager mStateManager;
 
     public static ShoppingCartFragment newInstance() {
         return new ShoppingCartFragment();
@@ -105,6 +112,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         mTvEdit = view.findViewById(R.id.tv_edit);
         mTvAnchor = view.findViewById(R.id.anchor_1);
         mIvArrowLeft = view.findViewById(R.id.iv_arrow_left);
+        mPtrFrameLayout = view.findViewById(R.id.ptrFrameLayout);
         return attachToSwipeBack(view);
     }
 
@@ -112,12 +120,20 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initStatusBar();
+        initStateManager();
         initData();
         initListener();
+        initPtrFrameLayout(mPtrFrameLayout, mRecyclerView);
     }
 
     private void initStatusBar() {
         mRlToolbar.setPadding(mRlToolbar.getPaddingLeft(), mRlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mRlToolbar.getPaddingRight(), mRlToolbar.getPaddingBottom());
+    }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        mPresenter.getCarts(cartUid);
     }
 
     private void initData() {
@@ -136,6 +152,22 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         });
         mAdapter.setNewData(mDatas);
         mPresenter.getCarts(cartUid);
+    }
+
+    private void initStateManager() {
+        mStateManager = StateManager.builder(_mActivity)
+                .setContent(mRecyclerView)
+                .setEmptyView(R.layout.state_empty_layout)
+                .setEmptyImage(R.drawable.ic_prompt_order_01)
+                .setErrorOnClickListener(v -> mPtrFrameLayout.autoRefresh())
+                .setConvertListener(new StateListener.ConvertListener() {
+                    @Override
+                    public void convert(BaseViewHolder holder, StateLayout stateLayout) {
+                        holder.setVisible(R.id.bt_empty_state, false);
+                    }
+                })
+                .setEmptyText("当前购物车暂无商品，再去逛逛~~")
+                .build();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -362,6 +394,11 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     public void responseRecommendGoodsSuccess(List<StoreBean> data) {
         mDatas.addAll(data);
         mAdapter.setNewData(mDatas);
+        if (mDatas.size() == 0) {
+            mStateManager.showEmpty();
+        }else{
+            mStateManager.showContent();
+        }
     }
 
     private void switchEditModel() {

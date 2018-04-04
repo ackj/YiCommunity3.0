@@ -214,7 +214,8 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                 .setLayoutId(R.layout.dialog_input)
                 .setConvertListener((holder, dialog) -> {
                     EditText etInput = holder.getView(R.id.et_input);
-                    etInput.setText(mCurrentEditInfo.getLeaveMessage() + "");
+                    etInput.setText(mCurrentEditInfo.getLeaveMessage() + " ");
+                    etInput.setSelection(etInput.getText().toString().length());
                     holder
                             .setOnClickListener(R.id.btn_cancel, new View.OnClickListener() {
                                 @Override

@@ -199,6 +199,13 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     }
 
     @Override
+    public void error(String errorMessage) {
+        super.error(errorMessage);
+        mPtrFrameLayout.refreshComplete();
+        mStateManager.showError();
+    }
+
+    @Override
     public void responseGetHome(List<StoreItemGridBean> data) {
         mDatas = data;
         mPtrFrameLayout.refreshComplete();

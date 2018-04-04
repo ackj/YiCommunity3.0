@@ -5,7 +5,7 @@ import java.util.List;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.OperateBean;
 import rx.Observable;
 
 /**
@@ -20,19 +20,19 @@ public interface SubmitOrderContract {
     interface View extends BaseContract.View {
         void responseGetAddress(List<DeliveryBean> data);
 
-        void responsePostOrdersSuccess(BaseResponse response);
+        void responsePostOrdersSuccess(BaseResponse<List<OperateBean>> response);
     }
 
     interface Presenter extends BaseContract.Presenter {
         void getAddress();
 
-        void postOrders(List<OperatorBean> data);
+        void postOrders(List<OperateBean> data);
     }
 
     interface Model extends BaseContract.Model {
         Observable<BaseResponse<List<DeliveryBean>>> getAddress();
 
-        Observable<BaseResponse> postOrders(List<OperatorBean> data);
+        Observable<BaseResponse<List<OperateBean>>> postOrders(List<OperateBean> data);
     }
 
 }

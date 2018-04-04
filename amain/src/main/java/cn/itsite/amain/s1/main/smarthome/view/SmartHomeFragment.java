@@ -187,7 +187,7 @@ public class SmartHomeFragment extends BaseFragment<SmartHomeContract.Presenter>
                     showSelectedDialog();
                 } else {
                     Intent intent = new Intent(_mActivity, CameraPlayActivity.class);
-                    intent.putExtra("bean", item);
+                    intent.putExtra("OperateBean", item);
                     _mActivity.startActivity(intent);
                 }
             }

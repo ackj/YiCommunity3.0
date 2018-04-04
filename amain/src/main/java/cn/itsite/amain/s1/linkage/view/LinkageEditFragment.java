@@ -79,7 +79,7 @@ public class LinkageEditFragment extends BaseFragment<AddLinkageContract.Present
     public static LinkageEditFragment newInstance(LinkageBean.DataBean bean) {
         LinkageEditFragment fragment = new LinkageEditFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", bean);
+        bundle.putSerializable("OperateBean", bean);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -99,8 +99,8 @@ public class LinkageEditFragment extends BaseFragment<AddLinkageContract.Present
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            if (bundle.getSerializable("bean") instanceof LinkageBean.DataBean) {
-                bean = (LinkageBean.DataBean) bundle.getSerializable("bean");
+            if (bundle.getSerializable("OperateBean") instanceof LinkageBean.DataBean) {
+                bean = (LinkageBean.DataBean) bundle.getSerializable("OperateBean");
             }
         }
     }

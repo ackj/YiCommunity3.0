@@ -5,7 +5,7 @@ import java.util.List;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.StoreBean;
@@ -30,7 +30,7 @@ public interface CartContract {
     }
 
     interface Presenter extends BaseContract.Presenter {
-        void deleteProduct(String cartsUID,List<OperatorBean> list);
+        void deleteProduct(String cartsUID,List<OperateBean> list);
         void postProduct(String cartsUID,String productUID);
         void putProduct(String cartsUID, ProductsBean bean);
         void getCarts(String cartsUID);
@@ -38,7 +38,7 @@ public interface CartContract {
     }
 
     interface Model extends BaseContract.Model {
-        Observable<BaseResponse> deleteProduct(String shopUID, List<OperatorBean> list);
+        Observable<BaseResponse> deleteProduct(String shopUID, List<OperateBean> list);
         Observable<BaseResponse> postProduct(String shopUID, String productUID);
         Observable<BaseResponse> putProduct(String shopUID, ProductsBean bean);
         Observable<BaseResponse<List<StorePojo>>> getCarts(String shopUID);

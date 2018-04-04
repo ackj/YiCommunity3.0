@@ -4,8 +4,8 @@ import java.util.List;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.OperatorBean;
-import cn.itsite.order.OrderDetailBean;
+import cn.itsite.acommon.OperateBean;
+import cn.itsite.order.model.OrderDetailBean;
 import rx.Observable;
 
 /**
@@ -28,17 +28,17 @@ public interface OrderDetailContract {
     interface Presenter extends BaseContract.Presenter {
         void getOrderDetail(String uid);
 
-        void deleteOrders(List<OperatorBean> orders);
+        void deleteOrders(List<OperateBean> orders);
 
-        void putOrders(List<OperatorBean> orders);
+        void putOrders(List<OperateBean> orders);
     }
 
     interface Model extends BaseContract.Model {
         Observable<BaseResponse<OrderDetailBean>> getOrderDetail(String uid);
 
-        Observable<BaseResponse> deleteOrders(List<OperatorBean> orders);
+        Observable<BaseResponse> deleteOrders(List<OperateBean> orders);
 
-        Observable<BaseResponse> putOrders(List<OperatorBean> orders);
+        Observable<BaseResponse> putOrders(List<OperateBean> orders);
     }
 
 }

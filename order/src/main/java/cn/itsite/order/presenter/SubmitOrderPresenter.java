@@ -7,7 +7,7 @@ import java.util.List;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.OperateBean;
 import cn.itsite.order.contract.SubmitOrderContract;
 import cn.itsite.order.model.SubmitOrderModel;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,7 +19,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * @time 2018/4/2 0002 15:30
  */
 
-public class SubmitOrderPresenter extends BasePresenter<SubmitOrderContract.View,SubmitOrderContract.Model> implements SubmitOrderContract.Presenter {
+public class SubmitOrderPresenter extends BasePresenter<SubmitOrderContract.View, SubmitOrderContract.Model> implements SubmitOrderContract.Presenter {
 
     /**
      * 创建Presenter的时候就绑定View和创建model。
@@ -40,7 +40,7 @@ public class SubmitOrderPresenter extends BasePresenter<SubmitOrderContract.View
     public void getAddress() {
         mRxManager.add(mModel.getAddress()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<DeliveryBean>>>(){
+                .subscribe(new BaseSubscriber<BaseResponse<List<DeliveryBean>>>() {
                     @Override
                     public void onSuccess(BaseResponse<List<DeliveryBean>> listBaseResponse) {
                         getView().responseGetAddress(listBaseResponse.getData());
@@ -49,12 +49,12 @@ public class SubmitOrderPresenter extends BasePresenter<SubmitOrderContract.View
     }
 
     @Override
-    public void postOrders(List<OperatorBean> data) {
+    public void postOrders(List<OperateBean> data) {
         mRxManager.add(mModel.postOrders(data)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse>(){
+                .subscribe(new BaseSubscriber<BaseResponse<List<OperateBean>>>() {
                     @Override
-                    public void onSuccess(BaseResponse response) {
+                    public void onSuccess(BaseResponse<List<OperateBean>> response) {
                         getView().responsePostOrdersSuccess(response);
                     }
                 }));

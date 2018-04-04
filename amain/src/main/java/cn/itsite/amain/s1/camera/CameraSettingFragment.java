@@ -53,7 +53,7 @@ public class CameraSettingFragment extends BaseFragment<CameraSettingContract.Pr
     public static CameraSettingFragment newInstance(MainDeviceListBean.DataBean bean) {
         CameraSettingFragment fragment = new CameraSettingFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", bean);
+        bundle.putSerializable("OperateBean", bean);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -69,8 +69,8 @@ public class CameraSettingFragment extends BaseFragment<CameraSettingContract.Pr
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            if (bundle.getSerializable("bean") instanceof MainDeviceListBean.DataBean) {
-                bean = (MainDeviceListBean.DataBean) bundle.getSerializable("bean");
+            if (bundle.getSerializable("OperateBean") instanceof MainDeviceListBean.DataBean) {
+                bean = (MainDeviceListBean.DataBean) bundle.getSerializable("OperateBean");
             }
         }
     }
@@ -112,8 +112,8 @@ public class CameraSettingFragment extends BaseFragment<CameraSettingContract.Pr
             params.deviceId = bean.getNo();
             params.devicePassword = bean.getPassword();
             params.deviceName = bean.getName();
-//            params.deviceType = bean.getDeviceType();
-//            params.index = bean.getIndex();
+//            params.deviceType = OperateBean.getDeviceType();
+//            params.index = OperateBean.getIndex();
         }
     }
 
@@ -165,7 +165,7 @@ public class CameraSettingFragment extends BaseFragment<CameraSettingContract.Pr
                                     DialogHelper.warningSnackbar(getView(), "请输入内容");
                                 } else {
                                     showLoading();
-//                                    params.fid = bean.getFid();
+//                                    params.fid = OperateBean.getFid();
                                     if (isNickname) {
                                         params.deviceName = result;
                                         mPresenter.requestModCamera(params);

@@ -1,4 +1,4 @@
-package cn.itsite.order;
+package cn.itsite.order.view;
 
 import android.widget.ImageView;
 
@@ -7,6 +7,8 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import cn.itsite.abase.BaseApp;
+import cn.itsite.order.R;
+import cn.itsite.order.model.SubmitOrderBean;
 
 /**
  * Author： Administrator on 2018/2/1 0001.
@@ -27,11 +29,11 @@ public class SubmitOrderRVAdapter extends BaseMultiItemQuickAdapter<SubmitOrderB
         switch (item.getItemType()) {
             case SubmitOrderBean.TYPE_STORE_TITLE:
                 helper.setText(R.id.tv_name, item.getShopBean().getName())
-                        .setText(R.id.tv_delivery_type,item.getShopBean().getServiceType())
+                        .setText(R.id.tv_delivery_type, item.getShopBean().getServiceType())
                         .setTextColor(R.id.tv_delivery_type, item.getShopBean().getServiceType().contains("上门") ?
                                 BaseApp.mContext.getResources().getColor(R.color.base_color) :
                                 BaseApp.mContext.getResources().getColor(R.color.green))
-                        .setBackgroundRes(R.id.tv_delivery_type,  item.getShopBean().getServiceType().contains("上门")  ?
+                        .setBackgroundRes(R.id.tv_delivery_type, item.getShopBean().getServiceType().contains("上门") ?
                                 R.drawable.shape_bg_round_orange : R.drawable.shape_bg_round_green);
                 break;
             case SubmitOrderBean.TYPE_STORE_GOODS:

@@ -51,7 +51,7 @@ public class RoomDeviceListRVAdapter extends BaseMultiItemQuickAdapter<MultiItem
                     @Override
                     public void onClick(View v) {
                         int pos = helper.getAdapterPosition();
-//                        if (bean.isExpanded()) {
+//                        if (OperateBean.isExpanded()) {
 //                            collapse(pos);
 //                        } else {
 //                            expand(pos);

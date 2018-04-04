@@ -7,9 +7,8 @@ import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperatorBean;
-import cn.itsite.order.OrderBean;
-import cn.itsite.order.OrderService;
+import cn.itsite.acommon.OperateBean;
+import cn.itsite.order.contract.OrderService;
 import cn.itsite.order.contract.OrderListContract;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -30,7 +29,7 @@ public class OrderListModel extends BaseModel implements OrderListContract.Model
     }
 
     @Override
-    public Observable<BaseResponse> deleteOrders(List<OperatorBean> orders) {
+    public Observable<BaseResponse> deleteOrders(List<OperateBean> orders) {
         BaseRequest request = new BaseRequest();
         request.message = "居然被你删除成功了";
         request.data = orders;
@@ -40,7 +39,7 @@ public class OrderListModel extends BaseModel implements OrderListContract.Model
     }
 
     @Override
-    public Observable<BaseResponse> putOrders(List<OperatorBean> orders) {
+    public Observable<BaseResponse> putOrders(List<OperateBean> orders) {
         BaseRequest request = new BaseRequest();
         request.message = "居然被你修改成功了";
         request.data = orders;

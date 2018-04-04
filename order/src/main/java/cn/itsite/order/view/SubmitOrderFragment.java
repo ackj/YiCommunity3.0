@@ -1,4 +1,4 @@
-package cn.itsite.order;
+package cn.itsite.order.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,20 +20,37 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.StorePojo;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
+import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
+import cn.itsite.apayment.payment.Payment;
+import cn.itsite.apayment.payment.PaymentListener;
+import cn.itsite.apayment.payment.network.NetworkClient;
+import cn.itsite.apayment.payment.network.PayService;
+import cn.itsite.apayment.payment.pay.IPayable;
+import cn.itsite.apayment.payment.pay.Pay;
+import cn.itsite.order.R;
 import cn.itsite.order.contract.SubmitOrderContract;
+import cn.itsite.order.model.PayParams;
+import cn.itsite.order.model.SubmitOrderBean;
 import cn.itsite.order.presenter.SubmitOrderPresenter;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Author： Administrator on 2018/2/1 0001.
@@ -48,10 +65,10 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     private ArrayList<StorePojo> mOrders;
     private TextView mTvTotalPrice;
     private TextView mTvAmount;
-
     private SubmitOrderBean mCurrentEditInfo;
     private DeliveryBean mDefaultDelivery;
     private TextView mTvSubmit;
+    private Payment payment;
 
     public static SubmitOrderFragment newInstance() {
         return new SubmitOrderFragment();
@@ -91,14 +108,17 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     }
 
     private void initStatusBar() {
-        mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(), mLlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mLlToolbar.getPaddingRight(), mLlToolbar.getPaddingBottom());
+        mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(),
+                mLlToolbar.getPaddingTop() +
+                        ScreenUtils.getStatusBarHeight(_mActivity),
+                mLlToolbar.getPaddingRight(),
+                mLlToolbar.getPaddingBottom());
     }
 
     private void initData() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
         mAdapter = new SubmitOrderRVAdapter();
         mRecyclerView.setAdapter(mAdapter);
-
         mPresenter.getAddress();
     }
 
@@ -165,23 +185,23 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     }
 
     private void submitOrder() {
-        List<OperatorBean> data = new ArrayList<>();
-        OperatorBean operatorBean = new OperatorBean();
+        List<OperateBean> data = new ArrayList<>();
+        OperateBean operatorOperateBean = new OperateBean();
         for (int i = 0; i < mAdapter.getData().size(); i++) {
             SubmitOrderBean submitOrderBean = mAdapter.getData().get(i);
             if (submitOrderBean.getItemType() == SubmitOrderBean.TYPE_STORE_TITLE) {
-                operatorBean = new OperatorBean();
-                operatorBean.products = new ArrayList<>();
+                operatorOperateBean = new OperateBean();
+                operatorOperateBean.products = new ArrayList<>();
             } else if (submitOrderBean.getItemType() == SubmitOrderBean.TYPE_STORE_GOODS) {
-                OperatorBean.Product product = new OperatorBean.Product();
+                OperateBean.Product product = new OperateBean.Product();
                 product.amount = submitOrderBean.getProductsBean().getCount() + "";
                 product.sku = submitOrderBean.getProductsBean().getSkuID();
                 product.uid = submitOrderBean.getProductsBean().getUid();
-                operatorBean.products.add(product);
+                operatorOperateBean.products.add(product);
             } else if (submitOrderBean.getItemType() == SubmitOrderBean.TYPE_ORDER_INFO) {
-                operatorBean.note = submitOrderBean.getLeaveMessage();
-                operatorBean.uid = submitOrderBean.getDeliveryBean().getUid();
-                data.add(operatorBean);
+                operatorOperateBean.note = submitOrderBean.getLeaveMessage();
+                operatorOperateBean.uid = submitOrderBean.getDeliveryBean().getUid();
+                data.add(operatorOperateBean);
             }
         }
         if (data.size() > 0) {
@@ -255,8 +275,51 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     }
 
     @Override
-    public void responsePostOrdersSuccess(BaseResponse response) {
+    public void responsePostOrdersSuccess(BaseResponse<List<OperateBean>> response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        List<OperateBean> data = response.getData();
+        BaseRequest<PayParams> request = new BaseRequest<>();
+
+        request.message = "请求统一订单";
+
+        Observable.from(data).map(OperateBean::getUid).toList()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(strings -> {
+                    PayParams payParams = new PayParams();
+                    payParams.setOrders(strings);
+                    request.data = payParams;
+                    showPaySelector(request);
+                });
+    }
+
+    private void showPaySelector(BaseRequest<PayParams> request) {
+        List<String> strings = Arrays.asList("支付宝", "微信");
+
+        new SelectorDialogFragment()
+                .setTitle("请选择支付方式")
+                .setItemLayoutId(R.layout.item_rv_simple_selector)
+                .setData(strings)
+                .setOnItemConvertListener((holder, position, dialog) ->
+                        holder.setText(R.id.tv_item_rv_simple_selector, strings.get(position)))
+                .setOnItemClickListener((view, baseViewHolder, position, dialog) -> {
+                    dialog.dismiss();
+                    switch (position) {
+                        case 0:
+                            request.data.setPayment("zfb");
+                            pay(request, Pay.aliAppPay());
+                            break;
+                        case 1:
+                            request.data.setPayment("weixin_h5");
+                            pay(request, Pay.weChatH5xPay());
+                            break;
+                        default:
+                            break;
+                    }
+                })
+                .setAnimStyle(R.style.SlideAnimation)
+                .setGravity(Gravity.BOTTOM)
+                .show(getChildFragmentManager());
     }
 
     private void showHintDialog() {
@@ -278,5 +341,116 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                 .setMargin(40)
                 .setGravity(Gravity.CENTER)
                 .show(getChildFragmentManager());
+    }
+
+    private void pay(BaseRequest<PayParams> request, IPayable iPayable) {
+        //拼参数。
+        Map<String, String> params = new HashMap<>();
+        params.put("params", request.toString());
+
+        //构建支付入口对象。
+        payment = Payment.builder()
+                .setParams(params)
+                .setHttpType(Payment.HTTP_POST)
+                .setUrl(PayService.requestGoodsPayResult)
+                .setActivity(_mActivity)
+                .setClient(NetworkClient.okhttp())
+                .setPay(iPayable)
+                .setOnRequestListener(new PaymentListener.OnRequestListener() {
+                    @Override
+                    public void onStart() {
+                        ALog.e("1.请求 开始-------->");
+                        showLoading("请求订单中");
+                    }
+
+                    @Override
+                    public void onSuccess(String result) {
+                        ALog.e("1.请求 成功-------->" + result);
+                        showLoading("等待解析");
+                    }
+
+                    @Override
+                    public void onError(int errorCode) {
+                        ALog.e("1.请求 失败-------->" + errorCode);
+                        dismissLoading();
+                        DialogHelper.errorSnackbar(getView(), "订单请求失败");
+
+                    }
+                })
+                .setOnParseListener(new PaymentListener.OnParseListener() {
+                    @Override
+                    public void onStart(String result) {
+                        ALog.e("2.解析 开始-------->" + result);
+                        showLoading("正在解析");
+                    }
+
+                    @Override
+                    public void onSuccess(cn.itsite.apayment.payment.PayParams params) {
+                        ALog.e("2.解析 成功-------->");
+                        showLoading("解析成功");
+
+                    }
+
+                    @Override
+                    public void onError(int errorCode) {
+                        ALog.e("2.解析 失败------->" + errorCode);
+                        dismissLoading();
+                        DialogHelper.errorSnackbar(getView(), "解析异常");
+                    }
+                })
+                .setOnPayListener(new PaymentListener.OnPayListener() {
+                    @Override
+                    public void onStart(@Payment.PayType int payType) {
+                        ALog.e("3.支付 开始-------->" + payType);
+                        showLoading("正在支付");
+                    }
+
+                    @Override
+                    public void onSuccess(@Payment.PayType int payType) {
+                        ALog.e("3.支付 成功-------->" + payType);
+                        dismissLoading();
+                        DialogHelper.successSnackbar(getView(), "支付成功");
+//                        ptrFrameLayout.autoRefresh();
+                    }
+
+                    @Override
+                    public void onFailure(@Payment.PayType int payType, int errorCode) {
+                        ALog.e("3.支付 失败-------->" + payType + "----------errorCode-->" + errorCode);
+                        dismissLoading();
+                        DialogHelper.errorSnackbar(getView(), "支付失败，请重试");
+                    }
+                })
+                .setOnVerifyListener(new PaymentListener.OnVerifyListener() {
+
+                    @Override
+                    public void onStart() {
+                        ALog.e("4.检验 开始--------");
+                        showLoading("正在确认");
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        ALog.e("4.检验 成功--------");
+                        dismissLoading();
+                    }
+
+                    @Override
+                    public void onFailure(int errorCode) {
+                        ALog.e("4.检验 失败--------" + "errorCode-->" + errorCode);
+                        dismissLoading();
+                        DialogHelper.errorSnackbar(getView(), "确认失败，请稍后再查看");
+//                        ptrFrameLayout.autoRefresh();
+                    }
+                })
+                .start();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (payment != null) {
+            payment.clear();
+        }
     }
 }

@@ -162,7 +162,7 @@ public class CameraPlayActivity extends BaseMonitorActivity implements CameraSet
         registerReceiver(mReceiver, filter);
 
         //获取数据
-        cameraBean = (MainDeviceListBean.DataBean) getIntent().getSerializableExtra("bean");
+        cameraBean = (MainDeviceListBean.DataBean) getIntent().getSerializableExtra("OperateBean");
         SharedPreferences sp = getSharedPreferences("Account", MODE_PRIVATE);
         cameraUserId = sp.getString("userId", "");
         cameraPassword = P2PHandler.getInstance().EntryPassword(cameraBean.getPassword());

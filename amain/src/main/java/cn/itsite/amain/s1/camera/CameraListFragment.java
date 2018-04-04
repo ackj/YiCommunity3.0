@@ -209,7 +209,7 @@ public class CameraListFragment extends BaseFragment<CameraListContract.Presente
                     return;
                 }
                 Intent intent = new Intent(_mActivity, CameraPlayActivity.class);
-                intent.putExtra("bean", bean);
+                intent.putExtra("OperateBean", bean);
                 _mActivity.startActivity(intent);
             }
         });

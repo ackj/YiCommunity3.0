@@ -1,4 +1,4 @@
-package cn.itsite.order;
+package cn.itsite.order.model;
 
 import java.util.List;
 

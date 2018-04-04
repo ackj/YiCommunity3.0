@@ -217,7 +217,7 @@ public class RoomDeviceListFragment extends BaseFragment<RoomDeviceListContract.
                 ((SupportActivity) _mActivity).start(DeviceTypeFragment.newInstance(selectRoom.getFid()));
             } else if ("camera01".equals(bean.getDeviceType())) {
                 Intent intent = new Intent(_mActivity, CameraPlay2Activity.class);
-                intent.putExtra("bean", (Serializable) bean);
+                intent.putExtra("OperateBean", (Serializable) bean);
                 _mActivity.startActivity(intent);
             } else {
                 ((SupportActivity) _mActivity).start(DeviceOnOffFragment.newInstance(bean, selectRoom));
@@ -230,7 +230,7 @@ public class RoomDeviceListFragment extends BaseFragment<RoomDeviceListContract.
                 new AlertDialog.Builder(_mActivity)
                         .setItems(cameraArr, (dialog, which) -> {
                             if (which == 0) {
-//                                        _mActivity.start(CameraSettingFragment.newInstance(bean));
+//                                        _mActivity.start(CameraSettingFragment.newInstance(OperateBean));
                             } else {
                                 showDeleteCameraDialog(bean);
                             }

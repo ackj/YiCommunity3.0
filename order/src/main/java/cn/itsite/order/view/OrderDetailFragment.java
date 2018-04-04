@@ -1,4 +1,4 @@
-package cn.itsite.order;
+package cn.itsite.order.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,15 +27,18 @@ import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.OperateBean;
+import cn.itsite.order.model.OrderDetailBean;
+import cn.itsite.order.R;
 import cn.itsite.order.contract.OrderDetailContract;
 import cn.itsite.order.presenter.OrderDetailPresenter;
 
-import static cn.itsite.order.OrderListFragment.TYPE_CANCEL;
-import static cn.itsite.order.OrderListFragment.TYPE_DELETE;
-import static cn.itsite.order.OrderListFragment.TYPE_LOGISTICS;
-import static cn.itsite.order.OrderListFragment.TYPE_PAY;
-import static cn.itsite.order.OrderListFragment.TYPE_RECEIPT;
+import static cn.itsite.order.view.OrderListFragment.TYPE_CANCEL;
+import static cn.itsite.order.view.OrderListFragment.TYPE_DELETE;
+import static cn.itsite.order.view.OrderListFragment.TYPE_LOGISTICS;
+import static cn.itsite.order.view.OrderListFragment.TYPE_PAY;
+import static cn.itsite.order.view.OrderListFragment.TYPE_RECEIPT;
 
 /**
  * Author： Administrator on 2018/2/1 0001.
@@ -208,16 +211,16 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
             case TYPE_CANCEL://取消订单
             case TYPE_RECEIPT://确认订单
                 //这两种操作只需要无脑传category给后台，以更改该订单的状态即可
-                List<OperatorBean> orders = new ArrayList<>();
-                OperatorBean order = new OperatorBean();
+                List<OperateBean> orders = new ArrayList<>();
+                OperateBean order = new OperateBean();
                 order.uid = orderUid;
                 order.category = action.getCategory();
                 orders.add(order);
                 mPresenter.putOrders(orders);
                 break;
             case TYPE_DELETE://删除订单
-                List<OperatorBean> deleteOrders = new ArrayList<>();
-                OperatorBean dOrder = new OperatorBean();
+                List<OperateBean> deleteOrders = new ArrayList<>();
+                OperateBean dOrder = new OperateBean();
                 dOrder.uid = orderUid;
                 deleteOrders.add(dOrder);
                 mPresenter.deleteOrders(deleteOrders);

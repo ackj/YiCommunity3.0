@@ -100,7 +100,7 @@ public class GoodsCategoryFragment extends BaseFragment<GoodsCategoryContract.Pr
     public void responseFirstLevel(List<FirstLevelBean.DataBean> datas) {
         for (FirstLevelBean.DataBean bean : datas) {
             if ("智能家居".equals(bean.getName())) {
-//                params.id = bean.getId();
+//                params.id = OperateBean.getId();
                 startForResult(SmartHomeMallFragment.newInstance(bean.getId()), 100);
                 break;
             }

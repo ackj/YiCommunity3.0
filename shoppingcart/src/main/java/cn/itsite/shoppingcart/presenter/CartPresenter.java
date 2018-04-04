@@ -8,7 +8,7 @@ import java.util.List;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.StoreBean;
@@ -44,7 +44,7 @@ public class CartPresenter extends BasePresenter<CartContract.View, CartContract
     }
 
     @Override
-    public void deleteProduct(String shopUID, List<OperatorBean> list) {
+    public void deleteProduct(String shopUID, List<OperateBean> list) {
         mRxManager.add(mModel.deleteProduct(shopUID, list)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {

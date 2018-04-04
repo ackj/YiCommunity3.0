@@ -22,6 +22,7 @@ public class HttpUrlConnectionClient implements INetworkClient {
     public static final int CONNECTTIMEOUT = 20 * 1000;
     public static final int READTIMEOUT = 10 * 1000;
 
+    @Override
     public void get(final String url, final Map<String, String> params, final CallBack callBack) {
         Runnable command = new Runnable() {
             @Override
@@ -37,28 +38,7 @@ public class HttpUrlConnectionClient implements INetworkClient {
                                 .append(entry.getValue())
                                 .append("&");
                     }
-
-                    ALog.e("sbUrl.toString()-->" + sbUrl.toString());
-
                     sbUrl.deleteCharAt(sbUrl.length() - 1);
-                    ALog.e("sbUrl.toString()-->" + sbUrl.toString());
-
-//                    sbUrl.append("?")
-//                            .append("token=").append(payParams.getToken())
-//                            .append("&")
-//                            .append("billFids=").append(payParams.getBillFids())
-//                            .append("&")
-//                            .append("payMethod=").append(payParams.getPayMethod())
-//                            .append("&")
-//                            .append("jumpUrl=").append(payParams.getJumpUrl())
-//                            .append("&")
-//                            .append("quitUrl=").append(payParams.getQuitUrl())
-//                            .append("&")
-//                            .append("payUrl=").append(payParams.getPayMethod())
-//                            .append("&")
-//                            .append("code=").append(payParams.getCode());
-
-
                     connection = (HttpURLConnection) new URL(sbUrl.toString()).openConnection();
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(CONNECTTIMEOUT);
@@ -98,6 +78,7 @@ public class HttpUrlConnectionClient implements INetworkClient {
         ThreadManager.execute(command);
     }
 
+    @Override
     public void post(final String url, final Map<String, String> params, final CallBack callBack) {
         Runnable command = new Runnable() {
             @Override

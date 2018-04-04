@@ -1,10 +1,12 @@
-package cn.itsite.order;
+package cn.itsite.order.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
+
+import cn.itsite.order.model.CategoryBean;
 
 /**
  * Author： Administrator on 2018/2/1 0001.

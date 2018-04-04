@@ -1,10 +1,14 @@
-package cn.itsite.order;
+package cn.itsite.order.contract;
 
 import java.util.List;
 
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.DeliveryBean;
+import cn.itsite.acommon.OperateBean;
+import cn.itsite.order.model.CategoryBean;
+import cn.itsite.order.model.OrderBean;
+import cn.itsite.order.model.OrderDetailBean;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
@@ -40,7 +44,7 @@ public interface OrderService {
 
     //新增订单
     @POST("v1/orders")
-    Observable<BaseResponse> postOrders(@Body BaseRequest request);
+    Observable<BaseResponse<List<OperateBean>>> postOrders(@Body BaseRequest request);
 
     //删除订单
     @HTTP(method = "delete", path = "v1/orders", hasBody = true)

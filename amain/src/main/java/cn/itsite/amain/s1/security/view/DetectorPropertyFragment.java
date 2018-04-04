@@ -71,7 +71,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
     public static DetectorPropertyFragment newInstance(SecurityBean.DataBean.SubDevicesBean bean) {
         DetectorPropertyFragment fragment = new DetectorPropertyFragment();
         Bundle args = new Bundle();
-        args.putSerializable("bean", bean);
+        args.putSerializable("OperateBean", bean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,7 +87,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            deviceBean = (SecurityBean.DataBean.SubDevicesBean) bundle.getSerializable("bean");
+            deviceBean = (SecurityBean.DataBean.SubDevicesBean) bundle.getSerializable("OperateBean");
         }
     }
 

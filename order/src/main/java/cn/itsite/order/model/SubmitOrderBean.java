@@ -1,4 +1,4 @@
-package cn.itsite.order;
+package cn.itsite.order.model;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 

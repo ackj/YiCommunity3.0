@@ -1,4 +1,4 @@
-package cn.itsite.order;
+package cn.itsite.order.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +16,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsParams;
+import cn.itsite.order.model.OrderDetailBean;
+import cn.itsite.order.R;
 import cn.itsite.order.contract.OrderDetailContract;
 import cn.itsite.order.presenter.OrderDetailPresenter;
 

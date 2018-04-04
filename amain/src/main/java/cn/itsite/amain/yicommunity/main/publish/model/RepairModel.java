@@ -67,7 +67,7 @@ public class RepairModel extends BaseModel implements PublishContract.Model {
 //                .requestMyhouses(ApiService.requestMyhouses, params.token, params.cmnt_c)
 //                .map(myHousesBean -> myHousesBean.getData().getAuthBuildings())
 //                .flatMap(Flowable::fromIterable)
-//                .map(bean -> new IconBean(R.drawable.ic_my_house_red_140px, bean.getAddress(), bean.getFid()))
+//                .map(OperateBean -> new IconBean(R.drawable.ic_my_house_red_140px, OperateBean.getAddress(), OperateBean.getFid()))
 //                .toList()
 //                .subscribeOn(Schedulers.io());
 //    }

@@ -7,8 +7,8 @@ import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.acommon.OperatorBean;
-import cn.itsite.order.OrderService;
+import cn.itsite.acommon.OperateBean;
+import cn.itsite.order.contract.OrderService;
 import cn.itsite.order.contract.SubmitOrderContract;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -32,7 +32,7 @@ public class SubmitOrderModel extends BaseModel implements SubmitOrderContract.M
     }
 
     @Override
-    public Observable<BaseResponse> postOrders(List<OperatorBean> data) {
+    public Observable<BaseResponse<List<OperateBean>>> postOrders(List<OperateBean> data) {
         BaseRequest request = new BaseRequest();
         request.message = "上传这几个订单";
         request.data = data;

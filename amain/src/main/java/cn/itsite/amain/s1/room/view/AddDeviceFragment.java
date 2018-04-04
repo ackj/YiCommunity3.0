@@ -65,7 +65,7 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
     public static AddDeviceFragment newInstance(DeviceListBean.DataBean.SubDevicesBean bean, RoomsBean.DataBean.RoomListBean room) {
         AddDeviceFragment fragment = new AddDeviceFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", bean);
+        bundle.putSerializable("OperateBean", bean);
         bundle.putSerializable("room", room);
         fragment.setArguments(bundle);
         return fragment;
@@ -82,7 +82,7 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            bean = (DeviceListBean.DataBean.SubDevicesBean) bundle.getSerializable("bean");
+            bean = (DeviceListBean.DataBean.SubDevicesBean) bundle.getSerializable("OperateBean");
             selectRoom = (RoomsBean.DataBean.RoomListBean) bundle.getSerializable("room");
         }
     }

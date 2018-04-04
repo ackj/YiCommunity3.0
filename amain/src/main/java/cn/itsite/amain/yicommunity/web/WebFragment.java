@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.JavaScriptObject;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -64,12 +65,12 @@ public class WebFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(cn.itsite.web.R.layout.fragment_web, container, false);
-        mWebView = ((WebView) view.findViewById(cn.itsite.web.R.id.wv_web_fragment));
-        ptrFramlayout = ((PtrFrameLayout) view.findViewById(cn.itsite.web.R.id.ptr_web_fragment));
-        toolbarTitle = ((TextView) view.findViewById(cn.itsite.web.R.id.toolbar_title));
-        toolbar = ((Toolbar) view.findViewById(cn.itsite.web.R.id.toolbar));
-        toolbarMenu = ((TextView) view.findViewById(cn.itsite.web.R.id.toolbar_menu));
+        View view = inflater.inflate(R.layout.fragment_web, container, false);
+        mWebView = ((WebView) view.findViewById(R.id.wv_web_fragment));
+        ptrFramlayout = ((PtrFrameLayout) view.findViewById(R.id.ptr_web_fragment));
+        toolbarTitle = ((TextView) view.findViewById(R.id.toolbar_title));
+        toolbar = ((Toolbar) view.findViewById(R.id.toolbar));
+        toolbarMenu = ((TextView) view.findViewById(R.id.toolbar_menu));
         return view;
     }
 
@@ -86,7 +87,7 @@ public class WebFragment extends BaseFragment {
         if (!TextUtils.isEmpty(title)) {
             toolbarTitle.setText(title);
         }
-        toolbar.setNavigationIcon(cn.itsite.web.R.drawable.ic_chevron_left_white_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
         toolbarMenu.setText("关闭");
         toolbarMenu.setOnClickListener(v -> ((SupportActivity) _mActivity).onBackPressedSupport());

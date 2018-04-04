@@ -1,5 +1,7 @@
 package cn.itsite.abase.network.http;
 
+import com.google.gson.Gson;
+
 /**
  * @version v0.0.0
  * @Author leguang
@@ -26,5 +28,10 @@ public class BaseRequest<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

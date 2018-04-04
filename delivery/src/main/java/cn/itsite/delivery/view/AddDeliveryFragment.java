@@ -53,7 +53,7 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
     public static AddDeliveryFragment newInstance(DeliveryBean deliveryBean) {
         AddDeliveryFragment fragment = new AddDeliveryFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", deliveryBean);
+        bundle.putSerializable("OperateBean", deliveryBean);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -67,7 +67,7 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        deliveryBean = (DeliveryBean) getArguments().getSerializable("bean");
+        deliveryBean = (DeliveryBean) getArguments().getSerializable("OperateBean");
         isAdd = deliveryBean == null;
     }
 

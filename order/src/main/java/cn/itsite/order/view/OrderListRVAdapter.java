@@ -1,4 +1,4 @@
-package cn.itsite.order;
+package cn.itsite.order.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +17,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.mvp.view.base.BaseRecyclerViewAdapter;
+import cn.itsite.order.model.OrderBean;
+import cn.itsite.order.R;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**

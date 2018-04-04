@@ -35,7 +35,7 @@ import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsCounterView;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.StorePojo;
 import cn.itsite.acommon.event.RefreshCartEvent;
@@ -299,18 +299,18 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
 
     private void deleteProducts() {
         List<StoreBean> data = mAdapter.getData();
-        List<OperatorBean> deleteBeans = new ArrayList<>();
+        List<OperateBean> deleteOperateBeans = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getItemType() == StoreBean.TYPE_STORE_GOODS && data.get(i).isChecked()) {
                 StorePojo.ProductsBean productsBean = data.get(i).getProductsBean();
-                OperatorBean bean = new OperatorBean();
-                bean.sku = productsBean.getSku();
-                bean.uid = productsBean.getUid();
-                deleteBeans.add(bean);
+                OperateBean OperateBean = new OperateBean();
+                OperateBean.sku = productsBean.getSku();
+                OperateBean.uid = productsBean.getUid();
+                deleteOperateBeans.add(OperateBean);
             }
         }
-        if (deleteBeans.size() > 0) {
-            mPresenter.deleteProduct(cartUid, deleteBeans);
+        if (deleteOperateBeans.size() > 0) {
+            mPresenter.deleteProduct(cartUid, deleteOperateBeans);
         } else {
             DialogHelper.warningSnackbar(getView(), "请勾选要删除的商品");
         }

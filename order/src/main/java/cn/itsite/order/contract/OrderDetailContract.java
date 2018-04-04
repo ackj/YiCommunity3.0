@@ -3,7 +3,7 @@ package cn.itsite.order.contract;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.order.OrderDetailBean;
+import cn.itsite.order.model.OrderDetailBean;
 import rx.Observable;
 
 /**

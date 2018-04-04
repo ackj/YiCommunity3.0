@@ -9,7 +9,7 @@ import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperatorBean;
+import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.RequestBean;
@@ -29,7 +29,7 @@ import rx.schedulers.Schedulers;
 public class CartModel extends BaseModel implements CartContract.Model {
 
     @Override
-    public Observable<BaseResponse> deleteProduct(String shopUID, List<OperatorBean> list) {
+    public Observable<BaseResponse> deleteProduct(String shopUID, List<OperateBean> list) {
         BaseRequest request = new BaseRequest();
         request.data = list;
         request.message = "删除这几个商品";

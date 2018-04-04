@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.order.OrderDetailBean;
+import cn.itsite.order.model.OrderDetailBean;
 import cn.itsite.order.contract.OrderDetailContract;
 import cn.itsite.order.model.OrderDetailModel;
 import rx.android.schedulers.AndroidSchedulers;

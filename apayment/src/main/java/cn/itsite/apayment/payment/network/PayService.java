@@ -42,5 +42,7 @@ public interface PayService {
 
     String requestPayResult = "http://www.aglhz.com:8090/sub_property_ysq" + "/trade/wxpay/order-query-url";
 
+    String requestGoodsPayResult = "http://www.aglhz.com/mall/ec/v1/payParam";
+
 
 }

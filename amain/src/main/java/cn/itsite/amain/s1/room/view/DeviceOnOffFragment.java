@@ -44,7 +44,7 @@ public class DeviceOnOffFragment extends BaseFragment<DeviceOnOffContract.Presen
     public static DeviceOnOffFragment newInstance(DeviceListBean.DataBean.SubDevicesBean bean, RoomsBean.DataBean.RoomListBean selectRoom) {
         DeviceOnOffFragment fragment = new DeviceOnOffFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", bean);
+        bundle.putSerializable("OperateBean", bean);
         bundle.putSerializable("selectRoom", selectRoom);
         fragment.setArguments(bundle);
         return fragment;
@@ -55,7 +55,7 @@ public class DeviceOnOffFragment extends BaseFragment<DeviceOnOffContract.Presen
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            bean = (DeviceListBean.DataBean.SubDevicesBean) bundle.getSerializable("bean");
+            bean = (DeviceListBean.DataBean.SubDevicesBean) bundle.getSerializable("OperateBean");
             selectRoom = (RoomsBean.DataBean.RoomListBean) bundle.getSerializable("selectRoom");
         }
     }

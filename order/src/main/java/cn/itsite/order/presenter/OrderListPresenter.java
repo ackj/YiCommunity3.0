@@ -7,8 +7,8 @@ import java.util.List;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperatorBean;
-import cn.itsite.order.OrderBean;
+import cn.itsite.acommon.OperateBean;
+import cn.itsite.order.model.OrderBean;
 import cn.itsite.order.contract.OrderListContract;
 import cn.itsite.order.model.OrderListModel;
 import rx.android.schedulers.AndroidSchedulers;
@@ -50,7 +50,7 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View,Ord
     }
 
     @Override
-    public void deleteOrders(List<OperatorBean> orders) {
+    public void deleteOrders(List<OperateBean> orders) {
         mRxManager.add(mModel.deleteOrders(orders)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -62,7 +62,7 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View,Ord
     }
 
     @Override
-    public void putOrders(List<OperatorBean> orders) {
+    public void putOrders(List<OperateBean> orders) {
         mRxManager.add(mModel.putOrders(orders)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {

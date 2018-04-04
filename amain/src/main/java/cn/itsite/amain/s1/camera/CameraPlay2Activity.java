@@ -129,7 +129,7 @@ public class CameraPlay2Activity extends BaseMonitorActivity implements CameraSe
         registerReceiver(mReceiver, filter);
 
         //获取数据
-        cameraBean = (DeviceListBean.DataBean.SubDevicesBean) getIntent().getSerializableExtra("bean");
+        cameraBean = (DeviceListBean.DataBean.SubDevicesBean) getIntent().getSerializableExtra("OperateBean");
         SharedPreferences sp = getSharedPreferences("Account", MODE_PRIVATE);
         cameraUserId = sp.getString("userId", "");
         cameraPassword = P2PHandler.getInstance().EntryPassword(cameraBean.getPassword());
@@ -513,7 +513,7 @@ public class CameraPlay2Activity extends BaseMonitorActivity implements CameraSe
             clickQuality();
         } else if (i == R.id.toolbar_menu) {
             Intent intent = new Intent(this, CameraSettingActivity.class);
-            intent.putExtra("bean", (Serializable) cameraBean);
+            intent.putExtra("OperateBean", (Serializable) cameraBean);
             startActivity(intent);
         }
     }

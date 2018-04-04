@@ -41,7 +41,7 @@ public class GoodsFragment extends BaseFragment {
     public static GoodsFragment newInstance(ProductDetailBean bean) {
         GoodsFragment fragment = new GoodsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", bean);
+        bundle.putSerializable("OperateBean", bean);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -49,7 +49,7 @@ public class GoodsFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bean = (ProductDetailBean) getArguments().getSerializable("bean");
+        bean = (ProductDetailBean) getArguments().getSerializable("OperateBean");
     }
 
     @Nullable

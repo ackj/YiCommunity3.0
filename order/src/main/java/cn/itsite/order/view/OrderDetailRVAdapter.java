@@ -1,4 +1,4 @@
-package cn.itsite.order;
+package cn.itsite.order.view;
 
 import android.widget.ImageView;
 
@@ -6,6 +6,8 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import cn.itsite.abase.mvp.view.base.BaseRecyclerViewAdapter;
+import cn.itsite.order.R;
+import cn.itsite.order.model.OrderDetailBean;
 
 /**
  * Author： Administrator on 2018/2/1 0001.

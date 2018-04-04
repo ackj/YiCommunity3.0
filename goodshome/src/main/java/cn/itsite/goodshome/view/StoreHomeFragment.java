@@ -67,6 +67,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
     private GoodsParams mParams = new GoodsParams();
     private StoreHomeVPAdapter mAdapter;
     private DeliveryBean mDeliveryBean;
+    private ImageView mIvBack;
 
     public static StoreHomeFragment newInstance() {
         return new StoreHomeFragment();
@@ -93,6 +94,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
         mIvShopCart = view.findViewById(R.id.iv_shop_cart);
         mFabSearch = view.findViewById(R.id.fab_search);
         mMagicIndicator = view.findViewById(R.id.magicIndicator);
+        mIvBack = view.findViewById(R.id.iv_back);
         return attachToSwipeBack(view);
     }
 
@@ -138,7 +140,8 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                         public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
                             String shopUid = adapter.getData().get(position).getUid();
                             SPCache.put(_mActivity, UserHelper.SHOP_ID, shopUid);
-                            EventBus.getDefault().post(new SwitchStoreEvent(shopUid,mDeliveryBean));
+                            SPCache.put(_mActivity, UserHelper.DELIVERY, mDeliveryBean.getLocation() + mDeliveryBean.getAddress());
+                            EventBus.getDefault().post(new SwitchStoreEvent(shopUid, mDeliveryBean));
                             dialog.dismiss();
                         }
                     });
@@ -149,6 +152,12 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
     }
 
     private void initListener() {
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _mActivity.finish();
+            }
+        });
         mIvShopCart.setOnClickListener(v -> {
             Fragment fragment = (Fragment) ARouter.getInstance()
                     .build("/shoppingcart/shoppingcartfragment")

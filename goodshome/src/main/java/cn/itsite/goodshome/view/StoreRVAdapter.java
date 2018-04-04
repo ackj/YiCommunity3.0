@@ -47,7 +47,8 @@ public class StoreRVAdapter extends BaseMultiItemQuickAdapter<StoreItemGridBean,
             case StoreItemGridBean.TYPE_BANNER:
                 Banner banner = helper.getView(R.id.banner);
                 helper.addOnClickListener(R.id.ll_location)
-                        .setVisible(R.id.ll_location, item.shopType.equals("shop"));
+                        .setVisible(R.id.ll_location, item.shopType.equals("shop"))
+                        .setText(R.id.tv_delivery, String.format("配送至：%1$s", item.getDelivery()));
 
                 List<Object> bannerImages = new ArrayList<>();
                 List<String> bannerTitles = new ArrayList<>();

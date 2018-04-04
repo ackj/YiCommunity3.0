@@ -187,12 +187,12 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
                 mTvSku.setText("库存不足，请选择其他类型~");
             } else {
                 selectedSku = skuBean;
-                mTvSku.setText("已选："+skuBean.getSku());
+                mTvSku.setText("已选：" + skuBean.getSku());
                 refreshInfo(skuBean.getStockQuantity() + "", skuBean.getCurrency() + skuBean.getPrice());
             }
         } else {
             selectedSku = null;
-            mTvSku.setText("请选择 "+sb);
+            mTvSku.setText("请选择 " + sb);
         }
     }
 
@@ -269,6 +269,8 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         if (bean.getPay() != null) {
             refreshInfo(bean.getStockQuantity(), bean.getPay().getCurrency() + bean.getPay().getPrice());
         }
+
+        mTvSku.setVisibility(bean.getSkus().size() == 0 ? View.GONE : View.VISIBLE);
         refreshProduct();
     }
 }

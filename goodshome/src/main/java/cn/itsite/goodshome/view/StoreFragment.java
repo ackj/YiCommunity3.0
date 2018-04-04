@@ -25,7 +25,6 @@ import java.util.List;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.acommon.GoodsParams;
 import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.goodshome.R;
@@ -56,7 +55,6 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     private StateManager mStateManager;
     private PtrFrameLayout mPtrFrameLayout;
 
-    private DeliveryBean mDeliveryBean;
 
     public static StoreFragment newInstance(String shopType) {
         StoreFragment fragment = new StoreFragment();
@@ -105,16 +103,14 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
 
     private void refresh() {
         if ("shop".equals(mParmas.shoptype)) {
-            mParmas.shopUid = (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, null);
-
+            mParmas.shopUid = (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, "");
         }
         mPresenter.getHome(mParmas);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SwitchStoreEvent event) {
-        mDeliveryBean = event.getDelivery();
-        refresh();
+        onRefresh();
     }
 
     private void initStateManager() {

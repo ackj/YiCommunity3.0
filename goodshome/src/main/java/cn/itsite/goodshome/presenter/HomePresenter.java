@@ -5,6 +5,10 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.itsite.abase.BaseApp;
+import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.common.UserHelper;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
@@ -24,6 +28,8 @@ import rx.functions.Func1;
  */
 
 public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract.Model> implements HomeContract.Presenter {
+    private static final String TAG = HomePresenter.class.getSimpleName();
+
     /**
      * 创建Presenter的时候就绑定View和创建model。
      *
@@ -49,6 +55,13 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
                         List<StoreItemGridBean> data = new ArrayList<>();
                         //banners
                         StoreItemGridBean banners = new StoreItemGridBean();
+                        ALog.e(TAG, "delivery shopType:" + goodsParams.shoptype);
+                        if (goodsParams.shoptype.equals("shop")) {
+                            String deliery = (String) SPCache.get(BaseApp.mContext, UserHelper.DELIVERY, "");
+                            ALog.e(TAG, "delivery get:" + deliery);
+
+                            banners.setDelivery(deliery);
+                        }
                         banners.setBanners(homeBean.getAds());
                         banners.setSpanSize(2);
                         banners.shopType = goodsParams.shoptype;
@@ -60,15 +73,15 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
                             categoryBean.setSpanSize(2);
                             categoryBean.setItemType(StoreItemGridBean.TYPE_MORE);
                             data.add(categoryBean);
-                            for (int j =0;j<homeBean.getRecommendations().get(i).getProducts().size();j++){
+                            for (int j = 0; j < homeBean.getRecommendations().get(i).getProducts().size(); j++) {
                                 HomePojo.RecommendationsBean recommendationsBean = homeBean.getRecommendations().get(i);
-                                if(j==0){
+                                if (j == 0) {
                                     StoreItemGridBean recommendBean = new StoreItemGridBean();
                                     recommendBean.setProductsBean(recommendationsBean.getProducts().get(0));
                                     recommendBean.setSpanSize(2);
                                     recommendBean.setItemType(StoreItemGridBean.TYPE_RECOMMEND);
                                     data.add(recommendBean);
-                                }else{
+                                } else {
                                     StoreItemGridBean productBean = new StoreItemGridBean();
                                     productBean.setProductsBean(recommendationsBean.getProducts().get(j));
                                     productBean.setSpanSize(1);

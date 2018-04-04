@@ -4,7 +4,6 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
 
-import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.acommon.GoodsGridBean;
 
 /**
@@ -24,15 +23,15 @@ public class StoreItemGridBean extends GoodsGridBean implements MultiItemEntity 
     private CategoryBean categoryBean;
     private ProductsBean productsBean;
     private List<ProductsBean> banners;
-    private DeliveryBean deliveryBean;
     public String shopType;//区分首页展示用的
+    private String delivery;
 
-    public DeliveryBean getDeliveryBean() {
-        return deliveryBean;
+    public String getDelivery() {
+        return delivery;
     }
 
-    public void setDeliveryBean(DeliveryBean deliveryBean) {
-        this.deliveryBean = deliveryBean;
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
     }
 
     public List<ProductsBean> getBanners() {

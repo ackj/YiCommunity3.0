@@ -24,14 +24,14 @@
             android:layout_height="13dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:src="@drawable/ic_location_white_24dp" />
+            app:srcCompat="@drawable/ic_location_white_24dp" />
 
         <TextView
+            android:id="@+id/tv_delivery"
             android:includeFontPadding="false"
-
             android:layout_marginRight="8dp"
             android:layout_width="match_parent"
-            android:text="配送至：惠州市江北区云商西路哈哈哈"
+            android:text="配送至："
             android:lines="1"
             android:textColor="@color/white"
             android:textSize="@dimen/H5"

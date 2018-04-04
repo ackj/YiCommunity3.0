@@ -48,7 +48,7 @@ public interface OrderService {
     Observable<BaseResponse<List<OperateBean>>> postOrders(@Body BaseRequest request);
 
     //删除订单
-    @HTTP(method = "delete", path = "v1/orders", hasBody = true)
+    @HTTP(method = "DELETE", path = "v1/orders", hasBody = true)
     Observable<BaseResponse> deleteOrders(@Body BaseRequest request);
 
     //修改订单

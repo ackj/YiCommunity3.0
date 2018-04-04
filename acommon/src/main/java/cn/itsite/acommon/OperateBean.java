@@ -17,6 +17,7 @@ public class OperateBean {
     public String note;
     public String product;
     public String category;
+    public String from;
 
     public List<Product> products;
 

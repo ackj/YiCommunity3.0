@@ -192,6 +192,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
             if (submitOrderBean.getItemType() == SubmitOrderBean.TYPE_STORE_TITLE) {
                 operatorOperateBean = new OperateBean();
                 operatorOperateBean.products = new ArrayList<>();
+                operatorOperateBean.from = "cart";
             } else if (submitOrderBean.getItemType() == SubmitOrderBean.TYPE_STORE_GOODS) {
                 OperateBean.Product product = new OperateBean.Product();
                 product.amount = submitOrderBean.getProductsBean().getCount() + "";
@@ -295,7 +296,6 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
 
     private void showPaySelector(BaseRequest<PayParams> request) {
         List<String> strings = Arrays.asList("支付宝", "微信");
-
         new SelectorDialogFragment()
                 .setTitle("请选择支付方式")
                 .setItemLayoutId(R.layout.item_rv_simple_selector)
@@ -347,7 +347,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
         //拼参数。
         Map<String, String> params = new HashMap<>();
         params.put("params", request.toString());
-
+        ALog.e(TAG, request.toString());
         //构建支付入口对象。
         payment = Payment.builder()
                 .setParams(params)

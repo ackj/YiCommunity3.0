@@ -14,6 +14,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Map;
 
+import cn.itsite.abase.log.ALog;
 import cn.itsite.apayment.payment.network.INetworkClient;
 import cn.itsite.apayment.payment.network.NetworkClient;
 import cn.itsite.apayment.payment.pay.IPayable;
@@ -317,6 +318,7 @@ public final class Payment {
         INetworkClient.CallBack callBack = new INetworkClient.CallBack<String>() {
             @Override
             public void onSuccess(final String result) {
+                ALog.e(TAG,"result:"+result);
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

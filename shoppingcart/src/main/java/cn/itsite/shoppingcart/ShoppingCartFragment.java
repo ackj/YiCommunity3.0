@@ -478,11 +478,13 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         dialog.setSkuListener(new SpecificationDialog.OnSkusListener() {
             @Override
             public void clickComfirm(SkusBean.SkuBean sku, int amount, SpecificationDialog dialog) {
-                if (sku != null && !product.getSkuID().equals(sku.getUid())) {
-                    List<String> skus = new ArrayList<>();
-                    skus.add(product.getSkuID());
-                    skus.add(sku.getUid());
-                    view.setTag(R.id.tag_skus, skus);
+                if (sku != null) {
+                    if(!product.getSkuID().equals(sku.getUid())){
+                        List<String> skus = new ArrayList<>();
+                        skus.add(product.getSkuID());
+                        skus.add(sku.getUid());
+                        view.setTag(R.id.tag_skus, skus);
+                    }
                     ((TextView) view).setText(sku.getSku());
                 }
                 goodsCounterView.setCounter(amount);

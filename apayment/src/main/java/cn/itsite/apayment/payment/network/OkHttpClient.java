@@ -66,6 +66,12 @@ public class OkHttpClient implements INetworkClient {
     public void post(String url, Map<String, String> params, final CallBack callBack) {
         okhttp3.OkHttpClient mOkHttpClient = new okhttp3.OkHttpClient();
         RequestBody requestBody = null;
+
+        /**
+         * 为什么要这么判断？为什么要分两种，本质原因是因为我们的技术栈并没有统一，之前的是传表单形式，现在改为json形式。
+         * 未来都会用json形式，所以暂时过渡方案如此。
+         * 物业缴费的支付是大叔写的，商城支付是基哥写的，两个不同的接口，两种不同的传参形式，未来统一成基哥的这种形式。
+         */
         if (url.equals(PayService.requestGoodsPayResult)) {
             ALog.e(params.get("params"));
             requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8")

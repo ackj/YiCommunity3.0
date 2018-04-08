@@ -32,22 +32,28 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.goodshome.R;
 import cn.itsite.goodshome.contract.StoreContract;
 import cn.itsite.goodshome.model.ShopBean;
 import cn.itsite.goodshome.presenter.StorePresenter;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * Author： Administrator on 2018/1/30 0030.
@@ -68,6 +74,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
     private StoreHomeVPAdapter mAdapter;
     private DeliveryBean mDeliveryBean;
     private ImageView mIvBack;
+    private Badge mBadge;
 
     public static StoreHomeFragment newInstance() {
         return new StoreHomeFragment();
@@ -105,6 +112,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
         initMagicIndicator();
         initData();
         initListener();
+        EventBus.getDefault().register(this);
     }
 
     private void initStatusBar() {
@@ -116,14 +124,22 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
         mViewPager.setAdapter(mAdapter);
 //        mTabLayout.setupWithViewPager(mViewPager);
 
-        //todo （暂时不做）购物车上的小红点数字
-//        new QBadgeView(_mActivity)
-//                .bindTarget(mIvShopCart)
-//                .setBadgeTextSize(10, true)
-//                .setBadgeGravity(Gravity.END | Gravity.TOP)
-//                .setBadgeBackgroundColor(0xA0FF0000)
-//                .setBadgeTextColor(0x99FFFFFF)
-//                .setBadgeNumber(2);
+        //购物车上的小红点数字
+        mBadge = new QBadgeView(_mActivity)
+                .bindTarget(mIvShopCart)
+                .setBadgeTextSize(10, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setBadgeBackgroundColor(0xA0FF0000)
+                .setBadgeTextColor(0x99FFFFFF);
+
+        //读取购物车数量缓存
+        int cartNum = (int) SPCache.get(_mActivity, BaseConstants.KEY_CART_NUM, 0);
+        mBadge.setBadgeNumber(cartNum);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshCartRedPointEvent event) {
+        mBadge.setBadgeNumber(event.getNumber());
     }
 
     public void showStoreDialog(List<ShopBean> list) {
@@ -257,5 +273,11 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                 .setMargin(40)
                 .setGravity(Gravity.CENTER)
                 .show(getChildFragmentManager());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

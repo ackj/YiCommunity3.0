@@ -37,6 +37,7 @@ import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.event.RefreshOrderEvent;
+import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
 import cn.itsite.apayment.payment.Payment;
 import cn.itsite.apayment.payment.PaymentListener;
@@ -90,6 +91,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     private Button mBtn1;
     private Button mBtn2;
     private Payment payment;
+    private ImageView mIvBack;
 
     public static OrderDetailFragment newInstance(String uid) {
         OrderDetailFragment fragment = new OrderDetailFragment();
@@ -119,6 +121,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         mRecyclerView = view.findViewById(R.id.recyclerView);
         mBtn1 = view.findViewById(R.id.btn_1);
         mBtn2 = view.findViewById(R.id.btn_2);
+        mIvBack = view.findViewById(R.id.iv_back);
         return attachToSwipeBack(view);
     }
 
@@ -148,7 +151,6 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         mTvIdentity = viewHeader.findViewById(R.id.tv_identity);
         mAdapter.addHeaderView(viewHeader);
 
-
         View viewFooter = LayoutInflater.from(_mActivity).inflate(R.layout.item_order_detail_footer, null);
         mTvAmount = viewFooter.findViewById(R.id.tv_amount);
         mTvContactWay = viewFooter.findViewById(R.id.tv_contactway);
@@ -165,6 +167,12 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     }
 
     private void initListener() {
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
     }
 
 
@@ -240,11 +248,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 mPresenter.putOrders(orders);
                 break;
             case TYPE_DELETE://删除订单
-                List<OperateBean> deleteOrders = new ArrayList<>();
-                OperateBean dOrder = new OperateBean();
-                dOrder.uid = orderUid;
-                deleteOrders.add(dOrder);
-                mPresenter.deleteOrders(deleteOrders);
+                showHintDialog(orderUid);
                 break;
             case TYPE_LOGISTICS://查看物流
                 Fragment fragment = (Fragment) ARouter.getInstance().build("/web/webfragment").navigation();
@@ -269,6 +273,42 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 break;
             default:
         }
+    }
+
+
+    private void showHintDialog(String orderUid) {
+        new BaseDialogFragment()
+                .setLayoutId(R.layout.dialog_hint)
+                .setConvertListener((holder, dialog) -> {
+                    holder.setText(R.id.tv_content, "您确定要删除订单吗？")
+                            .setText(R.id.btn_cancel, "取消")
+                            .setText(R.id.btn_comfirm, "确定")
+                            .setOnClickListener(R.id.btn_cancel, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setOnClickListener(R.id.btn_comfirm, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    deleteOrder(orderUid);
+                                    dialog.dismiss();
+                                }
+                            });
+                })
+                .setMargin(40)
+                .setDimAmount(0.3f)
+                .setGravity(Gravity.CENTER)
+                .show(getChildFragmentManager());
+    }
+
+    private void deleteOrder(String orderUid) {
+        List<OperateBean> deleteOrders = new ArrayList<>();
+        OperateBean dOrder = new OperateBean();
+        dOrder.uid = orderUid;
+        deleteOrders.add(dOrder);
+        mPresenter.deleteOrders(deleteOrders);
     }
 
     private void showPaySelector(BaseRequest<PayParams> request) {
@@ -412,14 +452,14 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     @Override
     public void responseDeleteSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
-        EventBus.getDefault().register(new RefreshOrderEvent());
+        EventBus.getDefault().post(new RefreshOrderEvent());
         pop();
     }
 
     @Override
     public void responsePutSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
-        EventBus.getDefault().register(new RefreshOrderEvent());
+        EventBus.getDefault().post(new RefreshOrderEvent());
         pop();
     }
 }

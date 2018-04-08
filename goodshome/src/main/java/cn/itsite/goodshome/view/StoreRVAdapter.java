@@ -57,17 +57,13 @@ public class StoreRVAdapter extends BaseMultiItemQuickAdapter<StoreItemGridBean,
                     bannerTitles.add(item.getBanners().get(i).getTitle());
                 }
                 banner.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtils.dp2px(BaseApp.mContext, 150)));
-                if ("shop".equals(item.shopType)) {
-                    banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-                } else {
-                    banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-                }
                 banner.setImageLoader(new ImageLoader() {
                     @Override
                     public void displayImage(Context context, Object path, ImageView imageView) {
                         Glide.with(context).load(path).into(imageView);
                     }
                 })
+                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                         .setBannerTitles(bannerTitles)
                         .setImages(bannerImages)
                         .setIndicatorGravity(BannerConfig.RIGHT)

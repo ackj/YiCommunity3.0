@@ -111,9 +111,7 @@ public class GoodsFragment extends BaseFragment {
             }
         })
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-
                 .setImages(bannerImages)
-
                 .isAutoPlay(true)
                 .start();
     }

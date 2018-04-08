@@ -32,7 +32,6 @@
         android:layout_marginTop="15dp"
         android:clickable="false"
         android:ellipsize="end"
-
         android:includeFontPadding="false"
         android:lines="1"
         android:text="智能安防小卫士"
@@ -55,7 +54,7 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:text="智能安防小卫士智能安防小卫士"
-        android:textColor="@color/base_gray"
+        android:textColor="@color/default_text"
         android:textSize="@dimen/H5"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="parent"

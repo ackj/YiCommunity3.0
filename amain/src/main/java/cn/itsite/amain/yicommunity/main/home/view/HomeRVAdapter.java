@@ -2,6 +2,7 @@ package cn.itsite.amain.yicommunity.main.home.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -172,6 +173,11 @@ public class HomeRVAdapter extends BaseMultiItemQuickAdapter<HomeBean, BaseViewH
                 SmartLifeAdapter smartLifeAdapter = new SmartLifeAdapter(item.getSmartMenus());
                 smartLifeAdapter.setOnItemClickListener((adapter12, view, position) ->{
                     Fragment classifyfragment = (Fragment) ARouter.getInstance().build("/classify/classifyfragment").navigation();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("shopType", "smartHome");
+                    bundle.putString("shopUid", "");
+                    bundle.putString("menuUid",item.getSmartMenus().get(position).getUid());
+                    classifyfragment.setArguments(bundle);
                     ((BaseActivity) fragment.getActivity()).start((BaseFragment) classifyfragment);
                 });
                 rvSmartLife.setAdapter(smartLifeAdapter);

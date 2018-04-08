@@ -172,6 +172,7 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                         Bundle bundle = new Bundle();
                         bundle.putString("shopType", mParmas.shoptype);
                         bundle.putString("shopUid", mParmas.shopUid);
+                        bundle.putString("menuUid",item.getCategoryBean().getUid());
                         fragment.setArguments(bundle);
                         ((StoreHomeFragment) getParentFragment()).start((BaseFragment) fragment);
                         break;

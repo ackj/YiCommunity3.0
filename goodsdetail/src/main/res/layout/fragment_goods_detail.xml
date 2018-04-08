@@ -46,6 +46,11 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/default_white" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="49dp"
@@ -60,9 +65,13 @@
             android:gravity="center"
             android:orientation="vertical">
 
+
             <ImageView
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:id="@+id/iv_shop_cart"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="2dp"
+                android:paddingTop="10dp"
                 app:srcCompat="@drawable/ic_cart_gray_24dp" />
 
             <TextView

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_goods_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cl_goods_layout"
     android:background="@color/white">
 
     <ImageView
@@ -34,7 +34,6 @@
 -->
 
     <TextView
-        android:includeFontPadding="false"
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,8 +42,8 @@
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:gravity="left"
+        android:includeFontPadding="false"
         android:lines="1"
-        android:text="智能安防小卫士"
         android:textColor="@color/base_black"
         android:textSize="@dimen/H3"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -52,9 +51,8 @@
         app:layout_constraintTop_toBottomOf="@id/iv_icon" />
 
     <TextView
-        android:includeFontPadding="false"
-
         android:id="@+id/tv_desc"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -62,17 +60,15 @@
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:gravity="left"
+        android:includeFontPadding="false"
         android:lines="1"
-        android:text="智能安防小卫士智能安防小卫士"
-        android:textColor="@color/base_gray"
+        android:textColor="@color/default_text"
         android:textSize="@dimen/H5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
     <TextView
-        android:includeFontPadding="false"
-
         android:id="@+id/tv_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,8 +77,8 @@
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:gravity="left"
+        android:includeFontPadding="false"
         android:lines="1"
-        android:text="￥ 589.00"
         android:textColor="@color/error"
         android:textSize="@dimen/H3"
         app:layout_constraintLeft_toLeftOf="parent"

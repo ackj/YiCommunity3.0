@@ -93,7 +93,7 @@
             android:layout_marginTop="6dp"
             android:includeFontPadding="false"
             android:text="WiFi/电话双网 智能家庭安全"
-            android:textColor="@color/base_gray"
+            android:textColor="@color/default_text"
             android:textSize="@dimen/H5"
             app:layout_constraintLeft_toRightOf="@id/iv_icon"
             app:layout_constraintTop_toBottomOf="@id/tv_name" />

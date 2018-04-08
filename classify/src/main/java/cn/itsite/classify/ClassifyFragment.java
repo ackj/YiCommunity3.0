@@ -72,6 +72,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     private ImageView mIvBack;
     private StateManager mStateManager;
     private PtrFrameLayout mPtrFrameLayout;
+    private String mMenuUid;
 
     public static ClassifyFragment newInstance() {
         return new ClassifyFragment();
@@ -82,6 +83,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
         super.onCreate(savedInstanceState);
         mParams.shopUid = getArguments().getString("shopUid");
         mParams.shoptype = getArguments().getString("shopType");
+        mMenuUid = getArguments().getString("menuUid");
     }
 
     @NonNull
@@ -257,6 +259,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     private void clickFirstMenu(int position) {
         MenuBean menuBean = mAdapterMenu.getData().get(position);
         mAdapterMenu.setSelectedPosition(position);
+        mRvMenu.scrollToPosition(position);
         //判断是否隐藏二级菜单右侧展开按钮
         if (menuBean.getChildren().size() > 2) {
             mIvStretchMenu.setVisibility(View.VISIBLE);
@@ -318,15 +321,21 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     @Override
     public void responseGetGategories(List<MenuBean> data) {
         mAdapterMenu.setNewData(data);
-        if (data.size() > 0) {
-            //自动选中第一项
+        if (mMenuUid != null) {
+            for (int i = 0; i < data.size(); i++) {
+                if (mMenuUid.equals(data.get(i).getUid())) {
+                    clickFirstMenu(i);
+                    break;
+                }
+            }
+        } else if (data.size() > 0) {
+            //选中第一项
             clickFirstMenu(0);
         }
     }
 
     @Override
     public void responseGetProducts(List<ProductBean> datas) {
-
         mPtrFrameLayout.refreshComplete();
         if (datas == null || datas.isEmpty()) {
             if (mParams.page == 1) {

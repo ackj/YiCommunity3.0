@@ -269,7 +269,6 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         if (bean.getPay() != null) {
             refreshInfo(bean.getStockQuantity(), bean.getPay().getCurrency() + bean.getPay().getPrice());
         }
-
         mTvSku.setVisibility(bean.getSkus().size() == 0 ? View.GONE : View.VISIBLE);
         refreshProduct();
     }

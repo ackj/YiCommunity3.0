@@ -19,6 +19,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,6 +37,7 @@ import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.StorePojo;
+import cn.itsite.acommon.event.RefreshCartEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
 import cn.itsite.apayment.payment.Payment;
@@ -278,6 +281,8 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     @Override
     public void responsePostOrdersSuccess(BaseResponse<List<OperateBean>> response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        EventBus.getDefault().post(new RefreshCartEvent());
+
         List<OperateBean> data = response.getData();
         BaseRequest<PayParams> request = new BaseRequest<>();
 

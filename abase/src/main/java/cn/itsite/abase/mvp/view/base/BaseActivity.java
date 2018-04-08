@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.WindowManager;
 
-import cn.itsite.abase.common.ActivityHelper;
-import cn.itsite.abase.event.EventLogout;
-import cn.itsite.abase.mvp.contract.base.BaseContract;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import cn.itsite.abase.common.ActivityHelper;
+import cn.itsite.abase.event.EventLogout;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -71,8 +69,8 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
             mPresenter.clear();
             mPresenter = null;
         }
-        //把每一个Activity弹出栈。
-        ActivityHelper.getInstance().removeActivity(this);
+//        //把每一个Activity弹出栈。
+//        ActivityHelper.getInstance().removeActivity(this);
         super.onDestroy();
     }
 

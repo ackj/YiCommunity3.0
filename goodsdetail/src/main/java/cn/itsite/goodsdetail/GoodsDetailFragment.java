@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,16 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.BaseApp;
+import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
@@ -42,9 +49,12 @@ import cn.itsite.acommon.SkusBean;
 import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.StorePojo;
 import cn.itsite.acommon.VerticalViewPager;
+import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.goodsdetail.contract.ProductContract;
 import cn.itsite.goodsdetail.presenter.ProductPresenter;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 import static android.view.View.OVER_SCROLL_NEVER;
 
@@ -66,6 +76,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     private TextView mTvTitleShop;
     private ImageView mIvBack;
     private ProductDetailBean mDetailBean;
+    private ImageView mIvShopCart;
+    private Badge mBadge;
 
     public static GoodsDetailFragment newInstance() {
         return new GoodsDetailFragment();
@@ -102,6 +114,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mMagicIndicator = view.findViewById(R.id.magicIndicator);
         mTvTitleShop = view.findViewById(R.id.tv_title_shop);
         mIvBack = view.findViewById(R.id.iv_back);
+        mIvShopCart = view.findViewById(R.id.iv_shop_cart);
         return attachToSwipeBack(view);
     }
 
@@ -110,8 +123,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         super.onViewCreated(view, savedInstanceState);
         initStatusBar();
         initData();
-        initMagicIndicator();
         initListener();
+        EventBus.getDefault().register(this);
     }
 
     private void initStatusBar() {
@@ -127,6 +140,18 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mViewPager.setOverScrollMode(OVER_SCROLL_NEVER);
         cartUid = "-1";
         mPresenter.getProduct(uid);
+
+
+        mBadge = new QBadgeView(_mActivity)
+                .bindTarget(mIvShopCart)
+                .setBadgeTextSize(10, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setBadgeBackgroundColor(0xA0FF0000)
+                .setBadgeTextColor(0x99FFFFFF);
+
+        //读取购物车数量缓存
+        int cartNum = (int) SPCache.get(_mActivity, BaseConstants.KEY_CART_NUM, 0);
+        mBadge.setBadgeNumber(cartNum);
     }
 
     private void initListener() {
@@ -134,7 +159,11 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mTvBuyItNow.setOnClickListener(this);
         mLlShopCart.setOnClickListener(this);
         mTvPutShopcart.setOnClickListener(this);
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshCartRedPointEvent event) {
+        mBadge.setBadgeNumber(event.getNumber());
     }
 
     private void initMagicIndicator() {
@@ -221,6 +250,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
             mMagicIndicator.setVisibility(View.INVISIBLE);
             mTvTitleShop.setVisibility(View.VISIBLE);
         } else {
+            initMagicIndicator();
             mMagicIndicator.setVisibility(View.VISIBLE);
             mTvTitleShop.setVisibility(View.INVISIBLE);
         }
@@ -234,6 +264,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     @Override
     public void responsePostSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        EventBus.getDefault().post(new RefreshCartRedPointEvent(mBadge.getBadgeNumber() + mAmount));
     }
 
     @Override
@@ -272,6 +303,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         productsBean.setPay(payBean);
         productsBean.setTitle(mDetailBean.getTitle());
         productsBean.setCount(mAmount);
+        productsBean.setUid(mDetailBean.getUid());
         if (mSku != null) {
             productsBean.setSkuID(mSku.getUid());
             productsBean.setSku(mSku.getSku());
@@ -283,5 +315,12 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         bundle.putParcelableArrayList("orders", orders);
         fragment.setArguments(bundle);
         start((BaseFragment) fragment);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+
     }
 }

@@ -47,8 +47,7 @@ public class SearchGoodsRVAdapter extends BaseMultiItemQuickAdapter<SearchGoodsB
                 Glide.with(mIvIcon.getContext())
                         .load(item.getGoodsBean().getImageUrl())
                         .into(mIvIcon);
-                helper.addOnClickListener(R.id.cl_goods_layout)
-                        .setText(R.id.tv_name, item.getGoodsBean().getTitle())
+                helper.setText(R.id.tv_name, item.getGoodsBean().getTitle())
                         .setText(R.id.tv_desc, item.getGoodsBean().getDescription())
                         .setText(R.id.tv_price, item.getGoodsBean().getCurrency() + " " + item.getGoodsBean().getPrice());
                 break;

@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.List;
 
 import cn.itsite.abase.cache.SPCache;
@@ -34,6 +36,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * [选择城市]的View层
  * 打开方式：StartApp-->社区-->切换-->右上角城市按钮-->选择城市
  */
+@Route(path = "/picker/citypickerfragment")
 public class CityPickerFragment extends BaseFragment implements View.OnClickListener {
     private static final String TAG = CityPickerFragment.class.getSimpleName();
     private ListView mListView;

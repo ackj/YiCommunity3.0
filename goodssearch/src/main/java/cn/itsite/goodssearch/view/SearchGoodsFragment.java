@@ -1,6 +1,5 @@
 package cn.itsite.goodssearch.view;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +13,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -125,7 +123,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     }
 
     private void initData() {
-        showSoftInputFromWindow(_mActivity, mEtInput);
+//        showSoftInputFromWindow(_mActivity, mEtInput);
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 6));
         mSearchGoodsAdapter = new SearchGoodsRVAdapter();
@@ -185,6 +183,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
                             mPresenter.getKeywords(mParams);
                         }
                         break;
+
                     default:
                 }
             }
@@ -207,6 +206,9 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
                         break;
                     case SearchGoodsBean.TYPE_SEARCH_GOODS:
                         Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("uid", item.getGoodsBean().getUid());
+                        goodsDetailFragment.setArguments(bundle2);
                         start((BaseFragment) goodsDetailFragment);
                         break;
                     default:
@@ -226,12 +228,12 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         });
     }
 
-    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-    }
+//    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
+//        editText.setFocusable(true);
+//        editText.setFocusableInTouchMode(true);
+//        editText.requestFocus();
+//        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//    }
 
     private void search() {
         String input = mEtInput.getText().toString();

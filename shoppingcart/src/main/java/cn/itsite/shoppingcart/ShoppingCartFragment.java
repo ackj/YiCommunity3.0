@@ -35,11 +35,12 @@ import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsCounterView;
 import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.SkusBean;
 import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.SkusBean;
 import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.StorePojo;
 import cn.itsite.acommon.event.RefreshCartEvent;
+import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.shoppingcart.contract.CartContract;
@@ -314,6 +315,21 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         mTvTotalSum.setText(currency + amountPrice);
     }
 
+    private void computeCount() {
+        computeCount(mAdapter.getData());
+    }
+
+    private void computeCount(List<StoreBean> data) {
+        int number = 0;
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getItemType() == StoreBean.TYPE_STORE_GOODS) {
+                StorePojo.ProductsBean productsBean = data.get(i).getProductsBean();
+                number += productsBean.getCount();
+            }
+        }
+        EventBus.getDefault().post(new RefreshCartRedPointEvent(number));
+    }
+
     private void showHintDialog() {
         new BaseDialogFragment()
                 .setLayoutId(R.layout.dialog_hint)
@@ -378,6 +394,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     @Override
     public void responsePostSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        computeCount();
     }
 
     @Override
@@ -387,6 +404,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             mOperationSwipeLayout.close();
             mOperationProduct.setCount(mOptionAmount);
             computePrice();
+            computeCount();
         }
     }
 
@@ -399,6 +417,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
         } else {
             mDatas = data;
         }
+        computeCount(data);
         //查推荐
         mPresenter.getRecommendGoods(mGoodsParams);
     }
@@ -479,7 +498,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             @Override
             public void clickComfirm(SkusBean.SkuBean sku, int amount, SpecificationDialog dialog) {
                 if (sku != null) {
-                    if(!product.getSkuID().equals(sku.getUid())){
+                    if (!product.getSkuID().equals(sku.getUid())) {
                         List<String> skus = new ArrayList<>();
                         skus.add(product.getSkuID());
                         skus.add(sku.getUid());

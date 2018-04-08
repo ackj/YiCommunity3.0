@@ -28,5 +28,7 @@ public class BaseConstants {
 
     public static final String KEY_LINK = "link";
     public static final String KEY_TITLE = "title";
+    public static final String KEY_CART_NUM = "cart_num";//购物车数量
+
 
 }

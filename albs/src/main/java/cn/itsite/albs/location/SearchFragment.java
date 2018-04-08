@@ -2,6 +2,7 @@ package cn.itsite.albs.location;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
@@ -96,6 +98,7 @@ public class SearchFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData();
+        initListener();
         requestHistory();
         KeyBoardUtils.showKeybord(etKeyword, BaseApp.mContext);
     }
@@ -166,6 +169,25 @@ public class SearchFragment extends BaseFragment {
             setFragmentResult(SupportFragment.RESULT_OK, bundle);
             ((SupportActivity) _mActivity).onBackPressedSupport();
         });
+    }
+
+    private void initListener() {
+        tvCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = (Fragment) ARouter.getInstance().build("/picker/citypickerfragment").navigation();
+                startForResult((BaseFragment) fragment, 100);
+            }
+        });
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 100) {
+            String city = data.getString("city");
+            tvCity.setText(city);
+        }
     }
 
     private void search(String keyword, String city) {

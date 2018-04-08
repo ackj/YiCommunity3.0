@@ -8,4 +8,5 @@ package cn.itsite.acommon.event;
  */
 
 public class RefreshCartEvent {
+
 }

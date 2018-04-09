@@ -40,4 +40,11 @@ public class SubmitOrderModel extends BaseModel implements SubmitOrderContract.M
                 .postOrders(request)
                 .subscribeOn(Schedulers.io());
     }
+
+    @Override
+    public Observable<BaseResponse<OperateBean>> checkOrderStatus(String orderUid) {
+        return HttpHelper.getService(OrderService.class)
+                .checkOrderStatus(orderUid)
+                .subscribeOn(Schedulers.io());
+    }
 }

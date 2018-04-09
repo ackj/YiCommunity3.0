@@ -59,6 +59,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     private ImageView mIvIcon;
     private TextView mTvPrice;
     private boolean mHasSkus;
+    private String mSkuID;
 
     @Nullable
     @Override
@@ -92,11 +93,12 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     }
 
     @SuppressLint("ValidFragment")
-    public SpecificationDialog(Context context, String uid, String normalImage, int normalAmount) {
+    public SpecificationDialog(Context context, String uid, String normalImage, int normalAmount, String skuID) {
         mContext = context;
         mUid = uid;
         mNormalImage = normalImage;
         mNormalAmount = normalAmount;
+        mSkuID = skuID;
     }
 
     @SuppressLint("ResourceType")
@@ -116,7 +118,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new SpecificationRVAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        mPresenter.getSkus(mUid);
+        mPresenter.getSkus(mUid, mSkuID);
         mTvGoodsCounter.setCounter(mNormalAmount);
 
         if (mNormalImage != null) {
@@ -160,7 +162,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
             if (mPositions.containsKey(i)) {
                 continue;
             }
-            sb.append(data.get(i).getAttribute());
+            sb.append(" " + data.get(i).getAttribute());
         }
         //选择完毕后
         if (TextUtils.isEmpty(sb.toString())) {
@@ -192,7 +194,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
             }
         } else {
             selectedSku = null;
-            mTvSku.setText("请选择 " + sb);
+            mTvSku.setText("请选择" + sb);
         }
     }
 
@@ -270,6 +272,17 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
             refreshInfo(bean.getStockQuantity(), bean.getPay().getCurrency() + bean.getPay().getPrice());
         }
         mTvSku.setVisibility(bean.getSkus().size() == 0 ? View.GONE : View.VISIBLE);
+
+        //把选中的项put到已选集合中
+        for (int i = 0; i < bean.getAttributes().size(); i++) {
+            SkusBean.AttributesBean attributesBean = bean.getAttributes().get(i);
+            for (int j = 0; j < attributesBean.getValues().size(); j++) {
+                SkusBean.AttributesBean.ValuesBean valuesBean = attributesBean.getValues().get(j);
+                if (valuesBean.isSelected()) {
+                    mPositions.put(i, valuesBean);
+                }
+            }
+        }
         refreshProduct();
     }
 }

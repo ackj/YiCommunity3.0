@@ -34,8 +34,8 @@ public class SkusPresenter extends BasePresenter<SkusContract.View,SkusContract.
     }
 
     @Override
-    public void getSkus(String uid) {
-        mRxManager.add(mModel.getSkus(uid)
+    public void getSkus(String uid,String sku) {
+        mRxManager.add(mModel.getSkus(uid,sku)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<SkusBean>>(){
                     @Override

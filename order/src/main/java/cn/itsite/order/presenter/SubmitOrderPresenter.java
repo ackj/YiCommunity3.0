@@ -59,4 +59,16 @@ public class SubmitOrderPresenter extends BasePresenter<SubmitOrderContract.View
                     }
                 }));
     }
+
+    @Override
+    public void checkOrderStatus(String orderUid) {
+        mRxManager.add(mModel.checkOrderStatus(orderUid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<OperateBean>>() {
+                    @Override
+                    public void onSuccess(BaseResponse<OperateBean> operateBeanBaseResponse) {
+                        getView().responseCheckOrderStatus(operateBeanBaseResponse.getData().getStatus());
+                    }
+                }));
+    }
 }

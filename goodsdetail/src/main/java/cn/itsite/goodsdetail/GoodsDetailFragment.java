@@ -313,6 +313,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         orders.add(storePojo);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("orders", orders);
+        bundle.putString("from", "detail");
         fragment.setArguments(bundle);
         start((BaseFragment) fragment);
     }

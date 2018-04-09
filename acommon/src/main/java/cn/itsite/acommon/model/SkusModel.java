@@ -22,9 +22,10 @@ import rx.schedulers.Schedulers;
 public class SkusModel extends BaseModel implements SkusContract.Model {
 
     @Override
-    public Observable<BaseResponse<SkusBean>> getSkus(String uid) {
+    public Observable<BaseResponse<SkusBean>> getSkus(String uid,String sku) {
         OperateBean operatorOperateBean = new OperateBean();
         operatorOperateBean.product = uid;
+        operatorOperateBean.sku = sku;
         return HttpHelper.getService(SkusService.class)
                 .getSkus(new Gson().toJson(operatorOperateBean))
                 .subscribeOn(Schedulers.io());

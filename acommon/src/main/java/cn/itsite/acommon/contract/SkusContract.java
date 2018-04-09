@@ -19,11 +19,11 @@ public interface SkusContract {
     }
 
     interface Presenter extends BaseContract.Presenter {
-        void getSkus(String uid);
+        void getSkus(String uid,String sku);
     }
 
     interface Model extends BaseContract.Model {
-        Observable<BaseResponse<SkusBean>> getSkus(String uid);
+        Observable<BaseResponse<SkusBean>> getSkus(String uid,String sku);
     }
 
 }

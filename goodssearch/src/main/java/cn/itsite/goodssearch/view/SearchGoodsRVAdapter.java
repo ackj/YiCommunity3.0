@@ -3,6 +3,7 @@ package cn.itsite.goodssearch.view;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -46,6 +47,8 @@ public class SearchGoodsRVAdapter extends BaseMultiItemQuickAdapter<SearchGoodsB
                 ImageView mIvIcon = helper.getView(R.id.iv_icon);
                 Glide.with(mIvIcon.getContext())
                         .load(item.getGoodsBean().getImageUrl())
+                        .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading))
+                        .apply(new RequestOptions().error(R.drawable.ic_img_error))
                         .into(mIvIcon);
                 helper.setText(R.id.tv_name, item.getGoodsBean().getTitle())
                         .setText(R.id.tv_desc, item.getGoodsBean().getDescription())

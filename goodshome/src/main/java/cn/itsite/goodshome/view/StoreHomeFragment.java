@@ -185,8 +185,11 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                     .build("/goodssearch/searchgoodsfragment")
                     .navigation();
             Bundle bundle = new Bundle();
-            bundle.putString("shopType", shopTypes[mViewPager.getCurrentItem()]);
-            bundle.putString("shopUid", (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, ""));
+            String shopType = shopTypes[mViewPager.getCurrentItem()];
+            bundle.putString("shopType", shopType);
+            if (shopType.equals("shop")) {
+                bundle.putString("shopUid", (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, ""));
+            }
             fragment.setArguments(bundle);
             start((BaseFragment) fragment);
         });

@@ -18,6 +18,7 @@ public class OperateBean {
     public String product;
     public String category;
     public String from;
+    public int status;
 
     public List<Product> products;
 
@@ -25,6 +26,14 @@ public class OperateBean {
         public String uid;
         public String amount;
         public String sku;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getSku() {

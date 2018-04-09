@@ -175,7 +175,6 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         });
     }
 
-
     @Override
     public void responseOrderDetail(OrderDetailBean orderDetailBean) {
         mTvDeliveryType.setText(orderDetailBean.getDeliveryType());
@@ -183,7 +182,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         mTvCategory.setText(orderDetailBean.getCategory());
         mTvAmount.setText(_mActivity.getString(R.string.amount, orderDetailBean.getAmount(), "￥ " + orderDetailBean.getCost()));
         mTvContactWay.setText(_mActivity.getString(R.string.consignee, orderDetailBean.getDelivery().getName(), orderDetailBean.getDelivery().getPhoneNumber()));
-        mTvLocation.setText(orderDetailBean.getDelivery().getAddress() + orderDetailBean.getDelivery().getLocation());
+        mTvLocation.setText(orderDetailBean.getDelivery().getLocation() + orderDetailBean.getDelivery().getAddress());
         mTvLeaveWords.setText(orderDetailBean.getNote());
         mTvOrderNum.setText(orderDetailBean.getOrderNumber());
         mTvOrderTime.setText(orderDetailBean.getTime());

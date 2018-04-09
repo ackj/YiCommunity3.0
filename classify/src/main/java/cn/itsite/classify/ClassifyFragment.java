@@ -142,7 +142,9 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     public void onRefresh() {
         super.onRefresh();
         mParams.page = 1;
-        mPresenter.getProducts(mParams);
+        //为了防止首次进来就立即刷新，商品是要获取category参数之后才刷新的
+        if (mParams.category != null)
+            mPresenter.getProducts(mParams);
     }
 
     private void initData() {
@@ -243,6 +245,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
                 mAdapterSubMenu.setSelectedPosition(position);
                 mParams.category = bean.getUid();
                 onRefresh();
+
             }
         });
 
@@ -321,16 +324,18 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     @Override
     public void responseGetGategories(List<MenuBean> data) {
         mAdapterMenu.setNewData(data);
+        int selectedMenuPos = 0;
         if (mMenuUid != null) {
             for (int i = 0; i < data.size(); i++) {
                 if (mMenuUid.equals(data.get(i).getUid())) {
-                    clickFirstMenu(i);
+                    selectedMenuPos = i;
                     break;
                 }
             }
-        } else if (data.size() > 0) {
+        }
+        if (data.size() > 0) {
             //选中第一项
-            clickFirstMenu(0);
+            clickFirstMenu(selectedMenuPos);
         }
     }
 
@@ -360,7 +365,6 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
             mAdapterContentLinear.setEnableLoadMore(true);
             mAdapterContentLinear.loadMoreComplete();
         }
-
     }
 
     @Override

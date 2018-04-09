@@ -72,6 +72,8 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     private DeliveryBean mDefaultDelivery;
     private TextView mTvSubmit;
     private Payment payment;
+    private String mFrom;
+    private String mOrderUid;
 
     public static SubmitOrderFragment newInstance() {
         return new SubmitOrderFragment();
@@ -87,6 +89,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mOrders = getArguments().getParcelableArrayList("orders");
+        mFrom = getArguments().getString("from");
         ALog.e(TAG, "orders:" + mOrders);
     }
 
@@ -195,7 +198,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
             if (submitOrderBean.getItemType() == SubmitOrderBean.TYPE_STORE_TITLE) {
                 operatorOperateBean = new OperateBean();
                 operatorOperateBean.products = new ArrayList<>();
-                operatorOperateBean.from = "cart";
+                operatorOperateBean.from = mFrom;
             } else if (submitOrderBean.getItemType() == SubmitOrderBean.TYPE_STORE_GOODS) {
                 OperateBean.Product product = new OperateBean.Product();
                 product.amount = submitOrderBean.getProductsBean().getCount() + "";
@@ -282,7 +285,6 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     public void responsePostOrdersSuccess(BaseResponse<List<OperateBean>> response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
         EventBus.getDefault().post(new RefreshCartEvent());
-
         List<OperateBean> data = response.getData();
         BaseRequest<PayParams> request = new BaseRequest<>();
 
@@ -299,14 +301,29 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                 });
     }
 
+    @Override
+    public void responseCheckOrderStatus(int status) {
+        if (status == 0) {
+            //支付失败
+            DialogHelper.errorSnackbar(getView(), "支付失败");
+        } else if (status == 1) {
+            //支付成功
+            DialogHelper.successSnackbar(getView(), "支付成功");
+        }
+        //跳到订单详情页
+        start(OrderDetailFragment.newInstance(mOrderUid));
+        pop();
+    }
+
     private void showPaySelector(BaseRequest<PayParams> request) {
         List<String> strings = Arrays.asList("支付宝", "微信");
         new SelectorDialogFragment()
                 .setTitle("请选择支付方式")
                 .setItemLayoutId(R.layout.item_rv_simple_selector)
                 .setData(strings)
-                .setOnItemConvertListener((holder, position, dialog) ->
-                        holder.setText(R.id.tv_item_rv_simple_selector, strings.get(position)))
+                .setOnItemConvertListener((holder, position, dialog) -> {
+                    holder.setText(R.id.tv_item_rv_simple_selector, strings.get(position));
+                })
                 .setOnItemClickListener((view, baseViewHolder, position, dialog) -> {
                     dialog.dismiss();
                     switch (position) {
@@ -348,7 +365,12 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                 .show(getChildFragmentManager());
     }
 
+    @Override
+    public void start(Object response) {
+    }
+
     private void pay(BaseRequest<PayParams> request, IPayable iPayable) {
+        mOrderUid = request.getData().getOrders().get(0);
         //拼参数。
         Map<String, String> params = new HashMap<>();
         params.put("params", request.toString());
@@ -414,15 +436,18 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                     public void onSuccess(@Payment.PayType int payType) {
                         ALog.e("3.支付 成功-------->" + payType);
                         dismissLoading();
-                        DialogHelper.successSnackbar(getView(), "支付成功");
+//                        DialogHelper.successSnackbar(getView(), "支付成功");
 //                        ptrFrameLayout.autoRefresh();
+                        mPresenter.checkOrderStatus(mOrderUid);
+
                     }
 
                     @Override
                     public void onFailure(@Payment.PayType int payType, int errorCode) {
                         ALog.e("3.支付 失败-------->" + payType + "----------errorCode-->" + errorCode);
                         dismissLoading();
-                        DialogHelper.errorSnackbar(getView(), "支付失败，请重试");
+//                        DialogHelper.errorSnackbar(getView(), "支付失败，请重试");
+                        mPresenter.checkOrderStatus(mOrderUid);
                     }
                 })
                 .setOnVerifyListener(new PaymentListener.OnVerifyListener() {

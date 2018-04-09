@@ -74,6 +74,8 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         super.onCreate(savedInstanceState);
         mParams.shopUid = getArguments().getString("shopUid");
         mParams.shoptype = getArguments().getString("shopType");
+        ALog.e(TAG,"shopType:"+mParams.shoptype);
+        ALog.e(TAG,"shopUid:"+mParams.shopUid);
     }
 
     @NonNull

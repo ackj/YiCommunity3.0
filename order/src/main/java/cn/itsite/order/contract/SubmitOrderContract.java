@@ -21,18 +21,24 @@ public interface SubmitOrderContract {
         void responseGetAddress(List<DeliveryBean> data);
 
         void responsePostOrdersSuccess(BaseResponse<List<OperateBean>> response);
+
+        void responseCheckOrderStatus(int status);
     }
 
     interface Presenter extends BaseContract.Presenter {
         void getAddress();
 
         void postOrders(List<OperateBean> data);
+
+        void checkOrderStatus(String orderUid);
     }
 
     interface Model extends BaseContract.Model {
         Observable<BaseResponse<List<DeliveryBean>>> getAddress();
 
         Observable<BaseResponse<List<OperateBean>>> postOrders(List<OperateBean> data);
+
+        Observable<BaseResponse<OperateBean>> checkOrderStatus(String orderUid);
     }
 
 }

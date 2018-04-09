@@ -54,4 +54,8 @@ public interface OrderService {
     //修改订单
     @PUT("v1/orders")
     Observable<BaseResponse> putOrders(@Body BaseRequest request);
+
+    //检查订单状态
+    @GET("v1/checkPayOrderState/{orderUid}")
+    Observable<BaseResponse<OperateBean>> checkOrderStatus(@Path("orderUid")String orderUid);
 }

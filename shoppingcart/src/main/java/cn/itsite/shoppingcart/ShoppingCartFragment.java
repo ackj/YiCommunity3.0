@@ -418,6 +418,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             mDatas = data;
         }
         computeCount(data);
+        computePrice();
         //查推荐
         mPresenter.getRecommendGoods(mGoodsParams);
     }
@@ -486,6 +487,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             Fragment fragment = (Fragment) ARouter.getInstance().build("/order/submitorderfragment").navigation();
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("orders", resultData);
+            bundle.putString("from", "cart");
             fragment.setArguments(bundle);
             start((BaseFragment) fragment);
         }
@@ -493,7 +495,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     }
 
     private void showSpecificationDialog(StorePojo.ProductsBean product, View view, GoodsCounterView goodsCounterView) {
-        SpecificationDialog dialog = new SpecificationDialog(_mActivity, product.getUid(), product.getIcon(), goodsCounterView.getCounter());
+        SpecificationDialog dialog = new SpecificationDialog(_mActivity, product.getUid(), product.getIcon(), goodsCounterView.getCounter(), product.getSkuID());
         dialog.setSkuListener(new SpecificationDialog.OnSkusListener() {
             @Override
             public void clickComfirm(SkusBean.SkuBean sku, int amount, SpecificationDialog dialog) {
@@ -502,6 +504,8 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
                         List<String> skus = new ArrayList<>();
                         skus.add(product.getSkuID());
                         skus.add(sku.getUid());
+                        product.setSkuID(sku.getUid());
+                        product.setSku(sku.getSku());
                         view.setTag(R.id.tag_skus, skus);
                     }
                     ((TextView) view).setText(sku.getSku());

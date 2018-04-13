@@ -339,6 +339,15 @@ public class OrderDetailBean {
         private PayBean pay;
         private String title;
         private String uid;
+        private List<ActionBean> actions;
+
+        public List<ActionBean> getActions() {
+            return actions;
+        }
+
+        public void setActions(List<ActionBean> actions) {
+            this.actions = actions;
+        }
 
         public String getAmount() {
             return amount;
@@ -395,6 +404,47 @@ public class OrderDetailBean {
         public void setUid(String uid) {
             this.uid = uid;
         }
+
+        public static class ActionBean{
+
+            private String action;
+            private String category;
+            private String link;
+            private String type;
+
+            public String getAction() {
+                return action;
+            }
+
+            public void setAction(String action) {
+                this.action = action;
+            }
+
+            public String getCategory() {
+                return category;
+            }
+
+            public void setCategory(String category) {
+                this.category = category;
+            }
+
+            public String getLink() {
+                return link;
+            }
+
+            public void setLink(String link) {
+                this.link = link;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+        }
+
 
         public static class PayBean {
             /**

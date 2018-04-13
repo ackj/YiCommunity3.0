@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -24,7 +26,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseLazyFragment;
 import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
 import cn.itsite.amain.R;
@@ -32,8 +36,6 @@ import cn.itsite.amain.s1.main.smarthome.view.SmartHomeFragment;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.DoorManager;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.abase.common.UserHelper;
-import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.DoorListBean;
 import cn.itsite.amain.yicommunity.entity.bean.HouseInfoBean;
 import cn.itsite.amain.yicommunity.entity.bean.IconBean;
@@ -46,7 +48,6 @@ import cn.itsite.amain.yicommunity.main.house.HouseActivity;
 import cn.itsite.amain.yicommunity.main.parking.ParkingActivity;
 import cn.itsite.amain.yicommunity.main.picker.PickerActivity;
 import cn.itsite.amain.yicommunity.main.publish.PropertyActivity;
-import cn.itsite.amain.yicommunity.main.smarthome.view.SmartHomeMallFragment;
 import cn.itsite.amain.yicommunity.main.steward.contract.StewardContract;
 import cn.itsite.amain.yicommunity.main.steward.presenter.StewardPresenter;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -302,7 +303,8 @@ public class StewardFragment extends BaseLazyFragment<StewardContract.Presenter>
 
     private void go2DeviceStore() {
 //        _mActivity.start(GoodsCategoryFragment.newInstance());
-        ((SupportActivity) _mActivity).start(SmartHomeMallFragment.newInstance(null, 0));
+//        ((SupportActivity) _mActivity).start(SmartHomeMallFragment.newInstance(null, 0));
+        ARouter.getInstance().build("/goodshome/main").navigation();
     }
 
     @Override

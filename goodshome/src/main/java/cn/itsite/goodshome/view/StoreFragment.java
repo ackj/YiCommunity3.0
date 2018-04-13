@@ -168,20 +168,19 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                     case StoreItemGridBean.TYPE_BANNER:
                         break;
                     case StoreItemGridBean.TYPE_MORE:
-                        Fragment fragment = (Fragment) ARouter.getInstance().build("/classify/classifyfragment").navigation();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("shopType", mParmas.shoptype);
-                        bundle.putString("shopUid", mParmas.shopUid);
-                        bundle.putString("menuUid",item.getCategoryBean().getUid());
-                        fragment.setArguments(bundle);
+                        Fragment fragment = (Fragment) ARouter.getInstance()
+                                .build("/classify/classifyfragment")
+                                .withString("shopType", mParmas.shoptype)
+                                .withString("shopUid", mParmas.shopUid)
+                                .withString("menuUid", item.getCategoryBean().getUid())
+                                .navigation();
                         ((StoreHomeFragment) getParentFragment()).start((BaseFragment) fragment);
                         break;
                     case StoreItemGridBean.TYPE_RECOMMEND:
                     case StoreItemGridBean.TYPE_GOODS:
-                        Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putString("uid", item.getProductsBean().getUid());
-                        goodsDetailFragment.setArguments(bundle2);
+                        Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment")
+                                .withString("uid", item.getProductsBean().getUid())
+                                .navigation();
                         ((StoreHomeFragment) getParentFragment()).start((BaseFragment) goodsDetailFragment);
                         break;
                     default:

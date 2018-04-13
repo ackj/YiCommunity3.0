@@ -71,7 +71,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     public static final String TYPE_RECEIPT = "receipt";//确认收货
     public static final String TYPE_LOGISTICS = "logistics";//查看物流
     public static final String TYPE_DELETE = "delete";//删除订单
-
+    public static final String TYPE_EVALUATE = "evaluate";//去评价
 
     RecyclerView mRecyclerView;
     private OrderListRVAdapter mAdapter;
@@ -195,11 +195,12 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                 showHintDialog(orderUid);
                 break;
             case TYPE_LOGISTICS://查看物流
-                Fragment fragment = (Fragment) ARouter.getInstance().build("/web/webfragment").navigation();
-                Bundle bundle = new Bundle();
-                bundle.putString(BaseConstants.KEY_LINK, action.getLink());
-                bundle.putString(BaseConstants.KEY_TITLE, "查看物流");
-                fragment.setArguments(bundle);
+                Fragment fragment = (Fragment) ARouter
+                        .getInstance()
+                        .build("/web/webfragment")
+                        .withString(BaseConstants.KEY_LINK, action.getLink())
+                        .withString(BaseConstants.KEY_TITLE, "查看物流")
+                        .navigation();
                 ((BaseFragment) getParentFragment()).start((BaseFragment) fragment);
                 break;
             case TYPE_PAY://跳支付
@@ -214,6 +215,9 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                             request.data = payParams;
                             showPaySelector(request);
                         });
+                break;
+            case TYPE_EVALUATE:
+
                 break;
             default:
         }
@@ -384,7 +388,6 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                 })
                 .start();
     }
-
 
     @Override
     public void start(Object response) {

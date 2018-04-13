@@ -63,7 +63,6 @@
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:maxLines="2"
-
         android:textColor="@color/base_black"
         android:textSize="@dimen/H4"
         app:layout_constraintBottom_toBottomOf="@+id/fl_icon_bg"

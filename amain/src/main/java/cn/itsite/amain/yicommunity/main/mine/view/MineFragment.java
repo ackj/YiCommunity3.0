@@ -47,6 +47,7 @@ import cn.itsite.amain.yicommunity.main.mine.contract.MineContract;
 import cn.itsite.amain.yicommunity.main.mine.presenter.MinePresenter;
 import cn.itsite.amain.yicommunity.main.mypublish.MyPublishActivity;
 import cn.itsite.amain.yicommunity.main.view.MainFragment;
+import cn.itsite.amain.yicommunity.main.wallet.view.WalletFragment;
 import cn.itsite.amain.yicommunity.web.WebActivity;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import me.yokeyword.fragmentation.ISupportFragment;
@@ -78,6 +79,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     private View viewUnreadMark;
     private ScrollView svMine;
     private Params params = Params.getInstance();
+    private LinearLayout mLlMineWallet;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -99,6 +101,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         tvUserData = ((TextView) view.findViewById(R.id.tv_user_data));
         llMessageCenter = ((LinearLayout) view.findViewById(R.id.ll_message_center));
         llMyIndent = ((LinearLayout) view.findViewById(R.id.ll_my_indent));
+        mLlMineWallet = view.findViewById(R.id.ll_mine_wallet);
         llMyAddress = ((LinearLayout) view.findViewById(R.id.ll_my_address));
         llMakeShortcut = ((LinearLayout) view.findViewById(R.id.ll_make_shortcut));
         llMyPublish = ((LinearLayout) view.findViewById(R.id.ll_my_publish));
@@ -143,6 +146,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         llAboutUs.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
         llMyHouse.setOnClickListener(this);
+        mLlMineWallet.setOnClickListener(this);
     }
 
     private boolean isLogined() {
@@ -288,6 +292,8 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
             if (isLogined()) {
                 ((SupportActivity) _mActivity).start(MessageCenterFragment.newInstance());
             }
+        } else if (i == R.id.ll_mine_wallet) {
+            ((SupportActivity) _mActivity).start(WalletFragment.newInstance());
         } else if (i == R.id.ll_my_indent) {
             if (isLogined()) {
                 Fragment mineorderfragment = (Fragment) ARouter.getInstance().build("/order/mineorderfragment").navigation();

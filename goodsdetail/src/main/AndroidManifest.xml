@@ -3,7 +3,7 @@
     package="cn.itsite.goodsdetail">
 
     <application>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".view.MainActivity"></activity>
     </application>
 
 </manifest>

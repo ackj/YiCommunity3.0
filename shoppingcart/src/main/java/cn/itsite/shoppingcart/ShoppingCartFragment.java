@@ -220,10 +220,11 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
                     case StoreBean.TYPE_RECOMMEND_TITLE:
                         break;
                     case StoreBean.TYPE_RECOMMEND_GOODS:
-                        Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("uid", item.getRecommendGoodsBean().getUid());
-                        goodsDetailFragment.setArguments(bundle);
+                        Fragment goodsDetailFragment = (Fragment) ARouter
+                                .getInstance()
+                                .build("/goodsdetail/goodsdetailfragment")
+                                .withString("uid", item.getRecommendGoodsBean().getUid())
+                                .navigation();
                         start((BaseFragment) goodsDetailFragment);
                         break;
                     case StoreBean.TYPE_EMPTY:
@@ -233,20 +234,6 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
                 }
             }
         });
-
-//        mAdapter.setOnAddMinusClickListener(new GoodsCounterView.OnAddMinusClickListener() {
-//            @Override
-//            public void clickAdd(GoodsCounterView view) {
-//                mPresenter.putProduct("123", "123");
-//                mCurrentCounterView = view;
-//            }
-//
-//            @Override
-//            public void clickMinus(GoodsCounterView view) {
-//                mPresenter.putProduct("123", "123");
-//                mCurrentCounterView = view;
-//            }
-//        });
 
         mCbSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

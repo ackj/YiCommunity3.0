@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipeLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
     android:layout_height="82dp"
     app:drag_edge="right"
@@ -109,6 +109,18 @@
             android:textSize="@dimen/H3"
             app:layout_constraintBottom_toBottomOf="@id/iv_icon"
             app:layout_constraintLeft_toRightOf="@id/iv_icon" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/error"
+            android:textSize="@dimen/H3"
+            app:layout_constraintBottom_toBottomOf="@id/iv_icon"
+            app:layout_constraintRight_toRightOf="parent" />
+
 
         <View
             android:id="@+id/line"

@@ -1,6 +1,26 @@
 <resources>
     <string name="app_name">亿社区</string>
 
+    <string-array name="goods_return_reason">
+        <item>我不想买了</item>
+        <item>商品需要维修</item>
+        <item>收到商品破损</item>
+        <item>商品错发/漏发</item>
+        <item>发票问题、退运费</item>
+        <item>收到商品不符合描述</item>
+        <item>商品质量问题</item>
+        <item>未按照约定时间发货</item>
+    </string-array>
+
+
+    <string-array name="goods_exchange_reason">
+        <item>商品需要维修</item>
+        <item>收到商品破损</item>
+        <item>商品错发/漏发</item>
+        <item>收到商品不符合描述</item>
+        <item>商品质量问题</item>
+    </string-array>
+
     <!-- 首页模块 -->
     <string name="community">社区</string>
     <string name="steward">管家</string>

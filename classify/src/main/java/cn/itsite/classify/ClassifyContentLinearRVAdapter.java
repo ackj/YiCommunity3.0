@@ -28,6 +28,8 @@ public class ClassifyContentLinearRVAdapter extends BaseRecyclerViewAdapter<Prod
                 .apply(new RequestOptions().error(R.drawable.ic_img_error))
                 .into(ivIcon);
         helper.setText(R.id.tv_name, item.getTitle())
+                .setVisible(R.id.tv_amount, false)
+                .setVisible(R.id.tv_apply, false)
                 .setText(R.id.tv_desc, item.getDescription())
                 .setText(R.id.tv_price, item.getCurrency() + item.getPrice());
     }

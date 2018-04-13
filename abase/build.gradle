@@ -153,4 +153,7 @@ dependencies {
     api ('com.alibaba.android:ultraviewpager:1.0.6.1@aar') {
         transitive = true
     }
+    //图片选择器
+    api 'com.bilibili:boxing-impl:0.7.0'
+
 }

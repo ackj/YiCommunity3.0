@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -56,6 +57,7 @@ import rx.schedulers.Schedulers;
 
 import static cn.itsite.order.view.OrderListFragment.TYPE_CANCEL;
 import static cn.itsite.order.view.OrderListFragment.TYPE_DELETE;
+import static cn.itsite.order.view.OrderListFragment.TYPE_EVALUATE;
 import static cn.itsite.order.view.OrderListFragment.TYPE_LOGISTICS;
 import static cn.itsite.order.view.OrderListFragment.TYPE_PAY;
 import static cn.itsite.order.view.OrderListFragment.TYPE_RECEIPT;
@@ -173,6 +175,38 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 pop();
             }
         });
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_apply) {
+                    showServiceTypeDialog();
+                }
+            }
+        });
+    }
+
+    private void showServiceTypeDialog() {
+        new BaseDialogFragment()
+                .setLayoutId(R.layout.dialog_list_2)
+                .setConvertListener((holder, dialog) -> {
+                    RecyclerView recyclerView = holder.getView(R.id.recyclerView);
+                    ServiceTypeRVAdapter adapter = new ServiceTypeRVAdapter();
+                    recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
+                    recyclerView.setAdapter(adapter);
+                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+                            Fragment fragment = (Fragment) ARouter.getInstance()
+                                    .build("/aftersales/aftersalesfragment")
+                                    .navigation();
+                            start((BaseFragment) fragment);
+                            dialog.dismiss();
+                        }
+                    });
+                })
+                .setDimAmount(0.3f)
+                .setGravity(Gravity.BOTTOM)
+                .show(getChildFragmentManager());
     }
 
     @Override
@@ -269,6 +303,9 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                             request.data = payParams;
                             showPaySelector(request);
                         });
+                break;
+            case TYPE_EVALUATE:
+                start(InputCommentFragment.newInstance());
                 break;
             default:
         }

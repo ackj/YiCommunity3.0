@@ -64,7 +64,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_specification, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_specification_2, null);
         mRecyclerView = view.findViewById(R.id.recyclerView);
         mTvGoodsCounter = view.findViewById(R.id.view_goods_counter);
         mTvName = view.findViewById(R.id.tv_name);
@@ -272,6 +272,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
             refreshInfo(bean.getStockQuantity(), bean.getPay().getCurrency() + bean.getPay().getPrice());
         }
         mTvSku.setVisibility(bean.getSkus().size() == 0 ? View.GONE : View.VISIBLE);
+        mRecyclerView.setVisibility(bean.getSkus().size() == 0 ? View.GONE : View.VISIBLE);
 
         //把选中的项put到已选集合中
         for (int i = 0; i < bean.getAttributes().size(); i++) {

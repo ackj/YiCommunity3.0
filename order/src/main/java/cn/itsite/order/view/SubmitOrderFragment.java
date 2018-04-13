@@ -73,7 +73,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     private TextView mTvSubmit;
     private Payment payment;
     private String mFrom;
-    private String mOrderUid;
+    private String mOutTradeNo;
 
     public static SubmitOrderFragment newInstance() {
         return new SubmitOrderFragment();
@@ -310,8 +310,9 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
             //支付成功
             DialogHelper.successSnackbar(getView(), "支付成功");
         }
+        ALog.e(TAG, "status:" + status);
         //跳到订单详情页
-        start(OrderDetailFragment.newInstance(mOrderUid));
+//        start(OrderDetailFragment.newInstance(mOutTradeNo));
         pop();
     }
 
@@ -370,7 +371,6 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     }
 
     private void pay(BaseRequest<PayParams> request, IPayable iPayable) {
-        mOrderUid = request.getData().getOrders().get(0);
         //拼参数。
         Map<String, String> params = new HashMap<>();
         params.put("params", request.toString());
@@ -415,7 +415,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                     public void onSuccess(cn.itsite.apayment.payment.PayParams params) {
                         ALog.e("2.解析 成功-------->");
                         showLoading("解析成功");
-
+                        mOutTradeNo = params.getOutTradeNo();
                     }
 
                     @Override
@@ -438,8 +438,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                         dismissLoading();
 //                        DialogHelper.successSnackbar(getView(), "支付成功");
 //                        ptrFrameLayout.autoRefresh();
-                        mPresenter.checkOrderStatus(mOrderUid);
-
+                        mPresenter.checkOrderStatus(mOutTradeNo);
                     }
 
                     @Override
@@ -447,7 +446,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                         ALog.e("3.支付 失败-------->" + payType + "----------errorCode-->" + errorCode);
                         dismissLoading();
 //                        DialogHelper.errorSnackbar(getView(), "支付失败，请重试");
-                        mPresenter.checkOrderStatus(mOrderUid);
+                        mPresenter.checkOrderStatus(mOutTradeNo);
                     }
                 })
                 .setOnVerifyListener(new PaymentListener.OnVerifyListener() {
@@ -468,7 +467,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                     public void onFailure(int errorCode) {
                         ALog.e("4.检验 失败--------" + "errorCode-->" + errorCode);
                         dismissLoading();
-                        DialogHelper.errorSnackbar(getView(), "确认失败，请稍后再查看");
+//                        DialogHelper.errorSnackbar(getView(), "确认失败，请稍后再查看");
 //                        ptrFrameLayout.autoRefresh();
                     }
                 })

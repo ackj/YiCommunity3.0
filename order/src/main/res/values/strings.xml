@@ -8,4 +8,17 @@
 
     <string name="amount">共%1$s件产品      合计：%2$s</string>
     <string name="consignee">收货人：%1$s      %2$s</string>
+
+    <string-array name="service_type_title">
+        <item>仅退款</item>
+        <item>退货退款</item>
+        <item>换货</item>
+    </string-array>
+
+    <string-array name="service_type_desc">
+        <item>未收到货(包含未签收)，或卖家协商同意前提下</item>
+        <item>已收到货，需要退换已收到的货物</item>
+        <item>商品存在质量问题，联系卖家协商换货</item>
+    </string-array>
+
 </resources>

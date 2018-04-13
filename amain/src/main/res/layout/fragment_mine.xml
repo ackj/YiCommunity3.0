@@ -104,6 +104,31 @@
                 <ImageView style="@style/MineItemViewMoreStyle" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_mine_wallet"
+                style="@style/MineItemLayoutStyle">
+
+                <ImageView
+                    style="@style/MineItemIconStyle"
+                    android:src="@drawable/ic_mine_messagecenter_84px" />
+
+                <TextView
+                    style="@style/MineItemTitleStyle"
+                    android:text="我的钱包" />
+
+                <View style="@style/MineItemHorizontalSpace" />
+
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/default_text"
+                    android:textSize="@dimen/H3" />
+
+                <ImageView style="@style/MineItemViewMoreStyle" />
+            </LinearLayout>
+
             <View
                 style="@style/LineStyle"
                 android:layout_height="1dp" />

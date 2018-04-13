@@ -1,7 +1,9 @@
-package cn.itsite.goodsdetail;
+package cn.itsite.goodsdetail.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import cn.itsite.goodsdetail.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -87,6 +87,8 @@ dependencies {
     api project(':web')
     //购物车模块。
     api project(':shoppingcart')
+    //售后模块
+    api project(':aftersales')
     //阿里巴巴开源基础路由
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
 
@@ -101,8 +103,6 @@ dependencies {
     //地址选择器
     api 'com.github.chihane:JDAddressSelector:1.1.4'
 
-    //图片选择器
-    api 'com.bilibili:boxing-impl:0.7.0'
 
     //switchbutton
     api 'com.kyleduo.switchbutton:library:1.4.5'

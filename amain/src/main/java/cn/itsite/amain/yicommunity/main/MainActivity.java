@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         if (intent != null && intent.getExtras() != null) {
             String result = (String) intent.getExtras().get(QRCodeActivity.QRCODE_RESULT);
+            if (result == null) return;
             Uri uri = Uri.parse(result);
             String type = uri.getQueryParameter(Constants.TYPE);
             switch (type) {

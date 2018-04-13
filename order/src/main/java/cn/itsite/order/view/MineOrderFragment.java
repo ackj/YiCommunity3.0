@@ -35,8 +35,8 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
 
     private RelativeLayout mLlToolbar;
     private SubmitOrderRVAdapter mAdapter;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
 
     private GoodsParams mGoodsParams = new GoodsParams();
     private CategoryBean mAllCategory;
@@ -63,8 +63,8 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine_order, container, false);
         mLlToolbar = view.findViewById(R.id.rl_toolbar);
-        tabLayout = view.findViewById(R.id.tabLayout);
-        viewPager = view.findViewById(R.id.viewPager);
+        mTabLayout = view.findViewById(R.id.tabLayout);
+        mViewPager = view.findViewById(R.id.viewPager);
         mIvBack = view.findViewById(R.id.iv_back);
         return attachToSwipeBack(view);
     }
@@ -87,6 +87,8 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
         mCategories = new ArrayList<>();
         mCategories.add(mAllCategory);
 
+        mViewPager.setOffscreenPageLimit(1);
+
         mGoodsParams.type = "orders";
         mPresenter.getCategories(mGoodsParams);
     }
@@ -104,7 +106,7 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     public void responseGetCategories(List<CategoryBean> data) {
         mCategories.addAll(data);
         MineOrderVPAdapter mAdapter = new MineOrderVPAdapter(getChildFragmentManager(), mCategories);
-        viewPager.setAdapter(mAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        mViewPager.setAdapter(mAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 }

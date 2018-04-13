@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">aftersales</string>
+    <string name="back_price">最多%1$s，含发货邮费%2$s</string>
+</resources>

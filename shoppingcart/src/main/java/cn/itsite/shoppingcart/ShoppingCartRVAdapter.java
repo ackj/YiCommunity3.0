@@ -49,29 +49,30 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
                                 listener.onStoreCheckedChanged(helper.getLayoutPosition(), isChecked);
                             }
                         })
-                        .setText(R.id.tv_delivery_type,item.getShopBean().getServiceType())
+                        .setText(R.id.tv_delivery_type, item.getShopBean().getServiceType())
                         .setTextColor(R.id.tv_delivery_type, item.getShopBean().getServiceType().contains("上门") ?
                                 BaseApp.mContext.getResources().getColor(R.color.base_color) :
                                 BaseApp.mContext.getResources().getColor(R.color.green))
-                        .setBackgroundRes(R.id.tv_delivery_type,  item.getShopBean().getServiceType().contains("上门")  ?
+                        .setBackgroundRes(R.id.tv_delivery_type, item.getShopBean().getServiceType().contains("上门") ?
                                 R.drawable.shape_bg_round_orange : R.drawable.shape_bg_round_green);
                 break;
             case StoreBean.TYPE_STORE_GOODS:
                 TextView tvSku = helper.getView(R.id.tv_specification);
-                if(TextUtils.isEmpty(item.getProductsBean().getSkuID())){
+                if (TextUtils.isEmpty(item.getProductsBean().getSkuID())) {
                     tvSku.setVisibility(View.GONE);
-                }else{
+                } else {
                     tvSku.setVisibility(View.VISIBLE);
                     tvSku.setText(item.getProductsBean().getSku());
                 }
 
-                SwipeLayout swipeLayout =  helper.getView(R.id.swipeLayout);
+                SwipeLayout swipeLayout = helper.getView(R.id.swipeLayout);
                 swipeLayout.setSwipeEnabled(false);
 
                 GoodsCounterView goodsCounterView = helper.getView(R.id.goodsCounterView);
                 goodsCounterView.setCounter(item.getProductsBean().getCount());
                 helper.setOnCheckedChangeListener(R.id.checkBox, null)
                         .setText(R.id.tv_name, item.getProductsBean().getTitle())
+                        .setText(R.id.tv_count, item.getProductsBean().getCount() + "")
                         .setChecked(R.id.checkBox, item.isChecked())
                         .setOnCheckedChangeListener(R.id.checkBox, new CompoundButton.OnCheckedChangeListener() {
                             @Override

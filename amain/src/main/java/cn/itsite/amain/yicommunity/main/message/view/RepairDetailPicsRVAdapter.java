@@ -19,7 +19,7 @@ import java.util.List;
 public class RepairDetailPicsRVAdapter extends BaseRecyclerViewAdapter<String, BaseViewHolder> {
 
     public RepairDetailPicsRVAdapter(List<String> datas) {
-        super(R.layout.item_image, datas);
+        super(R.layout.item_image_aftersales, datas);
     }
 
     @Override

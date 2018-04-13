@@ -149,7 +149,6 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
 
     private void initData() {
         mContentLayoutManager = new GridLayoutManager(_mActivity, SPAN_COUNT_TWO);
-
         mRvMenu.setLayoutManager(new LinearLayoutManager(_mActivity));
         mAdapterMenu = new ClassifyMenuRVAdapter();
         mRvMenu.setAdapter(mAdapterMenu);

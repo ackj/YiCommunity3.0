@@ -287,7 +287,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
 
     //计算总额
     private void computePrice() {
-        List<StoreBean> data = mAdapter.getData();
+        List<StoreBean> data = mDatas;
         float amountPrice = 0;
         String currency = "";
         for (int i = 0; i < data.size(); i++) {
@@ -303,7 +303,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     }
 
     private void computeCount() {
-        computeCount(mAdapter.getData());
+        computeCount(mDatas);
     }
 
     private void computeCount(List<StoreBean> data) {
@@ -351,7 +351,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
             if (data.get(i).getItemType() == StoreBean.TYPE_STORE_GOODS && data.get(i).isChecked()) {
                 StorePojo.ProductsBean productsBean = data.get(i).getProductsBean();
                 OperateBean OperateBean = new OperateBean();
-                OperateBean.sku = productsBean.getSku();
+                OperateBean.sku = productsBean.getSkuID();
                 OperateBean.uid = productsBean.getUid();
                 deleteOperateBeans.add(OperateBean);
             }

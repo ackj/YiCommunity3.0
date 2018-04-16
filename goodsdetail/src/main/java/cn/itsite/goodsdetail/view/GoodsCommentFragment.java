@@ -9,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.goodsdetail.R;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * @author liujia
@@ -30,6 +33,8 @@ public class GoodsCommentFragment extends BaseFragment {
     private Toolbar mToolbar;
     private ImageView mIvBack;
     private GoodsCommentRVAdapter mAdapter;
+    private TextView mToolbarTitle;
+    private PtrFrameLayout mPtrFrameLayout;
 
     public static GoodsCommentFragment newInstance() {
         return new GoodsCommentFragment();
@@ -45,8 +50,10 @@ public class GoodsCommentFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mToolbar = view.findViewById(R.id.toolbar);
+        mToolbarTitle = view.findViewById(R.id.toolbar_title);
         mRecyclerView = view.findViewById(R.id.recyclerView);
         mIvBack = view.findViewById(R.id.iv_back);
+        mPtrFrameLayout = view.findViewById(R.id.ptrFrameLayout);
         return attachToSwipeBack(view);
     }
 
@@ -54,8 +61,17 @@ public class GoodsCommentFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initStateBar(mToolbar);
+        initToolbar();
         initData();
         initListener();
+        initPtrFrameLayout(mPtrFrameLayout, mRecyclerView);
+    }
+
+    private void initToolbar() {
+        initStateBar(mToolbar);
+        mToolbarTitle.setText("商品评价");
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_left_gray_24dp);
+        mToolbar.setNavigationOnClickListener(v -> ((SupportActivity) _mActivity).onBackPressedSupport());
     }
 
     private void initData() {

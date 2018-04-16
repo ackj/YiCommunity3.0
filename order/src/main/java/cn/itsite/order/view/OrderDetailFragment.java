@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.log.ALog;
@@ -50,6 +51,7 @@ import cn.itsite.order.R;
 import cn.itsite.order.contract.OrderDetailContract;
 import cn.itsite.order.model.OrderDetailBean;
 import cn.itsite.order.model.PayParams;
+import cn.itsite.order.model.ServiceTypeBean;
 import cn.itsite.order.presenter.OrderDetailPresenter;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -94,6 +96,8 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     private Button mBtn2;
     private Payment payment;
     private ImageView mIvBack;
+    private List<ServiceTypeBean> mServiceTypeList;
+    private String mOutTradeNo;
 
     public static OrderDetailFragment newInstance(String uid) {
         OrderDetailFragment fragment = new OrderDetailFragment();
@@ -165,6 +169,15 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         mRecyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
         mRecyclerView.setAdapter(mAdapter);
 
+        String[] titles = BaseApp.mContext.getResources().getStringArray(R.array.service_type_title);
+        String[] desc = BaseApp.mContext.getResources().getStringArray(R.array.service_type_desc);
+        mServiceTypeList = new ArrayList<>();
+        for (int i = 0; i < desc.length; i++) {
+            ServiceTypeBean bean = new ServiceTypeBean();
+            bean.setDesc(desc[i]);
+            bean.setTitle(titles[i]);
+            mServiceTypeList.add(bean);
+        }
         mPresenter.getOrderDetail(mUid);
     }
 
@@ -189,8 +202,9 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         new BaseDialogFragment()
                 .setLayoutId(R.layout.dialog_list_2)
                 .setConvertListener((holder, dialog) -> {
+                    holder.setText(R.id.tv_title, "选择服务类型");
                     RecyclerView recyclerView = holder.getView(R.id.recyclerView);
-                    ServiceTypeRVAdapter adapter = new ServiceTypeRVAdapter();
+                    ServiceTypeRVAdapter adapter = new ServiceTypeRVAdapter(mServiceTypeList);
                     recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
                     recyclerView.setAdapter(adapter);
                     adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -311,7 +325,6 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         }
     }
 
-
     private void showHintDialog(String orderUid) {
         new BaseDialogFragment()
                 .setLayoutId(R.layout.dialog_hint)
@@ -375,6 +388,19 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 .show(getChildFragmentManager());
     }
 
+    @Override
+    public void responseCheckOrderStatus(int status) {
+        if (status == 0) {
+            //支付失败
+            DialogHelper.errorSnackbar(getView(), "支付失败");
+        } else if (status == 1) {
+            //支付成功
+            DialogHelper.successSnackbar(getView(), "支付成功");
+        }
+        EventBus.getDefault().post(new RefreshOrderEvent());
+        pop();
+    }
+
     private void pay(BaseRequest<PayParams> request, IPayable iPayable) {
         //拼参数。
         Map<String, String> params = new HashMap<>();
@@ -420,7 +446,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                     public void onSuccess(cn.itsite.apayment.payment.PayParams params) {
                         ALog.e("2.解析 成功-------->");
                         showLoading("解析成功");
-
+                        mOutTradeNo = params.getOutTradeNo();
                     }
 
                     @Override
@@ -441,15 +467,15 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                     public void onSuccess(@Payment.PayType int payType) {
                         ALog.e("3.支付 成功-------->" + payType);
                         dismissLoading();
-                        DialogHelper.successSnackbar(getView(), "支付成功");
-//                        ptrFrameLayout.autoRefresh();
+                        mPresenter.checkOrderStatus(mOutTradeNo);
                     }
 
                     @Override
                     public void onFailure(@Payment.PayType int payType, int errorCode) {
                         ALog.e("3.支付 失败-------->" + payType + "----------errorCode-->" + errorCode);
                         dismissLoading();
-                        DialogHelper.errorSnackbar(getView(), "支付失败，请重试");
+                        ALog.e(TAG, "current thread:" + Thread.currentThread().getName());
+                        mPresenter.checkOrderStatus(mOutTradeNo);
                     }
                 })
                 .setOnVerifyListener(new PaymentListener.OnVerifyListener() {
@@ -475,6 +501,10 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                     }
                 })
                 .start();
+    }
+
+    @Override
+    public void start(Object response) {
     }
 
     @Override

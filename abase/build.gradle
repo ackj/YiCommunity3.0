@@ -38,7 +38,6 @@ android {
              * 美伦安保：SmartMeilunApp
              * 猫眼：SmartCateyeApp
              */
-
             buildConfigField "String", "fromPoint", "\"YsqApp\""
         }
         meilun {

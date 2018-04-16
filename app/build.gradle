@@ -23,7 +23,6 @@ android {
                 arguments = [moduleName: project.getName()]
             }
         }
-
     }
 
     //移除lint检测的error
@@ -87,9 +86,9 @@ android {
         }
     }
 
-    buildTypes.all {
-        buildType -> buildType.versionNameSuffix = buildType.isDebuggable() ? "-测试版" : "-正式版"
-    }
+//    buildTypes.all {
+//        buildType -> buildType.versionNameSuffix = buildType.isDebuggable() ? "-测试版" : "-正式版"
+//    }
 
     productFlavors.all {
         flavor ->

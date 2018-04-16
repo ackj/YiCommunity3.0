@@ -436,8 +436,6 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                     public void onSuccess(@Payment.PayType int payType) {
                         ALog.e("3.支付 成功-------->" + payType);
                         dismissLoading();
-//                        DialogHelper.successSnackbar(getView(), "支付成功");
-//                        ptrFrameLayout.autoRefresh();
                         mPresenter.checkOrderStatus(mOutTradeNo);
                     }
 
@@ -445,7 +443,6 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                     public void onFailure(@Payment.PayType int payType, int errorCode) {
                         ALog.e("3.支付 失败-------->" + payType + "----------errorCode-->" + errorCode);
                         dismissLoading();
-//                        DialogHelper.errorSnackbar(getView(), "支付失败，请重试");
                         mPresenter.checkOrderStatus(mOutTradeNo);
                     }
                 })

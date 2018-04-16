@@ -46,4 +46,11 @@ public class OrderDetailModel extends BaseModel implements OrderDetailContract.M
                 .putOrders(request)
                 .subscribeOn(Schedulers.io());
     }
+
+    @Override
+    public Observable<BaseResponse<OperateBean>> checkOrderStatus(String orderUid) {
+        return HttpHelper.getService(OrderService.class)
+                .checkOrderStatus(orderUid)
+                .subscribeOn(Schedulers.io());
+    }
 }

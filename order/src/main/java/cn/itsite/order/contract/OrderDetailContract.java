@@ -23,6 +23,9 @@ public interface OrderDetailContract {
         void responseDeleteSuccess(BaseResponse response);
 
         void responsePutSuccess(BaseResponse response);
+
+        void responseCheckOrderStatus(int status);
+
     }
 
     interface Presenter extends BaseContract.Presenter {
@@ -31,6 +34,9 @@ public interface OrderDetailContract {
         void deleteOrders(List<OperateBean> orders);
 
         void putOrders(List<OperateBean> orders);
+
+        void checkOrderStatus(String orderUid);
+
     }
 
     interface Model extends BaseContract.Model {
@@ -39,6 +45,9 @@ public interface OrderDetailContract {
         Observable<BaseResponse> deleteOrders(List<OperateBean> orders);
 
         Observable<BaseResponse> putOrders(List<OperateBean> orders);
+
+        Observable<BaseResponse<OperateBean>> checkOrderStatus(String orderUid);
+
     }
 
 }

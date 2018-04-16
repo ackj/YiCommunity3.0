@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.android.arouter.utils.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.youth.banner.Banner;
 
@@ -104,6 +105,11 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     private void refresh() {
         if ("shop".equals(mParmas.shoptype)) {
             mParmas.shopUid = (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, "");
+            if (TextUtils.isEmpty(mParmas.shopUid)) {
+                mPtrFrameLayout.refreshComplete();
+                mStateManager.showEmpty();
+                return;
+            }
         }
         mPresenter.getHome(mParmas);
     }
@@ -122,7 +128,13 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                 .setConvertListener(new StateListener.ConvertListener() {
                     @Override
                     public void convert(BaseViewHolder holder, StateLayout stateLayout) {
-                        holder.setText(R.id.bt_empty_state, "切换地址");
+                        holder.setText(R.id.bt_empty_state, "切换地址")
+                                .setOnClickListener(R.id.bt_empty_state, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        go2SelectAddressView();
+                                    }
+                                });
                     }
                 })
                 .setEmptyText("当前暂无商品，请切换地址试试吧！")
@@ -151,8 +163,7 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                 switch (item.getItemType()) {
                     case StoreItemGridBean.TYPE_BANNER:
                         if (view.getId() == R.id.ll_location) {
-                            Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
-                            ((StoreHomeFragment) getParentFragment()).startForResult((BaseFragment) addressFragment, 100);
+                            go2SelectAddressView();
                         }
                         break;
                     default:
@@ -187,6 +198,11 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                 }
             }
         });
+    }
+
+    private void go2SelectAddressView() {
+        Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
+        ((StoreHomeFragment) getParentFragment()).startForResult((BaseFragment) addressFragment, 100);
     }
 
     @Override

@@ -25,6 +25,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.common.ScrollingHelper;
 import cn.itsite.abase.log.ALog;
@@ -80,7 +81,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     private View viewToolbarBg;
     private HomeRVAdapter adapter;
     private LinearLayoutManager layoutManager;
-    private String normalNotice = "欢迎来到亿社区！";
+    private String normalNotice = String.format("欢迎来到%1$s！", BaseApp.mContext.getResources().getString(R.string.app_name));
     private Params params = Params.getInstance();
     private OpenDoorDialog openDoorialog;
     private int totalDy = 0;
@@ -338,8 +339,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         setCommunity();
         Params.cmnt_c = UserHelper.communityCode;
         recyclerView.scrollToPosition(0);
-        totalDy = 0;//让滑动标记置0，不然在切换社区时，由于通过代码滑动到顶部，这个状态字段就没有归0，会出现顶部栏颜色不变的Bug。
-        ptrFrameLayout.autoRefresh();
+        autoRefresh();
     }
 
     @Override
@@ -463,8 +463,15 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             return;
         }
         recyclerView.scrollToPosition(0);
-        ptrFrameLayout.autoRefresh();
+        autoRefresh();
     }
+
+    private void autoRefresh(){
+        totalDy = 0;//让滑动标记置0，不然在切换社区时，由于通过代码滑动到顶部，这个状态字段就没有归0，会出现顶部栏颜色不变的Bug。
+        ptrFrameLayout.autoRefresh();
+
+    }
+
 
     public void showQuickOpenDoorDialog() {
         if (openDoorialog == null) {

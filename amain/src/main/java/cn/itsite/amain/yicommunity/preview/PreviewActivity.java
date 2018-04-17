@@ -141,7 +141,7 @@ public class PreviewActivity extends BaseActivity {
 
             Glide.with(App.mContext)
                     .load(picPath)
-                    .apply(new RequestOptions().placeholder(R.mipmap.ic_launcher).error(R.drawable.ic_default_img_120px))
+                    .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_error))
                     .into(mPhotoView);
             container.addView(mPhotoView);
             return mPhotoView;

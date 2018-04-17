@@ -81,7 +81,7 @@ android {
             applicationId 'com.meilun.one'
         }
         vensi {
-            resValue "string", "app_name", "威士丹力"
+            resValue "string", "app_name", "威士丹利"
             applicationId 'com.aglhz.yicommunity'
         }
     }

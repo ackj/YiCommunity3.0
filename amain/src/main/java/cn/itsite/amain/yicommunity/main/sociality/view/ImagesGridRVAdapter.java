@@ -56,8 +56,8 @@ public class ImagesGridRVAdapter extends BaseRecyclerViewAdapter<SocialityListBe
         Glide.with(App.mContext)
                 .load(item.getUrl())
                 .apply(new RequestOptions()
-                        .error(R.drawable.ic_default_img_120px)
-                        .placeholder(R.drawable.ic_default_img_120px))
+                        .error(R.drawable.ic_img_error)
+                        .placeholder(R.drawable.ic_img_loading))
                 .into(iv);
     }
 }

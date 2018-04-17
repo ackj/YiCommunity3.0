@@ -87,8 +87,6 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
         mCategories = new ArrayList<>();
         mCategories.add(mAllCategory);
 
-        mViewPager.setOffscreenPageLimit(1);
-
         mGoodsParams.type = "orders";
         mPresenter.getCategories(mGoodsParams);
     }
@@ -108,5 +106,6 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
         MineOrderVPAdapter mAdapter = new MineOrderVPAdapter(getChildFragmentManager(), mCategories);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+
     }
 }

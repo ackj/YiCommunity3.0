@@ -12,6 +12,7 @@ import org.linphone.core.LinphoneCore;
 
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
+import cn.itsite.abase.utils.system.StatusBarHelper;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.DoorManager;
@@ -35,6 +36,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarHelper.statusBarLightMode(this);
+
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             loadRootFragment(R.id.fl_main_activity, MainFragment.newInstance());

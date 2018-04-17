@@ -44,7 +44,6 @@ android {
             buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""
 //这个还是得想办法让后台返回才行,可以考虑通过传包名来区分不同App，而不是写死在这里。
             buildConfigField "String", "SC", "\"AglhzYsq\""//这个还是得想办法让后台返回才行。
-
             manifestPlaceholders = [application_id: "com.aglhz.yicommunity",
                                     amap_apikey   : "da7f5447eccd1609e8dcce4cd0919ad8"]
         }
@@ -102,7 +101,6 @@ dependencies {
 
     //地址选择器
     api 'com.github.chihane:JDAddressSelector:1.1.4'
-
 
     //switchbutton
     api 'com.kyleduo.switchbutton:library:1.4.5'

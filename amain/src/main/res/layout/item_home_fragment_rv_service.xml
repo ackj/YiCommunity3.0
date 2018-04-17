@@ -18,7 +18,7 @@
             android:layout_width="7dp"
             android:layout_height="13dp"
             android:layout_marginLeft="10dp"
-            android:background="#FD6C6F" />
+            android:background="@color/base_color" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:text="社区服务"
-            android:textColor="#FD6C6F"
+            android:textColor="@color/base_color"
             android:textSize="13sp" />
     </LinearLayout>
 

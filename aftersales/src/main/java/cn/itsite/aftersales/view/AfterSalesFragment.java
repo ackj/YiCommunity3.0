@@ -2,6 +2,7 @@ package cn.itsite.aftersales.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,17 +23,15 @@ import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing_impl.ui.BoxingActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import cn.itsite.abase.cache.SPCache;
-import cn.itsite.abase.common.UserHelper;
-import cn.itsite.abase.log.ALog;
+import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.acommon.event.SwitchStoreEvent;
+import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
+import cn.itsite.aftersales.contract.AfterSalesContract;
+import cn.itsite.aftersales.presenter.AfterSalesPresenter;
 import me.liujia95.aftersales.R;
 
 /**
@@ -42,7 +41,7 @@ import me.liujia95.aftersales.R;
  * @time 2018/4/11 0011 8:54
  */
 @Route(path = "/aftersales/aftersalesfragment")
-public class AfterSalesFragment extends BaseFragment {
+public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presenter> implements AfterSalesContract.View {
 
     public static final String TAG = AfterSalesFragment.class.getSimpleName();
     private RelativeLayout mRlToolbar;
@@ -63,6 +62,12 @@ public class AfterSalesFragment extends BaseFragment {
 
     public static AfterSalesFragment newInstance() {
         return new AfterSalesFragment();
+    }
+
+    @NonNull
+    @Override
+    protected AfterSalesContract.Presenter createPresenter() {
+        return new AfterSalesPresenter(this);
     }
 
     @Override
@@ -157,4 +162,8 @@ public class AfterSalesFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void responsePostSuccess(BaseResponse response) {
+        DialogHelper.successSnackbar(getView(), response.getMessage());
+    }
 }

@@ -27,7 +27,6 @@ public interface PayService {
 
     String requestCarCardOrder = "http://www.aglhz.com:8090/sub_property_ysq" + "/park/card/from-client/pay-bill";
 
-
     @GET
     Call<ResponseBody> getOrder(@Url String url,
                                 @Query("token") String token,

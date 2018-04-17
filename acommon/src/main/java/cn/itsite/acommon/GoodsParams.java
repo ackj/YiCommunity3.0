@@ -2,6 +2,9 @@ package cn.itsite.acommon;
 
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.util.List;
+
 /**
  * @author liujia
  * @version v0.0.0
@@ -23,6 +26,7 @@ public class GoodsParams {
 
     public String latitude;
     public String longitude;
+    public List<File> files;
 
     @Override
     public String toString() {

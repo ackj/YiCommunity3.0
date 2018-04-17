@@ -18,6 +18,7 @@
         <item name="android:windowBackground">@drawable/bg_splash_720px_1280px</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:navigationBarColor">@color/base_color</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowAnimationStyle">@style/NoAnimationTheme</item>
     </style>
 

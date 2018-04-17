@@ -60,7 +60,6 @@ public class GoodsCommentFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initStateBar(mToolbar);
         initToolbar();
         initData();
         initListener();
@@ -70,6 +69,7 @@ public class GoodsCommentFragment extends BaseFragment {
     private void initToolbar() {
         initStateBar(mToolbar);
         mToolbarTitle.setText("商品评价");
+        mToolbarTitle.setTextColor(_mActivity.getResources().getColor(R.color.base_black));
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left_gray_24dp);
         mToolbar.setNavigationOnClickListener(v -> ((SupportActivity) _mActivity).onBackPressedSupport());
     }

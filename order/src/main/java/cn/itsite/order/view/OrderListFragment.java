@@ -101,8 +101,6 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
         initData();
         initListener();
         initPtrFrameLayout(mPtrFrameLayout, mRecyclerView);
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
     }
 
     private void initStateManager() {
@@ -286,11 +284,20 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (payment != null) {
             payment.clear();
         }
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
     }
 }

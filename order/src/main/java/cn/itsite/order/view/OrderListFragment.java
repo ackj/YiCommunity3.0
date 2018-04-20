@@ -195,7 +195,8 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                 go2OrderDetailView(orderUid);
                 break;
             case TYPE_EVALUATE://去评价
-
+//                该页面无评价按钮（后台决定）
+//                start(InputCommentFragment.newInstance());
                 break;
             default:
         }

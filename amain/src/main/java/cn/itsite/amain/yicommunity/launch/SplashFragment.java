@@ -222,7 +222,6 @@ public class SplashFragment extends BaseFragment implements EasyPermissions.Perm
 
             @Override
             public void onPostAccessToken(WebReponse webReponse) {
-                ALog.e("webReponse-->" + webReponse.getStatusCode());
                 go2Main();
             }
         });

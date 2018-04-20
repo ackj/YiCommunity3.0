@@ -179,6 +179,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mTvDetail.setOnClickListener(this);
         mTvGoods.setOnClickListener(this);
         mLlComment.setOnClickListener(this);
+
     }
 
     private void initStatusBar() {
@@ -365,6 +366,12 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
             mWebView.loadUrl(url);
             mTvTitleShop.setVisibility(View.INVISIBLE);
             mLlTabs.setVisibility(View.VISIBLE);
+        }
+        if (bean.getEvaluates() == null || bean.getEvaluates().size() == 0) {
+            //没有评论时将评论相关的布局隐藏
+            mLlComment.setVisibility(View.GONE);
+        }else{
+            mLlComment.setVisibility(View.VISIBLE);
         }
     }
 

@@ -18,6 +18,7 @@ public class OperateBean {
     public String product;
     public String category;
     public String from;
+    public String url;
     public int status;
 
     public List<Product> products;
@@ -26,6 +27,14 @@ public class OperateBean {
         public String uid;
         public String amount;
         public String sku;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public int getStatus() {

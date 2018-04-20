@@ -39,6 +39,7 @@ import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.event.RefreshOrderEvent;
+import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
 import cn.itsite.apayment.payment.Payment;
@@ -49,7 +50,6 @@ import cn.itsite.apayment.payment.pay.IPayable;
 import cn.itsite.apayment.payment.pay.Pay;
 import cn.itsite.order.R;
 import cn.itsite.order.contract.OrderDetailContract;
-import cn.itsite.order.model.OrderDetailBean;
 import cn.itsite.order.model.PayParams;
 import cn.itsite.order.model.ServiceTypeBean;
 import cn.itsite.order.presenter.OrderDetailPresenter;
@@ -98,6 +98,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     private ImageView mIvBack;
     private List<ServiceTypeBean> mServiceTypeList;
     private String mOutTradeNo;
+    private OrderDetailBean mOrderDetailBean;
 
     public static OrderDetailFragment newInstance(String uid) {
         OrderDetailFragment fragment = new OrderDetailFragment();
@@ -192,13 +193,14 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId() == R.id.tv_apply) {
-                    showServiceTypeDialog();
+                    showServiceTypeDialog(mAdapter.getItem(position));
+                } else if (view.getId() == R.id.cl_goods_layout) {
                 }
             }
         });
     }
 
-    private void showServiceTypeDialog() {
+    private void showServiceTypeDialog(OrderDetailBean.ProductsBean product) {
         new BaseDialogFragment()
                 .setLayoutId(R.layout.dialog_list_2)
                 .setConvertListener((holder, dialog) -> {
@@ -210,8 +212,23 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                     adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+                            String serviceType = BaseConstants.SERVICE_TYPE_RETURN;
+                            switch (position){
+                                case 0:
+                                    serviceType = BaseConstants.SERVICE_TYPE_RETURN;
+                                    break;
+                                case 1:
+                                    serviceType = BaseConstants.SERVICE_TYPE_REFUND;
+                                    break;
+                                case 2:
+                                    serviceType = BaseConstants.SERVICE_TYPE_EXCHANGE;
+                                    break;
+                            }
                             Fragment fragment = (Fragment) ARouter.getInstance()
                                     .build("/aftersales/aftersalesfragment")
+                                    .withString("serviceType", serviceType)
+                                    .withString("orderUid",mOrderDetailBean.getUid())
+                                    .withSerializable("product",product)
                                     .navigation();
                             start((BaseFragment) fragment);
                             dialog.dismiss();
@@ -225,6 +242,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
 
     @Override
     public void responseOrderDetail(OrderDetailBean orderDetailBean) {
+        mOrderDetailBean = orderDetailBean;
         mTvDeliveryType.setText(orderDetailBean.getDeliveryType());
         mTvShopName.setText(orderDetailBean.getShop().getName());
         mTvCategory.setText(orderDetailBean.getCategory());
@@ -319,7 +337,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                         });
                 break;
             case TYPE_EVALUATE:
-                start(InputCommentFragment.newInstance());
+                start(InputCommentFragment.newInstance(mOrderDetailBean));
                 break;
             default:
         }

@@ -6,9 +6,10 @@ import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.DeliveryBean;
 import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.order.model.CategoryBean;
 import cn.itsite.order.model.OrderBean;
-import cn.itsite.order.model.OrderDetailBean;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
@@ -58,4 +59,13 @@ public interface OrderService {
     //检查订单状态
     @GET("v1/checkPayOrderState/{orderUid}")
     Observable<BaseResponse<OperateBean>> checkOrderStatus(@Path("orderUid")String orderUid);
+
+    //图片上传
+    @POST("v1/saleAfterApplyPictures")
+    Observable<BaseResponse<List<OperateBean>>> postPictures(@Body MultipartBody body);
+
+    //提交商品评论
+    @POST("v1/orderProductsEvaluate")
+    Observable<BaseResponse> postEvaluate(@Body BaseRequest body);
+
 }

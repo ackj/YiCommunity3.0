@@ -21,6 +21,7 @@ import me.liujia95.aftersales.R;
  */
 
 public class ImageRVAdapter extends BaseRecyclerViewAdapter<BaseMedia, BaseViewHolder> {
+
     public ImageRVAdapter() {
         super(R.layout.item_image_aftersales);
     }

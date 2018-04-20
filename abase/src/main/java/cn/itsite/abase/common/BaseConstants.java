@@ -30,5 +30,8 @@ public class BaseConstants {
     public static final String KEY_TITLE = "title";
     public static final String KEY_CART_NUM = "cart_num";//购物车数量
 
+    public static final String SERVICE_TYPE_RETURN = "RETURN";
+    public static final String SERVICE_TYPE_REFUND = "REFUND";
+    public static final String SERVICE_TYPE_EXCHANGE = "EXCHANGE";
 
 }

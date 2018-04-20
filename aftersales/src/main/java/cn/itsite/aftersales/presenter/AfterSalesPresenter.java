@@ -2,11 +2,15 @@ package cn.itsite.aftersales.presenter;
 
 import android.support.annotation.NonNull;
 
+import java.io.File;
+import java.util.List;
+
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.OperateBean;
 import cn.itsite.aftersales.contract.AfterSalesContract;
 import cn.itsite.aftersales.model.AfterSalesModel;
+import cn.itsite.aftersales.model.PostApplyBean;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -34,13 +38,37 @@ public class AfterSalesPresenter extends BasePresenter<AfterSalesContract.View,A
     }
 
     @Override
-    public void postApply(GoodsParams goodsParams) {
-        mRxManager.add(mModel.postApply(goodsParams)
+    public void postApply(PostApplyBean applyBean) {
+        mRxManager.add(mModel.postApply(applyBean)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>(){
                     @Override
                     public void onSuccess(BaseResponse response) {
                         getView().responsePostSuccess(response);
+                    }
+                }));
+    }
+
+    @Override
+    public void getReasontType() {
+        mRxManager.add(mModel.getReasonType()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>(){
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        getView().responseReasonType(response);
+                    }
+                }));
+    }
+
+    @Override
+    public void postPicture(List<File> pictures, int position) {
+        mRxManager.add(mModel.postPictures(pictures)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<OperateBean>>>() {
+                    @Override
+                    public void onSuccess(BaseResponse<List<OperateBean>> response) {
+                        getView().responsePostPicture(response,position);
                     }
                 }));
     }

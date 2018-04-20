@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,16 +22,23 @@ import com.bilibili.boxing.Boxing;
 import com.bilibili.boxing.model.config.BoxingConfig;
 import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing_impl.ui.BoxingActivity;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.aftersales.contract.AfterSalesContract;
+import cn.itsite.aftersales.model.PostApplyBean;
+import cn.itsite.aftersales.model.ReasonTypeBean;
 import cn.itsite.aftersales.presenter.AfterSalesPresenter;
 import me.liujia95.aftersales.R;
 
@@ -39,11 +47,13 @@ import me.liujia95.aftersales.R;
  * @version v0.0.0
  * @E-mail liujia95me@126.com
  * @time 2018/4/11 0011 8:54
+ * 退款退货和换货共用一个页面，用isExhange字段区分
  */
 @Route(path = "/aftersales/aftersalesfragment")
 public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presenter> implements AfterSalesContract.View {
 
     public static final String TAG = AfterSalesFragment.class.getSimpleName();
+
     private RelativeLayout mRlToolbar;
     private ImageView mIvBack;
     private RecyclerView mRecyclerView;
@@ -54,14 +64,33 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
             return TYPE.IMAGE;
         }
     };
-
     ArrayList<BaseMedia> mSelectedMedia = new ArrayList<>();
+    boolean isExchange;
+    private ReasonTypeBean mSelectedReasonType;
+
+
     private EditText mEtExplain;
     private TextView mTvBackprice;
     private TextView mTvReason;
+    private LinearLayout mLlPrice;
+    private TextView mTvAnchorReason;
+    private TextView mTvAnchorExplain;
+    private TextView mTvApply;
+    private OrderDetailBean.ProductsBean productsBean;
+    private TextView mTvPrice;
+    private TextView mTvName;
+    private TextView mTvDesc;
+    private ImageView mIvIcon;
+    private TextView mTvAmount;
+    private TextView mTvTitle;
+    private TextView mTvRefundPrice;
+    private TextView mTvMenu;
+    private String mOrderUid;
+    private PostApplyBean mApplyBean;
 
     public static AfterSalesFragment newInstance() {
-        return new AfterSalesFragment();
+        AfterSalesFragment fragment = new AfterSalesFragment();
+        return fragment;
     }
 
     @NonNull
@@ -73,6 +102,9 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isExchange = getArguments().getBoolean("isExchange");
+        mOrderUid = getArguments().getString("orderUid");
+        productsBean = (OrderDetailBean.ProductsBean) getArguments().getSerializable("product");
     }
 
     @Nullable
@@ -80,11 +112,23 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_aftersafes, container, false);
         mRlToolbar = view.findViewById(R.id.rl_toolbar);
+        mTvTitle = view.findViewById(R.id.tv_title);
         mIvBack = view.findViewById(R.id.iv_back);
         mRecyclerView = view.findViewById(R.id.recyclerView);
         mTvBackprice = view.findViewById(R.id.tv_backprice);
         mEtExplain = view.findViewById(R.id.et_explain);
         mTvReason = view.findViewById(R.id.tv_reason);
+        mTvAnchorReason = view.findViewById(R.id.tv_anchor_reason);
+        mTvAnchorExplain = view.findViewById(R.id.tv_anchor_explain);
+        mLlPrice = view.findViewById(R.id.ll_price);
+        mTvApply = view.findViewById(R.id.tv_apply);
+        mIvIcon = view.findViewById(R.id.iv_icon);
+        mTvName = view.findViewById(R.id.tv_name);
+        mTvPrice = view.findViewById(R.id.tv_price);
+        mTvDesc = view.findViewById(R.id.tv_desc);
+        mTvAmount = view.findViewById(R.id.tv_amount);
+        mTvMenu = view.findViewById(R.id.tv_menu);
+        mTvRefundPrice = view.findViewById(R.id.tv_refund_price);
         return attachToSwipeBack(view);
     }
 
@@ -97,6 +141,34 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     }
 
     private void initData() {
+        if (isExchange) {
+            //如果是换货
+            mTvBackprice.setVisibility(View.GONE);
+            mLlPrice.setVisibility(View.GONE);
+            mTvAnchorExplain.setText("换货说明：");
+            mTvAnchorReason.setText("换货原因：");
+            mTvTitle.setText("申请换货");
+        }
+
+        mTvApply.setVisibility(View.GONE);
+
+        if (productsBean != null) {
+            Glide.with(mIvIcon.getContext())
+                    .load(productsBean.getImageUrl())
+                    .apply(new RequestOptions().error(R.drawable.ic_img_error)
+                            .placeholder(R.drawable.ic_img_loading))
+                    .into(mIvIcon);
+            mTvName.setText(productsBean.getTitle());
+            mTvDesc.setText(productsBean.getDescription());
+            String currency = productsBean.getPay().getCurrency();
+            float price = Float.valueOf(productsBean.getPay().getPrice());
+            mTvPrice.setText(currency+ price);
+            mTvAmount.setText("x"+productsBean.getAmount());
+            float refundPrice =price *Integer.getInteger(productsBean.getAmount());
+            mTvRefundPrice.setText(currency+refundPrice);
+            mTvBackprice.setText("最多"+currency+price+"，含发货邮票"+currency+"0.00");
+        }
+
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 4));
         mAdapter = new ImageRVAdapter();
         mRecyclerView.setAdapter(mAdapter);
@@ -116,25 +188,52 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
         mTvReason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showReasonDialog();
+                mPresenter.getReasontType();
+            }
+        });
+        mTvMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkApply()){
+                    submitApply();
+                }
             }
         });
     }
 
-    private void showReasonDialog() {
+    //检查是否填写完整
+    private boolean checkApply() {
+        if(isExchange){
+
+        }else{
+
+        }
+        return true;
+    }
+
+    //提交申请
+    private void submitApply() {
+        String explain = mEtExplain.getText().toString().trim();
+        mApplyBean = new PostApplyBean();
+        mApplyBean.setCategory(isExchange?"":"REFUND");
+        mApplyBean.setNote(explain);
+        mApplyBean.setReasonType(mSelectedReasonType.getValue());
+        mApplyBean.setUid(mOrderUid);
+    }
+
+    private void showReasonDialog(List<ReasonTypeBean> reasonTypes) {
         new BaseDialogFragment()
                 .setLayoutId(R.layout.dialog_reason)
                 .setConvertListener((holder, dialog) -> {
-                    String[] arrays = _mActivity.getResources().getStringArray(R.array.goods_return_reason);
                     RecyclerView recyclerView = holder.getView(R.id.recyclerView);
-                    ReasonRVAdapter adapter = new ReasonRVAdapter();
+                    ReasonRVAdapter adapter = new ReasonRVAdapter(reasonTypes);
                     recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
                     recyclerView.setAdapter(adapter);
-                    adapter.setNewData(Arrays.asList(arrays));
                     adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
-                            mTvReason.setText(arrays[position]);
+                            mTvReason.setText(reasonTypes.get(position).getName());
+                            mSelectedReasonType = reasonTypes.get(position);
                             dialog.dismiss();
                         }
                     });
@@ -165,5 +264,23 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     @Override
     public void responsePostSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+    }
+
+    @Override
+    public void responseReasonType(BaseResponse<List<ReasonTypeBean>> response) {
+        showReasonDialog(response.getData());
+    }
+
+    @Override
+    public void responsePostPicture(BaseResponse<List<OperateBean>> response, int position) {
+        DialogHelper.successSnackbar(getView(),response.getMessage());
+        ALog.e(TAG,"图片上传成功："+position+"  个数："+response.getData().size());
+        List<String> files = new ArrayList<>();
+        for (int i = 0; i < response.getData().size(); i++) {
+            files.add(response.getData().get(i).getUrl());
+        }
+//        mApplyBean.set
+        submitApply();
+        mPresenter.postApply(mApplyBean);
     }
 }

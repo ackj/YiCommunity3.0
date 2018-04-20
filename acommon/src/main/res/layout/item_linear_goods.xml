@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_goods_layout"
     android:layout_width="match_parent"
     android:layout_height="82dp"
-    android:id="@+id/cl_goods_layout"
     android:background="@color/white">
 
     <ImageView
@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="9dp"
         android:includeFontPadding="false"
-        android:text="智能安防小卫士"
         android:textColor="@color/base_black"
         android:textSize="@dimen/H3"
         app:layout_constraintLeft_toRightOf="@id/iv_icon"
@@ -34,7 +33,6 @@
         android:layout_marginLeft="9dp"
         android:layout_marginTop="6dp"
         android:includeFontPadding="false"
-        android:text="WiFi/电话双网 智能家庭安全"
         android:textColor="@color/default_text"
         android:textSize="@dimen/H5"
         app:layout_constraintLeft_toRightOf="@id/iv_icon"
@@ -46,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="9dp"
         android:includeFontPadding="false"
-        android:text="￥ 5.00"
         android:textColor="@color/error"
         android:textSize="@dimen/H3"
         app:layout_constraintBottom_toBottomOf="@id/iv_icon"
@@ -61,6 +58,7 @@
         android:textColor="@color/error"
         android:textSize="@dimen/H3"
         app:layout_constraintBottom_toBottomOf="@id/iv_icon"
+        app:layout_constraintRight_toLeftOf="@+id/tv_apply"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
@@ -69,8 +67,9 @@
         android:layout_height="30dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/shape_bg_round_gray"
-        android:text="申请售后"
         android:gravity="center"
+        android:text="申请售后"
+
         android:textColor="@color/default_text"
         android:textSize="@dimen/H3"
         app:layout_constraintBottom_toBottomOf="@+id/iv_icon"

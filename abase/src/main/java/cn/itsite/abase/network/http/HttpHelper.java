@@ -24,6 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpHelper {
     private static final String TAG = HttpHelper.class.getSimpleName();
     public static String BASE_URL = "http://www.aglhz.com/mall/ec/";
+    //基哥测试服务器
+//    public static String BASE_URL = "http://192.168.7.118:8080/gcmall/ec/";
     private static OkHttpClient mOkHttpClient;
     private static Retrofit mRetrofit;
     private static final int TIMEOUT = 15;

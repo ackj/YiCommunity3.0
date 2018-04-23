@@ -6,7 +6,7 @@ import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.amain.yicommunity.common.luban.Luban;
+import cn.itsite.abase.common.luban.Luban;
 import cn.itsite.amain.yicommunity.main.publish.contract.PublishContract;
 import cn.itsite.amain.yicommunity.main.publish.model.PublishExchangeModel;
 import rx.android.schedulers.AndroidSchedulers;

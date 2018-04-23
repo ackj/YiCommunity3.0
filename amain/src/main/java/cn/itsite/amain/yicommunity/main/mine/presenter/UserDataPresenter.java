@@ -6,7 +6,7 @@ import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.abase.common.UserHelper;
-import cn.itsite.amain.yicommunity.common.luban.Luban;
+import cn.itsite.abase.common.luban.Luban;
 import cn.itsite.amain.yicommunity.main.mine.contract.UserDataContract;
 import cn.itsite.amain.yicommunity.main.mine.model.UserDataModel;
 import rx.android.schedulers.AndroidSchedulers;

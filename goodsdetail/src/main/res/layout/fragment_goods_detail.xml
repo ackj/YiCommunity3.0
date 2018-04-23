@@ -61,7 +61,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -187,6 +187,7 @@
             <LinearLayout
                 android:id="@+id/ll_comment"
                 android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -196,16 +197,17 @@
                     android:background="@color/default_white" />
 
                 <LinearLayout
+                    android:id="@+id/ll_comment_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginTop="11dp"
+                    android:layout_height="35dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/tv_comment_count"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
@@ -215,13 +217,19 @@
                         android:textSize="@dimen/H1" />
 
                     <ImageView
+                        android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="12dp"
                         android:src="@drawable/ic_arrow_right_30px" />
                 </LinearLayout>
 
-                <include layout="@layout/item_goods_comment" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <WebView
@@ -229,7 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <View
         android:layout_width="match_parent"

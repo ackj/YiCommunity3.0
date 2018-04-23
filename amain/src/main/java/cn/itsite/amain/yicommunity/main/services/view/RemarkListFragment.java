@@ -33,7 +33,7 @@ import cn.itsite.amain.yicommunity.event.EventRefreshRemarkList;
 import cn.itsite.amain.yicommunity.main.publish.CommentActivity;
 import cn.itsite.amain.yicommunity.main.services.contract.RemarkContract;
 import cn.itsite.amain.yicommunity.main.services.presenter.RemarkPresenter;
-import cn.itsite.amain.yicommunity.preview.PreviewActivity;
+import cn.itsite.acommon.view.PreviewActivity;
 import cn.itsite.statemanager.StateManager;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;

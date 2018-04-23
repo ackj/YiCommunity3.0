@@ -24,6 +24,7 @@ import java.util.List;
 
 import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsParams;
@@ -186,7 +187,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                 Fragment fragment = (Fragment) ARouter
                         .getInstance()
                         .build("/web/webfragment")
-                        .withString(BaseConstants.KEY_LINK, action.getLink())
+                        .withString(BaseConstants.KEY_LINK, "http://www.aglhz.com/mall/m/html/wuliuSearch.html?token="+ UserHelper.token)
                         .withString(BaseConstants.KEY_TITLE, "查看物流")
                         .navigation();
                 ((BaseFragment) getParentFragment()).start((BaseFragment) fragment);

@@ -42,7 +42,7 @@ import cn.itsite.amain.yicommunity.event.EventRefreshRemarkList;
 import cn.itsite.amain.yicommunity.main.publish.CommentActivity;
 import cn.itsite.amain.yicommunity.main.services.contract.ServicesDetailContract;
 import cn.itsite.amain.yicommunity.main.services.presenter.ServicesDetailPresenter;
-import cn.itsite.amain.yicommunity.preview.PreviewActivity;
+import cn.itsite.acommon.view.PreviewActivity;
 import cn.itsite.amain.yicommunity.web.WebActivity;
 
 /**

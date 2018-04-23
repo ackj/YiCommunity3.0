@@ -6,7 +6,7 @@
     android:background="#EE000000"
     android:orientation="vertical">
 
-    <cn.itsite.amain.yicommunity.preview.HackyViewPager
+    <cn.itsite.acommon.view.HackyViewPager
         android:id="@+id/viewpager_activity_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

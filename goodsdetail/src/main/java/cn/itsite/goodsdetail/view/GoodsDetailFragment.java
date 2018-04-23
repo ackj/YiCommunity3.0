@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,7 +22,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -88,11 +90,15 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     private int mAmount;
     private TextView mTvGoods;
     private TextView mTvDetail;
-    private ScrollView mScrollView;
+    private NestedScrollView mScrollView;
     private ConstraintLayout mConstraintLayout;
     private LinearLayout mLlTabs;
     private TextView mTvTitleShop;
     private LinearLayout mLlComment;
+    private RecyclerView mRecyclerView;
+    private GoodsCommentRVAdapter mCommentAdapter;
+    private LinearLayout mLlCommentLayout;
+    private TextView mTvEvaCount;
 
     public static GoodsDetailFragment newInstance() {
         return new GoodsDetailFragment();
@@ -135,6 +141,9 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mTvTitleShop = view.findViewById(R.id.tv_title_shop);
         mLlTabs = view.findViewById(R.id.ll_tab_titles);
         mLlComment = view.findViewById(R.id.ll_comment);
+        mRecyclerView = view.findViewById(R.id.recyclerView);
+        mLlCommentLayout = view.findViewById(R.id.ll_comment_layout);
+        mTvEvaCount = view.findViewById(R.id.tv_comment_count);
         return attachToSwipeBack(view);
     }
 
@@ -159,6 +168,11 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mTvGoods.setSelected(true);
         cartUid = "-1";
 
+        mCommentAdapter = new GoodsCommentRVAdapter();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
+        mRecyclerView.setAdapter(mCommentAdapter);
+        mRecyclerView.setNestedScrollingEnabled(false);
+
         mBadge = new QBadgeView(_mActivity)
                 .bindTarget(mIvShopCart)
                 .setBadgeTextSize(10, true)
@@ -178,8 +192,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         mTvPutShopcart.setOnClickListener(this);
         mTvDetail.setOnClickListener(this);
         mTvGoods.setOnClickListener(this);
-        mLlComment.setOnClickListener(this);
-
+        mLlCommentLayout.setOnClickListener(this);
     }
 
     private void initStatusBar() {
@@ -262,8 +275,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back) {
             pop();
-        } else if (v.getId() == R.id.ll_comment) {
-            start(GoodsCommentFragment.newInstance());
+        } else if (v.getId() == R.id.ll_comment_layout) {
+            start(GoodsCommentFragment.newInstance(mDetailBean.getUid()));
         } else if (v.getId() == R.id.tv_put_shopcart) {
             showSpecificationDialog(false);
         } else if (v.getId() == R.id.tv_buy_it_now) {
@@ -372,6 +385,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
             mLlComment.setVisibility(View.GONE);
         }else{
             mLlComment.setVisibility(View.VISIBLE);
+            mCommentAdapter.setNewData(bean.getEvaluates());
+            mTvEvaCount.setText("商品评价（"+bean.getEvaCounts()+"）");
         }
     }
 

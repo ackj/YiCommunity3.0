@@ -1,9 +1,12 @@
 package cn.itsite.goodsdetail.contract;
 
+import java.util.List;
+
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.SkusBean;
 import cn.itsite.goodsdetail.ProductDetailBean;
+import cn.itsite.goodsdetail.model.EvaluatesBean;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -29,4 +32,6 @@ public interface ProductService {
     @POST("v1/carts/{cartUid}/products")
     Observable<BaseResponse> postProducts(@Path("cartUid") String cartUid, @Body BaseRequest request);
 
+    @GET("v1/products/evaluates")
+    Observable<BaseResponse<List<EvaluatesBean>>> getEvaluates(@Query("params")String params);
 }

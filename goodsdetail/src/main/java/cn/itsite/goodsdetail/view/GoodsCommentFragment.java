@@ -1,6 +1,7 @@
 package cn.itsite.goodsdetail.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.acommon.GoodsParams;
 import cn.itsite.goodsdetail.R;
+import cn.itsite.goodsdetail.contract.GoodsCommentContract;
+import cn.itsite.goodsdetail.model.EvaluatesBean;
+import cn.itsite.goodsdetail.presenter.GoodsCommentPresenter;
+import cn.itsite.statemanager.BaseViewHolder;
+import cn.itsite.statemanager.StateLayout;
+import cn.itsite.statemanager.StateListener;
+import cn.itsite.statemanager.StateManager;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -26,7 +34,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * @time 2018/4/12 0012 17:33
  */
 
-public class GoodsCommentFragment extends BaseFragment {
+public class GoodsCommentFragment extends BaseFragment<GoodsCommentContract.Presenter> implements GoodsCommentContract.View {
 
     public static final String TAG = GoodsCommentFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
@@ -36,13 +44,27 @@ public class GoodsCommentFragment extends BaseFragment {
     private TextView mToolbarTitle;
     private PtrFrameLayout mPtrFrameLayout;
 
-    public static GoodsCommentFragment newInstance() {
-        return new GoodsCommentFragment();
+    private GoodsParams mParams = new GoodsParams();
+    private StateManager mStateManager;
+
+    public static GoodsCommentFragment newInstance(String uid) {
+        GoodsCommentFragment fragment = new GoodsCommentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("uid",uid);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mParams.uid = getArguments().getString("uid");
+    }
+
+    @NonNull
+    @Override
+    protected GoodsCommentContract.Presenter createPresenter() {
+        return new GoodsCommentPresenter(this);
     }
 
     @Nullable
@@ -63,6 +85,7 @@ public class GoodsCommentFragment extends BaseFragment {
         initToolbar();
         initData();
         initListener();
+        initStateManager();
         initPtrFrameLayout(mPtrFrameLayout, mRecyclerView);
     }
 
@@ -74,21 +97,65 @@ public class GoodsCommentFragment extends BaseFragment {
         mToolbar.setNavigationOnClickListener(v -> ((SupportActivity) _mActivity).onBackPressedSupport());
     }
 
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        mParams.page = 1;
+        mPresenter.getComments(mParams);
+    }
+
+    private void initStateManager() {
+        mStateManager = StateManager.builder(_mActivity)
+                .setContent(mRecyclerView)
+                .setEmptyView(R.layout.state_empty_layout)
+                .setEmptyImage(R.drawable.ic_prompt_shangpin_01)
+                .setConvertListener(new StateListener.ConvertListener() {
+                    @Override
+                    public void convert(BaseViewHolder holder, StateLayout stateLayout) {
+                        holder.setVisible(R.id.bt_empty_state, false);
+                    }
+                })
+                .setEmptyText("抱歉，该分类暂无评论~")
+                .build();
+    }
+
     private void initData() {
         mToolbar.setBackgroundColor(_mActivity.getResources().getColor(R.color.white));
         mAdapter = new GoodsCommentRVAdapter();
+        mAdapter.setEnableLoadMore(true);
+        mAdapter.setOnLoadMoreListener(() -> {
+            mParams.page++;
+            mPresenter.getComments(mParams);
+        }, mRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
         mRecyclerView.setAdapter(mAdapter);
 
-        List<String> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            data.add("");
-        }
-        mAdapter.setNewData(data);
+        mPresenter.getComments(mParams);
     }
 
     private void initListener() {
 
     }
 
+    @Override
+    public void responseGetComments(List<EvaluatesBean> datas) {
+        mPtrFrameLayout.refreshComplete();
+        if (datas == null || datas.isEmpty()) {
+            if (mParams.page == 1) {
+                mStateManager.showEmpty();
+            }
+            mAdapter.loadMoreEnd();
+            return;
+        }
+
+        if (mParams.page == 1) {
+            mStateManager.showContent();
+            mAdapter.setNewData(datas);
+            mAdapter.disableLoadMoreIfNotFullPage(mRecyclerView);
+        } else {
+            mAdapter.addData(datas);
+            mAdapter.setEnableLoadMore(true);
+            mAdapter.loadMoreComplete();
+        }
+    }
 }

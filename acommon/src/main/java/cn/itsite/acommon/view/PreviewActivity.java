@@ -1,4 +1,4 @@
-package cn.itsite.amain.yicommunity.preview;
+package cn.itsite.acommon.view;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -26,10 +26,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
-import cn.itsite.amain.R;
-import cn.itsite.amain.yicommunity.App;
+import cn.itsite.acommon.R;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -98,7 +98,7 @@ public class PreviewActivity extends BaseActivity {
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            PhotoView mPhotoView = (PhotoView) LayoutInflater.from(App.mContext).inflate(R.layout.item_preview, null, false);
+            PhotoView mPhotoView = (PhotoView) LayoutInflater.from(BaseApp.mContext).inflate(R.layout.item_preview, null, false);
             mPhotoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
                 public void onPhotoTap(View view, float x, float y) {
@@ -139,7 +139,7 @@ public class PreviewActivity extends BaseActivity {
                 return false;
             });
 
-            Glide.with(App.mContext)
+            Glide.with(BaseApp.mContext)
                     .load(picPath)
                     .apply(new RequestOptions().placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_img_error))
                     .into(mPhotoView);

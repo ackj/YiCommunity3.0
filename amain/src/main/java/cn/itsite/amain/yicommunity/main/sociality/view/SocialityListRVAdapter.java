@@ -29,7 +29,7 @@ import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.entity.bean.CommentBean;
 import cn.itsite.amain.yicommunity.entity.bean.SocialityListBean;
-import cn.itsite.amain.yicommunity.preview.PreviewActivity;
+import cn.itsite.acommon.view.PreviewActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**

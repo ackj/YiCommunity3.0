@@ -97,7 +97,6 @@ dependencies {
     //监控卡顿
     debugApi 'com.github.markzhai:blockcanary-android:1.5.0'
     // todo ----------------以上库用于性能检测，故只需在debug阶段使用 -------------------
-
     //谷歌json框架
     api 'com.google.code.gson:gson:2.8.0'
     // To get SwipeBack feature, rely on both fragmentation & fragmentation-swipeback
@@ -137,7 +136,6 @@ dependencies {
 
     //下拉刷新框架(由于之前版本多出使用，暂时先不舍弃)
     api 'in.srain.cube:ultra-ptr:1.0.11'
-
     //Banner
     api 'com.youth.banner:banner:1.4.10'
     //角标View

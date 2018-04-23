@@ -32,6 +32,7 @@ import java.util.Map;
 import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseRequest;
@@ -282,7 +283,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
             }
         });
 
-        if (orderDetailBean.getDeliveryType().contains("上门")) {
+        if (orderDetailBean.getExpress()!=null) {
             mLayoutExpress.setVisibility(View.VISIBLE);
             OrderDetailBean.ExpressBean express = orderDetailBean.getExpress();
             Glide.with(_mActivity)
@@ -318,7 +319,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
             case TYPE_LOGISTICS://查看物流
                 Fragment fragment = (Fragment) ARouter.getInstance().build("/web/webfragment").navigation();
                 Bundle bundle = new Bundle();
-                bundle.putString(BaseConstants.KEY_LINK, action.getLink());
+                bundle.putString(BaseConstants.KEY_LINK, "http://www.aglhz.com/mall/m/html/wuliuSearch.html?token="+ UserHelper.token);
                 bundle.putString(BaseConstants.KEY_TITLE, "查看物流");
                 fragment.setArguments(bundle);
                 ((BaseFragment) getParentFragment()).start((BaseFragment) fragment);

@@ -25,7 +25,7 @@ public interface AfterSalesContract {
 
         void responseReasonType(BaseResponse<List<ReasonTypeBean>> reasonTypes);
 
-        void responsePostPicture(BaseResponse<List<OperateBean>> response, int position);
+        void responsePostPicture(BaseResponse<List<OperateBean>> response);
 
     }
 
@@ -34,7 +34,7 @@ public interface AfterSalesContract {
 
         void getReasontType();
 
-        void postPicture(List<File> pictures, int position);
+        void postPicture(List<File> pictures);
 
     }
 

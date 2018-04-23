@@ -127,7 +127,7 @@
             android:name=".yicommunity.main.mypublish.MyPublishActivity"
             android:theme="@style/Transparent" />
         <activity
-            android:name=".yicommunity.preview.PreviewActivity"
+            android:name="cn.itsite.acommon.view.PreviewActivity"
             android:theme="@style/Transparent" />
 
         <!--快捷方式Activity，启动模式必须设置成singleInstance，否则主Activity存在的时候，点击快捷方式会把主Activity也带起来。-->
@@ -214,7 +214,6 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name="cn.itsite.amain.s1.qrcode.ScanQRCodeActivity"
             android:theme="@style/AppTheme.Transparent" />

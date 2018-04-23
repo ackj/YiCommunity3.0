@@ -59,8 +59,8 @@ public class InputCommentFragment extends BaseFragment<InputCommentContract.Pres
     private RecyclerView mRecyclerView;
     private InputCommentRVAdapter mAdapter;
     private int mSelectedPosition;
-    private int postPictureCount;//上传含图片的评论数量
-    private int responsePicCount;//上传成功的含图片的评论数量
+    private int postPictureCount = 0;//上传含图片的评论数量
+    private int responsePicCount = 0;//上传成功的含图片的评论数量
 
     BaseMedia mAddMedia = new BaseMedia() {
         @Override
@@ -157,9 +157,10 @@ public class InputCommentFragment extends BaseFragment<InputCommentContract.Pres
         mToolbarMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(checkComment()){
-                    submitComment();
+                    if(!submitPictures()){
+                        submitComment();
+                    }
                 }
             }
         });
@@ -167,7 +168,7 @@ public class InputCommentFragment extends BaseFragment<InputCommentContract.Pres
 
             @Override
             public void clickAddPic(ArrayList<BaseMedia> medias, int position) {
-                mSelectedMedia = medias;
+                mSelectedMedia = new ArrayList<>(medias);
                 mSelectedMedia.remove(medias.size() - 1);
                 mSelectedPosition = position;
                 selectPhoto();
@@ -205,27 +206,52 @@ public class InputCommentFragment extends BaseFragment<InputCommentContract.Pres
         return true;
     }
 
-    //提交评论流程
-    //1、先将评论下的图片上传得到url集合，将其拼接到评论的表单中，
-    //2、由于一次只能上传一个图片集合，针对多个评论都要上传图片的情况做分段上传处理。
-    //3、即：post pic_list1 -->response list1's urls --> post pic_list2 --> response list2's urls
-    //4、拼接：params[list1's urls,list2's urls] --> post params --> success
-    private void submitComment() {
+    private boolean submitPictures() {
         postPictureCount = 0;
         responsePicCount = 0;
         for (int i = 0; i < mSubmitCommentDatas.size(); i++) {
             ArrayList<BaseMedia> medias = mSubmitCommentDatas.get(i).getMedias();
+            ALog.e(TAG,"submitPictures i:"+i+"  medias:"+medias.size());
             List<File> files= new ArrayList<>();
             for (int j = 0;j<medias.size()-1;j++){
                 File file = new File(medias.get(j).getPath());
                 files.add(file);
             }
             if(files.size()>0){
-                postPictureCount++;
+                postPictureCount ++;
                 mPresenter.postPicture(files,i);
             }
         }
+        if(postPictureCount>0){
+            return true;
+        }
+        return false;
+    }
 
+    //提交评论流程
+    //1、先将评论下的图片上传得到url集合，将其拼接到评论的表单中，
+    //2、由于一次只能上传一个图片集合，针对多个评论都要上传图片的情况做分段上传处理。
+    //3、即：post pic_list1 -->response list1's urls --> post pic_list2 --> response list2's urls
+    //4、拼接：params[list1's urls,list2's urls] --> post params --> success
+    private void submitComment(){
+        PostCommentBean postCommentBean = new PostCommentBean();
+        postCommentBean.setCategory("EVALUATE");
+        postCommentBean.setUid(mOrderDetailBean.getUid());
+        List<PostCommentBean.ProductsBean> productsBeans = new ArrayList<>();
+        postCommentBean.setProducts(productsBeans);
+        for (int i = 0; i < mSubmitCommentDatas.size(); i++) {
+            SubmitCommentBean submitCommentBean = mSubmitCommentDatas.get(i);
+            PostCommentBean.ProductsBean productsBean = new PostCommentBean.ProductsBean();
+            OrderDetailBean.ProductsBean originalProduct = mOrderDetailBean.getProducts().get(i);
+            productsBean.setUid(originalProduct.getUid());
+            productsBean.setSku(originalProduct.getSku());
+            productsBean.setEvaLevel(submitCommentBean.getEvaLevel());
+            productsBean.setEvaDescription(submitCommentBean.getEvaDescription());
+            productsBean.setPictures(submitCommentBean.getFiles());
+            productsBean.setAmount(originalProduct.getAmount());
+            productsBeans.add(productsBean);
+        }
+        mPresenter.postComments(postCommentBean);
     }
 
     private void selectPhoto() {
@@ -283,7 +309,7 @@ public class InputCommentFragment extends BaseFragment<InputCommentContract.Pres
 
     @Override
     public void responsePostPicture(BaseResponse<List<OperateBean>> response, int position) {
-        DialogHelper.successSnackbar(getView(),response.getMessage());
+        ToastUtils.showToast(_mActivity,"评论"+(position+1)+"的图片上传成功！");
         ALog.e(TAG,"图片上传成功："+position+"  个数："+response.getData().size());
         List<String> files = new ArrayList<>();
         for (int i = 0; i < response.getData().size(); i++) {
@@ -294,24 +320,7 @@ public class InputCommentFragment extends BaseFragment<InputCommentContract.Pres
         //将图片全部上传完成，拼接完成后正式提交评论
         responsePicCount++;
         if(postPictureCount==responsePicCount){
-            PostCommentBean postCommentBean = new PostCommentBean();
-            postCommentBean.setCategory("EVALUATE");
-            postCommentBean.setUid(mOrderDetailBean.getUid());
-            List<PostCommentBean.ProductsBean> productsBeans = new ArrayList<>();
-                postCommentBean.setProducts(productsBeans);
-            for (int i = 0; i < mSubmitCommentDatas.size(); i++) {
-                SubmitCommentBean submitCommentBean = mSubmitCommentDatas.get(i);
-                PostCommentBean.ProductsBean productsBean = new PostCommentBean.ProductsBean();
-                OrderDetailBean.ProductsBean originalProduct = mOrderDetailBean.getProducts().get(i);
-                productsBean.setUid(originalProduct.getUid());
-                productsBean.setSku(originalProduct.getSku());
-                productsBean.setEvaLevel(submitCommentBean.getEvaLevel());
-                productsBean.setEvaDescription(submitCommentBean.getEvaDescription());
-                productsBean.setPictures(submitCommentBean.getFiles());
-                productsBean.setAmount(originalProduct.getAmount());
-                productsBeans.add(productsBean);
-            }
-            mPresenter.postComments(postCommentBean);
+            submitComment();
         }
     }
 

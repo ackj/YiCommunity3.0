@@ -56,7 +56,6 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     private StateManager mStateManager;
     private PtrFrameLayout mPtrFrameLayout;
 
-
     public static StoreFragment newInstance(String shopType) {
         StoreFragment fragment = new StoreFragment();
         Bundle bundle = new Bundle();

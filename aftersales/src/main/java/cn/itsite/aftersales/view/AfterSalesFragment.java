@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +27,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.OperateBean;
 import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
@@ -65,9 +69,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
         }
     };
     ArrayList<BaseMedia> mSelectedMedia = new ArrayList<>();
-    boolean isExchange;
     private ReasonTypeBean mSelectedReasonType;
-
 
     private EditText mEtExplain;
     private TextView mTvBackprice;
@@ -76,7 +78,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     private TextView mTvAnchorReason;
     private TextView mTvAnchorExplain;
     private TextView mTvApply;
-    private OrderDetailBean.ProductsBean productsBean;
+    private OrderDetailBean.ProductsBean mProductsBean;
     private TextView mTvPrice;
     private TextView mTvName;
     private TextView mTvDesc;
@@ -87,6 +89,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     private TextView mTvMenu;
     private String mOrderUid;
     private PostApplyBean mApplyBean;
+    private String mServiceType;
 
     public static AfterSalesFragment newInstance() {
         AfterSalesFragment fragment = new AfterSalesFragment();
@@ -102,9 +105,9 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isExchange = getArguments().getBoolean("isExchange");
+        mServiceType = getArguments().getString("serviceType");
         mOrderUid = getArguments().getString("orderUid");
-        productsBean = (OrderDetailBean.ProductsBean) getArguments().getSerializable("product");
+        mProductsBean = (OrderDetailBean.ProductsBean) getArguments().getSerializable("product");
     }
 
     @Nullable
@@ -141,7 +144,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     }
 
     private void initData() {
-        if (isExchange) {
+        if (mServiceType.equals(BaseConstants.SERVICE_TYPE_EXCHANGE)) {
             //如果是换货
             mTvBackprice.setVisibility(View.GONE);
             mLlPrice.setVisibility(View.GONE);
@@ -152,21 +155,34 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
 
         mTvApply.setVisibility(View.GONE);
 
-        if (productsBean != null) {
+        if (mProductsBean != null) {
+            //将数据映射到界面上
             Glide.with(mIvIcon.getContext())
-                    .load(productsBean.getImageUrl())
+                    .load(mProductsBean.getImageUrl())
                     .apply(new RequestOptions().error(R.drawable.ic_img_error)
                             .placeholder(R.drawable.ic_img_loading))
                     .into(mIvIcon);
-            mTvName.setText(productsBean.getTitle());
-            mTvDesc.setText(productsBean.getDescription());
-            String currency = productsBean.getPay().getCurrency();
-            float price = Float.valueOf(productsBean.getPay().getPrice());
-            mTvPrice.setText(currency+ price);
-            mTvAmount.setText("x"+productsBean.getAmount());
-            float refundPrice =price *Integer.getInteger(productsBean.getAmount());
-            mTvRefundPrice.setText(currency+refundPrice);
-            mTvBackprice.setText("最多"+currency+price+"，含发货邮票"+currency+"0.00");
+            mTvName.setText(mProductsBean.getTitle());
+            mTvDesc.setText(mProductsBean.getDescription());
+            String currency = mProductsBean.getPay().getCurrency();
+            float price = Float.valueOf(mProductsBean.getPay().getPrice());
+            mTvPrice.setText(currency + price);
+            mTvAmount.setText("x" + mProductsBean.getAmount());
+            float refundPrice = price * Integer.valueOf(mProductsBean.getAmount());
+            mTvRefundPrice.setText(currency + refundPrice);
+            mTvBackprice.setText("最多" + currency + price + "，含发货邮票" + currency + "0.00");
+
+            //创建一个提交的对象
+            mApplyBean = new PostApplyBean();
+            mApplyBean.setCategory(mServiceType);
+            mApplyBean.setUid(mOrderUid);
+            PostApplyBean.ProductsBean productsBean = new PostApplyBean.ProductsBean();
+            productsBean.setSku(mProductsBean.getSku());
+            productsBean.setAmount(mProductsBean.getAmount());
+            productsBean.setUid(mProductsBean.getUid());
+            List<PostApplyBean.ProductsBean> productsBeans = new ArrayList<>();
+            productsBeans.add(productsBean);
+            mApplyBean.setProducts(productsBeans);
         }
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 4));
@@ -194,8 +210,10 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
         mTvMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkApply()){
-                    submitApply();
+                if (checkApply()) {
+                    if(!submitPictures()){
+                        submitApply();
+                    }
                 }
             }
         });
@@ -203,22 +221,38 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
 
     //检查是否填写完整
     private boolean checkApply() {
-        if(isExchange){
-
-        }else{
-
+        String reason = mTvReason.getText().toString().trim();
+        String explain = mEtExplain.getText().toString().trim();
+        if(TextUtils.isEmpty(reason)){
+            ToastUtils.showToast(_mActivity,"请选择原因");
+            return false;
+        }else if(TextUtils.isEmpty(explain)){
+            ToastUtils.showToast(_mActivity,"请输入说明");
+            return false;
         }
         return true;
     }
 
+    private boolean submitPictures() {
+        List<File> files = new ArrayList<>();
+        for (int i = 0; i < mAdapter.getData().size() - 1; i++) {
+            File file = new File(mAdapter.getItem(i).getPath());
+            files.add(file);
+        }
+        if (files.size() > 0) {
+            mPresenter.postPicture(files);
+            return true;
+        }
+        return false;
+    }
+
+
     //提交申请
     private void submitApply() {
         String explain = mEtExplain.getText().toString().trim();
-        mApplyBean = new PostApplyBean();
-        mApplyBean.setCategory(isExchange?"":"REFUND");
         mApplyBean.setNote(explain);
         mApplyBean.setReasonType(mSelectedReasonType.getValue());
-        mApplyBean.setUid(mOrderUid);
+        mPresenter.postApply(mApplyBean);
     }
 
     private void showReasonDialog(List<ReasonTypeBean> reasonTypes) {
@@ -264,6 +298,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     @Override
     public void responsePostSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        pop();
     }
 
     @Override
@@ -272,15 +307,14 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     }
 
     @Override
-    public void responsePostPicture(BaseResponse<List<OperateBean>> response, int position) {
-        DialogHelper.successSnackbar(getView(),response.getMessage());
-        ALog.e(TAG,"图片上传成功："+position+"  个数："+response.getData().size());
+    public void responsePostPicture(BaseResponse<List<OperateBean>> response) {
+        DialogHelper.successSnackbar(getView(), response.getMessage());
+        ALog.e(TAG, "图片上传成功 个数：" + response.getData().size());
         List<String> files = new ArrayList<>();
         for (int i = 0; i < response.getData().size(); i++) {
             files.add(response.getData().get(i).getUrl());
         }
-//        mApplyBean.set
+        mApplyBean.getProducts().get(0).setPictures(files);
         submitApply();
-        mPresenter.postApply(mApplyBean);
     }
 }

@@ -37,7 +37,7 @@ import cn.itsite.amain.yicommunity.event.EventRefreshSocialityList;
 import cn.itsite.amain.yicommunity.main.publish.CommentActivity;
 import cn.itsite.amain.yicommunity.main.sociality.contract.SocialityListContract;
 import cn.itsite.amain.yicommunity.main.sociality.presenter.SocialityListPresenter;
-import cn.itsite.amain.yicommunity.preview.PreviewActivity;
+import cn.itsite.acommon.view.PreviewActivity;
 import cn.itsite.amain.yicommunity.web.WebActivity;
 import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateLayout;

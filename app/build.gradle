@@ -84,6 +84,10 @@ android {
             resValue "string", "app_name", "威士丹利"
             applicationId 'com.aglhz.yicommunity'
         }
+        ec{
+            resValue "string", "app_name", "宅易购"
+            applicationId 'com.itsite.ec'
+        }
     }
 
 //    buildTypes.all {
@@ -119,5 +123,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //阿里巴巴开源基础路由
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
-    implementation project(':amain')
+//    implementation project(':amain')
+    implementation project(':ecmain')
 }

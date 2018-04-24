@@ -56,6 +56,9 @@ android {
         vensi {
             buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
         }
+        ec{
+            buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
+        }
     }
 }
 

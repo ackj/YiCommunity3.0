@@ -89,7 +89,7 @@ public class RegisterFragment extends BaseFragment<RegisterPresenter> implements
         cbAgree = ((CheckBox) view.findViewById(R.id.cb_agree));
         btSubmit = ((Button) view.findViewById(R.id.btn_submit));
         etAgainPassword = ((EditText) view.findViewById(R.id.et_again_password));
-        toolbarTitle = ((EditText) view.findViewById(R.id.toolbar_title));
+        toolbarTitle = ((TextView) view.findViewById(R.id.toolbar_title));
         toolbar = ((Toolbar) view.findViewById(R.id.toolbar));
         return attachToSwipeBack(view);
     }

@@ -69,6 +69,15 @@ android {
                                     aliyun_appsecret: "077b8ea013652e988304c0bc6b41fb3a",
                                     huawei_appid    : "100099829"]
         }
+        ec{
+            buildConfigField "String", "XIAOMI_APP_ID", "\"2882303761517621288\""//配置小米的AppId。
+            buildConfigField "String", "XIAOMI_APP_KEY", "\"5861762181288\""//配置小米的AppKey。
+
+            manifestPlaceholders = [application_id  : "com.aglhz.yicommunity",
+                                    aliyun_appkey   : "24632152",
+                                    aliyun_appsecret: "077b8ea013652e988304c0bc6b41fb3a",
+                                    huawei_appid    : "100099829"]
+        }
     }
 }
 

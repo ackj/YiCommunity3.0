@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.aglhz.yicommunity.R;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -12,9 +13,8 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import cn.itsite.abase.log.ALog;
-import cn.itsite.amain.R;
 import cn.itsite.abase.common.UserHelper;
+import cn.itsite.abase.log.ALog;
 
 import static cn.itsite.apayment.payment.pay.wechat.WeChatAppPay.WECHAT_PAY_RESULT_ACTION;
 import static cn.itsite.apayment.payment.pay.wechat.WeChatAppPay.WECHAT_PAY_RESULT_EXTRA;

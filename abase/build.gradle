@@ -13,7 +13,7 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
+            javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
@@ -45,6 +45,9 @@ android {
         }
         vensi {
             buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
+        }
+        ec{
+           buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
         }
     }
 }

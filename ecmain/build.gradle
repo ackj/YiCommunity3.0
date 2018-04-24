@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        debug {
+        }
+        release {
+        }
+    }
+
+    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
+    productFlavors {
+        yishequ {
+        }
+        meilun {
+        }
+        vensi {
+        }
+        ec{}
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    //分类模块。
+    api project(':classify')
+    //配送模块。
+    api project(':delivery')
+    //商品详情模块。
+    api project(':goodsdetail')
+    //商品主页模块。
+    api project(':goodshome')
+    //搜索模块。
+    api project(':goodssearch')
+    //订单模块。
+    api project(':order')
+    //web模块。
+    api project(':web')
+    //购物车模块。
+    api project(':shoppingcart')
+    //售后模块
+    api project(':aftersales')
+    api project(':login')
+}

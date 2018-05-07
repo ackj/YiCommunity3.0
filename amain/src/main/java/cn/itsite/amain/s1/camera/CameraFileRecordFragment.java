@@ -22,7 +22,7 @@ import java.util.Date;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.amain.R;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**

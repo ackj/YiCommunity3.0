@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.itsite.acommon.view.PtrHTFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ptrFrameLayout"
@@ -28,4 +28,4 @@
             android:layoutAnimation="@anim/layout_dock_left_enter" />
     </cn.itsite.statemanager.StateLayout>
 
-</cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout>
+</cn.itsite.acommon.view.PtrHTFrameLayout>

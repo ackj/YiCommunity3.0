@@ -1,10 +1,14 @@
 package com.example.ecmain;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bilibili.boxing.BoxingMediaLoader;
+import com.bilibili.boxing.loader.IBoxingMediaLoader;
 
 import org.litepal.LitePal;
 
 import cn.itsite.abase.BaseApp;
+import cn.itsite.acommon.boxing.BoxingGlideLoader;
+import cn.itsite.apush.PushHelper;
 
 /**
  * Author：leguang on 2016/10/9 0009 15:49
@@ -18,6 +22,8 @@ public class App extends BaseApp {
         super.onCreate();
         initRouter();
         LitePal.initialize(this);//初始化ORM。
+        initBoxing();
+        initPush();
     }
 
     private void initRouter() {
@@ -26,5 +32,18 @@ public class App extends BaseApp {
         ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
 //        }
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
+    }
+
+    private void initBoxing() {
+        IBoxingMediaLoader loader = new BoxingGlideLoader();
+        BoxingMediaLoader.getInstance().init(loader);
+//        BoxingCrop.getInstance().init(new BoxingUcrop());初始化图片裁剪（可选）
+    }
+
+    /**
+     * 初始化推送。
+     */
+    public void initPush() {
+        PushHelper.init(this);
     }
 }

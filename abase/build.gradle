@@ -155,5 +155,6 @@ dependencies {
     }
     //图片选择器
     api 'com.bilibili:boxing-impl:0.7.0'
-
+    //状态栏
+    api 'com.gyf.barlibrary:barlibrary:2.3.0'
 }

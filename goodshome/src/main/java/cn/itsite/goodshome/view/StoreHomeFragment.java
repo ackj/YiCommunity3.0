@@ -43,8 +43,9 @@ import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
+import cn.itsite.acommon.data.bean.DeliveryBean;
+import cn.itsite.acommon.event.EventSelectedDelivery;
 import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
@@ -52,6 +53,7 @@ import cn.itsite.goodshome.R;
 import cn.itsite.goodshome.contract.StoreContract;
 import cn.itsite.goodshome.model.ShopBean;
 import cn.itsite.goodshome.presenter.StorePresenter;
+import me.yokeyword.fragmentation.SupportFragment;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -191,7 +193,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                 bundle.putString("shopUid", (String) SPCache.get(_mActivity, UserHelper.SHOP_ID, ""));
             }
             fragment.setArguments(bundle);
-            start((BaseFragment) fragment);
+            ((SupportFragment)getParentFragment()).start((BaseFragment) fragment);
         });
     }
 
@@ -205,6 +207,15 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
             mPresenter.getStore(mParams);
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EventSelectedDelivery event){
+        mDeliveryBean = event.deliveryBean;
+        mParams.latitude = mDeliveryBean.getLatitude();
+        mParams.longitude = mDeliveryBean.getLongitude();
+        mPresenter.getStore(mParams);
+    }
+
 
     private void initMagicIndicator() {
         CommonNavigator commonNavigator = new CommonNavigator(_mActivity);

@@ -104,7 +104,7 @@ public class AboutUsFragment extends BaseFragment implements View.OnClickListene
     /**
      * 检测是否有新版本需要下载更新。
      */
-    public void updateApp() {
+    public void  updateApp() {
         String random = System.currentTimeMillis() + "";
         String accessKey = Constants.SYS_ACCESS_PREFIX + random + Constants.SYS_ACCESS_KEY;
         ALog.e("random-->" + random);
@@ -116,7 +116,6 @@ public class AboutUsFragment extends BaseFragment implements View.OnClickListene
         params.put("random", random);
         params.put("sc", BuildConfig.SC);
         params.put("appType", Constants.APP_TYPE);
-
 
         new UpdateAppManager
                 .Builder()

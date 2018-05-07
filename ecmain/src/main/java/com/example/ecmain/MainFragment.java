@@ -1,162 +1,139 @@
 package com.example.ecmain;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aglhz.yicommunity.R;
-import com.orhanobut.logger.Logger;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.example.ecmain.mine.view.MineFragment;
+
+import java.util.ArrayList;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.albs.location.LocationFragment;
-import cn.itsite.classify.ClassifyFragment;
-import cn.itsite.delivery.view.SelectDeliveryFragment;
-import cn.itsite.goodsdetail.view.GoodsDetailFragment;
-import cn.itsite.goodshome.view.StoreHomeFragment;
-import cn.itsite.goodssearch.view.SearchGoodsFragment;
-import cn.itsite.login.LoginFragment;
-import cn.itsite.order.view.MineOrderFragment;
-import cn.itsite.order.view.OrderDetailFragment;
-import cn.itsite.order.view.SubmitOrderFragment;
-import cn.itsite.shoppingcart.ShoppingCartFragment;
-import rx.Subscriber;
+import cn.itsite.acommon.AudioPlayer;
+import cn.itsite.goodshome.view.StoreHomeECFragment;
+import cn.itsite.shoppingcart.ShoppingCartECFragment;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Author： Administrator on 2018/2/1 0001.
  * Email： liujia95me@126.com
  */
 
-public class MainFragment extends BaseFragment implements View.OnClickListener {
-    private static final String TAG = "MainFragment";
+public class MainFragment extends BaseFragment  {
+    private static final String TAG = MainFragment.class.getSimpleName();
+    private static final long WAIT_TIME = 2000L;// 再点一次退出程序时间设置
+    private long TOUCH_TIME = 0;
+    private AHBottomNavigation ahbn;
+    private ArrayList<AHBottomNavigationItem> bottomItems = new ArrayList<>();
+    private int prePosition = 0;
+    private SupportFragment[] mFragments = new SupportFragment[4];
 
     public static MainFragment newInstance() {
         return new MainFragment();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+        ahbn = ((AHBottomNavigation) view.findViewById(R.id.ahbn_main_fragment));
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initListener();
+        if (savedInstanceState == null) {
+            mFragments[0] = StoreHomeECFragment.newInstance(true);
+            mFragments[1] = StoreHomeECFragment.newInstance(false);
+            mFragments[2] = ShoppingCartECFragment.newInstance();
+            mFragments[3] = MineFragment.newInstance();
+            loadMultipleRootFragment(R.id.fl_container_main_fragment, 0, mFragments[0], mFragments[1], mFragments[2], mFragments[3]);
+        } else {
+            mFragments[0] = findChildFragment(StoreHomeECFragment.class);
+            mFragments[1] = findChildFragment(StoreHomeECFragment.class);
+            mFragments[2] = findChildFragment(ShoppingCartECFragment.class);
+            mFragments[3] = findChildFragment(MineFragment.class);
+            prePosition = savedInstanceState.getInt("prePosition");
+        }
+        initData();
     }
 
-    private void initListener() {
-        getView().findViewById(R.id.btn_1).setOnClickListener(this);
-        getView().findViewById(R.id.btn_2).setOnClickListener(this);
-        getView().findViewById(R.id.btn_3).setOnClickListener(this);
-        getView().findViewById(R.id.btn_4).setOnClickListener(this);
-        getView().findViewById(R.id.btn_5).setOnClickListener(this);
-        getView().findViewById(R.id.btn_6).setOnClickListener(this);
-        getView().findViewById(R.id.btn_7).setOnClickListener(this);
-        getView().findViewById(R.id.btn_8).setOnClickListener(this);
-        getView().findViewById(R.id.btn_9).setOnClickListener(this);
-        getView().findViewById(R.id.btn_10).setOnClickListener(this);
-        getView().findViewById(R.id.btn_11).setOnClickListener(this);
-        getView().findViewById(R.id.btn_12).setOnClickListener(this);
+    private void initData() {
+        updateApp();//检测App的更新。
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_discover, R.drawable.ic_tab_discover_78px, R.color.white);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_shop, R.drawable.ic_tab_mall_78px, R.color.white);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_cart, R.drawable.ic_tab_shoppingcart_78px, R.color.white);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.tab_mine, R.drawable.ic_tab_mine_78px, R.color.white);
+        bottomItems.add(item1);
+        bottomItems.add(item2);
+        bottomItems.add(item3);
+        bottomItems.add(item4);
+        ahbn.addItems(bottomItems);
+        ahbn.setDefaultBackgroundColor(ContextCompat.getColor(App.mContext, R.color.white));
+        ahbn.setBehaviorTranslationEnabled(false);
+        ahbn.setColored(true);
+        ahbn.setForceTint(false);
+        ahbn.setAccentColor(ContextCompat.getColor(App.mContext, R.color.base_color));
+        ahbn.setInactiveColor(ContextCompat.getColor(App.mContext, R.color.base_gray));
+        ahbn.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+
+        ahbn.setOnTabSelectedListener((position, wasSelected) -> {
+            showHideFragment(mFragments[position], mFragments[prePosition]);
+            prePosition = position;
+            AudioPlayer.getInstance(_mActivity).play(2);
+
+//            if (wasSelected) {
+//                switch (position) {
+//                    case 0:
+//                        ((HomeFragment) mFragments[0]).go2TopAndRefresh();
+//                        break;
+//                    case 1:
+//                        ((StoreHomeFragment) mFragments[1]).go2TopAndRefresh(null);
+//                        break;
+//                    case 2:
+//                        ((SocialityFragment) mFragments[2]).go2TopAndRefresh();
+//                        break;
+//                    case 3:
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+            return true;
+        });
+        ahbn.setCurrentItem(prePosition);
+//        GuideHelper.showHomeGuide(_mActivity);
+    }
+
+    private void updateApp() {
+
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("prePosition", prePosition);
     }
-
 
     @Override
-    public void onClick(View view) {
-        if(view.getId()==R.id.btn_1){
-            start(StoreHomeFragment.newInstance());
-        }else if(view.getId()==R.id.btn_2){
-            start(SearchGoodsFragment.newInstance());
-        }else if(view.getId()==R.id.btn_3) {
-            start(SelectDeliveryFragment.newInstance());
-        }else if(view.getId()==R.id.btn_4){
-            start(ClassifyFragment.newInstance());
-        }else if(view.getId()==R.id.btn_5) {
-            start(ShoppingCartFragment.newInstance());
-        }else if(view.getId()==R.id.btn_6){
-            start(SubmitOrderFragment.newInstance());
-        }else if(view.getId()==R.id.btn_7){
-            start(MineOrderFragment.newInstance());
-        } else if(view.getId()==R.id.btn_8){
-            start(OrderDetailFragment.newInstance(""));
-        }else if(view.getId()==R.id.btn_9){
-            start(LoginFragment.newInstance());
-        }else if(view.getId()==R.id.btn_10){
-            start(LocationFragment.newInstance());
-        }else if(view.getId()==R.id.btn_11){
-//            start(MineFragment.newInstance());
-        }else if(view.getId()==R.id.btn_12){
-            start(GoodsDetailFragment.newInstance());
+    public boolean onBackPressedSupport() {
+        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+            //退到桌面，而不是退出应用，让用户以为退出应用，尽量保活。
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+        } else {
+            TOUCH_TIME = System.currentTimeMillis();
         }
-    }
-
-    public void net() {
-//        HttpHelper.getService(KeywordService.class)
-//                .getKeywords()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new BaseSubscriber<BaseResponse<List<KeywordBean>>>() {
-//
-//                    @Override
-//                    public void onSuccess(BaseResponse<List<KeywordBean>> response) {
-//
-//
-//                        Logger.e("111111111111" + response.getData().get(0).getQuery());
-//                    }
-//                });
-
-
-    }
-
-    public abstract class BaseSubscriber<T extends BaseResponse> extends Subscriber<T> {
-
-        @Override
-        public void onStart() {
-            super.onStart();
-        }
-
-        @Override
-        public void onNext(T response) {
-            Logger.e( "onNextonNextonNextonNextonNext");
-
-
-            if (response.isSuccessful()) {
-                onSuccess(response);
-            } else if (response.getCode() == 123) {
-                Logger.e( "123");
-            } else {
-                Logger.e( "非200");
-
-//                getView().error(response.getMessage());
-            }
-        }
-
-
-        @Override
-        public void onCompleted() {
-            Logger.e( "onCompletedonCompletedonCompleted");
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            e.printStackTrace();
-        }
-
-        public abstract void onSuccess(T t);
+        return true;
     }
 }

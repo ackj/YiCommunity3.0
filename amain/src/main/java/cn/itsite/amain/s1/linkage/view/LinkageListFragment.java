@@ -29,7 +29,7 @@ import cn.itsite.amain.s1.event.EventLinkageChanged;
 import cn.itsite.amain.s1.event.EventSwitchHost;
 import cn.itsite.amain.s1.linkage.contract.LinkageListContract;
 import cn.itsite.amain.s1.linkage.presenter.LinkageListPresenter;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;
 

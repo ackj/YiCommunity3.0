@@ -46,6 +46,8 @@ public class BaseBean implements Serializable {
         private String refresh;
         private String first;
 
+
+
         public int getCode() {
             return code;
         }

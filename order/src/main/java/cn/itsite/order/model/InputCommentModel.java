@@ -9,7 +9,7 @@ import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.order.contract.InputCommentContract;
 import cn.itsite.order.contract.OrderService;
 import okhttp3.MediaType;

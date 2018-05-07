@@ -2,7 +2,7 @@ package cn.itsite.shoppingcart;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
-import cn.itsite.acommon.StorePojo;
+import cn.itsite.acommon.data.pojo.StorePojo;
 
 /**
  * @author liujia

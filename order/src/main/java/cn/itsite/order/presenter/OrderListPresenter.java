@@ -6,8 +6,8 @@ import java.util.List;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.GoodsParams;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.order.model.OrderBean;
 import cn.itsite.order.contract.OrderListContract;
 import cn.itsite.order.model.OrderListModel;

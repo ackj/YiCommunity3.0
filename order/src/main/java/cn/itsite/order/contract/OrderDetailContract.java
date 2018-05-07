@@ -4,7 +4,7 @@ import java.util.List;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.model.OrderDetailBean;
 import rx.Observable;
 

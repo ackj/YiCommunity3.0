@@ -17,5 +17,6 @@ public class MainActivity extends BaseActivity {
         if (savedInstanceState == null) {
             loadRootFragment(android.R.id.content, StoreHomeFragment.newInstance());
         }
+
     }
 }

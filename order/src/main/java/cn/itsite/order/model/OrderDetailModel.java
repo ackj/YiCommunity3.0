@@ -6,7 +6,7 @@ import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.order.contract.OrderDetailContract;
 import cn.itsite.order.contract.OrderService;

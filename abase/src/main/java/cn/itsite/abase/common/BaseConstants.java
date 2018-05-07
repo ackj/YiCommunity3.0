@@ -34,4 +34,7 @@ public class BaseConstants {
     public static final String SERVICE_TYPE_REFUND = "REFUND";
     public static final String SERVICE_TYPE_EXCHANGE = "EXCHANGE";
 
+    public static final int RESPONSE_CODE_SUCCESS = 200;
+
+
 }

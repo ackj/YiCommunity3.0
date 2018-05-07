@@ -11,19 +11,20 @@ import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ScrollView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.itsite.abase.R;
-import cn.itsite.abase.common.DialogHelper;
-import cn.itsite.abase.common.ScrollingHelper;
-import cn.itsite.abase.log.ALog;
-import cn.itsite.abase.mvp.contract.base.BaseContract;
-import cn.itsite.abase.utils.DensityUtils;
-import cn.itsite.abase.utils.ScreenUtils;
 
 import org.json.JSONException;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
+import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.common.ScrollingHelper;
+import cn.itsite.abase.log.ALog;
+import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.abase.utils.DensityUtils;
+import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.adialog.dialog.LoadingDialog;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -50,6 +51,8 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
         mPresenter = createPresenter();
         //一旦启动某个Fragment就打印Log，方便找到该类
         ALog.e(TAG);
+        initImmersionBar();
+
     }
 
     @NonNull
@@ -72,13 +75,13 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
             mPresenter.clear();
             mPresenter = null;
         }
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();
         super.onDestroy();
     }
 
     public void initStateBar(View view) {
-//        if (view == null) {
-//            return;
-//        }
+
         if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
             view.setPadding(view.getPaddingLeft(),
                     view.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity),
@@ -211,5 +214,16 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     @CallSuper
     public void complete(Object response) {
         dismissLoading();
+    }
+
+    protected ImmersionBar mImmersionBar;
+
+    /**
+     * 初始化沉浸式
+     */
+    protected void initImmersionBar() {
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarDarkFont(true);
+        mImmersionBar.init();
     }
 }

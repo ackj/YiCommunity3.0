@@ -27,8 +27,8 @@ import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.GoodsParams;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.event.RefreshOrderEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.apayment.payment.Payment;
@@ -124,7 +124,8 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     public void onRefresh() {
         super.onRefresh();
         mGoodsParams.page = 1;
-        mPresenter.getOrders(mGoodsParams);
+        if (mPresenter != null)
+            mPresenter.getOrders(mGoodsParams);
     }
 
     private void initData() {
@@ -187,7 +188,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                 Fragment fragment = (Fragment) ARouter
                         .getInstance()
                         .build("/web/webfragment")
-                        .withString(BaseConstants.KEY_LINK, "http://www.aglhz.com/mall/m/html/wuliuSearch.html?token="+ UserHelper.token)
+                        .withString(BaseConstants.KEY_LINK, "http://www.aglhz.com/mall/m/html/wuliuSearch.html?token=" + UserHelper.token)
                         .withString(BaseConstants.KEY_TITLE, "查看物流")
                         .navigation();
                 ((BaseFragment) getParentFragment()).start((BaseFragment) fragment);
@@ -288,7 +289,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     @Override
     public void onStart() {
         super.onStart();
-        if(!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
     }

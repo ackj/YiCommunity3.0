@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.WindowManager;
 
+import com.gyf.barlibrary.ImmersionBar;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,6 +27,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 public abstract class BaseActivity<P extends BaseContract.Presenter> extends SwipeBackActivity {
     private final String TAG = BaseActivity.class.getSimpleName();
     public P mPresenter;
+    protected ImmersionBar mImmersionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
             //实现透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarDarkFont(true);
+        mImmersionBar.init();   //所有子类都将继承这些相同的属性
     }
 
     @NonNull
@@ -71,6 +77,8 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
         }
 //        //把每一个Activity弹出栈。
 //        ActivityHelper.getInstance().removeActivity(this);
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();  //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
         super.onDestroy();
     }
 

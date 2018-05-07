@@ -39,7 +39,7 @@ import cn.itsite.amain.yicommunity.main.sociality.contract.SocialityListContract
 import cn.itsite.amain.yicommunity.main.sociality.presenter.SocialityListPresenter;
 import cn.itsite.acommon.view.PreviewActivity;
 import cn.itsite.amain.yicommunity.web.WebActivity;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateLayout;
 import cn.itsite.statemanager.StateManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;

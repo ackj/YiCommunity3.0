@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity {
         if (savedInstanceState == null) {
             loadRootFragment(R.id.fl_main_activity, MainFragment.newInstance());
         }
+
         handler = new Handler();
         setCallListener();
 

@@ -11,7 +11,7 @@ import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.goodshome.model.HomePojo;
 import cn.itsite.goodshome.model.StoreItemGridBean;
 import cn.itsite.goodshome.contract.HomeContract;

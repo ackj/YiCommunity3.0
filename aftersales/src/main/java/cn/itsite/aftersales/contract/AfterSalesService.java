@@ -4,7 +4,7 @@ import java.util.List;
 
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.aftersales.model.ReasonTypeBean;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;

@@ -4,12 +4,12 @@ import java.util.List;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.GoodsParams;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.model.ProductsBean;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.StoreBean;
-import cn.itsite.acommon.StorePojo;
+import cn.itsite.acommon.data.pojo.StorePojo;
 import rx.Observable;
 
 /**

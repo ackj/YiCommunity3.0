@@ -10,7 +10,7 @@ import cn.itsite.abase.common.luban.Luban;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.aftersales.contract.AfterSalesContract;
 import cn.itsite.aftersales.model.AfterSalesModel;
 import cn.itsite.aftersales.model.PostApplyBean;

@@ -40,7 +40,7 @@ import cn.itsite.amain.s1.event.EventSwitchHost;
 import cn.itsite.amain.s1.security.contract.SecurityContract;
 import cn.itsite.amain.s1.security.presenter.SecurityPresenter;
 import cn.itsite.amain.s1.widget.RecordButton;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.apush.event.EventRefreshSecurity;
 import cn.itsite.statemanager.StateLayout;
 import me.yokeyword.fragmentation.SupportActivity;

@@ -15,13 +15,16 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.DeliveryBean;
+import cn.itsite.acommon.data.bean.DeliveryBean;
+import cn.itsite.acommon.event.EventSelectedDelivery;
 import cn.itsite.delivery.R;
 import cn.itsite.delivery.contract.DeliveryContract;
 import cn.itsite.delivery.presenter.DeliveryPresenter;
@@ -39,6 +42,7 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
     private TextView mTvAdd;
     private DeliveryRVAdapter mAdapter;
     private ImageView mIvBack;
+    private boolean fromShop; //是否是从便利商城跳转过来
 
     public static SelectDeliveryFragment newInstance() {
         return new SelectDeliveryFragment();
@@ -47,6 +51,7 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fromShop = getArguments().getBoolean("fromShop");
     }
 
     @NonNull
@@ -114,6 +119,9 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("delivery", deliveryBean);
                     setFragmentResult(RESULT_OK, bundle);
+                    if(fromShop){
+                        EventBus.getDefault().post(new EventSelectedDelivery(deliveryBean));
+                    }
                     ((SupportActivity) _mActivity).onBackPressedSupport();
                 }
             }

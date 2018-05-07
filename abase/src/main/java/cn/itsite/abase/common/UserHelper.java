@@ -66,6 +66,10 @@ public class UserHelper {
     public static int deviceIsManager;//是不是主机管理员0否1是
     public static final String DEVICE_ID = "device_id";
 
+    public static String mobile;
+    public static String nickName;
+    public static String avator;
+
     public static UserBean.DataBean.MemberInfoBean userInfo;
 
     public static boolean setLongitude(String longitude) {
@@ -142,6 +146,18 @@ public class UserHelper {
 
         getDefaultEditor().putString(TOKEN, token).commit();//临时为了应付注册deviceID能在apush中拿得到，所以保存在default sp文件中。
         return editor.commit();
+    }
+
+    public static void setMobile(String mobile){
+        UserHelper.mobile = mobile;
+    }
+
+    public static void setNickname(String nickname){
+        UserHelper.nickName = nickname;
+    }
+
+    public static void setAvator(String avator){
+        UserHelper.avator = avator;
     }
 
     //更新社区名称和社区代码。

@@ -2,8 +2,8 @@ package cn.itsite.order.model;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
-import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.acommon.StorePojo;
+import cn.itsite.acommon.data.bean.DeliveryBean;
+import cn.itsite.acommon.data.pojo.StorePojo;
 
 /**
  * Author： Administrator on 2018/2/1 0001.

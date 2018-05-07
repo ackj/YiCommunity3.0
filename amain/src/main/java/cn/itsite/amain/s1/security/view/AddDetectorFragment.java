@@ -26,7 +26,7 @@ import cn.itsite.amain.s1.entity.bean.BaseBean;
 import cn.itsite.amain.s1.entity.bean.DevicesBean;
 import cn.itsite.amain.s1.security.contract.AddDetectorContract;
 import cn.itsite.amain.s1.security.presenter.AddDetectorPresenter;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.apush.event.EventLearnSensor;
 import cn.itsite.statemanager.StateLayout;
 import cn.itsite.statemanager.StateManager;

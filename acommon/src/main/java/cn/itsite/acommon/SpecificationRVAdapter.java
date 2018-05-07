@@ -9,6 +9,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.mvp.view.base.BaseRecyclerViewAdapter;
+import cn.itsite.acommon.data.bean.SkusBean;
 
 /**
  * Author： Administrator on 2018/2/7 0007.

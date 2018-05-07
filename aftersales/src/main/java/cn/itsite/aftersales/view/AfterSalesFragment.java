@@ -37,7 +37,7 @@ import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ToastUtils;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.aftersales.contract.AfterSalesContract;

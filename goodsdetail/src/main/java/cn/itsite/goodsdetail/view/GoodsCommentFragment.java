@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.goodsdetail.R;
 import cn.itsite.goodsdetail.contract.GoodsCommentContract;
 import cn.itsite.goodsdetail.model.EvaluatesBean;
@@ -147,7 +147,6 @@ public class GoodsCommentFragment extends BaseFragment<GoodsCommentContract.Pres
             mAdapter.loadMoreEnd();
             return;
         }
-
         if (mParams.page == 1) {
             mStateManager.showContent();
             mAdapter.setNewData(datas);

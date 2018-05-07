@@ -7,6 +7,7 @@ package cn.itsite.abase.network.http;
  * @Blog https://github.com/leguang
  * @Time 2018/3/8 0008 10:36
  * @Description
+ * RESTFUL风格接口返回过来的json基本结构
  */
 public class BaseResponse<T> {
     public int code;

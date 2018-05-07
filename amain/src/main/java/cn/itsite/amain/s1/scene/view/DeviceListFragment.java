@@ -19,7 +19,7 @@ import cn.itsite.amain.s1.common.ApiService;
 import cn.itsite.amain.s1.common.Constants;
 import cn.itsite.amain.s1.common.Params;
 import cn.itsite.amain.s1.entity.bean.DeviceListBean;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;

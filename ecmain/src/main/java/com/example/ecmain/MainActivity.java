@@ -15,4 +15,9 @@ public class MainActivity extends BaseActivity {
             loadRootFragment(android.R.id.content, MainFragment.newInstance());
         }
     }
+
+    @Override
+    public boolean swipeBackPriority() {
+        return false;
+    }
 }

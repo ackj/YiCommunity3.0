@@ -1,9 +1,11 @@
 package cn.itsite.order.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -22,7 +24,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,12 +35,12 @@ import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.abase.utils.ToastUtils;
-import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.acommon.OperateBean;
-import cn.itsite.acommon.StorePojo;
+import cn.itsite.acommon.data.bean.DeliveryBean;
+import cn.itsite.acommon.data.bean.OperateBean;
+import cn.itsite.acommon.data.pojo.StorePojo;
+import cn.itsite.acommon.event.EventRefreshOrdersPoint;
 import cn.itsite.acommon.event.RefreshCartEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
-import cn.itsite.adialog.dialogfragment.SelectorDialogFragment;
 import cn.itsite.apayment.payment.Payment;
 import cn.itsite.apayment.payment.PaymentListener;
 import cn.itsite.apayment.payment.network.NetworkClient;
@@ -288,6 +289,8 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
         List<OperateBean> data = response.getData();
         BaseRequest<PayParams> request = new BaseRequest<>();
 
+        //需要刷新宅易购【我的】的界面
+        EventBus.getDefault().post(new EventRefreshOrdersPoint());
         request.message = "请求统一订单";
 
         Observable.from(data).map(OperateBean::getUid).toList()
@@ -317,32 +320,23 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     }
 
     private void showPaySelector(BaseRequest<PayParams> request) {
-        List<String> strings = Arrays.asList("支付宝", "微信");
-        new SelectorDialogFragment()
+        String[] payWay = {"支付宝", "微信"};
+        new AlertDialog.Builder(_mActivity)
                 .setTitle("请选择支付方式")
-                .setItemLayoutId(R.layout.item_rv_simple_selector)
-                .setData(strings)
-                .setOnItemConvertListener((holder, position, dialog) -> {
-                    holder.setText(R.id.tv_item_rv_simple_selector, strings.get(position));
-                })
-                .setOnItemClickListener((view, baseViewHolder, position, dialog) -> {
-                    dialog.dismiss();
-                    switch (position) {
-                        case 0:
+                .setItems(payWay, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(i==0){
                             request.data.setPayment("zfb");
                             pay(request, Pay.aliAppPay());
-                            break;
-                        case 1:
+                        }else{
                             request.data.setPayment("weixin_h5");
                             pay(request, Pay.weChatH5xPay());
-                            break;
-                        default:
-                            break;
+                        }
                     }
                 })
-                .setAnimStyle(R.style.SlideAnimation)
-                .setGravity(Gravity.BOTTOM)
-                .show(getChildFragmentManager());
+                .setCancelable(false)
+                .show();
     }
 
     private void showHintDialog() {

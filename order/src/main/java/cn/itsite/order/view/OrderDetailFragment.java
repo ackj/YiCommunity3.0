@@ -38,7 +38,8 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
+import cn.itsite.acommon.event.EventRefreshOrdersPoint;
 import cn.itsite.acommon.event.RefreshOrderEvent;
 import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
@@ -416,6 +417,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
             //支付成功
             DialogHelper.successSnackbar(getView(), "支付成功");
         }
+        EventBus.getDefault().post(new EventRefreshOrdersPoint());
         EventBus.getDefault().post(new RefreshOrderEvent());
         pop();
     }

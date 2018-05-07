@@ -27,7 +27,7 @@ import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.DensityUtils;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.classify.contract.MenuContract;
 import cn.itsite.classify.presenter.MenuPresenter;
 import cn.itsite.statemanager.BaseViewHolder;
@@ -148,6 +148,7 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
     }
 
     private void initData() {
+        mRvContent.setBackgroundColor(getResources().getColor(R.color.default_white));
         mContentLayoutManager = new GridLayoutManager(_mActivity, SPAN_COUNT_TWO);
         mRvMenu.setLayoutManager(new LinearLayoutManager(_mActivity));
         mAdapterMenu = new ClassifyMenuRVAdapter();

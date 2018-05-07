@@ -67,7 +67,6 @@ public class PreviewActivity extends BaseActivity {
         for (int i = 0; i < picsList.size(); i++) {
             ALog.e(TAG, picsList.get(i));
         }
-
         mViewPager.setAdapter(new PreviewAdapter());
         mViewPager.setCurrentItem(position);
     }

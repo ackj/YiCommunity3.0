@@ -4,7 +4,7 @@ import java.util.List;
 
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.DeliveryBean;
+import cn.itsite.acommon.data.bean.DeliveryBean;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;

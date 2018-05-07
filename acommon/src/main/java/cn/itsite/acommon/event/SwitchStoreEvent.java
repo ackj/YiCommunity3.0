@@ -1,6 +1,6 @@
 package cn.itsite.acommon.event;
 
-import cn.itsite.acommon.DeliveryBean;
+import cn.itsite.acommon.data.bean.DeliveryBean;
 
 /**
  * @author liujia

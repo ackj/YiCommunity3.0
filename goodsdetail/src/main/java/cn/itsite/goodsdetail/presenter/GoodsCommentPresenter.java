@@ -6,7 +6,7 @@ import java.util.List;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.goodsdetail.contract.GoodsCommentContract;
 import cn.itsite.goodsdetail.model.EvaluatesBean;
 import cn.itsite.goodsdetail.model.GoodsCommentModel;

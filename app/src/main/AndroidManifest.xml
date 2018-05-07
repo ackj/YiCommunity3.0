@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.aglhz.yicommunity">
-<!--
     <application
         android:name="cn.itsite.amain.yicommunity.App"
         android:allowBackup="true"
@@ -19,19 +18,18 @@
             android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        &lt;!&ndash; 微信回调页面 &ndash;&gt;
+        <!-- 微信回调页面 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" />
-    </application>-->
-    <application
+    </application>
+    <!--<application
         android:name="com.example.ecmain.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,7 +39,7 @@
         tools:replace="android:icon, android:theme,android:label">
 
         <activity
-            android:name="com.example.ecmain.MainActivity"
+            android:name="com.example.ecmain.LaunchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme">
@@ -51,11 +49,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 微信回调页面 -->
+
+        <activity
+            android:theme="@style/AppTheme"
+            android:name="com.example.ecmain.MainActivity"
+            tools:replace="android:theme" />
+        &lt;!&ndash; 微信回调页面 &ndash;&gt;
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" />
-    </application>
+    </application>-->
 </manifest>

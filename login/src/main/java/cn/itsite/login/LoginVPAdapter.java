@@ -17,7 +17,7 @@ public class LoginVPAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return LoginInputFragment.newInstance();
+        return position==0?LoginInputFragment.newInstance():RegisterInputFragment.newInstance();
     }
 
     @Override

@@ -6,7 +6,7 @@ import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.shoppingcart.RecommendGoodsBean;
 import cn.itsite.shoppingcart.RequestBean;
-import cn.itsite.acommon.StorePojo;
+import cn.itsite.acommon.data.pojo.StorePojo;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;

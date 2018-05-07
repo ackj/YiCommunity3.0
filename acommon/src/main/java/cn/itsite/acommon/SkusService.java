@@ -1,6 +1,7 @@
 package cn.itsite.acommon;
 
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.acommon.data.bean.SkusBean;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

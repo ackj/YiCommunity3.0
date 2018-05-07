@@ -3,7 +3,7 @@ package cn.itsite.goodshome.model;
 import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.goodshome.contract.HomeService;
 import cn.itsite.goodshome.contract.HomeContract;
 import rx.Observable;

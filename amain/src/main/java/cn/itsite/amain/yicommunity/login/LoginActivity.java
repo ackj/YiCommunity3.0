@@ -3,12 +3,11 @@ package cn.itsite.amain.yicommunity.login;
 import android.Manifest;
 import android.os.Bundle;
 
+import java.util.List;
+
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
 import cn.itsite.abase.utils.ToastUtils;
-
-import java.util.List;
-
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.login.view.LoginFragment;
@@ -27,6 +26,7 @@ public class LoginActivity extends BaseActivity implements EasyPermissions.Permi
         if (savedInstanceState == null) {
             loadRootFragment(R.id.fl_main_activity, LoginFragment.newInstance());
         }
+
     }
 
     @AfterPermissionGranted(SMS)

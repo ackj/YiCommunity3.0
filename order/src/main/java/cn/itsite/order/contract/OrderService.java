@@ -4,8 +4,8 @@ import java.util.List;
 
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.DeliveryBean;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.DeliveryBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.order.model.CategoryBean;
 import cn.itsite.order.model.OrderBean;

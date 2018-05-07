@@ -29,7 +29,7 @@ import java.util.List;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.goodssearch.R;
 import cn.itsite.goodssearch.contract.KeywordsContract;
 import cn.itsite.goodssearch.model.GoodsBean;

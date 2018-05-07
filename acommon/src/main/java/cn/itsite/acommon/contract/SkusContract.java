@@ -2,7 +2,7 @@ package cn.itsite.acommon.contract;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.SkusBean;
+import cn.itsite.acommon.data.bean.SkusBean;
 import rx.Observable;
 
 /**

@@ -31,7 +31,7 @@ import cn.itsite.amain.s1.host.contract.AuthorizationContract;
 import cn.itsite.amain.s1.host.presenter.AuthorizationPresenter;
 import cn.itsite.amain.s1.qrcode.ScanQRCodeFragment;
 import cn.itsite.abase.common.UserHelper;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;
 

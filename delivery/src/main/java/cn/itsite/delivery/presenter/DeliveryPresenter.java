@@ -6,7 +6,7 @@ import java.util.List;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.DeliveryBean;
+import cn.itsite.acommon.data.bean.DeliveryBean;
 import cn.itsite.delivery.contract.DeliveryContract;
 import cn.itsite.delivery.model.DeliveryModel;
 import rx.android.schedulers.AndroidSchedulers;

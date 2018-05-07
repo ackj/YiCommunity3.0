@@ -50,18 +50,21 @@ import me.yokeyword.fragmentation.SupportActivity;
 
 public class MessageCenterFragment extends BaseFragment<MessageCenterContract.Presenter> implements MessageCenterContract.View {
     public static final String TAG = MessageCenterFragment.class.getSimpleName();
-    private static final String SMARTDOOR_PUSHREC = "smartdoor_pushrec";
-    private static final String HOUSE_OWNER_APPLY = "house_owner_apply";// 业主申请
-    private static final String HOUSE_MEMBER_APPLY = "house_member_apply";// 成员申请
-    private static final String HOUSE_RENTER_APPLY = "house_renter_apply";// 租客申请
-    private static final String HOUSE_OWNER_APPROVE = "house_owner_approve";// 业主申请审核
-    private static final String HOUSE_MEMBER_APPROVE = "house_member_approve";// 成员申请审核
-    private static final String HOUSE_RENTER_APPROVE = "house_renter_approve";// 租客申请审核
-    private static final String FEEDBACK_REPLY = "feedback_reply";// 信息反馈回复
-    private static final String REPAIR_REPLY = "repair_reply";// 物业报修回复
-    private static final String NOTICE_PUBLISH = "notice_publish";// 公告发布
-    private static final String PROPERTY_BILL = "property_bill";// 物业账单
-    private static final String COMPLAINT_REPLY = "complaint_reply";// 物业投诉回复
+    public static final String SMARTDOOR_PUSHREC    = "smartdoor_pushrec";
+    public static final String HOUSE_OWNER_APPLY    = "house_owner_apply";// 业主申请
+    public static final String HOUSE_MEMBER_APPLY   = "house_member_apply";// 成员申请
+    public static final String HOUSE_RENTER_APPLY   = "house_renter_apply";// 租客申请
+    public static final String HOUSE_OWNER_APPROVE  = "house_owner_approve";// 业主申请审核
+    public static final String HOUSE_MEMBER_APPROVE = "house_member_approve";// 成员申请审核
+    public static final String HOUSE_RENTER_APPROVE = "house_renter_approve";// 租客申请审核
+    public static final String FEEDBACK_REPLY       = "feedback_reply";// 信息反馈回复
+    public static final String REPAIR_REPLY         = "repair_reply";// 物业报修回复
+    public static final String NOTICE_PUBLISH       = "notice_publish";// 公告发布
+    public static final String PROPERTY_BILL        = "property_bill";// 物业账单
+    public static final String COMPLAINT_REPLY       = "complaint_reply";// 物业投诉回复
+    public static final String SMARTDOOR_CALL_PUSH = "smartdoor_call_push";//有人来电
+    //todo：可能还会有车卡办理和设备报警的推送，还少一个商城通知
+
     private TextView toolbarTitle;
     private Toolbar toolbar;
     private RecyclerView recyclerView;

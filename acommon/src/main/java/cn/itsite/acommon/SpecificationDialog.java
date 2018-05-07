@@ -25,6 +25,7 @@ import java.util.List;
 import cn.itsite.abase.utils.DensityUtils;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.contract.SkusContract;
+import cn.itsite.acommon.data.bean.SkusBean;
 import cn.itsite.acommon.presenter.SkusPresenter;
 import cn.itsite.adialog.dialog.LoadingDialog;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;

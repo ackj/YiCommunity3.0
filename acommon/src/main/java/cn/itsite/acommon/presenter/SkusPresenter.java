@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.SkusBean;
+import cn.itsite.acommon.data.bean.SkusBean;
 import cn.itsite.acommon.contract.SkusContract;
 import cn.itsite.acommon.model.SkusModel;
 import rx.android.schedulers.AndroidSchedulers;

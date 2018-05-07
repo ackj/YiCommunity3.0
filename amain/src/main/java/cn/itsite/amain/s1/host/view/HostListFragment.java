@@ -26,7 +26,7 @@ import cn.itsite.amain.s1.entity.bean.GatewaysBean;
 import cn.itsite.amain.s1.host.contract.HostListContract;
 import cn.itsite.amain.s1.host.presenter.HostListPresenter;
 import cn.itsite.amain.s1.qrcode.ScanQRCodeFragment;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;

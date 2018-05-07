@@ -12,7 +12,7 @@ import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.goodssearch.model.GoodsBean;
 import cn.itsite.goodssearch.model.KeywordBean;
 import cn.itsite.goodssearch.contract.KeywordsContract;

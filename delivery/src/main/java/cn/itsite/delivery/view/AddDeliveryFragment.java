@@ -23,7 +23,7 @@ import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.albs.location.LocationFragment;
 import cn.itsite.delivery.R;
 import cn.itsite.delivery.contract.AddDeliveryContract;
-import cn.itsite.acommon.DeliveryBean;
+import cn.itsite.acommon.data.bean.DeliveryBean;
 import cn.itsite.delivery.presenter.AddDeliveryPresenter;
 
 /**

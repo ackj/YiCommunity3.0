@@ -1,13 +1,12 @@
 package cn.itsite.abase.network.http;
 
-import cn.itsite.abase.log.ALog;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import cn.itsite.abase.log.ALog;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -28,7 +27,6 @@ public class LoginInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Response response = chain.proceed(request);
-
         ResponseBody responseBody = response.body();
         BufferedSource source = responseBody.source();
         source.request(Long.MAX_VALUE); // Buffer the entire body.
@@ -38,11 +36,8 @@ public class LoginInterceptor implements Interceptor {
         if (contentType != null) {
             charset = contentType.charset(UTF8);
         }
-
         String bodyString = buffer.clone().readString(charset);
-
         ALog.e("body---------->" + bodyString);
-
         JSONObject jsonObject;
         try {
             jsonObject = new JSONObject(buffer.readUtf8()).optJSONObject("other");
@@ -56,7 +51,6 @@ public class LoginInterceptor implements Interceptor {
             if (buffer != null) {
                 buffer.close();
             }
-
             if (source != null) {
                 source.close();
             }

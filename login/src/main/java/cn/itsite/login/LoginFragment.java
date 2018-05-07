@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -33,9 +34,11 @@ import cn.itsite.acommon.ContentViewPager;
 @Route(path = "/login/loginfragment")
 public class LoginFragment extends BaseFragment implements View.OnClickListener {
 
+
     private static final String TAG = LoginFragment.class.getSimpleName();
     private ContentViewPager mViewPager;
     private MagicIndicator mMagicIndicator;
+    private ImageView mIvBack;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -51,21 +54,18 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         mViewPager = view.findViewById(R.id.viewPager);
+        mIvBack = view.findViewById(R.id.iv_back);
         mMagicIndicator = view.findViewById(R.id.magicIndicator);
-        return attachToSwipeBack(view);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initStatusBar();
+        initStateBar(mIvBack);
         initData();
         initListener();
         initMagicIndicator();
-    }
-
-    private void initStatusBar() {
-//        mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(), mLlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity), mLlToolbar.getPaddingRight(), mLlToolbar.getPaddingBottom());
     }
 
     private void initData() {
@@ -128,4 +128,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     public void onClick(View v) {
 
     }
+
+
 }

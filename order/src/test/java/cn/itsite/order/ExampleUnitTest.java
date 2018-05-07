@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.itsite.abase.network.http.BaseRequest;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.order.model.PayParams;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

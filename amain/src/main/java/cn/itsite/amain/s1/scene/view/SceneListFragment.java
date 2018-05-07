@@ -25,7 +25,7 @@ import cn.itsite.amain.s1.event.EventRefreshSceneList;
 import cn.itsite.amain.s1.event.EventSwitchHost;
 import cn.itsite.amain.s1.scene.contract.SceneListContract;
 import cn.itsite.amain.s1.scene.presenter.SceneListPresenter;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;
 

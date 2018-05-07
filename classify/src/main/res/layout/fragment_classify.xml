@@ -87,7 +87,7 @@
                     app:srcCompat="@drawable/ic_arrow_bottom_gray_24dp" />
             </LinearLayout>
 
-            <include layout="@layout/recyclerview"/>
+            <include layout="@layout/recyclerview" />
 
             <!--<cn.itsite.statemanager.StateLayout
                 android:id="@+id/stateLayout"

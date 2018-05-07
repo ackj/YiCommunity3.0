@@ -26,7 +26,7 @@ import java.util.List;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.goodshome.R;
 import cn.itsite.goodshome.contract.HomeContract;
@@ -37,6 +37,7 @@ import cn.itsite.statemanager.StateLayout;
 import cn.itsite.statemanager.StateListener;
 import cn.itsite.statemanager.StateManager;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Author： Administrator on 2018/1/30 0030.
@@ -184,14 +185,14 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                                 .withString("shopUid", mParmas.shopUid)
                                 .withString("menuUid", item.getCategoryBean().getUid())
                                 .navigation();
-                        ((StoreHomeFragment) getParentFragment()).start((BaseFragment) fragment);
+                        ((SupportActivity) _mActivity).start((BaseFragment) fragment);
                         break;
                     case StoreItemGridBean.TYPE_RECOMMEND:
                     case StoreItemGridBean.TYPE_GOODS:
                         Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment")
                                 .withString("uid", item.getProductsBean().getUid())
                                 .navigation();
-                        ((StoreHomeFragment) getParentFragment()).start((BaseFragment) goodsDetailFragment);
+                        ((SupportActivity) _mActivity).start((BaseFragment) goodsDetailFragment);
                         break;
                     default:
                 }
@@ -200,8 +201,8 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
     }
 
     private void go2SelectAddressView() {
-        Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
-        ((StoreHomeFragment) getParentFragment()).startForResult((BaseFragment) addressFragment, 100);
+        Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").withBoolean("fromShop",true).navigation();
+        ((SupportActivity) _mActivity).startForResult((BaseFragment) addressFragment, 100);
     }
 
     @Override

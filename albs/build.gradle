@@ -61,9 +61,9 @@ dependencies {
 
     //高德地图
     //3D地图so及jar
-    api 'com.amap.api:3dmap:latest.integration'
+    api 'com.amap.api:3dmap:6.1.0'
     //定位功能
-    api 'com.amap.api:location:latest.integration'
+    api 'com.amap.api:location:3.8.0'
     //搜索功能
-    api 'com.amap.api:search:latest.integration'
+    api 'com.amap.api:search:6.1.0'
 }

@@ -10,7 +10,7 @@ import cn.itsite.abase.common.luban.Luban;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.acommon.OperateBean;
+import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.order.contract.InputCommentContract;
 import cn.itsite.order.model.InputCommentModel;
 import cn.itsite.order.model.PostCommentBean;

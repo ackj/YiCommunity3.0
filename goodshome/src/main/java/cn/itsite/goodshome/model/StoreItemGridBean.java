@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
 
-import cn.itsite.acommon.GoodsGridBean;
+import cn.itsite.acommon.data.bean.GoodsGridBean;
 
 /**
  * Author： Administrator on 2018/1/30 0030.

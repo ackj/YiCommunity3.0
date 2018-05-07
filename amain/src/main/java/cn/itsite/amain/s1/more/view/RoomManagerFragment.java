@@ -25,7 +25,7 @@ import cn.itsite.amain.s1.entity.bean.RoomTypesBean;
 import cn.itsite.amain.s1.entity.bean.RoomsBean;
 import cn.itsite.amain.s1.more.contract.RoomManagerContract;
 import cn.itsite.amain.s1.more.presenter.RoomManagerPresenter;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;
 

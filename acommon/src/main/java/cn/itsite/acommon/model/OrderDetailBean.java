@@ -8,8 +8,8 @@ import java.util.List;
  * @version v0.0.0
  * @E-mail liujia95me@126.com
  * @time 2018/3/20 0020 16:42
+ * 两个以上的module需要传递的对象，所以抽到common来
  */
-
 public class OrderDetailBean implements Serializable{
 
     /**

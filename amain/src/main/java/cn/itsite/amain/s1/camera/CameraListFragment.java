@@ -35,7 +35,7 @@ import cn.itsite.amain.s1.common.Params;
 import cn.itsite.amain.s1.entity.bean.BaseBean;
 import cn.itsite.amain.s1.entity.bean.CameraBean;
 import cn.itsite.amain.s1.event.EventCameraListRefresh;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;
 

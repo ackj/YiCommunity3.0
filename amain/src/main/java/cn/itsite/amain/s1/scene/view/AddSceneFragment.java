@@ -38,7 +38,7 @@ import cn.itsite.amain.s1.entity.bean.DeviceListBean;
 import cn.itsite.amain.s1.event.EventRefreshSceneList;
 import cn.itsite.amain.s1.scene.contract.AddSceneContract;
 import cn.itsite.amain.s1.scene.presenter.AddScenePresenter;
-import cn.itsite.amain.yicommunity.widget.PtrHTFrameLayout;
+import cn.itsite.acommon.view.PtrHTFrameLayout;
 import cn.itsite.statemanager.StateManager;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;

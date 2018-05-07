@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.aglhz.yicommunity">
+    package="com.example.ecmain">
 
     <application
         android:name="com.example.ecmain.App"
@@ -13,7 +13,7 @@
         tools:replace="android:icon, android:theme,android:label">
 
         <activity
-            android:name="com.example.ecmain.MainActivity"
+            android:name="com.example.ecmain.LaunchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme">
@@ -24,6 +24,19 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:theme="@style/AppTheme"
+            android:name="com.example.ecmain.MainActivity"
+            tools:replace="android:theme" />
+        <!-- 微信回调页面 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent" />
+
+        <activity android:name="cn.itsite.web.WebActivity"
+            android:theme="@style/AppTheme.Transparent"/>
     </application>
 
 </manifest>

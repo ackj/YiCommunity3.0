@@ -34,11 +34,11 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.GoodsCounterView;
-import cn.itsite.acommon.GoodsParams;
-import cn.itsite.acommon.OperateBean;
-import cn.itsite.acommon.SkusBean;
+import cn.itsite.acommon.data.GoodsParams;
+import cn.itsite.acommon.data.bean.OperateBean;
+import cn.itsite.acommon.data.bean.SkusBean;
 import cn.itsite.acommon.SpecificationDialog;
-import cn.itsite.acommon.StorePojo;
+import cn.itsite.acommon.data.pojo.StorePojo;
 import cn.itsite.acommon.event.RefreshCartEvent;
 import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.acommon.model.ProductsBean;
@@ -375,7 +375,7 @@ public class ShoppingCartFragment extends BaseFragment<CartContract.Presenter> i
     @Override
     public void responseDeleteSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
-        mPresenter.getCarts(cartUid);
+        EventBus.getDefault().post(new RefreshCartEvent());
     }
 
     @Override

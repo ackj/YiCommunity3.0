@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import java.util.List;
 
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.GoodsParams;
+import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.order.model.CategoryBean;
 import cn.itsite.order.R;
 import cn.itsite.order.contract.MineOrderContract;
@@ -42,6 +43,15 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     private CategoryBean mAllCategory;
     private List<CategoryBean> mCategories;
     private ImageView mIvBack;
+    private String category;
+
+    public static MineOrderFragment newInstance(String category) {
+        MineOrderFragment fragment =  new MineOrderFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("category",category);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     public static MineOrderFragment newInstance() {
         return new MineOrderFragment();
@@ -56,6 +66,7 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        category = getArguments().getString("category");
     }
 
     @Nullable
@@ -107,5 +118,13 @@ public class MineOrderFragment extends BaseFragment<MineOrderContract.Presenter>
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        if(!TextUtils.isEmpty(category)){
+            for (int i = 0; i < data.size(); i++) {
+                if(data.get(i).getCategory().equals(category)){
+                    mViewPager.setCurrentItem(i+1);
+                    break;
+                }
+            }
+        }
     }
 }

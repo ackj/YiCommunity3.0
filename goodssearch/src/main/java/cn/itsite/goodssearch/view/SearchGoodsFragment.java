@@ -1,5 +1,6 @@
 package cn.itsite.goodssearch.view;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.utils.KeyBoardUtils;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.goodssearch.R;
@@ -125,12 +127,20 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     }
 
     private void initData() {
+        showSoftInputFromWindow(_mActivity,mEtInput);
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 6));
         mSearchGoodsAdapter = new SearchGoodsRVAdapter();
         mRecyclerView.setAdapter(mSearchGoodsAdapter);
         //获取热门搜索
         mPresenter.getKeywords(mParams);
 
+    }
+
+    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        KeyBoardUtils.showKeybord(editText,activity);
     }
 
     private void refreshData(final List<SearchGoodsBean> data) {

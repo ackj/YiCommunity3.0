@@ -35,6 +35,9 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
         initActivity();
         initStateBar();
         mPresenter = createPresenter();
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarDarkFont(true);
+        mImmersionBar.init();   //所有子类都将继承这些相同的属性
     }
 
     private void initStateBar() {
@@ -44,9 +47,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
             //实现透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-        mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.statusBarDarkFont(true);
-        mImmersionBar.init();   //所有子类都将继承这些相同的属性
+
     }
 
     @NonNull

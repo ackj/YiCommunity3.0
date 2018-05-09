@@ -16,16 +16,16 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
-import cn.itsite.abase.BaseApp;
-import cn.itsite.abase.common.ActivityHelper;
-import cn.itsite.abase.event.EventLogout;
-import cn.itsite.abase.log.ALog;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.itsite.abase.BaseApp;
+import cn.itsite.abase.common.ActivityHelper;
+import cn.itsite.abase.event.EventLogout;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.apush.event.EventLearnSensor;
 import cn.itsite.apush.event.EventRefreshSecurity;
 import rx.Observable;
@@ -65,6 +65,20 @@ public class NoticeHelper {
     public static final String GW_ALARM_SOS = "gw_alarm_sos";// sos报警
     public static final String ALARM_RED = "alarm_red";// 红外报警
     public static final String ALARM_DOOR = "alarm_door";// 门磁报警
+
+    public static void notifycationSimple(Context context,String title,String content){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(BaseApp.mContext)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(BaseApp.mContext.getResources(), R.mipmap.ic_launcher))
+                .setVibrate(new long[]{0, 1000, 1000, 1000})
+                .setLights(Color.RED, 1000, 1000)
+                .setAutoCancel(true);
+
+        NotificationManager manager = (NotificationManager) BaseApp.mContext.getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(content.hashCode(), builder.build());
+    }
 
     public static void notification(Context mContext, final String message) {
         Notice notice = new Gson().fromJson(message, Notice.class);

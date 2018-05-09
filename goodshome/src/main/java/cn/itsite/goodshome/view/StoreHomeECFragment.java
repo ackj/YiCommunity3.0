@@ -221,7 +221,7 @@ public class StoreHomeECFragment extends BaseFragment<StoreContract.Presenter> i
                             .setOnClickListener(R.id.btn_comfirm, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
+                                    Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").withBoolean("fromShop",true).navigation();
                                     ((SupportFragment)getParentFragment()).startForResult((BaseFragment) addressFragment, 100);
                                     dialog.dismiss();
                                 }

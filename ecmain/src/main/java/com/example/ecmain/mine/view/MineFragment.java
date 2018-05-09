@@ -139,7 +139,7 @@ public class MineFragment extends BaseFragment<MineOrderContract.Presenter> impl
     private void refreshAvator() {
         Glide.with(_mActivity)
                 .load(UserHelper.avator)
-                .apply(new RequestOptions().circleCrop())
+                .apply(new RequestOptions().error(R.drawable.ic_avatar_150px).placeholder(R.drawable.ic_avatar_150px).circleCrop())
                 .into(mIvAvator);
     }
 

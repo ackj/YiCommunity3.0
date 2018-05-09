@@ -222,6 +222,7 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
      * 初始化沉浸式
      */
     protected void initImmersionBar() {
+
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.statusBarDarkFont(true);
         mImmersionBar.init();

@@ -111,12 +111,12 @@
             app:layout_constraintLeft_toRightOf="@id/iv_icon" />
 
         <TextView
-            android:id="@+id/tv_count"
+            android:id="@+id/tv_goods_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
             android:includeFontPadding="false"
-            android:textColor="@color/error"
+            android:textColor="@color/base_gray"
             android:textSize="@dimen/H3"
             app:layout_constraintBottom_toBottomOf="@id/iv_icon"
             app:layout_constraintRight_toRightOf="parent" />

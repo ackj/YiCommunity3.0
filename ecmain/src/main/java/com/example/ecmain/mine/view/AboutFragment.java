@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ecmain.R;
-import com.example.ecmain.common.ApiService;
-import com.example.ecmain.common.Constants;
 import com.example.ecmain.common.UpdateAppHttpUtils;
 import com.example.ecmain.entity.AppUpdateBean;
 import com.google.gson.Gson;
@@ -23,10 +21,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.AppUtils;
+import cn.itsite.acommon.ApiService;
+import cn.itsite.acommon.Constants;
 import cn.itsite.web.WebActivity;
 
 /**
@@ -86,6 +87,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
             Bundle bundle = new Bundle();
             bundle.putString(Constants.KEY_TITLE, "服务条款");
             bundle.putString(Constants.KEY_LINK, ApiService.SERVICE_TERMS);
+            bundle.putBoolean(BaseConstants.TOOLBAR_COLOR_IS_WHITE,true);
             termsIntent.putExtra("bundle",bundle);
             startActivity(termsIntent);
         }

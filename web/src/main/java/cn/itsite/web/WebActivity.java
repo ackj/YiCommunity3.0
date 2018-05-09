@@ -2,6 +2,8 @@ package cn.itsite.web;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import cn.itsite.abase.mvp.view.base.BaseActivity;
 
 /**
@@ -10,7 +12,7 @@ import cn.itsite.abase.mvp.view.base.BaseActivity;
  * <p>
  * 负责项目中的web部分。
  */
-
+@Route(path = "/web/webactivity")
 public class WebActivity extends BaseActivity {
     public static final String TAG = WebActivity.class.getSimpleName();
 

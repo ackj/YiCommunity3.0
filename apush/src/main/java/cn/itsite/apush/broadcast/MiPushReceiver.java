@@ -2,8 +2,6 @@ package cn.itsite.apush.broadcast;
 
 import android.content.Context;
 
-import cn.itsite.abase.cache.SPCache;
-import cn.itsite.abase.log.ALog;
 import com.taobao.accs.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
@@ -12,6 +10,8 @@ import com.xiaomi.mipush.sdk.PushMessageReceiver;
 
 import java.util.List;
 
+import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.apush.NoticeHelper;
 import cn.itsite.apush.PushHelper;
 

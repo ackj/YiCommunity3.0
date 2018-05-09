@@ -72,7 +72,7 @@ public class ShoppingCartRVAdapter extends BaseMultiItemQuickAdapter<StoreBean, 
                 goodsCounterView.setCounter(item.getProductsBean().getCount());
                 helper.setOnCheckedChangeListener(R.id.checkBox, null)
                         .setText(R.id.tv_name, item.getProductsBean().getTitle())
-                        .setText(R.id.tv_count, item.getProductsBean().getCount() + "")
+                        .setText(R.id.tv_goods_count, "x"+item.getProductsBean().getCount())
                         .setChecked(R.id.checkBox, item.isChecked())
                         .setOnCheckedChangeListener(R.id.checkBox, new CompoundButton.OnCheckedChangeListener() {
                             @Override

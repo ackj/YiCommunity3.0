@@ -10,10 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import cn.itsite.abase.cache.SPCache;
-import cn.itsite.abase.log.ALog;
 import com.huawei.hms.support.api.push.PushReceiver;
 
+import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.apush.NoticeHelper;
 import cn.itsite.apush.PushHelper;
 

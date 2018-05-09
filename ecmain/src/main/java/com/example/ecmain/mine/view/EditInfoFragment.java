@@ -165,7 +165,7 @@ public class EditInfoFragment extends BaseFragment<EditInfoContract.Presenter> i
     private void refreshAvator(String path) {
         Glide.with(_mActivity)
                 .load(path)
-                .apply(new RequestOptions().circleCrop())
+                .apply(new RequestOptions().error(R.drawable.ic_avatar_150px).placeholder(R.drawable.ic_avatar_150px).circleCrop())
                 .into(mIvAvator);
     }
 

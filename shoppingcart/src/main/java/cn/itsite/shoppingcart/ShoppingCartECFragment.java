@@ -204,6 +204,8 @@ public class ShoppingCartECFragment extends BaseFragment<CartContract.Presenter>
                             }
                             productsBean.setUid(item.getProductsBean().getUid());
                             mPresenter.putProduct(cartUid, productsBean);
+                            item.getProductsBean().setCount(goodsCounterView.getCounter());
+                            mAdapter.notifyItemChanged(position);
                         } else if (view.getId() == R.id.iv_edit) {
                             mOperationSwipeLayout = (SwipeLayout) view.getParent().getParent();
                             mOperationSwipeLayout.open();

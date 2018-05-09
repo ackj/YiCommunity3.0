@@ -270,15 +270,20 @@ public class ClassifyFragment extends BaseFragment<MenuContract.Presenter> imple
             mIvStretchMenu.setVisibility(View.INVISIBLE);
         }
         //增加一项：全部
-        MenuBean.ChildrenBean allBean = new MenuBean.ChildrenBean();
-        allBean.setCategory("全部");
-        allBean.setUid(menuBean.getUid());
+        if(menuBean.getChildren().size()>0){
+            mLlStretchable.setVisibility(View.VISIBLE);
+            MenuBean.ChildrenBean allBean = new MenuBean.ChildrenBean();
+            allBean.setCategory("全部");
+            allBean.setUid(menuBean.getUid());
 
-        mAdapterSubMenu.setNewData(null);
-        mAdapterSubMenu.addData(allBean);
-        mAdapterSubMenu.addData(menuBean.getChildren());
-        mAdapterSubMenu.setSelectedPosition(0);
-        //逻辑按点击“全部”一致，请求网络
+            mAdapterSubMenu.setNewData(null);
+            mAdapterSubMenu.addData(allBean);
+            mAdapterSubMenu.addData(menuBean.getChildren());
+            mAdapterSubMenu.setSelectedPosition(0);
+            //逻辑按点击“全部”一致，请求网络
+        }else{
+            mLlStretchable.setVisibility(View.GONE);
+        }
         mParams.category = menuBean.getUid();
         onRefresh();
 

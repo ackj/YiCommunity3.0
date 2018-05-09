@@ -145,8 +145,8 @@ public interface LoginService {
                                         @Query("deviceToken") String deviceToken,
                                         @Query("alias") String alias,
                                         @Query("aliasType") String aliasType);
-
-    String registerDevice = BASE_USER + "/client/logUMengParams";
+    //http://www.aglhz.com:8076/memberSYS-m/client/logUMengParams.do
+    String registerDevice = BASE_USER + "client/logUMengParams.do";
 
     /**
      * 会员推送配置信息

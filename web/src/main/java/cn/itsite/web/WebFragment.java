@@ -41,9 +41,10 @@ public class WebFragment extends BaseFragment {
     private TextView toolbarMenu;
     private String title;
     private String link;
+    private Boolean isWhite;
 
     public static WebFragment newInstance(Bundle bundle) {
-        ALog.e(TAG, "link-->" + bundle.getString("link"));
+//        ALog.e(TAG, "link-->" + bundle.getString("link"));
         WebFragment fragment = new WebFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -54,10 +55,9 @@ public class WebFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            title = bundle.getString(BaseConstants.KEY_TITLE);
-            link = bundle.getString(BaseConstants.KEY_LINK);
-        }
+        title = bundle.getString(BaseConstants.KEY_TITLE);
+        link = bundle.getString(BaseConstants.KEY_LINK);
+        isWhite = bundle.getBoolean(BaseConstants.TOOLBAR_COLOR_IS_WHITE);
     }
 
     @Nullable
@@ -83,10 +83,14 @@ public class WebFragment extends BaseFragment {
         if (!TextUtils.isEmpty(title)) {
             toolbarTitle.setText(title);
         }
-        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);
+        if(isWhite){
+            toolbar.setBackgroundColor(getResources().getColor(R.color.white));
+            toolbarTitle.setTextColor(getResources().getColor(R.color.base_black));
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_left_gray_24dp);
+        }else{
+            toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);
+        }
         toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
-        toolbarMenu.setText("关闭");
-        toolbarMenu.setOnClickListener(v -> ((SupportActivity) _mActivity).onBackPressedSupport());
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -137,6 +141,7 @@ public class WebFragment extends BaseFragment {
                 return super.onJsAlert(view, url, message, result);
             }
         });
+        onRefresh();
     }
 
     @Override

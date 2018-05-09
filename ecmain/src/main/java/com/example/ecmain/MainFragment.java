@@ -68,8 +68,8 @@ public class MainFragment extends BaseFragment  {
 
     private void initData() {
         updateApp();//检测App的更新。
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_discover, R.drawable.ic_tab_discover_78px, R.color.white);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_shop, R.drawable.ic_tab_mall_78px, R.color.white);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_discover, R.drawable.tab_zhinengray_78px, R.color.white);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_shop, R.drawable.tab_bianligray_78px, R.color.white);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_cart, R.drawable.ic_tab_shoppingcart_78px, R.color.white);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.tab_mine, R.drawable.ic_tab_mine_78px, R.color.white);
         bottomItems.add(item1);

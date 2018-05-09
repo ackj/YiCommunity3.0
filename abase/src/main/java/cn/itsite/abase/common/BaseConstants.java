@@ -28,6 +28,7 @@ public class BaseConstants {
 
     public static final String KEY_LINK = "link";
     public static final String KEY_TITLE = "title";
+    public static final String TOOLBAR_COLOR_IS_WHITE = "toolbar_color_is_white";
     public static final String KEY_CART_NUM = "cart_num";//购物车数量
 
     public static final String SERVICE_TYPE_RETURN = "RETURN";

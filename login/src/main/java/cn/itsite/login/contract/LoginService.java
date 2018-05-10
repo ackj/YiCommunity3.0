@@ -81,7 +81,7 @@ public interface LoginService {
      */
     @FormUrlEncoded
     @POST
-    Observable<BaseOldResponse<UserInfoBean>> requestLogin(@Url String url, @Field("user") String username, @Field("pwd") String pwd);
+    Observable<BaseOldResponse<UserInfoBean>> requestLogin(@Url String url,@Field("fc")String fc, @Field("user") String username, @Field("pwd") String pwd);
 
     String requestLogin = BASE_URL + "mall/client/login.do";
 

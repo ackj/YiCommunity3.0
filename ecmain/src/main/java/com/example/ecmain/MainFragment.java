@@ -13,10 +13,17 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.example.ecmain.mine.view.MineFragment;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
+import cn.itsite.abase.cache.SPCache;
+import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.acommon.AudioPlayer;
+import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.goodshome.view.StoreHomeECFragment;
 import cn.itsite.shoppingcart.ShoppingCartECFragment;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -37,6 +44,12 @@ public class MainFragment extends BaseFragment  {
 
     public static MainFragment newInstance() {
         return new MainFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -76,6 +89,7 @@ public class MainFragment extends BaseFragment  {
         bottomItems.add(item2);
         bottomItems.add(item3);
         bottomItems.add(item4);
+
         ahbn.addItems(bottomItems);
         ahbn.setDefaultBackgroundColor(ContextCompat.getColor(App.mContext, R.color.white));
         ahbn.setBehaviorTranslationEnabled(false);
@@ -84,6 +98,7 @@ public class MainFragment extends BaseFragment  {
         ahbn.setAccentColor(ContextCompat.getColor(App.mContext, R.color.base_color));
         ahbn.setInactiveColor(ContextCompat.getColor(App.mContext, R.color.base_gray));
         ahbn.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        refreshPoint();
 
         ahbn.setOnTabSelectedListener((position, wasSelected) -> {
             showHideFragment(mFragments[position], mFragments[prePosition]);
@@ -113,6 +128,16 @@ public class MainFragment extends BaseFragment  {
 //        GuideHelper.showHomeGuide(_mActivity);
     }
 
+    private void refreshPoint(){
+        int cartNum = (int) SPCache.get(_mActivity, BaseConstants.KEY_CART_NUM, 0);
+        ahbn.setNotification(cartNum+"",2);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshCartRedPointEvent event) {
+        ahbn.setNotification(event.getNumber()+"",2);
+    }
+
     private void updateApp() {
 
     }
@@ -135,5 +160,11 @@ public class MainFragment extends BaseFragment  {
             TOUCH_TIME = System.currentTimeMillis();
         }
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

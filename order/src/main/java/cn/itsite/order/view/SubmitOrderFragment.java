@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,7 +34,6 @@ import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.data.bean.DeliveryBean;
 import cn.itsite.acommon.data.bean.OperateBean;
@@ -75,6 +75,7 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     private Payment payment;
     private String mFrom;
     private String mOutTradeNo;
+    private ImageView mIvBack;
 
     public static SubmitOrderFragment newInstance() {
         return new SubmitOrderFragment();
@@ -103,23 +104,16 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
         mTvAmount = view.findViewById(R.id.tv_amount);
         mTvTotalPrice = view.findViewById(R.id.tv_total_price);
         mTvSubmit = view.findViewById(R.id.tv_submit);
+        mIvBack = view.findViewById(R.id.iv_back);
         return attachToSwipeBack(view);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initStatusBar();
+        initStateBar(mLlToolbar);
         initData();
         initListener();
-    }
-
-    private void initStatusBar() {
-        mLlToolbar.setPadding(mLlToolbar.getPaddingLeft(),
-                mLlToolbar.getPaddingTop() +
-                        ScreenUtils.getStatusBarHeight(_mActivity),
-                mLlToolbar.getPaddingRight(),
-                mLlToolbar.getPaddingBottom());
     }
 
     private void initData() {
@@ -187,6 +181,12 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
             @Override
             public void onClick(View v) {
                 submitOrder();
+            }
+        });
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pop();
             }
         });
     }

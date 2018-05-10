@@ -132,7 +132,7 @@ public class StoreHomeFragment extends BaseFragment<StoreContract.Presenter> imp
                 .setBadgeTextSize(10, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setBadgeBackgroundColor(0xA0FF0000)
-                .setBadgeTextColor(0x99FFFFFF);
+                .setBadgeTextColor(0xFFFFFF);
 
         //读取购物车数量缓存
         int cartNum = (int) SPCache.get(_mActivity, BaseConstants.KEY_CART_NUM, 0);

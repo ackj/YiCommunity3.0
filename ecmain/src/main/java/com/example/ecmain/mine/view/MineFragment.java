@@ -24,6 +24,7 @@ import java.util.List;
 
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.acommon.event.EventRefreshAvator;
 import cn.itsite.acommon.event.EventRefreshNickname;
@@ -130,7 +131,7 @@ public class MineFragment extends BaseFragment<MineOrderContract.Presenter> impl
                 .setBadgeTextSize(8, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setBadgeBackgroundColor(getResources().getColor(R.color.base_color))
-                .setBadgeTextColor(0x33FFFFFF);
+                .setBadgeTextColor(0xFFFFFF);
 
         params.type = "orders";
         mPresenter.getCategories(params);
@@ -172,6 +173,7 @@ public class MineFragment extends BaseFragment<MineOrderContract.Presenter> impl
         if (v.getId() == R.id.ll_location) {
             ((SupportActivity) _mActivity).start(SelectDeliveryFragment.newInstance());
         } else if (v.getId() == R.id.ll_set_score) {
+            ToastUtils.showToast(_mActivity,"此功能正在开发");
         } else if (v.getId() == R.id.ll_feedback) {
             ((SupportActivity) _mActivity).start(FeedbackFragment.newInstance());
         } else if (v.getId() == R.id.ll_about) {
@@ -203,7 +205,6 @@ public class MineFragment extends BaseFragment<MineOrderContract.Presenter> impl
             } else if (data.get(i).getCategory().equals(mOrdersArray[3])) {
                 mBadgeAfterSales.setBadgeNumber(Integer.valueOf(data.get(i).getCounts()));
             }
-
         }
     }
 

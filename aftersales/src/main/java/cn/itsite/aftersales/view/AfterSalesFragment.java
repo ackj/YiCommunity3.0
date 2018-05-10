@@ -201,6 +201,12 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
                 selectPhoto();
             }
         });
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pop();
+            }
+        });
         mTvReason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,7 +251,6 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
         }
         return false;
     }
-
 
     //提交申请
     private void submitApply() {

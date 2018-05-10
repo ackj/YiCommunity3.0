@@ -338,4 +338,10 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
             refreshData(mProductsDatas);
         }
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        KeyBoardUtils.hideKeybord(mEtInput,_mActivity);
+    }
 }

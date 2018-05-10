@@ -234,7 +234,47 @@
             android:layout_width="match_parent"
             android:layout_height="8dp"
             android:background="@color/default_white" />
+        <LinearLayout
+            android:id="@+id/ll_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/ic_receiving_90px"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:text="钱包"
+                android:textColor="@color/base_black"
+                android:textSize="@dimen/H3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="￥10.00"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="12dp"
+                app:srcCompat="@drawable/ic_arrow_right_gray_24dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@color/default_white" />
         <LinearLayout
             android:id="@+id/ll_location"
             android:layout_width="match_parent"

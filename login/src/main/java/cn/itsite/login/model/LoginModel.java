@@ -24,19 +24,19 @@ public class LoginModel extends BaseModel implements LoginContract.Model{
     public Observable<BaseOldResponse<UserInfoBean>> requestLogin(UserParams params) {
         return HttpHelper.getService(LoginService.class)
                 .requestLogin(LoginService.requestLogin,
+                        params.fc,
                         params.username,
                         params.pwd)
                 .subscribeOn(Schedulers.io());
     }
 
-        @Override
-        public void registerPush() {
-            HttpHelper.getService(LoginService.class)
-                    .registerDevice(LoginService.registerDevice, UserHelper.token, UserHelper.getDeviceID(), UserHelper.account, "userType")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(baseBean -> ALog.e(TAG, baseBean.getOther().getMessage()));
-        }
-
+    @Override
+    public void registerPush() {
+        HttpHelper.getService(LoginService.class)
+                .registerDevice(LoginService.registerDevice, UserHelper.token, UserHelper.getDeviceID(), UserHelper.account, "userType")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(baseBean -> ALog.e(TAG, baseBean.getOther().getMessage()));
+    }
 
 }

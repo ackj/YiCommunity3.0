@@ -25,13 +25,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import cn.itsite.abase.cache.SPCache;
-import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.acommon.data.bean.DeliveryBean;
 import cn.itsite.acommon.event.EventSelectedDelivery;
-import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.goodshome.R;
@@ -39,8 +37,6 @@ import cn.itsite.goodshome.contract.StoreContract;
 import cn.itsite.goodshome.model.ShopBean;
 import cn.itsite.goodshome.presenter.StorePresenter;
 import me.yokeyword.fragmentation.SupportFragment;
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
 
 /**
  * Created by liujia on 03/05/2018.
@@ -60,7 +56,6 @@ public class StoreHomeECFragment extends BaseFragment<StoreContract.Presenter> i
     private StoreHomeVPAdapter mAdapter;
     private DeliveryBean mDeliveryBean;
     private ImageView mIvBack;
-    private Badge mBadge;
     private boolean isSmartHome;
     private TextView mTvTitle;
 
@@ -111,22 +106,7 @@ public class StoreHomeECFragment extends BaseFragment<StoreContract.Presenter> i
         loadRootFragment(R.id.fl_content,StoreFragment.newInstance(shopTypes[isSmartHome?0:1]));
 
         mAdapter = new StoreHomeVPAdapter(getChildFragmentManager());
-        //购物车上的小红点数字
-        mBadge = new QBadgeView(_mActivity)
-                .bindTarget(mIvShopCart)
-                .setBadgeTextSize(10, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setBadgeBackgroundColor(0xA0FF0000)
-                .setBadgeTextColor(0x99FFFFFF);
 
-        //读取购物车数量缓存
-        int cartNum = (int) SPCache.get(_mActivity, BaseConstants.KEY_CART_NUM, 0);
-        mBadge.setBadgeNumber(cartNum);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefreshCartRedPointEvent event) {
-        mBadge.setBadgeNumber(event.getNumber());
     }
 
     public void showStoreDialog(List<ShopBean> list) {

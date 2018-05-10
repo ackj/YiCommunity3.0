@@ -1,9 +1,11 @@
 package cn.itsite.order.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -29,6 +31,7 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.acommon.data.bean.OperateBean;
+import cn.itsite.acommon.event.EventRefreshOrdersPoint;
 import cn.itsite.acommon.event.RefreshOrderEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.apayment.payment.Payment;
@@ -174,12 +177,22 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
             case TYPE_CANCEL://取消订单
             case TYPE_RECEIPT://确认订单
                 //这两种操作只需要无脑传category给后台，以更改该订单的状态即可
-                List<OperateBean> orders = new ArrayList<>();
-                OperateBean order = new OperateBean();
-                order.uid = orderUid;
-                order.category = action.getCategory();
-                orders.add(order);
-                mPresenter.putOrders(orders);
+                new AlertDialog.Builder(_mActivity)
+                        .setTitle("提示")
+                        .setMessage("此操作无法撤销，是否继续？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                List<OperateBean> orders = new ArrayList<>();
+                                OperateBean order = new OperateBean();
+                                order.uid = orderUid;
+                                order.category = action.getCategory();
+                                orders.add(order);
+                                mPresenter.putOrders(orders);
+                            }
+                        })
+                        .setNegativeButton("取消",null)
+                        .show();
                 break;
             case TYPE_DELETE://删除订单
                 showHintDialog(orderUid);
@@ -283,6 +296,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     @Override
     public void responsePutSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        EventBus.getDefault().post(new EventRefreshOrdersPoint());
         onRefresh();
     }
 

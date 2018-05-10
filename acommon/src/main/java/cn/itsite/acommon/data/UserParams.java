@@ -9,7 +9,7 @@ import java.io.File;
 public class UserParams {
 
     public String sc = "AglhzYsq";
-    public String fc = "FAglYsq";
+    public String fc = "FAglMall";
     public String username;
     public String pwd;
     public String code;

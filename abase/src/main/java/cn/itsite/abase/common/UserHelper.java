@@ -69,6 +69,7 @@ public class UserHelper {
     public static String mobile;
     public static String nickName;
     public static String avator;
+    public static String money;
 
     public static UserBean.DataBean.MemberInfoBean userInfo;
 
@@ -158,6 +159,10 @@ public class UserHelper {
 
     public static void setAvator(String avator){
         UserHelper.avator = avator;
+    }
+
+    public static void setMoney(String money){
+        UserHelper.money = money;
     }
 
     //更新社区名称和社区代码。

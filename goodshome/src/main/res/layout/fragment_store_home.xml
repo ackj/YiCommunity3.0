@@ -23,7 +23,6 @@
             android:padding="14dp"
             app:srcCompat="@drawable/ic_arrow_left_gray_24dp" />
 
-
         <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"

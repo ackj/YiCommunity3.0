@@ -18,12 +18,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
-import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.abase.utils.ToastUtils;
+import cn.itsite.acommon.data.bean.DeliveryBean;
 import cn.itsite.albs.location.LocationFragment;
 import cn.itsite.delivery.R;
 import cn.itsite.delivery.contract.AddDeliveryContract;
-import cn.itsite.acommon.data.bean.DeliveryBean;
 import cn.itsite.delivery.presenter.AddDeliveryPresenter;
 
 /**
@@ -84,22 +83,16 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
         mRgGender = view.findViewById(R.id.rg_gender);
         mCbDefault = view.findViewById(R.id.cb_default);
         mTvTitle = view.findViewById(R.id.tv_title);
+        view.findViewById(R.id.iv_back).setOnClickListener(this);
         return attachToSwipeBack(view);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initStatusBar();
+        initStateBar(mRlToolbar);
         initData();
         initListener();
-    }
-
-    private void initStatusBar() {
-        mRlToolbar.setPadding(mRlToolbar.getPaddingLeft(),
-                mRlToolbar.getPaddingTop() + ScreenUtils.getStatusBarHeight(_mActivity),
-                mRlToolbar.getPaddingRight(),
-                mRlToolbar.getPaddingBottom());
     }
 
     private void initData() {
@@ -175,6 +168,8 @@ public class AddDeliveryFragment extends BaseFragment<AddDeliveryContract.Presen
             }
         } else if (v.getId() == R.id.tv_select_address) {
             startForResult(LocationFragment.newInstance(), REQUEST_CODE);
+        }else if(v.getId()==R.id.iv_back){
+            pop();
         }
     }
 

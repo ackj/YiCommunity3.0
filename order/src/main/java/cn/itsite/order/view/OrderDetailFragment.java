@@ -1,9 +1,11 @@
 package cn.itsite.order.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -306,24 +308,33 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         switch (action.getType().toLowerCase()) {
             case TYPE_CANCEL://取消订单
             case TYPE_RECEIPT://确认订单
-                //这两种操作只需要无脑传category给后台，以更改该订单的状态即可
-                List<OperateBean> orders = new ArrayList<>();
-                OperateBean order = new OperateBean();
-                order.uid = orderUid;
-                order.category = action.getCategory();
-                orders.add(order);
-                mPresenter.putOrders(orders);
+                new AlertDialog.Builder(_mActivity)
+                        .setTitle("提示")
+                        .setMessage("此操作无法撤销，是否继续？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //这两种操作只需要无脑传category给后台，以更改该订单的状态即可
+                                List<OperateBean> orders = new ArrayList<>();
+                                OperateBean order = new OperateBean();
+                                order.uid = orderUid;
+                                order.category = action.getCategory();
+                                orders.add(order);
+                                mPresenter.putOrders(orders);
+                            }
+                        })
+                        .setNegativeButton("取消",null)
+                        .show();
                 break;
             case TYPE_DELETE://删除订单
                 showHintDialog(orderUid);
                 break;
             case TYPE_LOGISTICS://查看物流
-                Fragment fragment = (Fragment) ARouter.getInstance().build("/web/webfragment").navigation();
                 Bundle bundle = new Bundle();
                 bundle.putString(BaseConstants.KEY_LINK, "http://www.aglhz.com/mall/m/html/wuliuSearch.html?token="+ UserHelper.token);
                 bundle.putString(BaseConstants.KEY_TITLE, "查看物流");
-                fragment.setArguments(bundle);
-                ((BaseFragment) getParentFragment()).start((BaseFragment) fragment);
+                ARouter.getInstance().build("/web/webactivity")
+                        .withBundle("bundle",bundle).navigation();
                 break;
             case TYPE_PAY://跳支付
                 BaseRequest<PayParams> request = new BaseRequest<>();
@@ -547,6 +558,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     public void responsePutSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
         EventBus.getDefault().post(new RefreshOrderEvent());
+        EventBus.getDefault().post(new EventRefreshOrdersPoint());
         pop();
     }
 }

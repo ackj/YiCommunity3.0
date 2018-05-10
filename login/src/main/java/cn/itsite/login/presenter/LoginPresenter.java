@@ -44,7 +44,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View,LoginContra
                                 UserHelper.setMobile(response.getData().getMemberInfo().getMobile());
                                 UserHelper.setNickname(response.getData().getMemberInfo().getNickName());
                                 UserHelper.setToken(response.getData().getMemberInfo().getToken());
-
+                                UserHelper.setMoney(response.getData().getMemberInfo().getMoney());
                                 mModel.registerPush();
 
                                 getView().responseLogin(response.getData());

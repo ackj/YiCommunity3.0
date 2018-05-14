@@ -84,6 +84,7 @@ public class StoreRVAdapter extends BaseMultiItemQuickAdapter<StoreItemGridBean,
                 helper.setText(R.id.tv_name, item.getProductsBean().getTitle())
                         .setText(R.id.tv_desc, item.getProductsBean().getDescription())
                         .setText(R.id.tv_price, item.getProductsBean().getCurrency() + item.getProductsBean().getPrice());
+
                 break;
             case StoreItemGridBean.TYPE_GOODS:
                 ImageView ivIcon = helper.getView(R.id.iv_icon);

@@ -67,6 +67,7 @@ import static cn.itsite.order.view.OrderListFragment.TYPE_EVALUATE;
 import static cn.itsite.order.view.OrderListFragment.TYPE_LOGISTICS;
 import static cn.itsite.order.view.OrderListFragment.TYPE_PAY;
 import static cn.itsite.order.view.OrderListFragment.TYPE_RECEIPT;
+import static cn.itsite.order.view.OrderListFragment.TYPE_REFUND;
 
 /**
  * Author： Administrator on 2018/2/1 0001.
@@ -199,6 +200,11 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 if (view.getId() == R.id.tv_apply) {
                     showServiceTypeDialog(mAdapter.getItem(position));
                 } else if (view.getId() == R.id.cl_goods_layout) {
+                    Fragment goodsDetailFragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("uid", mAdapter.getData().get(position).getUid());
+                    goodsDetailFragment.setArguments(bundle);
+                    start((BaseFragment) goodsDetailFragment);
                 }
             }
         });
@@ -216,13 +222,13 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                     adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
-                            String serviceType = BaseConstants.SERVICE_TYPE_RETURN;
+                            String serviceType = BaseConstants.SERVICE_TYPE_REFUND;
                             switch (position){
                                 case 0:
-                                    serviceType = BaseConstants.SERVICE_TYPE_RETURN;
+                                    serviceType = BaseConstants.SERVICE_TYPE_REFUND;
                                     break;
                                 case 1:
-                                    serviceType = BaseConstants.SERVICE_TYPE_REFUND;
+                                    serviceType = BaseConstants.SERVICE_TYPE_RETURN;
                                     break;
                                 case 2:
                                     serviceType = BaseConstants.SERVICE_TYPE_EXCHANGE;
@@ -331,8 +337,9 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 break;
             case TYPE_LOGISTICS://查看物流
                 Bundle bundle = new Bundle();
-                bundle.putString(BaseConstants.KEY_LINK, "http://www.aglhz.com/mall/m/html/wuliuSearch.html?token="+ UserHelper.token);
+                bundle.putString(BaseConstants.KEY_LINK, "http://www.aglhz.com/mall/m/html/wuliuSearch.html?token="+ UserHelper.token+"&orderId="+orderUid);
                 bundle.putString(BaseConstants.KEY_TITLE, "查看物流");
+                bundle.putBoolean(BaseConstants.TOOLBAR_COLOR_IS_WHITE, true);
                 ARouter.getInstance().build("/web/webactivity")
                         .withBundle("bundle",bundle).navigation();
                 break;
@@ -351,6 +358,9 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 break;
             case TYPE_EVALUATE:
                 start(InputCommentFragment.newInstance(mOrderDetailBean));
+                break;
+            case TYPE_REFUND:
+
                 break;
             default:
         }

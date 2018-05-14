@@ -36,8 +36,7 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.data.UserParams;
-import cn.itsite.acommon.event.EventRefreshAvator;
-import cn.itsite.acommon.event.EventRefreshNickname;
+import cn.itsite.acommon.event.EventRefreshInfo;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 
 /**
@@ -173,7 +172,7 @@ public class EditInfoFragment extends BaseFragment<EditInfoContract.Presenter> i
     public void responseUpdateAvator(BaseOldResponse<String> response) {
         DialogHelper.successSnackbar(getView(),"修改头像成功");
         UserHelper.setAvator(params.file.getAbsolutePath());
-        EventBus.getDefault().post(new EventRefreshAvator());
+        EventBus.getDefault().post(new EventRefreshInfo());
     }
 
     @Override
@@ -181,6 +180,6 @@ public class EditInfoFragment extends BaseFragment<EditInfoContract.Presenter> i
         DialogHelper.successSnackbar(getView(),response.getOther().getMessage());
         mTvNickname.setText(params.username);
         UserHelper.setNickname(params.username);
-        EventBus.getDefault().post(new EventRefreshNickname());
+        EventBus.getDefault().post(new EventRefreshInfo());
     }
 }

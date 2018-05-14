@@ -7,7 +7,12 @@ import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.ecmain.BuildConfig;
 import com.example.ecmain.R;
 import com.example.ecmain.common.UpdateAppHttpUtils;
 import com.example.ecmain.entity.AppUpdateBean;
@@ -23,9 +28,11 @@ import java.util.Map;
 
 import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.common.GlideRoundTransform;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.AppUtils;
+import cn.itsite.abase.utils.DensityUtils;
 import cn.itsite.acommon.ApiService;
 import cn.itsite.acommon.Constants;
 import cn.itsite.web.WebActivity;
@@ -40,6 +47,8 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
     private static final String TAG = AboutFragment.class.getSimpleName();
     private TextInputLayout mTilPhone;
     private View mRlToolbar;
+    private TextView mTvVersion;
+    private ImageView mIvIcon;
 
     public static AboutFragment newInstance() {
         return new AboutFragment();
@@ -55,6 +64,8 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
         mRlToolbar = view.findViewById(R.id.rl_toolbar);
+        mTvVersion = view.findViewById(R.id.tv_version);
+        mIvIcon = view.findViewById(R.id.iv_icon);
         view.findViewById(R.id.iv_back).setOnClickListener(this);
         view.findViewById(R.id.ll_check_version).setOnClickListener(this);
         view.findViewById(R.id.ll_protocol).setOnClickListener(this);
@@ -70,7 +81,11 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void initData() {
-
+        mTvVersion.setText("版本："+ BuildConfig.VERSION_NAME);
+        Glide.with(_mActivity)
+                .load(R.mipmap.ic_launcher)
+                .apply(new RequestOptions().transform(new GlideRoundTransform(_mActivity, DensityUtils.dp2px(_mActivity,22.5f))))
+                .into(mIvIcon);
     }
 
     private void initListener() {
@@ -108,7 +123,6 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
         params.put("random", random);
         params.put("sc", Constants.SC);
         params.put("appType", Constants.APP_TYPE);
-
 
         new UpdateAppManager
                 .Builder()

@@ -5,10 +5,10 @@ import com.google.gson.Gson;
 import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
-import cn.itsite.acommon.data.bean.OperateBean;
-import cn.itsite.acommon.data.bean.SkusBean;
 import cn.itsite.acommon.SkusService;
 import cn.itsite.acommon.contract.SkusContract;
+import cn.itsite.acommon.data.bean.OperateBean;
+import cn.itsite.acommon.data.bean.SkusBean;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 

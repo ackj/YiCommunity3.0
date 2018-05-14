@@ -1,5 +1,7 @@
 package cn.itsite.goodssearch.model;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import cn.itsite.abase.mvp.model.base.BaseModel;
@@ -29,8 +31,9 @@ public class KeywordsModel extends BaseModel implements KeywordsContract.Model{
 
     @Override
     public Observable<BaseResponse<List<GoodsBean>>> getProducts(GoodsParams goodsParams) {
-        return HttpHelper.getService(KeywordService.class)
-                .getProducts(goodsParams.toString())
-                .subscribeOn(Schedulers.io());
+            return HttpHelper.getService(KeywordService.class)
+//                    .getProducts(URLEncoder.encode(goodsParams.toString(),"UTF-8"))
+                    .getProducts(goodsParams.toString())
+                    .subscribeOn(Schedulers.io());
     }
 }

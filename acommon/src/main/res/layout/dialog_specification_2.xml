@@ -79,7 +79,7 @@
         android:id="@+id/line_1"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/base_white" />
+        android:background="@color/default_white" />
 
 
     <android.support.v7.widget.RecyclerView
@@ -93,7 +93,7 @@
         android:id="@+id/line_2"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/base_white" />
+        android:background="@color/default_white" />
 
     <LinearLayout
         android:layout_width="match_parent"

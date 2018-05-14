@@ -23,7 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name="cn.itsite.login.LoginActivity"
+            android:theme="@style/AppTheme.Transparent">
+            <intent-filter>
+                <action android:name="cn.itsite.login.LoginActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:theme="@style/AppTheme"
             android:name="com.example.ecmain.MainActivity"
@@ -37,6 +44,13 @@
 
         <activity android:name="cn.itsite.web.WebActivity"
             android:theme="@style/AppTheme.Transparent"/>
+
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="f54194759b93b7a801d067d715899885" />
+
+        <activity
+            android:name="cn.itsite.acommon.view.PreviewActivity"
+            android:theme="@style/Transparent" />
+
     </application>
 
 </manifest>

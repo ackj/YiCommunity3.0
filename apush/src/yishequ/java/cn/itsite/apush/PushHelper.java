@@ -22,7 +22,6 @@ import java.io.IOException;
 import cn.itsite.abase.BaseApp;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.log.ALog;
-import cn.itsite.abase.network.http.HttpHelper;
 import okhttp3.ResponseBody;
 import retrofit2.http.POST;
 import retrofit2.http.Query;

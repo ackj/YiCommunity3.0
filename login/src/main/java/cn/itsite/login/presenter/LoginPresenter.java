@@ -3,6 +3,7 @@ package cn.itsite.login.presenter;
 import android.support.annotation.NonNull;
 
 import cn.itsite.abase.common.UserHelper;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
 import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.acommon.data.UserParams;
@@ -16,6 +17,8 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 
 public class LoginPresenter extends BasePresenter<LoginContract.View,LoginContract.Model> implements LoginContract.Presenter {
+
+    private static final String TAG= LoginPresenter.class.getSimpleName();
 
     /**
      * 创建Presenter的时候就绑定View和创建model。
@@ -39,6 +42,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View,LoginContra
                         .subscribe(new BaseOldSubscriber<BaseOldResponse<UserInfoBean>>() {
                             @Override
                             public void onSuccess(BaseOldResponse<UserInfoBean> response) {
+                                ALog.e(TAG,"onSuccess");
                                 UserHelper.setAccount(params.username,params.pwd);
                                 UserHelper.setAvator(response.getData().getMemberInfo().getFace());
                                 UserHelper.setMobile(response.getData().getMemberInfo().getMobile());

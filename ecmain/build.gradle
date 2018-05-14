@@ -6,11 +6,11 @@ properties.load(inputStream)
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.itsite.ec"
+        applicationId "com.aglhz.mall"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        versionCode 180
+        versionName "1.8.0"
 
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -70,7 +70,13 @@ android {
 
     flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
     productFlavors {
-            ec{}
+        ec {
+            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""//这个还是得想办法让后台返回才行。
+            buildConfigField "String", "SC", "\"AglhzMall\""//这个还是得想办法让后台返回才行。
+
+            manifestPlaceholders = [application_id: "com.aglhz.mall",
+                                    amap_apikey   : "f54194759b93b7a801d067d715899885"]
+        }
     }
 
 //    buildTypes.all {

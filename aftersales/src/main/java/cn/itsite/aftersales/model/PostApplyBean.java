@@ -7,7 +7,6 @@ import java.util.List;
  */
 
 public class PostApplyBean {
-
     /**
      * category : REFUND
      * uid : 13212133313
@@ -15,7 +14,6 @@ public class PostApplyBean {
      * reasonType : BAD_GOODS
      * products : [{"uid":"13212133313","amount":"5","sku":"525235","pictures":["url1","url2","url3"]},{"uid":"13212133313","amount":"5","sku":"","pictures":["url1","url2","url3"]}]
      */
-
     private String category;
     private String uid;
     private String note;

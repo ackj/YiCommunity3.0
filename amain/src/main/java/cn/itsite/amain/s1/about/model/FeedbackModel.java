@@ -2,7 +2,6 @@ package cn.itsite.amain.s1.about.model;
 
 
 import cn.itsite.abase.mvp.model.base.BaseModel;
-import cn.itsite.abase.network.http.HttpHelper;
 
 
 import cn.itsite.amain.s1.about.contract.FeedbackContract;

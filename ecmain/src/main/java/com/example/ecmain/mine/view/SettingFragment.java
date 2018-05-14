@@ -13,16 +13,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.example.ecmain.LaunchActivity;
 import com.example.ecmain.R;
 import com.example.ecmain.mine.contract.SettingContract;
 import com.example.ecmain.mine.presenter.SettingPresenter;
 import com.kyleduo.switchbutton.SwitchButton;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.common.UserHelper;
+import cn.itsite.abase.event.EventECLogout;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.acommon.data.UserParams;
+import cn.itsite.login.LoginActivity;
 import cn.itsite.login.model.PushEnableBean;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -32,7 +36,6 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 @Route(path = "/mine/settingfragment")
 public class SettingFragment extends BaseFragment<SettingContract.Presenter> implements SettingContract.View,View.OnClickListener {
-
 
     private static final String TAG = SettingFragment.class.getSimpleName();
     private RelativeLayout mRlToolbar;
@@ -117,8 +120,9 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
     @Override
     public void responseLogout(BaseOldResponse response) {
         DialogHelper.successSnackbar(getView(),response.getOther().getMessage());
-        startActivity(new Intent(_mActivity,LaunchActivity.class));
-        _mActivity.finish();
+        UserHelper.clear();
+        EventBus.getDefault().post(new EventECLogout());
+        startActivity(new Intent(_mActivity,LoginActivity.class));
     }
 
     @Override

@@ -1,24 +1,19 @@
 package cn.itsite.order.view;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import cn.itsite.abase.BaseApp;
-import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.mvp.view.base.BaseRecyclerViewAdapter;
-import cn.itsite.order.model.OrderBean;
 import cn.itsite.order.R;
+import cn.itsite.order.model.OrderBean;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
@@ -73,17 +68,17 @@ public class OrderListRVAdapter extends BaseRecyclerViewAdapter<OrderBean, BaseV
             }
         }
 
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
-                OrderBean.ProductsBean item = adapter.getData().get(position);
-                Fragment fragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
-                Bundle bundle = new Bundle();
-                bundle.putString("uid", item.getUid());
-                fragment.setArguments(bundle);
-                activity.start((BaseFragment) fragment);
-            }
-        });
+//        adapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+//                OrderBean.ProductsBean item = adapter.getData().get(position);
+//                Fragment fragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("uid", item.getUid());
+//                fragment.setArguments(bundle);
+//                activity.start((BaseFragment) fragment);
+//            }
+//        });
     }
 
     private boolean isDeliveryToDoor(OrderBean item) {

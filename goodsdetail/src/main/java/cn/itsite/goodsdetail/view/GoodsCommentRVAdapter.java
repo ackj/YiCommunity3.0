@@ -33,6 +33,11 @@ public class GoodsCommentRVAdapter extends BaseRecyclerViewAdapter<EvaluatesBean
         super(R.layout.item_goods_comment);
     }
 
+    private boolean isGoodsDetail;
+    public void setIsGoodsDetail(boolean isGoodsDetail){
+        this.isGoodsDetail = isGoodsDetail;
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, EvaluatesBean item) {
         RecyclerView recyclerView = helper.getView(R.id.recyclerView);
@@ -44,12 +49,13 @@ public class GoodsCommentRVAdapter extends BaseRecyclerViewAdapter<EvaluatesBean
         ImageView ivAvator = helper.getView(R.id.iv_avator);
         Glide.with(ivAvator.getContext())
                 .load(item.getMember().getIcon())
-                .apply(new RequestOptions().error(R.drawable.ic_default_head_image_200px)
-                .placeholder(R.drawable.ic_default_head_image_200px).circleCrop())
+                .apply(new RequestOptions().error(R.drawable.ic_avatar_150px)
+                .placeholder(R.drawable.ic_avatar_150px).circleCrop())
                 .into(ivAvator);
         helper.setText(R.id.tv_name,item.getMember().getName())
                 .setText(R.id.tv_content,item.getEvaDes())
                 .setText(R.id.tv_time,item.getEvaTime())
+                .setVisible(R.id.tv_time,!isGoodsDetail)
                 .setText(R.id.tv_desc,item.getProductDes())
         .setText(R.id.tv_level,item.getEvaLevel()==0?"差评":item.getEvaLevel()==1?"中评":"好评");
 

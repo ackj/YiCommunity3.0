@@ -15,7 +15,6 @@ import org.greenrobot.eventbus.EventBus;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.common.RxManager;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
-import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.abase.utils.KeyBoardUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.s1.App;

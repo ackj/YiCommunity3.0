@@ -13,7 +13,6 @@ import android.widget.TextView;
 import cn.itsite.abase.common.RxManager;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.mvp.view.base.Decoration;
-import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.amain.R;
 import cn.itsite.amain.s1.common.ApiService;
 import cn.itsite.amain.s1.common.Constants;

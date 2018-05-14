@@ -59,6 +59,7 @@ public class UserInfoBean implements Serializable{
          * gradeName :
          */
 
+        private String icon;
         private String id;
         private String mobile;
         private String email;
@@ -73,6 +74,14 @@ public class UserInfoBean implements Serializable{
         private int grade;
         private String gradeName;
         private String face;
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
 
         public String getFace() {
             return face;

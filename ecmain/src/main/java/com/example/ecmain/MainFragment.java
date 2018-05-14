@@ -11,18 +11,33 @@ import android.view.ViewGroup;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.example.ecmain.common.UpdateAppHttpUtils;
+import com.example.ecmain.entity.AppUpdateBean;
 import com.example.ecmain.mine.view.MineFragment;
+import com.google.gson.Gson;
+import com.vector.update_app.UpdateAppBean;
+import com.vector.update_app.UpdateAppManager;
+import com.vector.update_app.UpdateCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.common.BaseConstants;
+import cn.itsite.abase.event.EventECLogout;
+import cn.itsite.abase.event.EventLoginSuccess;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.utils.AppUtils;
 import cn.itsite.acommon.AudioPlayer;
+import cn.itsite.acommon.Constants;
 import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.goodshome.view.StoreHomeECFragment;
 import cn.itsite.shoppingcart.ShoppingCartECFragment;
@@ -104,24 +119,6 @@ public class MainFragment extends BaseFragment  {
             showHideFragment(mFragments[position], mFragments[prePosition]);
             prePosition = position;
             AudioPlayer.getInstance(_mActivity).play(2);
-
-//            if (wasSelected) {
-//                switch (position) {
-//                    case 0:
-//                        ((HomeFragment) mFragments[0]).go2TopAndRefresh();
-//                        break;
-//                    case 1:
-//                        ((StoreHomeFragment) mFragments[1]).go2TopAndRefresh(null);
-//                        break;
-//                    case 2:
-//                        ((SocialityFragment) mFragments[2]).go2TopAndRefresh();
-//                        break;
-//                    case 3:
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
             return true;
         });
         ahbn.setCurrentItem(prePosition);
@@ -130,7 +127,18 @@ public class MainFragment extends BaseFragment  {
 
     private void refreshPoint(){
         int cartNum = (int) SPCache.get(_mActivity, BaseConstants.KEY_CART_NUM, 0);
+        ahbn.setNotificationBackgroundColor(getResources().getColor(R.color.base_color));
         ahbn.setNotification(cartNum+"",2);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EventLoginSuccess event){
+        refreshPoint();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EventECLogout eventLogout){
+        ahbn.setNotification("",2);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -139,7 +147,75 @@ public class MainFragment extends BaseFragment  {
     }
 
     private void updateApp() {
+        String random = System.currentTimeMillis() + "";
+        String accessKey = Constants.SYS_ACCESS_PREFIX + random + Constants.SYS_ACCESS_KEY;
+        ALog.e("random-->" + random);
+        ALog.e("accessKey-->" + accessKey);
+        ALog.e("getMd5(accessKey)-->" + getMd5(accessKey));
 
+        Map<String, String> params = new HashMap<>();
+        params.put("accessKey", getMd5(accessKey));
+        params.put("random", random);
+        params.put("sc", BuildConfig.SC);
+        params.put("appType", Constants.APP_TYPE);
+
+        new UpdateAppManager
+                .Builder()
+                .setActivity(_mActivity)
+                .setHttpManager(new UpdateAppHttpUtils())
+                .setPost(true)
+                .setParams(params)
+                .setUpdateUrl(Constants.APP_UPDATE_URL)
+                .hideDialogOnDownloading(false)
+                .build()
+                .checkNewApp(new UpdateCallback() {
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        ALog.e("requestAppUpdatae-->" + json);
+                        UpdateAppBean updateAppBean = new UpdateAppBean();
+                        AppUpdateBean mAppUpdateBean = new Gson().fromJson(json, AppUpdateBean.class);
+
+                        updateAppBean
+                                //（必须）是否更新Yes,No
+                                .setUpdate(AppUtils.getVersionCode(_mActivity) < mAppUpdateBean.getData().getVersionCode() ? "Yes" : "No")
+                                //（必须）新版本号，
+                                .setNewVersion(mAppUpdateBean.getData().getVersionName())
+                                //（必须）下载地址
+                                .setApkFileUrl(mAppUpdateBean.getData().getUrl())
+                                //（必须）更新内容
+                                .setUpdateLog(mAppUpdateBean.getData().getDescription())
+                                //大小，不设置不显示大小，可以不设置
+                                .setTargetSize(mAppUpdateBean.getData().getSize())
+                                //是否强制更新，可以不设置
+                                .setConstraint(mAppUpdateBean.getData().isIsForce());
+
+                        return updateAppBean;
+                    }
+
+                    @Override
+                    protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        updateAppManager.showDialogFragment();
+                    }
+                });
+    }
+
+    private String getMd5(String str) {
+        StringBuffer sb = new StringBuffer();
+        try {
+            //获取加密方式为md5的算法对象
+            MessageDigest instance = MessageDigest.getInstance("MD5");
+            byte[] digest = instance.digest(str.getBytes());
+            for (byte b : digest) {
+                String hexString = Integer.toHexString(b & 0xff);
+                if (hexString.length() < 2) {
+                    hexString = "0" + hexString;
+                }
+                sb = sb.append(hexString);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
     @Override

@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.event.EventECLogout;
+import cn.itsite.abase.event.EventLoginSuccess;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.GoodsCounterView;
@@ -142,6 +145,7 @@ public class ShoppingCartECFragment extends BaseFragment<CartContract.Presenter>
         mAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
+                ALog.e(TAG,"position:"+position+"  size:"+mDatas.size());
                 return mDatas.get(position).getSpanSize();
             }
         });
@@ -167,6 +171,20 @@ public class ShoppingCartECFragment extends BaseFragment<CartContract.Presenter>
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefreshCartEvent event) {
         mPresenter.getCarts(cartUid);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EventLoginSuccess event) {
+        mPresenter.getCarts(cartUid);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EventECLogout event){
+        mDatas.clear();
+        mDatas.add(emptyBean);
+        computeCount(mDatas);
+        computePrice();
+        mPresenter.getRecommendGoods(mGoodsParams);
     }
 
     private void initListener() {
@@ -400,6 +418,7 @@ public class ShoppingCartECFragment extends BaseFragment<CartContract.Presenter>
         }
         computeCount(data);
         computePrice();
+        mAdapter.setNewData(mDatas);
         //查推荐
         mPresenter.getRecommendGoods(mGoodsParams);
     }

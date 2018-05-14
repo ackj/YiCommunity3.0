@@ -6,8 +6,8 @@ import cn.itsite.abase.mvp.model.base.BaseModel;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.acommon.data.bean.DeliveryBean;
-import cn.itsite.delivery.contract.DeliveryService;
 import cn.itsite.delivery.contract.DeliveryContract;
+import cn.itsite.delivery.contract.DeliveryService;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 

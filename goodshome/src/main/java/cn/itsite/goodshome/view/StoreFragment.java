@@ -1,5 +1,6 @@
 package cn.itsite.goodshome.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -132,13 +133,28 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                                 .setOnClickListener(R.id.bt_empty_state, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        go2SelectAddressView();
+                                        if(isLogined()){
+                                            go2SelectAddressView();
+                                        }
                                     }
                                 });
                     }
                 })
                 .setEmptyText("当前暂无商品，请切换地址试试吧！")
                 .build();
+    }
+
+    private boolean isLogined() {
+        if (UserHelper.isLogined()) {
+            return true;
+        } else {
+            Intent intent = new Intent("cn.itsite.login.LoginActivity");
+            //不添加这个Flag则会报如下错误：Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            _mActivity.overridePendingTransition(0, 0);
+            return false;
+        }
     }
 
     private void initData() {
@@ -163,7 +179,9 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
                 switch (item.getItemType()) {
                     case StoreItemGridBean.TYPE_BANNER:
                         if (view.getId() == R.id.ll_location) {
-                            go2SelectAddressView();
+                            if(isLogined()) {
+                                go2SelectAddressView();
+                            }
                         }
                         break;
                     default:

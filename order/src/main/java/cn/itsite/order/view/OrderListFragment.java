@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.event.EventRefreshOrdersPoint;
 import cn.itsite.acommon.event.RefreshOrderEvent;
-import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.apayment.payment.Payment;
 import cn.itsite.order.R;
 import cn.itsite.order.contract.OrderListContract;
@@ -61,6 +59,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
     public static final String TYPE_LOGISTICS = "logistics";//查看物流
     public static final String TYPE_DELETE = "delete";//删除订单
     public static final String TYPE_EVALUATE = "evaluate";//去评价
+    public static final String TYPE_REFUND = "refund";//去评价
 
     RecyclerView mRecyclerView;
     private OrderListRVAdapter mAdapter;
@@ -195,7 +194,17 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                         .show();
                 break;
             case TYPE_DELETE://删除订单
-                showHintDialog(orderUid);
+                new AlertDialog.Builder(_mActivity)
+                        .setTitle("提示")
+                        .setMessage("此操作无法撤销，是否继续？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteOrder(orderUid);
+                            }
+                        })
+                        .setNegativeButton("取消",null)
+                        .show();
                 break;
             case TYPE_LOGISTICS://查看物流
                 Fragment fragment = (Fragment) ARouter
@@ -210,38 +219,15 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                 go2OrderDetailView(orderUid);
                 break;
             case TYPE_EVALUATE://去评价
+                go2OrderDetailView(orderUid);
 //                该页面无评价按钮（后台决定）
 //                start(InputCommentFragment.newInstance());
                 break;
+            case TYPE_REFUND://退款
+
+                break;
             default:
         }
-    }
-
-    private void showHintDialog(String orderUid) {
-        new BaseDialogFragment()
-                .setLayoutId(R.layout.dialog_hint)
-                .setConvertListener((holder, dialog) -> {
-                    holder.setText(R.id.tv_content, "您确定要删除订单吗？")
-                            .setText(R.id.btn_cancel, "取消")
-                            .setText(R.id.btn_comfirm, "确定")
-                            .setOnClickListener(R.id.btn_cancel, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setOnClickListener(R.id.btn_comfirm, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    deleteOrder(orderUid);
-                                    dialog.dismiss();
-                                }
-                            });
-                })
-                .setMargin(40)
-                .setDimAmount(0.3f)
-                .setGravity(Gravity.CENTER)
-                .show(getChildFragmentManager());
     }
 
     private void deleteOrder(String orderUid) {

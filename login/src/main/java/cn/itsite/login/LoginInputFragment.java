@@ -86,6 +86,7 @@ public class LoginInputFragment extends BaseFragment<LoginContract.Presenter> im
     public void responseLogin(UserInfoBean bean) {
         DialogHelper.successSnackbar(_mActivity.getCurrentFocus(),"登录成功");
         EventBus.getDefault().post(new EventLoginSuccess());
+        _mActivity.onBackPressed();
     }
 
     @Override

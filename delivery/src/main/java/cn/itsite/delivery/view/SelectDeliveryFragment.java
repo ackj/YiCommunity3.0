@@ -121,8 +121,8 @@ public class SelectDeliveryFragment extends BaseFragment<DeliveryContract.Presen
                     setFragmentResult(RESULT_OK, bundle);
                     if(fromShop){
                         EventBus.getDefault().post(new EventSelectedDelivery(deliveryBean));
+                        ((SupportActivity) _mActivity).onBackPressedSupport();
                     }
-                    ((SupportActivity) _mActivity).onBackPressedSupport();
                 }
             }
         });

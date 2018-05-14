@@ -32,12 +32,14 @@ import java.util.Map;
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.data.bean.DeliveryBean;
 import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.data.pojo.StorePojo;
+import cn.itsite.acommon.event.EventRefreshInfo;
 import cn.itsite.acommon.event.EventRefreshOrdersPoint;
 import cn.itsite.acommon.event.RefreshCartEvent;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
@@ -76,6 +78,8 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
     private String mFrom;
     private String mOutTradeNo;
     private ImageView mIvBack;
+
+    private boolean isWalletPaying = false;//是否是钱包支付中
 
     public static SubmitOrderFragment newInstance() {
         return new SubmitOrderFragment();
@@ -290,7 +294,6 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
         BaseRequest<PayParams> request = new BaseRequest<>();
 
         //需要刷新宅易购【我的】的界面
-        EventBus.getDefault().post(new EventRefreshOrdersPoint());
         request.message = "请求统一订单";
 
         Observable.from(data).map(OperateBean::getUid).toList()
@@ -306,21 +309,46 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
 
     @Override
     public void responseCheckOrderStatus(int status) {
+        String str = "待付款";
         if (status == 0) {
             //支付失败
             DialogHelper.errorSnackbar(getView(), "支付失败");
         } else if (status == 1) {
             //支付成功
             DialogHelper.successSnackbar(getView(), "支付成功");
+            str = "待发货";
         }
-        ALog.e(TAG, "status:" + status);
-        //跳到订单详情页
-//        start(OrderDetailFragment.newInstance(mOutTradeNo));
+        //刷新【我的】订单的小点
+        EventBus.getDefault().post(new EventRefreshOrdersPoint());
         pop();
+        start(MineOrderFragment.newInstance(str));
+    }
+
+    @Override
+    public void error(String errorMessage) {
+        super.error(errorMessage);
+        if(isWalletPaying){
+            isWalletPaying = false;
+            //只针对钱包支付请求返回的异常做处理
+            EventBus.getDefault().post(new EventRefreshOrdersPoint());
+            DialogHelper.warningSnackbar(getView(), "您的钱包余额不足，请选择其他支付方式!");
+            pop();
+            start(MineOrderFragment.newInstance("待付款"));
+        }
+    }
+
+    @Override
+    public void responseWalletPay(BaseOldResponse response) {
+        isWalletPaying = false;
+        EventBus.getDefault().post(new EventRefreshOrdersPoint());
+        EventBus.getDefault().post(new EventRefreshInfo());
+        DialogHelper.successSnackbar(getView(),response.getOther().getMessage());
+        pop();
+        start(MineOrderFragment.newInstance("待发货"));
     }
 
     private void showPaySelector(BaseRequest<PayParams> request) {
-        String[] payWay = {"支付宝", "微信"};
+        String[] payWay = {"支付宝", "微信","钱包"};
         new AlertDialog.Builder(_mActivity)
                 .setTitle("请选择支付方式")
                 .setItems(payWay, new DialogInterface.OnClickListener() {
@@ -329,9 +357,13 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
                         if(i==0){
                             request.data.setPayment("zfb");
                             pay(request, Pay.aliAppPay());
-                        }else{
+                        }else if(i==1){
                             request.data.setPayment("weixin_h5");
                             pay(request, Pay.weChatH5xPay());
+                        }else{
+                            request.data.setPayment("wallet");
+                            isWalletPaying = true;
+                            mPresenter.requestWalletPay(request);
                         }
                     }
                 })

@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
+import cn.itsite.abase.network.http.BaseOldResponse;
+import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.data.bean.DeliveryBean;
 import cn.itsite.acommon.data.bean.OperateBean;
@@ -68,6 +70,18 @@ public class SubmitOrderPresenter extends BasePresenter<SubmitOrderContract.View
                     @Override
                     public void onSuccess(BaseResponse<OperateBean> operateBeanBaseResponse) {
                         getView().responseCheckOrderStatus(operateBeanBaseResponse.getData().getStatus());
+                    }
+                }));
+    }
+
+    @Override
+    public void requestWalletPay(BaseRequest request) {
+        mRxManager.add(mModel.requestWalletPay(request)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseOldSubscriber<BaseOldResponse>() {
+                    @Override
+                    public void onSuccess(BaseOldResponse response) {
+                        getView().responseWalletPay(response);
                     }
                 }));
     }

@@ -2,6 +2,7 @@ package cn.itsite.login.contract;
 
 import cn.itsite.abase.common.BaseBean;
 import cn.itsite.abase.network.http.BaseOldResponse;
+import cn.itsite.login.model.CheckTokenBean;
 import cn.itsite.login.model.PushEnableBean;
 import cn.itsite.login.model.UserInfoBean;
 import cn.itsite.login.model.VerifyCodeBean;
@@ -187,4 +188,19 @@ public interface LoginService {
     Observable<BaseOldResponse> requestFeedback(@Url String url, @Field("content") String content);
 
     String requestFeedback = BASE_URL + "mall/member/center/sendFeedbackMessage.do";
+
+    /**
+     * 获取用户信息
+     * @param token
+     * @return
+     */
+    @POST
+    Observable<BaseOldResponse<UserInfoBean.MemberInfoBean>> requestInfo(@Url String url,@Query("token") String token);
+    String requestInfo = BASE_URL+"mall/member/center/info.do";
+
+    //登录验证
+    String requestCheckToken = BASE_URL + "mall/client/loginCheck.do";
+    @POST
+    Observable<CheckTokenBean> requestCheckToken(@Url String url, @Query("token") String token);
+
 }

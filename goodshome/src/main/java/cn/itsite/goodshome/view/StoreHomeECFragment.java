@@ -168,6 +168,7 @@ public class StoreHomeECFragment extends BaseFragment<StoreContract.Presenter> i
             mDeliveryBean = event.deliveryBean;
             mParams.latitude = mDeliveryBean.getLatitude();
             mParams.longitude = mDeliveryBean.getLongitude();
+            mParams.shoptype = shopTypes[1];
             mPresenter.getStore(mParams);
         }
     }
@@ -179,6 +180,7 @@ public class StoreHomeECFragment extends BaseFragment<StoreContract.Presenter> i
             mDeliveryBean = (DeliveryBean) data.getSerializable("delivery");
             mParams.latitude = mDeliveryBean.getLatitude();
             mParams.longitude = mDeliveryBean.getLongitude();
+            mParams.shoptype = shopTypes[1];
             mPresenter.getStore(mParams);
         }
     }

@@ -1,7 +1,6 @@
 package cn.itsite.amain.s1.camera.model;
 
 import cn.itsite.abase.mvp.model.base.BaseModel;
-import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.amain.s1.camera.contract.CameraListContract;
 import cn.itsite.amain.s1.common.ApiService;
 import cn.itsite.amain.s1.common.Constants;

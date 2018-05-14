@@ -2,6 +2,7 @@ package cn.itsite.order.contract;
 
 import java.util.List;
 
+import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.data.bean.DeliveryBean;
@@ -17,6 +18,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -67,5 +69,11 @@ public interface OrderService {
     //提交商品评论
     @POST("v1/orderProductsEvaluate")
     Observable<BaseResponse> postEvaluate(@Body BaseRequest body);
+
+    //钱包支付
+    @POST
+    Observable<BaseOldResponse> requestWalletPay(@Url String url, @Body BaseRequest request);
+
+    String requestWalletPay = "http://www.aglhz.com/mall/ec/v1/payParam";
 
 }

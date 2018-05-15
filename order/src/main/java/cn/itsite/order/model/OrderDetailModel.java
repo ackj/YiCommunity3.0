@@ -3,6 +3,7 @@ package cn.itsite.order.model;
 import java.util.List;
 
 import cn.itsite.abase.mvp.model.base.BaseModel;
+import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.network.http.HttpHelper;
@@ -52,6 +53,13 @@ public class OrderDetailModel extends BaseModel implements OrderDetailContract.M
     public Observable<BaseResponse<OperateBean>> checkOrderStatus(String orderUid) {
         return HttpHelper.getService(OrderService.class)
                 .checkOrderStatus(orderUid)
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<BaseOldResponse> requestWalletPay(BaseRequest request) {
+        return HttpHelper.getService(OrderService.class)
+                .requestWalletPay(OrderService.requestWalletPay,request)
                 .subscribeOn(Schedulers.io());
     }
 }

@@ -85,12 +85,12 @@ public class SearchFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        ivBack = (ImageView) view.findViewById(R.id.iv_back_search_fragment);
-        tvSearch = (TextView) view.findViewById(R.id.tv_search_search_fragment);
-        tvCity = (TextView) view.findViewById(R.id.tv_city_search_fragment);
-        etKeyword = (EditText) view.findViewById(R.id.et_keyword_search_fragment);
-        ivClear = (ImageView) view.findViewById(R.id.iv_clear_search_fragment);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        ivBack =  view.findViewById(R.id.iv_back_search_fragment);
+        tvSearch =  view.findViewById(R.id.tv_search_search_fragment);
+        tvCity =  view.findViewById(R.id.tv_city_search_fragment);
+        etKeyword =  view.findViewById(R.id.et_keyword_search_fragment);
+        ivClear =  view.findViewById(R.id.iv_clear_search_fragment);
+        recyclerView =  view.findViewById(R.id.recyclerView);
         return attachToSwipeBack(view);
     }
 

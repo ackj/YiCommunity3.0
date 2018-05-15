@@ -159,7 +159,7 @@ public class OrderListFragment extends BaseFragment<OrderListContract.Presenter>
                 } else if (view.getId() == R.id.btn_1) {
                     OrderBean.ActionsBean actions = orderBean.getActions().get(1);
                     clickAction(orderBean, actions);
-                } else if (view.getId() == R.id.layout_order) {
+                } else if (view.getId() == R.id.layout_order || view.getId()==R.id.recyclerView) {
                     go2OrderDetailView(orderBean.getUid());
                 }
             }

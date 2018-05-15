@@ -47,7 +47,7 @@ android {
             buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
         }
         ec{
-           buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
+           buildConfigField "String", "fromPoint", "\"MallApp\""
         }
     }
 }
@@ -154,7 +154,7 @@ dependencies {
         transitive = true
     }
     //图片选择器
-    api 'com.bilibili:boxing-impl:0.7.0'
+    api 'com.bilibili:boxing-impl:1.0.2'
     //状态栏
     api 'com.gyf.barlibrary:barlibrary:2.3.0'
 }

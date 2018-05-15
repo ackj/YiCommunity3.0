@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import cn.itsite.abase.BaseApp;
@@ -48,6 +49,7 @@ public class OrderListRVAdapter extends BaseRecyclerViewAdapter<OrderBean, BaseV
                         R.drawable.shape_bg_round_orange : R.drawable.shape_bg_round_green)
                 .addOnClickListener(R.id.btn_2)
                 .addOnClickListener(R.id.btn_1)
+                .addOnClickListener(R.id.recyclerView)
                 .addOnClickListener(R.id.layout_order);
         recyclerView.setLayoutManager(new LinearLayoutManager(BaseApp.mContext, LinearLayoutManager.HORIZONTAL, false));
         OrderItemImageAdapter adapter = new OrderItemImageAdapter();
@@ -68,17 +70,12 @@ public class OrderListRVAdapter extends BaseRecyclerViewAdapter<OrderBean, BaseV
             }
         }
 
-//        adapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
-//                OrderBean.ProductsBean item = adapter.getData().get(position);
-//                Fragment fragment = (Fragment) ARouter.getInstance().build("/goodsdetail/goodsdetailfragment").navigation();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("uid", item.getUid());
-//                fragment.setArguments(bundle);
-//                activity.start((BaseFragment) fragment);
-//            }
-//        });
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+               activity.start(OrderDetailFragment.newInstance(item.getUid()), 100);
+            }
+        });
     }
 
     private boolean isDeliveryToDoor(OrderBean item) {

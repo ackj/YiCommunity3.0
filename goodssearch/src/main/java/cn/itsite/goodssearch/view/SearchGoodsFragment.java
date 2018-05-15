@@ -7,9 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,7 +125,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     }
 
     private void initData() {
-        showSoftInputFromWindow(_mActivity,mEtInput);
+        showSoftInputFromWindow(_mActivity, mEtInput);
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 6));
         mSearchGoodsAdapter = new SearchGoodsRVAdapter();
         mRecyclerView.setAdapter(mSearchGoodsAdapter);
@@ -140,7 +138,7 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
-        KeyBoardUtils.showKeybord(editText,activity);
+        KeyBoardUtils.showKeybord(editText, activity);
     }
 
     private void refreshData(final List<SearchGoodsBean> data) {
@@ -158,28 +156,28 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         mTvSearch.setOnClickListener(this);
         mEtInput.setOnClickListener(this);
         mIvBack.setOnClickListener(this);
-        mEtInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isClickSearchString) {
-                    isClickSearchString = false;
-                } else {
-                    mParams.keyword = s.toString();
-                    mPresenter.getKeywords(mParams);
-                }
-                ALog.e(TAG, "搜索：" + s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+//        mEtInput.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if (isClickSearchString) {
+//                    isClickSearchString = false;
+//                } else {
+//                    mParams.keyword = s.toString();
+//                    mPresenter.getProducts(mParams);
+//                }
+//                ALog.e(TAG, "搜索：" + s);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
         mSearchGoodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -238,21 +236,16 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
         });
     }
 
-//    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
-//        editText.setFocusable(true);
-//        editText.setFocusableInTouchMode(true);
-//        editText.requestFocus();
-//        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-//    }
-
     private void search() {
         String input = mEtInput.getText().toString();
         if (!TextUtils.isEmpty(input)) {
             super.start("");
             mParams.keyword = input;
             mPresenter.getProducts(mParams);
+            KeyBoardUtils.hideKeybord(mEtInput, _mActivity);
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -342,6 +335,6 @@ public class SearchGoodsFragment extends BaseFragment<KeywordsPresenter> impleme
     @Override
     public void onStop() {
         super.onStop();
-        KeyBoardUtils.hideKeybord(mEtInput,_mActivity);
+        KeyBoardUtils.hideKeybord(mEtInput, _mActivity);
     }
 }

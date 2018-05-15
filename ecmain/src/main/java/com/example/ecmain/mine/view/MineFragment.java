@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -41,6 +42,7 @@ import cn.itsite.login.LoginActivity;
 import cn.itsite.login.model.UserInfoBean;
 import cn.itsite.order.model.CategoryBean;
 import cn.itsite.order.view.MineOrderFragment;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import me.yokeyword.fragmentation.SupportActivity;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
@@ -69,6 +71,8 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     private TextView mTvPrice;
     private Button mBtnLogin;
     private RelativeLayout mRlInfo;
+    private PtrFrameLayout mPtrFrameLayout;
+    private ScrollView mScollView;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -109,6 +113,8 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         mTvPrice = view.findViewById(R.id.tv_price);
         mRlInfo = view.findViewById(R.id.rl_info);
         mBtnLogin = view.findViewById(R.id.btn_login);
+        mPtrFrameLayout = view.findViewById(R.id.ptrFrameLayout);
+        mScollView = view.findViewById(R.id.scroll_view);
         return view;
     }
 
@@ -118,6 +124,13 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         initData();
         initListener();
         EventBus.getDefault().register(this);
+        initPtrFrameLayout(mPtrFrameLayout,mScollView);
+    }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        refreshData();
     }
 
     private void initData() {
@@ -154,7 +167,6 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar.statusBarDarkFont(false).init();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -230,7 +242,15 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     }
 
     @Override
+    public void error(String errorMessage) {
+        super.error(errorMessage);
+        mPtrFrameLayout.refreshComplete();
+
+    }
+
+    @Override
     public void responseInfo(BaseOldResponse<UserInfoBean.MemberInfoBean> response) {
+        mPtrFrameLayout.refreshComplete();
         UserInfoBean.MemberInfoBean info = response.getData();
         mTvPrice.setText("￥"+info.getMoney());
         mTvNickname.setText(info.getNickName());

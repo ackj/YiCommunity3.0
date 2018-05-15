@@ -30,7 +30,7 @@ public class App extends cn.itsite.amain.s1.App implements Application.ActivityL
         initData();//数据的初始化要在友盟推送之前，因为要注册别名时，用到用户名。
         initPush();//初始化推送。
         initBoxing();//初始化图片选择器。
-        LitePal.initialize(this);//初始化ORM。
+        LitePal.initialize(this);//初始化ORM
     }
 
     private void initData() {

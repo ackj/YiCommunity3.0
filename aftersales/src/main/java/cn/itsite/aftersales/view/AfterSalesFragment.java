@@ -23,9 +23,9 @@ import com.bilibili.boxing.Boxing;
 import com.bilibili.boxing.model.config.BoxingConfig;
 import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing_impl.ui.BoxingActivity;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.acommon.data.bean.OperateBean;
+import cn.itsite.acommon.event.EventPostAfterSalesSuccess;
 import cn.itsite.acommon.model.OrderDetailBean;
 import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 import cn.itsite.aftersales.contract.AfterSalesContract;
@@ -77,19 +78,21 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     private LinearLayout mLlPrice;
     private TextView mTvAnchorReason;
     private TextView mTvAnchorExplain;
-    private TextView mTvApply;
     private OrderDetailBean.ProductsBean mProductsBean;
-    private TextView mTvPrice;
-    private TextView mTvName;
-    private TextView mTvDesc;
-    private ImageView mIvIcon;
-    private TextView mTvAmount;
     private TextView mTvTitle;
     private TextView mTvRefundPrice;
     private TextView mTvMenu;
     private String mOrderUid;
     private PostApplyBean mApplyBean;
     private String mServiceType;
+
+    private OrderDetailBean mOrderDetailBean;
+    private RecyclerView mRvProducts;
+    private ProductRVAdapter mProductAdapter;
+
+    private List<OrderDetailBean.ProductsBean> mProductList;
+    private TextView mTvAnchor2;//上传凭证的锚view
+    private boolean fromOrderDetail;
 
     public static AfterSalesFragment newInstance() {
         AfterSalesFragment fragment = new AfterSalesFragment();
@@ -107,7 +110,15 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
         super.onCreate(savedInstanceState);
         mServiceType = getArguments().getString("serviceType");
         mOrderUid = getArguments().getString("orderUid");
-        mProductsBean = (OrderDetailBean.ProductsBean) getArguments().getSerializable("product");
+        fromOrderDetail = getArguments().getBoolean("fromOrderDetail", false);
+        mProductList = new ArrayList<>();
+        if (fromOrderDetail) {
+            mOrderDetailBean = (OrderDetailBean) getArguments().getSerializable("orderDetail");
+            mProductList = mOrderDetailBean.getProducts();
+        } else {
+            mProductsBean = (OrderDetailBean.ProductsBean) getArguments().getSerializable("product");
+            mProductList.add(mProductsBean);
+        }
     }
 
     @Nullable
@@ -117,6 +128,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
         mRlToolbar = view.findViewById(R.id.rl_toolbar);
         mTvTitle = view.findViewById(R.id.tv_title);
         mIvBack = view.findViewById(R.id.iv_back);
+        mRvProducts = view.findViewById(R.id.rvProducts);
         mRecyclerView = view.findViewById(R.id.recyclerView);
         mTvBackprice = view.findViewById(R.id.tv_backprice);
         mEtExplain = view.findViewById(R.id.et_explain);
@@ -124,12 +136,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
         mTvAnchorReason = view.findViewById(R.id.tv_anchor_reason);
         mTvAnchorExplain = view.findViewById(R.id.tv_anchor_explain);
         mLlPrice = view.findViewById(R.id.ll_price);
-        mTvApply = view.findViewById(R.id.tv_apply);
-        mIvIcon = view.findViewById(R.id.iv_icon);
-        mTvName = view.findViewById(R.id.tv_name);
-        mTvPrice = view.findViewById(R.id.tv_price);
-        mTvDesc = view.findViewById(R.id.tv_desc);
-        mTvAmount = view.findViewById(R.id.tv_amount);
+        mTvAnchor2 = view.findViewById(R.id.anchor_2);
         mTvMenu = view.findViewById(R.id.tv_menu);
         mTvRefundPrice = view.findViewById(R.id.tv_refund_price);
         return attachToSwipeBack(view);
@@ -152,46 +159,50 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
             mTvAnchorReason.setText("换货原因：");
             mTvTitle.setText("申请换货");
         }
-
-        mTvApply.setVisibility(View.GONE);
-
-        if (mProductsBean != null) {
-            //将数据映射到界面上
-            Glide.with(mIvIcon.getContext())
-                    .load(mProductsBean.getImageUrl())
-                    .apply(new RequestOptions().error(R.drawable.ic_img_error)
-                            .placeholder(R.drawable.ic_img_loading))
-                    .into(mIvIcon);
-            mTvName.setText(mProductsBean.getTitle());
-            mTvDesc.setText(mProductsBean.getDescription());
-            String currency = mProductsBean.getPay().getCurrency();
-            float price = Float.valueOf(mProductsBean.getPay().getPrice());
-            mTvPrice.setText(currency + price);
-            mTvAmount.setText("x" + mProductsBean.getAmount());
-            float refundPrice = price * Integer.valueOf(mProductsBean.getAmount());
-            mTvRefundPrice.setText(currency + refundPrice);
-            mTvBackprice.setText("最多" + currency + price + "，含发货邮票" + currency + "0.00");
-
-            //创建一个提交的对象
-            mApplyBean = new PostApplyBean();
-            mApplyBean.setCategory(mServiceType);
-            mApplyBean.setUid(mOrderUid);
-            PostApplyBean.ProductsBean productsBean = new PostApplyBean.ProductsBean();
-            productsBean.setSku(mProductsBean.getSku());
-            productsBean.setAmount(mProductsBean.getAmount());
-            productsBean.setUid(mProductsBean.getUid());
-            List<PostApplyBean.ProductsBean> productsBeans = new ArrayList<>();
-            productsBeans.add(productsBean);
-            mApplyBean.setProducts(productsBeans);
-        }
-
+        //商品的recyclerview
+        mRvProducts.setLayoutManager(new LinearLayoutManager(_mActivity));
+        mProductAdapter = new ProductRVAdapter();
+        mRvProducts.setAdapter(mProductAdapter);
+        mProductAdapter.setNewData(mProductList);
+        //图片的recyclerview
         mRecyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 4));
         mAdapter = new ImageRVAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        //默认图
-        addMedia.setPath("android.resource://" + _mActivity.getPackageName() + "/" + R.drawable.ic_aftermarket_200px);
-        mAdapter.addData(addMedia);
+        float refundPrice = 0;
+        String currency = "";
+        for (int i = 0; i < mProductList.size(); i++) {
+            OrderDetailBean.ProductsBean product = mProductList.get(i);
+            currency = product.getPay().getCurrency();
+            float price = Float.valueOf(product.getPay().getPrice());
+            refundPrice += price * Integer.valueOf(product.getAmount());
+        }
+        mTvRefundPrice.setText(currency + refundPrice);
+        mTvBackprice.setText("最多" + currency + refundPrice + "，含发货邮票" + currency + "0.00");
+
+        //创建一个提交的对象
+        mApplyBean = new PostApplyBean();
+        mApplyBean.setCategory(mServiceType);
+        mApplyBean.setUid(mOrderUid);
+        List<PostApplyBean.ProductsBean> productsBeans = new ArrayList<>();
+        for (int i = 0; i < mProductList.size(); i++) {
+            OrderDetailBean.ProductsBean product = mProductList.get(i);
+            PostApplyBean.ProductsBean productsBean = new PostApplyBean.ProductsBean();
+            productsBean.setSku(product.getSku());
+            productsBean.setAmount(product.getAmount());
+            productsBean.setUid(product.getUid());
+            productsBeans.add(productsBean);
+        }
+        mApplyBean.setProducts(productsBeans);
+
+        if (fromOrderDetail) {
+            mTvAnchor2.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.GONE);
+        } else {
+            //默认图
+            addMedia.setPath("android.resource://" + _mActivity.getPackageName() + "/" + R.drawable.ic_aftermarket_200px);
+            mAdapter.addData(addMedia);
+        }
     }
 
     private void initListener() {
@@ -217,7 +228,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
             @Override
             public void onClick(View view) {
                 if (checkApply()) {
-                    if(!submitPictures()){
+                    if (!submitPictures()) {
                         submitApply();
                     }
                 }
@@ -229,11 +240,11 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     private boolean checkApply() {
         String reason = mTvReason.getText().toString().trim();
         String explain = mEtExplain.getText().toString().trim();
-        if(TextUtils.isEmpty(reason)){
-            ToastUtils.showToast(_mActivity,"请选择原因");
+        if (TextUtils.isEmpty(reason)) {
+            ToastUtils.showToast(_mActivity, "请选择原因");
             return false;
-        }else if(TextUtils.isEmpty(explain)){
-            ToastUtils.showToast(_mActivity,"请输入说明");
+        } else if (TextUtils.isEmpty(explain)) {
+            ToastUtils.showToast(_mActivity, "请输入说明");
             return false;
         }
         return true;
@@ -284,7 +295,8 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
 
     private void selectPhoto() {
         BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG); // Mode：Mode.SINGLE_IMG, Mode.MULTI_IMG, Mode.VIDEO
-        config.needCamera(R.drawable.ic_boxing_camera_white).needGif().withMaxCount(6) // 支持gif，相机，设置最大选图数
+        config//.needCamera(R.drawable.ic_boxing_camera_white)
+                .needGif().withMaxCount(6) // 支持gif，相机，设置最大选图数
                 .withMediaPlaceHolderRes(R.drawable.ic_boxing_default_image); // 设置默认图片占位图，默认无
         Boxing.of(config).withIntent(_mActivity, BoxingActivity.class, mSelectedMedia).start(this, 100);
     }
@@ -303,6 +315,7 @@ public class AfterSalesFragment extends BaseFragment<AfterSalesContract.Presente
     @Override
     public void responsePostSuccess(BaseResponse response) {
         DialogHelper.successSnackbar(getView(), response.getMessage());
+        EventBus.getDefault().post(new EventPostAfterSalesSuccess());
         pop();
     }
 

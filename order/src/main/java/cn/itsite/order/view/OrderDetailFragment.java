@@ -24,6 +24,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,10 +39,13 @@ import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
 import cn.itsite.acommon.data.bean.OperateBean;
+import cn.itsite.acommon.event.EventPostAfterSalesSuccess;
+import cn.itsite.acommon.event.EventRefreshInfo;
 import cn.itsite.acommon.event.EventRefreshOrdersPoint;
 import cn.itsite.acommon.event.RefreshOrderEvent;
 import cn.itsite.acommon.model.OrderDetailBean;
@@ -105,6 +110,8 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     private String mOutTradeNo;
     private OrderDetailBean mOrderDetailBean;
 
+    private boolean isWalletPaying = false;//是否是钱包支付中
+
     public static OrderDetailFragment newInstance(String uid) {
         OrderDetailFragment fragment = new OrderDetailFragment();
         Bundle bundle = new Bundle();
@@ -117,6 +124,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUid = getArguments().getString("uid");
+        EventBus.getDefault().register(this);
     }
 
     @NonNull
@@ -208,6 +216,12 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 }
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EventPostAfterSalesSuccess event){
+        EventBus.getDefault().post(new RefreshOrderEvent());
+        pop();
     }
 
     private void showServiceTypeDialog(OrderDetailBean.ProductsBean product) {
@@ -360,7 +374,14 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 start(InputCommentFragment.newInstance(mOrderDetailBean));
                 break;
             case TYPE_REFUND:
-
+                Fragment fragment = (Fragment) ARouter.getInstance()
+                        .build("/aftersales/aftersalesfragment")
+                        .withString("serviceType", action.getCategory())
+                        .withString("orderUid",mOrderDetailBean.getUid())
+                        .withSerializable("orderDetail",mOrderDetailBean)
+                        .withBoolean("fromOrderDetail",true)
+                        .navigation();
+                start((BaseFragment) fragment);
                 break;
             default:
         }
@@ -402,7 +423,7 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
     }
 
     private void showPaySelector(BaseRequest<PayParams> request) {
-        List<String> strings = Arrays.asList("支付宝", "微信");
+        List<String> strings = Arrays.asList("支付宝", "微信","钱包");
         new SelectorDialogFragment()
                 .setTitle("请选择支付方式")
                 .setItemLayoutId(R.layout.item_rv_simple_selector)
@@ -420,6 +441,11 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                             request.data.setPayment("weixin_h5");
                             pay(request, Pay.weChatH5xPay());
                             break;
+                        case 2:
+                            request.data.setPayment("wallet");
+                            isWalletPaying = true;
+                            mPresenter.requestWalletPay(request);
+                            break;
                         default:
                             break;
                     }
@@ -427,6 +453,20 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
                 .setAnimStyle(R.style.SlideAnimation)
                 .setGravity(Gravity.BOTTOM)
                 .show(getChildFragmentManager());
+    }
+
+    @Override
+    public void error(String errorMessage) {
+        super.error(errorMessage);
+        if(isWalletPaying){
+            isWalletPaying = false;
+            //只针对钱包支付请求返回的异常做处理
+            EventBus.getDefault().post(new EventRefreshOrdersPoint());
+            EventBus.getDefault().post(new RefreshOrderEvent());
+            DialogHelper.warningSnackbar(getView(), "您的钱包余额不足，请选择其他支付方式!");
+            pop();
+            start(MineOrderFragment.newInstance("待付款"));
+        }
     }
 
     @Override
@@ -440,6 +480,16 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         }
         EventBus.getDefault().post(new EventRefreshOrdersPoint());
         EventBus.getDefault().post(new RefreshOrderEvent());
+        pop();
+    }
+
+    @Override
+    public void responseWalletPay(BaseOldResponse response) {
+        isWalletPaying = false;
+        EventBus.getDefault().post(new EventRefreshOrdersPoint());
+        EventBus.getDefault().post(new EventRefreshInfo());
+        EventBus.getDefault().post(new RefreshOrderEvent());
+        DialogHelper.successSnackbar(getView(),response.getOther().getMessage());
         pop();
     }
 
@@ -555,6 +605,12 @@ public class OrderDetailFragment extends BaseFragment<OrderDetailContract.Presen
         if (payment != null) {
             payment.clear();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

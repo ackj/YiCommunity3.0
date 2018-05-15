@@ -32,7 +32,6 @@ import cn.itsite.abase.common.GlideRoundTransform;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.utils.AppUtils;
-import cn.itsite.abase.utils.DensityUtils;
 import cn.itsite.acommon.ApiService;
 import cn.itsite.acommon.Constants;
 import cn.itsite.web.WebActivity;
@@ -84,7 +83,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
         mTvVersion.setText("版本："+ BuildConfig.VERSION_NAME);
         Glide.with(_mActivity)
                 .load(R.mipmap.ic_launcher)
-                .apply(new RequestOptions().transform(new GlideRoundTransform(_mActivity, DensityUtils.dp2px(_mActivity,22.5f))))
+                .apply(new RequestOptions().transform(new GlideRoundTransform(_mActivity, 23)))
                 .into(mIvIcon);
     }
 

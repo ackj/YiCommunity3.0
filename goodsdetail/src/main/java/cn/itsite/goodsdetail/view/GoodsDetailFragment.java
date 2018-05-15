@@ -1,6 +1,7 @@
 package cn.itsite.goodsdetail.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,11 +44,12 @@ import java.util.List;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.common.BaseConstants;
 import cn.itsite.abase.common.DialogHelper;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
-import cn.itsite.acommon.data.bean.SkusBean;
 import cn.itsite.acommon.SpecificationDialog;
+import cn.itsite.acommon.data.bean.SkusBean;
 import cn.itsite.acommon.data.pojo.StorePojo;
 import cn.itsite.acommon.event.RefreshCartRedPointEvent;
 import cn.itsite.acommon.model.ProductsBean;
@@ -308,21 +310,34 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         dialog.setSkuListener(new SpecificationDialog.OnSkusListener() {
             @Override
             public void clickComfirm(SkusBean.SkuBean sku, int amount, SpecificationDialog dialog) {
-                mSku = sku;
-                mAmount = amount;
-                productsBean.setAmount(amount + "");
-                if (sku != null) {
-                    productsBean.setSku(sku.getUid());
+                if(isLogined()){
+                    mSku = sku;
+                    mAmount = amount;
+                    productsBean.setAmount(amount + "");
+                    if (sku != null) {
+                        productsBean.setSku(sku.getUid());
+                    }
+                    if (isBuyItNow) {//立即购买
+                        buyItNow();
+                    } else {//加到购物车
+                        mPresenter.postProduct(cartUid, productsBean);
+                    }
+                    dialog.dismiss();
                 }
-                if (isBuyItNow) {//立即购买
-                    buyItNow();
-                } else {//加到购物车
-                    mPresenter.postProduct(cartUid, productsBean);
-                }
-                dialog.dismiss();
             }
         });
         dialog.show(getChildFragmentManager());
+    }
+
+    private boolean isLogined() {
+        if (UserHelper.isLogined()) {
+            return true;
+        } else {
+            Intent intent = new Intent("cn.itsite.login.LoginActivity");
+            startActivity(intent);
+            _mActivity.overridePendingTransition(0, 0);
+            return false;
+        }
     }
 
     private void buyItNow() {

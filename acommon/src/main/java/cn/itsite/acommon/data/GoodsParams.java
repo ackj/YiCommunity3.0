@@ -3,6 +3,8 @@ package cn.itsite.acommon.data;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -30,6 +32,12 @@ public class GoodsParams {
 
     @Override
     public String toString() {
+        if (keyword != null) {
+            try {
+                keyword = URLEncoder.encode(keyword, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+            }
+        }
         return new Gson().toJson(this);
     }
 }

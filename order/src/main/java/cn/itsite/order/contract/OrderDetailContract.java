@@ -3,6 +3,8 @@ package cn.itsite.order.contract;
 import java.util.List;
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.abase.network.http.BaseOldResponse;
+import cn.itsite.abase.network.http.BaseRequest;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.acommon.data.bean.OperateBean;
 import cn.itsite.acommon.model.OrderDetailBean;
@@ -26,6 +28,8 @@ public interface OrderDetailContract {
 
         void responseCheckOrderStatus(int status);
 
+        void responseWalletPay(BaseOldResponse response);
+
     }
 
     interface Presenter extends BaseContract.Presenter {
@@ -37,6 +41,8 @@ public interface OrderDetailContract {
 
         void checkOrderStatus(String orderUid);
 
+        void requestWalletPay(BaseRequest request);
+
     }
 
     interface Model extends BaseContract.Model {
@@ -47,6 +53,8 @@ public interface OrderDetailContract {
         Observable<BaseResponse> putOrders(List<OperateBean> orders);
 
         Observable<BaseResponse<OperateBean>> checkOrderStatus(String orderUid);
+
+        Observable<BaseOldResponse> requestWalletPay(BaseRequest request);
 
     }
 

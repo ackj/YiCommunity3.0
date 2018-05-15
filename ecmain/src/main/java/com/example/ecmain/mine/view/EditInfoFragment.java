@@ -103,7 +103,7 @@ public class EditInfoFragment extends BaseFragment<EditInfoContract.Presenter> i
             showInputDialog();
         }else if(v.getId()==R.id.ll_avator){
             BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG); // Mode：Mode.SINGLE_IMG, Mode.MULTI_IMG, Mode.VIDEO
-            config.needCamera(R.drawable.ic_boxing_camera_white) // 支持gif，相机，设置最大选图数
+            config//.needCamera(R.drawable.ic_boxing_camera_white) // 支持gif，相机，设置最大选图数
                     .withMediaPlaceHolderRes(R.drawable.ic_boxing_default_image); // 设置默认图片占位图，默认无
             Boxing.of(config).withIntent(_mActivity, BoxingActivity.class).start(this, 100);
         }else if(v.getId()==R.id.iv_back){

@@ -26,7 +26,6 @@ public class OrderDetailRVAdapter extends BaseRecyclerViewAdapter<OrderDetailBea
     @Override
     protected void convert(BaseViewHolder helper, OrderDetailBean.ProductsBean item) {
         TextView tvApply = helper.getView(R.id.tv_apply);
-        TextView tvAmount = helper.getView(R.id.tv_amount);
         ImageView mIvIcon = helper.getView(R.id.iv_icon);
         Glide.with(mIvIcon.getContext())
                 .load(item.getImageUrl())

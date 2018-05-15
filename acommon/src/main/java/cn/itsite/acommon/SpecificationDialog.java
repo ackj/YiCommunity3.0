@@ -61,6 +61,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     private TextView mTvPrice;
     private boolean mHasSkus;
     private String mSkuID;
+    private View mLine1;
 
     @Nullable
     @Override
@@ -74,6 +75,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         mTvConfirm = view.findViewById(R.id.tv_confirm);
         mIvIcon = view.findViewById(R.id.iv_icon);
         mTvPrice = view.findViewById(R.id.tv_price);
+        mLine1 = view.findViewById(R.id.line_1);
         return view;
     }
 
@@ -274,6 +276,7 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
         }
         mTvSku.setVisibility(bean.getSkus().size() == 0 ? View.GONE : View.VISIBLE);
         mRecyclerView.setVisibility(bean.getSkus().size() == 0 ? View.GONE : View.VISIBLE);
+        mLine1.setVisibility(bean.getSkus().size() == 0 ? View.GONE : View.VISIBLE);
 
         //把选中的项put到已选集合中
         for (int i = 0; i < bean.getAttributes().size(); i++) {

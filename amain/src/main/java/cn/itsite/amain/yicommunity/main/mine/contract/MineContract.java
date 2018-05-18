@@ -1,9 +1,11 @@
 package cn.itsite.amain.yicommunity.main.mine.contract;
 
 
-import cn.itsite.abase.mvp.contract.base.BaseContract;
-import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.abase.common.BaseBean;
+import cn.itsite.abase.mvp.contract.base.BaseContract;
+import cn.itsite.abase.network.http.BaseOldResponse;
+import cn.itsite.acommon.data.bean.UserInfoBean;
+import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.amain.yicommunity.entity.bean.UnreadMessageBean;
 import rx.Observable;
 
@@ -24,6 +26,9 @@ public interface MineContract {
 
         void responseUnreadMark(UnreadMessageBean bean);
 
+        void responseInfo(BaseOldResponse<UserInfoBean.MemberInfoBean> response);
+
+
     }
 
     interface Presenter extends BaseContract.Presenter {
@@ -36,6 +41,9 @@ public interface MineContract {
 
         void requestUnreadMark(Params params);
 
+        void requestInfo(String token);
+
+
     }
 
     interface Model extends BaseContract.Model {
@@ -46,6 +54,9 @@ public interface MineContract {
         Observable<String> requestClearCache();
 
         Observable<UnreadMessageBean> requestUnreadMark(Params params);
+
+        Observable<BaseOldResponse<UserInfoBean.MemberInfoBean>> requestInfo(String token);
+
 
     }
 }

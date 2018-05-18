@@ -27,14 +27,15 @@ import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration;
 import java.util.concurrent.TimeUnit;
 
 import cn.itsite.abase.common.RxManager;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
+import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.abase.utils.ToastUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Constants;
-import cn.itsite.abase.common.UserHelper;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

@@ -172,7 +172,10 @@ public class SubmitOrderFragment extends BaseFragment<SubmitOrderContract.Presen
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId() == R.id.ll_delivery) {
-                    Fragment addressFragment = (Fragment) ARouter.getInstance().build("/delivery/selectshoppingaddressfragment").navigation();
+                    Fragment addressFragment = (Fragment) ARouter.getInstance()
+                            .build("/delivery/selectshoppingaddressfragment")
+                            .withBoolean("fromShop",true)
+                            .navigation();
                     startForResult((BaseFragment) addressFragment, 100);
                     mCurrentEditInfo = mAdapter.getItem(position);
                 } else if (view.getId() == R.id.tv_leave_message) {

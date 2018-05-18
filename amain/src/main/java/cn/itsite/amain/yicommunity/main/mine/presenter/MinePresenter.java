@@ -3,6 +3,8 @@ package cn.itsite.amain.yicommunity.main.mine.presenter;
 import android.support.annotation.NonNull;
 
 import cn.itsite.abase.mvp.presenter.base.BasePresenter;
+import cn.itsite.abase.network.http.BaseOldResponse;
+import cn.itsite.acommon.data.bean.UserInfoBean;
 import cn.itsite.amain.yicommunity.common.Constants;
 import cn.itsite.amain.yicommunity.common.Params;
 import cn.itsite.amain.yicommunity.main.mine.contract.MineContract;
@@ -81,5 +83,17 @@ public class MinePresenter extends BasePresenter<MineContract.View, MineContract
                     }
                 }, this::error)
         );
+    }
+
+    @Override
+    public void requestInfo(String token) {
+        mRxManager.add(mModel.requestInfo(token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseOldSubscriber<BaseOldResponse<UserInfoBean.MemberInfoBean>>() {
+                    @Override
+                    public void onSuccess(BaseOldResponse<UserInfoBean.MemberInfoBean> response) {
+                        getView().responseInfo(response);
+                    }
+                }));
     }
 }

@@ -99,7 +99,7 @@ public class SearchFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         initData();
         initListener();
-        requestHistory();
+//        requestHistory();
         KeyBoardUtils.showKeybord(etKeyword, BaseApp.mContext);
     }
 
@@ -121,7 +121,7 @@ public class SearchFragment extends BaseFragment {
                     search(newText, tvCity.getText().toString());
                 } else {
                     ivClear.setVisibility(View.GONE);
-                    requestHistory();
+//                    requestHistory();
                 }
             }
 
@@ -163,7 +163,7 @@ public class SearchFragment extends BaseFragment {
 
         adapter.setOnItemClickListener((adapter, view, position) -> {
             Tip tip = ((Tip) adapter.getData().get(position));
-            cacheHistory(tip);
+//            cacheHistory(tip);
             Bundle bundle = new Bundle();
             bundle.putParcelable(TIP, tip);
             setFragmentResult(SupportFragment.RESULT_OK, bundle);
@@ -213,6 +213,11 @@ public class SearchFragment extends BaseFragment {
         super.onDestroyView();
     }
 
+    /**
+     * 使用这个方法小米手机会报错，暂不用
+     * Unable to load resource 0x00000000 from pkg=com.android.systemui
+     android.content.res.Resources$NotFoundException: Resource ID #0x0
+     */
     private void requestHistory() {
         Observable.create((Observable.OnSubscribe<List<TipsHistoryData>>) subscriber -> {
             subscriber.onStart();

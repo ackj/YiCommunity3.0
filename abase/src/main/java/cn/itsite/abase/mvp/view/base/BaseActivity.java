@@ -102,7 +102,7 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Swi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginoutEvent(EventLogout event) {
-        Intent intent = new Intent("LoginActivity");
+        Intent intent = new Intent("cn.itsite.amain.LoginActivity");
         startActivity(intent);
     }
 }

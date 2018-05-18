@@ -110,7 +110,7 @@
 
                 <ImageView
                     style="@style/MineItemIconStyle"
-                    android:src="@drawable/ic_mine_messagecenter_84px" />
+                    android:src="@drawable/ic_wallet_90px" />
 
                 <TextView
                     style="@style/MineItemTitleStyle"
@@ -122,11 +122,11 @@
                     android:id="@+id/tv_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="12dp"
                     android:textColor="@color/default_text"
                     android:textSize="@dimen/H3" />
 
-                <ImageView style="@style/MineItemViewMoreStyle" />
+                <!--<ImageView style="@style/MineItemViewMoreStyle" />-->
             </LinearLayout>
 
             <View

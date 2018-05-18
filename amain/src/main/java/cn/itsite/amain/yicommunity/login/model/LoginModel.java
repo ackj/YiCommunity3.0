@@ -1,13 +1,14 @@
 package cn.itsite.amain.yicommunity.login.model;
 
 import cn.itsite.abase.BaseApp;
+import cn.itsite.abase.common.UserBean;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.model.base.BaseModel;
+import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.abase.common.UserHelper;
 import cn.itsite.amain.yicommunity.entity.bean.SipBean;
-import cn.itsite.abase.common.UserBean;
 import cn.itsite.amain.yicommunity.login.contract.LoginContract;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

@@ -14,7 +14,9 @@ import org.greenrobot.eventbus.EventBus;
 
 import cn.itsite.abase.common.DialogHelper;
 import cn.itsite.abase.common.RxManager;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.abase.utils.KeyBoardUtils;
 import cn.itsite.amain.R;
 import cn.itsite.amain.s1.App;
@@ -22,7 +24,6 @@ import cn.itsite.amain.s1.common.ApiService;
 import cn.itsite.amain.s1.common.Constants;
 import cn.itsite.amain.s1.common.Params;
 import cn.itsite.amain.s1.event.EventDeviceNameChanged;
-import cn.itsite.abase.common.UserHelper;
 import me.yokeyword.fragmentation.SupportActivity;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

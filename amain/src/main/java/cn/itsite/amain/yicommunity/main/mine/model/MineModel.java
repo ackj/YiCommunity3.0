@@ -1,11 +1,14 @@
 package cn.itsite.amain.yicommunity.main.mine.model;
 
 import cn.itsite.abase.cache.CacheManager;
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.abase.mvp.model.base.BaseModel;
+import cn.itsite.abase.network.http.BaseOldResponse;
+import cn.itsite.abase.network.http.HttpHelper;
+import cn.itsite.acommon.data.bean.UserInfoBean;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.UnreadMessageBean;
 import cn.itsite.amain.yicommunity.main.mine.contract.MineContract;
 import rx.Observable;
@@ -50,6 +53,13 @@ public class MineModel extends BaseModel implements MineContract.Model {
     public Observable<UnreadMessageBean> requestUnreadMark(Params params) {
         return HttpHelper.getService(ApiService.class)
                 .requestUnreadMark(ApiService.requestUnreadMark, params.token)
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<BaseOldResponse<UserInfoBean.MemberInfoBean>> requestInfo(String token) {
+        return HttpHelper.getService(ApiService.class)
+                .requestInfo(ApiService.requestInfo, token)
                 .subscribeOn(Schedulers.io());
     }
 }

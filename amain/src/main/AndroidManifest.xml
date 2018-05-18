@@ -77,7 +77,7 @@
             android:launchMode="singleInstance"
             android:theme="@style/Transparent">
             <intent-filter>
-                <action android:name="LoginActivity" />
+                <action android:name="cn.itsite.amain.LoginActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

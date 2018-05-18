@@ -2,11 +2,12 @@ package cn.itsite.amain.yicommunity.main.publish.model;
 
 import java.io.File;
 
+import cn.itsite.abase.common.BaseBean;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.model.base.BaseModel;
+import cn.itsite.abase.network.http.HttpHelper;
 import cn.itsite.amain.yicommunity.common.ApiService;
 import cn.itsite.amain.yicommunity.common.Params;
-import cn.itsite.abase.common.BaseBean;
 import cn.itsite.amain.yicommunity.entity.bean.MyHousesBean;
 import cn.itsite.amain.yicommunity.entity.bean.RepairTypesBean;
 import cn.itsite.amain.yicommunity.main.publish.contract.PublishContract;

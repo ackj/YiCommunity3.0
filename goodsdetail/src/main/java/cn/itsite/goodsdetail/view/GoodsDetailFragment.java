@@ -48,6 +48,7 @@ import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import cn.itsite.abase.network.http.BaseResponse;
 import cn.itsite.abase.utils.ScreenUtils;
+import cn.itsite.acommon.BuildConfig;
 import cn.itsite.acommon.SpecificationDialog;
 import cn.itsite.acommon.data.bean.SkusBean;
 import cn.itsite.acommon.data.pojo.StorePojo;
@@ -333,7 +334,8 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
         if (UserHelper.isLogined()) {
             return true;
         } else {
-            Intent intent = new Intent("cn.itsite.login.LoginActivity");
+
+            Intent intent = new Intent(BuildConfig.loginStaticAction);
             startActivity(intent);
             _mActivity.overridePendingTransition(0, 0);
             return false;
@@ -372,7 +374,7 @@ public class GoodsDetailFragment extends BaseFragment<ProductContract.Presenter>
                 .getInstance()
                 .build("/order/submitorderfragment")
                 .withString("from", "detail")
-                .withParcelableArrayList("orders", orders)
+                .withParcelableArrayList("orders",orders)
                 .navigation();
         start((BaseFragment) fragment);
     }

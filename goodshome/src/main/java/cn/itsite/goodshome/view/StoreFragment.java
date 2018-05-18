@@ -27,6 +27,7 @@ import java.util.List;
 import cn.itsite.abase.cache.SPCache;
 import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.acommon.BuildConfig;
 import cn.itsite.acommon.data.GoodsParams;
 import cn.itsite.acommon.event.SwitchStoreEvent;
 import cn.itsite.goodshome.R;
@@ -148,7 +149,7 @@ public class StoreFragment extends BaseFragment<HomeContract.Presenter> implemen
         if (UserHelper.isLogined()) {
             return true;
         } else {
-            Intent intent = new Intent("cn.itsite.login.LoginActivity");
+            Intent intent = new Intent(BuildConfig.loginStaticAction);
             //不添加这个Flag则会报如下错误：Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

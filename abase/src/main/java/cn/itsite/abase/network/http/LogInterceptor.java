@@ -1,11 +1,15 @@
 package cn.itsite.abase.network.http;
 
+import android.content.Intent;
+
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import cn.itsite.abase.BaseApp;
+import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.event.EventLogout;
 import cn.itsite.abase.log.ALog;
 import okhttp3.Interceptor;
@@ -25,17 +29,13 @@ public class LogInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         long t1 = System.nanoTime();
-
         Buffer buffer = new Buffer();
         if (request.body() != null) {
             request.body().writeTo(buffer);
         }
-
-
         ALog.e(String.format("Sending request %s on %s%n%sRequest Params: %s",
                 request.url(), chain.connection(), request.headers(), buffer.clone().readUtf8()));
         buffer.close();
-
         Response response = chain.proceed(request);
         long t2 = System.nanoTime();
 
@@ -55,9 +55,22 @@ public class LogInterceptor implements Interceptor {
             if (jsonOther != null) {
                 String code = jsonOther.optString("code");
                 if ("123".equals(code)) {
+//                    EventBus.getDefault().post(new EventLogout());
+                    EventBus.getDefault().post(new EventLogout());
+
+                }
+            } else {
+                String code = jsonObject.optString("code");
+                if("401".equals(code)){
+                    Intent intent = new Intent("cn.itsite.amain.LoginActivity");
+                    //不添加这个Flag则会报如下错误：Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    BaseApp.mContext.startActivity(intent);
+                    UserHelper.clear();
                     EventBus.getDefault().post(new EventLogout());
                 }
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

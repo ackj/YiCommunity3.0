@@ -49,15 +49,19 @@ android {
              */
 
             buildConfigField "String", "fromPoint", "\"YsqApp\""
+            buildConfigField "String", "loginStaticAction", "\"cn.itsite.amain.LoginActivity\""
         }
         meilun {
             buildConfigField "String", "fromPoint", "\"YsqMeilunApp\""
+            buildConfigField "String", "loginStaticAction", "\"cn.itsite.amain.LoginActivity\""
         }
         vensi {
             buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
+            buildConfigField "String", "loginStaticAction", "\"cn.itsite.amain.LoginActivity\""
         }
         ec{
             buildConfigField "String", "fromPoint", "\"YsqVensiApp\""
+            buildConfigField "String", "loginStaticAction", "\"cn.itsite.login.LoginActivity\""
         }
     }
 }

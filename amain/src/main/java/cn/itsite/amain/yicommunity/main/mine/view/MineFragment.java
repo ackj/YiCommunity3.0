@@ -30,7 +30,10 @@ import cn.itsite.abase.common.UserHelper;
 import cn.itsite.abase.event.EventLogout;
 import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.abase.utils.DensityUtils;
+import cn.itsite.acommon.data.bean.UserInfoBean;
+import cn.itsite.acommon.event.EventRefreshInfo;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.Constants;
@@ -47,7 +50,6 @@ import cn.itsite.amain.yicommunity.main.mine.contract.MineContract;
 import cn.itsite.amain.yicommunity.main.mine.presenter.MinePresenter;
 import cn.itsite.amain.yicommunity.main.mypublish.MyPublishActivity;
 import cn.itsite.amain.yicommunity.main.view.MainFragment;
-import cn.itsite.amain.yicommunity.main.wallet.view.WalletFragment;
 import cn.itsite.amain.yicommunity.web.WebActivity;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import me.yokeyword.fragmentation.ISupportFragment;
@@ -80,6 +82,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     private ScrollView svMine;
     private Params params = Params.getInstance();
     private LinearLayout mLlMineWallet;
+    private TextView tvBalance;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -113,6 +116,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         ivHeaderBackground = ((ImageView) view.findViewById(R.id.iv_header_background));
         viewUnreadMark = ((View) view.findViewById(R.id.view_unread_mark_mine_fragment));
         svMine = ((ScrollView) view.findViewById(R.id.sv_mine_fragment));
+        tvBalance = view.findViewById(R.id.tv_balance);
         return view;
     }
 
@@ -127,11 +131,13 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     private void initData() {
         mPresenter.requestCache();
         mPresenter.requestUnreadMark(params);
+        mPresenter.requestInfo(UserHelper.token);
         //动态给“个人资料”TextView设置drawableLeft并改变其大小
         Drawable drawableLeft = ContextCompat.getDrawable(_mActivity, R.drawable.ic_oneself_info_80px);
         drawableLeft.setBounds(0, 0, DensityUtils.dp2px(App.mContext, 16.f), DensityUtils.dp2px(App.mContext, 16.f));
         tvUserData.setCompoundDrawables(drawableLeft, null, null, null);
         updataView();
+
     }
 
     private void initListener() {
@@ -192,6 +198,11 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EventRefreshInfo event){
+        mPresenter.requestInfo(UserHelper.token);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginEvent(EventData event) {
         if (event.code == Constants.login) {
             if (_mActivity instanceof MainActivity) {
@@ -247,9 +258,15 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         }
     }
 
+    @Override
+    public void responseInfo(BaseOldResponse<UserInfoBean.MemberInfoBean> response) {
+        tvBalance.setText("￥"+response.getData().getMoney());
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogoutEvent(EventLogout event) {
         tvName.setText("访客");
+        tvBalance.setText("");
         tvPhoneNumber.setText("");
         ivHeaderBackground.setImageResource(R.drawable.bg_mine_1920px_1080px);
         ivHead.setImageResource(R.drawable.ic_mine_avatar_normal_320px);
@@ -292,8 +309,9 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
             if (isLogined()) {
                 ((SupportActivity) _mActivity).start(MessageCenterFragment.newInstance());
             }
-        } else if (i == R.id.ll_mine_wallet) {
-            ((SupportActivity) _mActivity).start(WalletFragment.newInstance());
+        } else if (i == R.id.ll_mine_wallet) {//每次点击钱包就刷新，为了防止退款时未收到推送
+//            ((SupportActivity) _mActivity).start(WalletFragment.newInstance());
+            mPresenter.requestInfo(UserHelper.token);
         } else if (i == R.id.ll_my_indent) {
             if (isLogined()) {
                 Fragment mineorderfragment = (Fragment) ARouter.getInstance().build("/order/mineorderfragment").navigation();

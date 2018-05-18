@@ -5,7 +5,9 @@ import java.util.Map;
 
 import cn.itsite.abase.common.BaseBean;
 import cn.itsite.abase.common.UserBean;
+import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.abase.network.http.BaseResponse;
+import cn.itsite.acommon.data.bean.UserInfoBean;
 import cn.itsite.amain.yicommunity.entity.bean.AppUpdateBean;
 import cn.itsite.amain.yicommunity.entity.bean.BannerBean;
 import cn.itsite.amain.yicommunity.entity.bean.BuildingBean;
@@ -1022,6 +1024,14 @@ public interface ApiService {
                                                            @Field("communityFid") String communityFid,
                                                            @Field("powerCode") String powerCode);
 
+    /**
+     * 获取用户信息
+     * @param token
+     * @return
+     */
+    @POST
+    Observable<BaseOldResponse<UserInfoBean.MemberInfoBean>> requestInfo(@Url String url, @Query("token") String token);
+    String requestInfo = BASE_USER+"/client/memberInfo.do";
 
 }
 

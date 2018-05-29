@@ -12,7 +12,6 @@ import java.util.List;
  * @E-mail liujia95me@126.com
  * @time 2018/3/14 0014 9:39
  */
-
 public class StorePojo implements Parcelable {
 
 

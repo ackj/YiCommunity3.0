@@ -29,7 +29,6 @@ public class LaunchActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
         UserHelper.init();
         mRxManager.add(HttpHelper.getService(LoginService.class)
                 .requestCheckToken(LoginService.requestCheckToken, UserHelper.token)

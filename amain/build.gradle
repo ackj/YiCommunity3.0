@@ -41,29 +41,31 @@ android {
     flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
     productFlavors {
         yishequ {
+
             buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""
-//这个还是得想办法让后台返回才行,可以考虑通过传包名来区分不同App，而不是写死在这里。
+            //这个还是得想办法让后台返回才行,可以考虑通过传包名来区分不同App，而不是写死在这里。
             buildConfigField "String", "SC", "\"AglhzYsq\""//这个还是得想办法让后台返回才行。
             manifestPlaceholders = [application_id: "com.aglhz.yicommunity",
                                     amap_apikey   : "da7f5447eccd1609e8dcce4cd0919ad8"]
         }
+
         meilun {
-            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""//这个还是得想办法让后台返回才行。
-            buildConfigField "String", "SC", "\"AglhzYsqMeilun\""//这个还是得想办法让后台返回才行。
+            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""
+            buildConfigField "String", "SC", "\"AglhzYsqMeilun\""
 
             manifestPlaceholders = [application_id: "com.meilun.one",
                                     amap_apikey   : "002c49f1112a41840a9c47c684c8d4f4"]
         }
         vensi {
-            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""//这个还是得想办法让后台返回才行。
-            buildConfigField "String", "SC", "\"AglhzYsqVensi\""//这个还是得想办法让后台返回才行。
+            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""
+            buildConfigField "String", "SC", "\"AglhzYsqVensi\""
 
             manifestPlaceholders = [application_id: "com.aglhz.yicommunity",
                                     amap_apikey   : "da7f5447eccd1609e8dcce4cd0919ad8"]
         }
         ec {
-            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""//这个还是得想办法让后台返回才行。
-            buildConfigField "String", "SC", "\"AglhzYsqVensi\""//这个还是得想办法让后台返回才行。
+            buildConfigField "String", "WX_APP_ID", "\"wx160fff7b6ed86ef7\""
+            buildConfigField "String", "SC", "\"AglhzYsqVensi\""
 
             manifestPlaceholders = [application_id: "com.aglhz.yicommunity",
                                     amap_apikey   : "da7f5447eccd1609e8dcce4cd0919ad8"]
@@ -77,6 +79,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
+    //todo：------------------该项目的其他模块-----------------
     //分类模块。
     api project(':classify')
     //配送模块。
@@ -97,68 +100,50 @@ dependencies {
     api project(':aftersales')
     //阿里巴巴开源基础路由
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
-
+    //todo------------------流行库------------------
     //自定义二维码
     api 'com.google.zxing:core:3.2.1'
     api 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
     api 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
-
     //底部导航栏
     api 'com.aurelhubert:ahbottomnavigation:2.0.6'
-
     //地址选择器
     api 'com.github.chihane:JDAddressSelector:1.1.4'
-
     //switchbutton
     api 'com.kyleduo.switchbutton:library:1.4.5'
-
     //时间选择器
     api 'com.contrarywind:Android-PickerView:3.2.4'
-
     //视频播放
     api 'fm.jiecao:jiecaovideoplayer:5.5.4'
-
     //Banner
     api 'com.youth.banner:banner:1.4.9'
-
     //swipelayout
     api 'com.daimajia.swipelayout:library:1.2.0@aar'
-
     //Gif图加载框架
     api 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
-
     //一个底部弹框的级联选择器
     api 'com.github.leguang:MultiSelector:1.3'
-
     //暂时使用的更新库,配合更新库使用，后期要内化掉。
     api 'com.qianwen:update-app:3.3.1'
     api 'com.qianwen:okhttp-utils:3.8.0'
-
+    //自定义车牌键盘。
+    api 'com.github.leguang:AKeyboard:0.0.3'
+    //orm框架
+    api 'org.litepal.android:core:1.6.0'
     //配合更新库使用，后期要内化掉。
     api 'com.android.support.constraint:constraint-layout:1.0.2'
-
-    //todo(高亮)ssssssssssssssssssssss 以下为s1相关 sssssssssssssssssssssssssssss
-
+    //todo(高亮)------------------以下为s1相关------------------
     //progress-button
     api 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
-
     //页面状态管理
     api 'com.github.leguang:StateManager:1.1.0'
-
     //摄像头
     api 'com.p2p.core:p2p-core:0.4.3'
     api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
-
     //声波配网库
     api 'com.github.jwkj:SoundWaveSender:v2.0.2'
-
     //声波配网库说依赖的udp通讯库，不可删除
     api 'com.jwkj:udpsender:v2.0.1'
 
-    //自定义车牌键盘。
-    api 'com.github.leguang:AKeyboard:0.0.3'
-
-    //orm框架
-    api 'org.litepal.android:core:1.6.0'
 
 }

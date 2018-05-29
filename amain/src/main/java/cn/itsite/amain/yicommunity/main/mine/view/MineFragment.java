@@ -34,6 +34,7 @@ import cn.itsite.abase.network.http.BaseOldResponse;
 import cn.itsite.abase.utils.DensityUtils;
 import cn.itsite.acommon.data.bean.UserInfoBean;
 import cn.itsite.acommon.event.EventRefreshInfo;
+import cn.itsite.amain.BuildConfig;
 import cn.itsite.amain.R;
 import cn.itsite.amain.yicommunity.App;
 import cn.itsite.amain.yicommunity.common.Constants;
@@ -83,6 +84,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     private Params params = Params.getInstance();
     private LinearLayout mLlMineWallet;
     private TextView tvBalance;
+    private LinearLayout llDataAuthorization;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -103,6 +105,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         tvPhoneNumber = ((TextView) view.findViewById(R.id.tv_phone_number));
         tvUserData = ((TextView) view.findViewById(R.id.tv_user_data));
         llMessageCenter = ((LinearLayout) view.findViewById(R.id.ll_message_center));
+        llDataAuthorization = ((LinearLayout) view.findViewById(R.id.ll_data_authorization));
         llMyIndent = ((LinearLayout) view.findViewById(R.id.ll_my_indent));
         mLlMineWallet = view.findViewById(R.id.ll_mine_wallet);
         llMyAddress = ((LinearLayout) view.findViewById(R.id.ll_my_address));
@@ -112,6 +115,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         llAboutUs = ((LinearLayout) view.findViewById(R.id.ll_about_us));
         llMyHouse = ((LinearLayout) view.findViewById(R.id.ll_my_house));
         tvLogout = ((TextView) view.findViewById(R.id.tv_logout));
+
         tvCache = ((TextView) view.findViewById(R.id.tv_cache_sum));
         ivHeaderBackground = ((ImageView) view.findViewById(R.id.iv_header_background));
         viewUnreadMark = ((View) view.findViewById(R.id.view_unread_mark_mine_fragment));
@@ -124,8 +128,15 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         EventBus.getDefault().register(this);
+        initDifference();
         initData();
         initListener();
+    }
+
+    private void initDifference() {
+        if(!BuildConfig.SC.contains("Vensi")){
+            llDataAuthorization.setVisibility(View.GONE);
+        }
     }
 
     private void initData() {
@@ -153,6 +164,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         tvLogout.setOnClickListener(this);
         llMyHouse.setOnClickListener(this);
         mLlMineWallet.setOnClickListener(this);
+        llDataAuthorization.setOnClickListener(this);
     }
 
     private boolean isLogined() {
@@ -338,7 +350,9 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 //                } else {
             createShortCut();
 //                }
-        } else if (i == R.id.ll_my_publish) {
+        } else if(i ==R.id.ll_data_authorization){
+            ((SupportActivity) _mActivity).start(AuthorizationFragment.newInstance());
+        }else if (i == R.id.ll_my_publish) {
             startActivity(new Intent(_mActivity, MyPublishActivity.class));
         } else if (i == R.id.ll_clean_cache) {
             mPresenter.requestClearCache();

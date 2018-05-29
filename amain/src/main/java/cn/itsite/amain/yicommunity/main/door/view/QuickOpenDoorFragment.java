@@ -166,7 +166,6 @@ public class QuickOpenDoorFragment extends BaseFragment<QuickOpenDoorContract.Pr
     @Override
     public void responseDoors(DoorListBean datas) {
         ptrFrameLayout.refreshComplete();
-
         if (datas == null || datas.getData().isEmpty()) {
             if (params.page == 1) {
                 mStateManager.showEmpty();
@@ -188,7 +187,6 @@ public class QuickOpenDoorFragment extends BaseFragment<QuickOpenDoorContract.Pr
 
     /**
      * 响应请求设置一键开门
-     *
      * @param mBaseBean
      */
     @Override

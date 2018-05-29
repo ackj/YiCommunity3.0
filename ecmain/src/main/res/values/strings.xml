@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">宅易购</string>
+    <string name="app_name">宅宜购</string>
 
     <array name="order_tabs">
         <item>全部订单</item>

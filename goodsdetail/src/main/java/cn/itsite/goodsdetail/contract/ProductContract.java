@@ -12,8 +12,8 @@ import rx.Observable;
  * @E-mail liujia95me@126.com
  * @time 2018/3/21 0021 17:38
  */
-
 public interface ProductContract {
+
     interface View extends BaseContract.View{
         void responseGetProduct(ProductDetailBean bean);
         void responsePostSuccess(BaseResponse response);

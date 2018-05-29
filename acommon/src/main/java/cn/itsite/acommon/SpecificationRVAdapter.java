@@ -27,7 +27,6 @@ public class SpecificationRVAdapter extends BaseRecyclerViewAdapter<SkusBean.Att
         helper.setText(R.id.tv_attribute, item.getAttribute());
         final FlexboxLayout flexboxLayout = helper.getView(R.id.flexboxLayout);
         flexboxLayout.removeAllViews();
-//        if (flexboxLayout.getChildCount() == 0) {
         for (int i = 0; i < item.getValues().size(); i++) {
             View view = LayoutInflater.from(BaseApp.mContext).inflate(R.layout.view_specification_text, null);
             final TextView textView = view.findViewById(R.id.textView);
@@ -37,10 +36,6 @@ public class SpecificationRVAdapter extends BaseRecyclerViewAdapter<SkusBean.Att
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //点击它的时候要做：
-                    //1、遍历其他规格下的选项是否与选中的这一项有skuuid的交集
-                    //2、如果没有，则该项不可点击，否则可点击
-                    //3、刷新整个列表
                     textView.setSelected(!textView.isSelected());
                     valuesBean.setSelected(textView.isSelected());
                     if (textView.isSelected()) {
@@ -57,13 +52,6 @@ public class SpecificationRVAdapter extends BaseRecyclerViewAdapter<SkusBean.Att
             });
             flexboxLayout.addView(view);
         }
-//            flexboxLayout.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    notifyItemChanged(helper.getLayoutPosition());
-//                }
-//            });
-//        }
     }
 
     private OnSpecificationClickListener listener;

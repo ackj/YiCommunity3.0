@@ -33,8 +33,8 @@ import cn.itsite.adialog.dialogfragment.BaseDialogFragment;
 /**
  * Author： Administrator on 2018/2/7 0007.
  * Email： liujia95me@126.com
+ * 商品规格选择器Dialog
  */
-
 public class SpecificationDialog extends BaseDialogFragment implements SkusContract.View {
 
     private static final String TAG = SpecificationDialog.class.getSimpleName();
@@ -51,9 +51,6 @@ public class SpecificationDialog extends BaseDialogFragment implements SkusContr
     private HashMap<Integer, SkusBean.AttributesBean.ValuesBean> mPositions = new HashMap<>();//已选的Position集
 
     private SkusBean.SkuBean selectedSku;
-
-//    private List<String> mInterselectionSkus = new ArrayList<>();//选中的skus交集，最后只会剩下一个值
-//    private List<String> mSkuUids = new ArrayList<>();//所有可能性的skus的uid
 
     private SkusBean skusBean;
     private TextView mTvConfirm;

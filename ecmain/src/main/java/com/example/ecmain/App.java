@@ -27,17 +27,18 @@ public class App extends BaseApp {
     }
 
     private void initRouter() {
-//        if (BuildConfig.DEBUG) {         // 这两行必须写在init之前，否则这些配置在init过程中将无效
+        //todo：这里官方的注释说调试模式在开启，但是实际使用(realease)过程中不加这两行会报错
+        //if (BuildConfig.DEBUG) {// 这两行必须写在init之前，否则这些配置在init过程中将无效
         ARouter.openLog();     // 打印日志
         ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
-//        }
-        ARouter.init(this); // 尽可能早，推荐在Application中初始化
+        //}
+        ARouter.init(this);
     }
 
     private void initBoxing() {
         IBoxingMediaLoader loader = new BoxingGlideLoader();
         BoxingMediaLoader.getInstance().init(loader);
-//        BoxingCrop.getInstance().init(new BoxingUcrop());初始化图片裁剪（可选）
+        //BoxingCrop.getInstance().init(new BoxingUcrop());初始化图片裁剪（可选）
     }
 
     /**

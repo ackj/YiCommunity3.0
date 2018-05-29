@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/default_white"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <cn.itsite.acommon.view.PtrHTFrameLayout
+        android:id="@+id/ptrFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="true"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
+
+        <cn.itsite.statemanager.StateLayout
+            android:id="@+id/stateLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:emptyLayout="@layout/layout_state_empty"
+            app:errorLayout="@layout/state_error"
+            app:loadingLayout="@layout/state_loading"
+            app:netErrorLayout="@layout/state_net_error">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
+                android:layoutAnimation="@anim/layout_dock_left_enter" />
+        </cn.itsite.statemanager.StateLayout>
+
+    </cn.itsite.acommon.view.PtrHTFrameLayout>
+    
+    <TextView
+        android:id="@+id/tv_operation"
+        android:text="添加"
+        android:gravity="center"
+        android:textColor="@color/error"
+        android:textSize="@dimen/H2"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginBottom="15dp"
+        android:layout_height="49dp" />
+    
+</LinearLayout>

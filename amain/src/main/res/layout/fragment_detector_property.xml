@@ -200,7 +200,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <com.dd.CircularProgressButton
+   <!-- <com.dd.CircularProgressButton
         android:id="@+id/cpb_delete_fragment_detector_property"
         android:layout_width="200dp"
         android:layout_height="40dp"
@@ -211,6 +211,16 @@
         app:cpb_textComplete="保存成功"
         app:cpb_textError="出错了"
         app:cpb_textIdle="保存修改"
-        app:cpb_textProgress="加载中" />
+        app:cpb_textProgress="加载中" />-->
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="200dp"
+        android:text="保存修改"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:background="@drawable/cpb_background"
+        android:layout_height="40dp" />
 
 </LinearLayout>

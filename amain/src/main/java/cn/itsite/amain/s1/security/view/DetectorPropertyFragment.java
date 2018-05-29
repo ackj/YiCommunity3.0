@@ -20,7 +20,6 @@ import com.bilibili.boxing.model.config.BoxingConfig;
 import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing_impl.ui.BoxingActivity;
 import com.bumptech.glide.Glide;
-import com.dd.CircularProgressButton;
 import com.kyleduo.switchbutton.SwitchButton;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,7 +54,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
     private TextView toolbarTitle;
     private TextView toolbarMenu;
     private Toolbar toolbar;
-    private CircularProgressButton cpbDelete;
+//    private CircularProgressButton cpbDelete;
     private EditText etName;
     private TextView tvLineOfDefense;
     private ImageView ivIcon;
@@ -67,6 +66,8 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
     private Params params = Params.getInstance();
     private SecurityBean.DataBean.SubDevicesBean deviceBean;
     private LinearLayout llChangeIcon;
+
+
 
     public static DetectorPropertyFragment newInstance(SecurityBean.DataBean.SubDevicesBean bean) {
         DetectorPropertyFragment fragment = new DetectorPropertyFragment();
@@ -98,7 +99,8 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
         toolbarTitle = ((TextView) view.findViewById(R.id.toolbar_title));
         toolbarMenu = ((TextView) view.findViewById(R.id.toolbar_menu));
         toolbar = ((Toolbar) view.findViewById(R.id.toolbar));
-        cpbDelete = ((CircularProgressButton) view.findViewById(R.id.cpb_delete_fragment_detector_property));
+//        cpbDelete = ((CircularProgressButton) view.findViewById(R.id.cpb_delete_fragment_detector_property));
+        view.findViewById(R.id.btn_save).setOnClickListener(this);
         etName = ((EditText) view.findViewById(R.id.et_name));
         tvLineOfDefense = ((TextView) view.findViewById(R.id.tv_line_of_defense));
         ivIcon = ((ImageView) view.findViewById(R.id.iv_icon));
@@ -121,7 +123,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
         sbAlarmDelay.setOnCheckedChangeListener((buttonView, isChecked) ->
                 params.alarmDelay = isChecked ? 1 : 0);
 
-        cpbDelete.setOnClickListener(this);
+//        cpbDelete.setOnClickListener(this);
         toolbarMenu.setOnClickListener(this);
         llDefenseLevel.setOnClickListener(this);
         llChangeIcon.setOnClickListener(this);
@@ -176,7 +178,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
     @Override
     public void error(String errorMessage) {
         super.error(errorMessage);
-        cpbDelete.setProgress(0);
+//        cpbDelete.setProgress(0);
         DialogHelper.warningSnackbar(getView(), errorMessage);
     }
 
@@ -187,7 +189,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
 
     @Override
     public void responseDelSuccess(BaseBean baseBean) {
-        cpbDelete.setProgress(100);
+//        cpbDelete.setProgress(100);
         EventBus.getDefault().post(new EventRefreshSecurity());
         DialogHelper.successSnackbar(getView(), "删除成功");
         pop();
@@ -236,7 +238,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
                     .withMediaPlaceHolderRes(R.drawable.ic_boxing_default_image); // 设置默认图片占位图，默认无
             Boxing.of(config).withIntent(_mActivity, BoxingActivity.class).start(this, RESULT_LOAD_IMAGE);
 
-        } else if (i == R.id.cpb_delete_fragment_detector_property) {
+        } else if (i == R.id.btn_save) {
             params.index = deviceBean.getIndex();
             params.name = etName.getText().toString().trim();
             if (TextUtils.isEmpty(params.name)) {
@@ -247,7 +249,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
             mPresenter.requestModsensor(params);
 
         } else if (i == R.id.toolbar_menu) {
-            cpbDelete.setIndeterminateProgressMode(true);
+//            cpbDelete.setIndeterminateProgressMode(true);
             if (deviceBean == null) {
                 DialogHelper.warningSnackbar(getView(), "删除失败");
                 return;
@@ -257,7 +259,7 @@ public class DetectorPropertyFragment extends BaseFragment<DetectorPropertyContr
                     .setMessage("你确定要删除吗？")
                     .setPositiveButton("确定", (dialog, which) -> {
                         params.index = deviceBean.getIndex();
-                        cpbDelete.setProgress(50);
+//                        cpbDelete.setProgress(50);
                         mPresenter.requestDelsensor(params);
                     })
                     .setNegativeButton("取消", null)

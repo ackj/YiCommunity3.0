@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,6 @@ import com.bilibili.boxing.model.config.BoxingConfig;
 import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing_impl.ui.BoxingActivity;
 import com.bumptech.glide.Glide;
-import com.dd.CircularProgressButton;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -51,7 +51,7 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
     private TextView toolbarTitle;
     private TextView toolbarMenu;
     private Toolbar toolbar;
-    private CircularProgressButton cpbDelete;
+//    private CircularProgressButton cpbDelete;
     private EditText etName;
     private TextView tvRoomName;
     private ImageView ivIcon;
@@ -61,6 +61,7 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
     private RoomsBean.DataBean.RoomListBean selectRoom;
     private Params params = Params.getInstance();
     private ImageView ivChangeImage;
+    private Button btnSave;
 
     public static AddDeviceFragment newInstance(DeviceListBean.DataBean.SubDevicesBean bean, RoomsBean.DataBean.RoomListBean room) {
         AddDeviceFragment fragment = new AddDeviceFragment();
@@ -94,7 +95,8 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
         toolbarTitle = ((TextView) view.findViewById(R.id.toolbar_title));
         toolbarMenu = ((TextView) view.findViewById(R.id.toolbar_menu));
         toolbar = ((Toolbar) view.findViewById(R.id.toolbar));
-        cpbDelete = ((CircularProgressButton) view.findViewById(R.id.cpb_delete));
+        btnSave = view.findViewById(R.id.btn_save);
+//        cpbDelete = ((CircularProgressButton) view.findViewById(R.id.cpb_delete));
         etName = ((EditText) view.findViewById(R.id.et_name));
         tvRoomName = ((TextView) view.findViewById(R.id.tv_room_name));
         ivIcon = ((ImageView) view.findViewById(R.id.iv_icon));
@@ -119,9 +121,9 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
     }
 
     private void initData() {
-        cpbDelete.setVisibility(bean == null ? View.GONE : View.VISIBLE);
+        btnSave.setVisibility(bean == null ? View.GONE : View.VISIBLE);
         if (bean == null) {
-            cpbDelete.setVisibility(View.GONE);
+            btnSave.setVisibility(View.GONE);
         } else {
             //把数据赋值
             etName.setText(bean.getName());
@@ -138,7 +140,7 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
     }
 
     private void initListener() {
-        cpbDelete.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
         toolbarMenu.setOnClickListener(this);
         tvRoomName.setOnClickListener(this);
         ivChangeImage.setOnClickListener(this);
@@ -169,7 +171,7 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
     @Override
     public void error(String errorMessage) {
         super.error(errorMessage);
-        cpbDelete.setProgress(0);
+//        cpbDelete.setProgress(0);
         DialogHelper.warningSnackbar(getView(), errorMessage);
     }
 
@@ -177,7 +179,7 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
     public void responseSuccess(BaseBean bean) {
         DialogHelper.successSnackbar(getView(), bean.getOther().getMessage());
         EventBus.getDefault().post(new EventDeviceChanged());
-        cpbDelete.setProgress(100);
+//        cpbDelete.setProgress(100);
         pop();
     }
 
@@ -201,8 +203,8 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.cpb_delete) {
-            cpbDelete.setIndeterminateProgressMode(true);
+        if (i == R.id.btn_save) {
+//            cpbDelete.setIndeterminateProgressMode(true);
             if (bean == null) {
                 DialogHelper.warningSnackbar(getView(), "删除失败");
                 return;
@@ -213,7 +215,7 @@ public class AddDeviceFragment extends BaseFragment<AddDeviceContract.Presenter>
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            cpbDelete.setProgress(50);
+//                            cpbDelete.setProgress(50);
                             params.index = bean.getIndex();
                             mPresenter.requestDelDevice(params);
                         }

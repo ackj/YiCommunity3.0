@@ -55,7 +55,6 @@ public class LogInterceptor implements Interceptor {
             if (jsonOther != null) {
                 String code = jsonOther.optString("code");
                 if ("123".equals(code)) {
-//                    EventBus.getDefault().post(new EventLogout());
                     EventBus.getDefault().post(new EventLogout());
 
                 }
@@ -63,7 +62,6 @@ public class LogInterceptor implements Interceptor {
                 String code = jsonObject.optString("code");
                 if("401".equals(code)){
                     Intent intent = new Intent("cn.itsite.amain.LoginActivity");
-                    //不添加这个Flag则会报如下错误：Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     BaseApp.mContext.startActivity(intent);
                     UserHelper.clear();

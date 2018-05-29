@@ -12,8 +12,8 @@ import java.util.List;
  * @version v0.0.0
  * @E-mail liujia95me@126.com
  * @time 2018/3/21 0021 16:05
+ * 【宅易购项目】操作非用户相关请求参数封装类
  */
-
 public class GoodsParams {
 
     public int pageSize = 20;
